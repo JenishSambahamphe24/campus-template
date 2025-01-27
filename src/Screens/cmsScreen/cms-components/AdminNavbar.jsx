@@ -6,7 +6,8 @@ import { ChevronDownIcon, } from '@heroicons/react/20/solid'
 import { useAuth } from '../../../context/AuthContextProvider';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+const address = import.meta.env.VITE_ADDRESS;
+const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 
 function AdminNavbar() {
     const navigate = useNavigate()
@@ -33,8 +34,8 @@ function AdminNavbar() {
                                 alt="Logo"
                             />
                             <div className="ml-4 flex flex-col justify-center">
-                                <h1 className="text-2xl tracking-tight">Gyanodaya Multiple Public Campus</h1>
-                                <p className="text-lg">Banke, Khajura</p>
+                                <h1 className="text-2xl tracking-tight">{collegeName}</h1>
+                                <p className="text-lg">{address}</p>
                             </div>
                         </Link>
                     </div>
@@ -44,7 +45,7 @@ function AdminNavbar() {
                     <div style={{ backgroundColor: '#0368B0' }} className="flex justify-between px-20 p-3  mt-3 overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start">
                         <div className="flex ">
                             <div className='flex'>
-                                <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/admin">Dashboard</Link>
+                                <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/admin">Home</Link>
 
                                 <Menu as="div" className="inline-block text-left z-10">
                                     <MenuButton className="mx-4 flex leading-2 text-sm text-white">

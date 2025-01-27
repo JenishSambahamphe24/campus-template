@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField } from '@mui/material';
+import { useState, useEffect } from 'react'
+import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
@@ -19,6 +19,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 function EditLinkDialog({ handleClose, open, linkId }) {
     const [formData, setFormData] = useState({
+        type: '',
         name: '',
         url: ''
     })
@@ -36,7 +37,7 @@ function EditLinkDialog({ handleClose, open, linkId }) {
         };
         fetchData()
     }, [linkId])
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -49,7 +50,6 @@ function EditLinkDialog({ handleClose, open, linkId }) {
         const formattedData = {
             ...formData,
             createdAt: extractDate(formData.createdAt),
-
             updatedAt: extractDate(formData.updatedAt)
         }
         try {
@@ -88,16 +88,72 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                 <Stack direction='column' rowGap='10px'>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing='1rem'>
+                            <Grid item sm={12}>
+                                <FormControl size='small' fullWidth>
+                                    <InputLabel>Link Type</InputLabel>
+                                    <Select
+                                        required InputLabelProps={{
+                                            sx: {
+                                                '& .MuiInputLabel-asterisk': {
+                                                    color: 'brown',
+                                                },
+                                            },
+                                        }}
+                                        variant='standard'
+                                        name="type"
+                                        value={formData.type}
+                                        onChange={handleChange}
+                                        label='Link Type'
+                                    >
+                                        <MenuItem value='socials'> Socials</MenuItem>
+                                        <MenuItem value='application'>Application</MenuItem>
+                                        <MenuItem value='otherLink'>Other-links</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
                             <Grid item xs={6}>
-                                <TextField
-                                    fullWidth
-                                    size='small'
-                                    variant='standard'
-                                    label='name'
-                                    name='name'
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                />
+
+                                {
+                                    formData.type === 'socials' ?
+                                        (
+                                            <>
+                                                <FormControl size='small' fullWidth>
+                                                    <InputLabel>Link Type</InputLabel>
+                                                    <Select
+                                                        required InputLabelProps={{
+                                                            sx: {
+                                                                '& .MuiInputLabel-asterisk': {
+                                                                    color: 'brown',
+                                                                },
+                                                            },
+                                                        }}
+                                                        variant='standard'
+                                                        name="name"
+                                                        value={formData.name}
+                                                        onChange={handleChange}
+                                                        label='Link Type'
+                                                    >
+                                                        <MenuItem value='facebook'> FaceBook</MenuItem>
+                                                        <MenuItem value='youtube'>YouTube</MenuItem>
+                                                        <MenuItem value='twitter'>Twitter</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <TextField
+                                                    fullWidth
+                                                    size='small'
+                                                    variant='standard'
+                                                    label='name'
+                                                    name='name'
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                />
+                                            </>
+                                        )
+                                }
+
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField

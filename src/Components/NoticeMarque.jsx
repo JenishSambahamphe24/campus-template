@@ -9,31 +9,12 @@ function NoticeMarque() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllpublication();
-      const latestReports = data
-        .filter(item => item.categoryName === 'Report' && item.isScrollable === true)
-        .sort((a, b) => b.id - a.id)
-        .slice(0, 2).map(item => ({
-          ...item,
-          route: "/report"
-        }));
-      const latestPublication = data
-        .filter(item => item.categoryName === 'Publication' && item.isScrollable === true)
-        .sort((a, b) => b.id - a.id)
-        .slice(0, 2).map(item => ({
-          ...item,
-          route: '/publication'
-        }));
-      const latestNotices = data
-        .filter(item => item.categoryName === 'Other' && item.isScrollable === true)
-        .sort((a, b) => b.id - a.id)
-        .slice(0, 2).map(item => ({
-          ...item,
-          route: '/other'
-        }));
-      setNotices([...latestReports, ...latestPublication, ...latestNotices]);
+      setNotices(data)
     };
     fetchData();
   }, []);
+
+  console.log(notices)
 
 
   return (

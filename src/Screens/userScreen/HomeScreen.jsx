@@ -1,11 +1,9 @@
 import Slider from '../../Components/Slider'
-import PublicationTabs from '../../Components/publicationTab/PublicationTabs'
-import AboutUs from '../../Components/AboutUs/AboutUs'
 import VideoPlayer from '../../Components/ReportTab/VideoPlayer'
-import { Grid, Stack } from '@mui/material'
-import ProgramSection from '../../Components/Programs/ProgramSection'
+import { Stack } from '@mui/material'
 import ReportTabs from '../../Components/ReportTab/ReportTabs'
 import NoticeMarque from '../../Components/NoticeMarque'
+import NoticeTabs from '../../Components/Notice-tab/NoticeTabs'
 
 function HomeScreen() {
     return (
@@ -13,10 +11,8 @@ function HomeScreen() {
             <NoticeMarque />
             <Slider />
             <Stack px='2rem' rowGap='1rem'>
-                <AboutUs />
-                <ProgramSection />
+            <NoticeTabs />
                 <ReportTabs />
-                <PublicationTabs />
                 <VideoPlayer />
             </Stack>
         </div>

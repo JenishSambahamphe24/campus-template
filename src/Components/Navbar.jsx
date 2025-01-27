@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Typography } from '@mui/material';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
-import { useAuth } from '../context/AuthContextProvider';
+const address = import.meta.env.VITE_ADDRESS;
+const collegeName = import.meta.env.VITE_COLLEGE_NAME;
+
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
-    const { activeAboutusId } = useAuth()
 
     return (
         <nav className="relative bg-white shadow ">
@@ -23,8 +23,8 @@ function Navbar() {
                                 alt="Logo"
                             />
                             <div className="ml-4 flex flex-col justify-center">
-                                <h1 className="text-2xl tracking-tight">Gyanodaya Multiple Public Campus</h1>
-                                <p className="text-lg">Banke, Khajura</p>
+                                <h1 className="text-2xl tracking-normal"> {collegeName} </h1>
+                                <p className="text-lg"> {address} </p>
                             </div>
                         </Link>
                     </div>
@@ -45,9 +45,7 @@ function Navbar() {
                                     className="absolute left-45% z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                 >
                                     <div className="py-1">
-                                        <MenuItem>
-                                            <Link to={`/about/${activeAboutusId}`} className="block px-4 py-2 text-sm text-white">Introduction</Link>
-                                        </MenuItem>
+
                                         <MenuItem>
                                             <Link to="/team" className="block px-4 py-2 text-sm text-white">Our Team</Link>
                                         </MenuItem>
@@ -129,7 +127,6 @@ function Navbar() {
                                         )}
                                     </div>
                                 </summary>
-                                <Link className="block   py-1 text-sm text-gray-200 transition-colors duration-300 transform  hover:text-blue-400">Introduction</Link>
                                 <Link className="block text-gray-200  text-sm text-white transition-colors duration-300 transform  hover:text-blue-400">Our Team</Link>
 
                             </details>

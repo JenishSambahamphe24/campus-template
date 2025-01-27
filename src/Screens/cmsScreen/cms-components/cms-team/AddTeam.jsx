@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel } from '@mui/material'
+import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, InputLabel, Select, MenuItem } from '@mui/material'
 import { addTeam } from './teamApi'
 import { toast } from 'react-toastify'
 import RichEditor from '../cms-project/components/RichEditor'
@@ -17,6 +17,8 @@ function AddTeam() {
         email: '',
         phoneNo: '',
         position: '',
+        category: '',
+        subCategory: '',
         fbUrl: '',
         cvDetail: '',
         index: 0,
@@ -26,12 +28,12 @@ function AddTeam() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         if (name === 'phoneNo' && !/^\d*$/.test(value)) {
-            return; // Prevent invalid characters in phone number
+            return;
         }
-    
-        if (name === 'status' || name === 'isChairman' || name === 'isCampusChief') {
+
+        if (name === 'status') {
             setFormData(prev => ({
                 ...prev,
                 [name]: value === 'true'
@@ -52,22 +54,22 @@ function AddTeam() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Ensure loading state is set
-    
+        setLoading(true);
+
         const formDataToSend = new FormData();
         Object.keys(formData).forEach((key) => {
             formDataToSend.append(key, formData[key]);
         });
-    
+
         try {
-            await addTeam(formDataToSend); // Make sure addTeam is working correctly
+            await addTeam(formDataToSend);
             toast.success('Team added successfully');
-            navigate('/admin/viewTeam'); // Redirect to view team
+            navigate('/admin/viewTeam');
         } catch (error) {
             console.error('Error adding team:', error);
             toast.error('Failed to add team');
         } finally {
-            setLoading(false); // Reset loading state
+            setLoading(false);
         }
     };
     return (
@@ -152,9 +154,58 @@ function AddTeam() {
                         inputProps={{ pattern: "[0-9]*", inputMode: 'numeric' }}
                     />
                 </Grid>
+                <Grid item sm={12} md={4}>
+                    <FormControl required size='small' fullWidth>
+                        <InputLabel
+                            InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
+                                },
+                            }}>Type</InputLabel>
+                        <Select
+                            required
+                            name="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            label='Type'
+                        >
+                            <MenuItem value='committeMember'> Committee Member</MenuItem>
+                            <MenuItem value='staff'>Staff</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item sm={12} md={4}>
+                    <FormControl required size='small' fullWidth>
+                        <InputLabel
+                            InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
+                                },
+                            }}>Sub-category</InputLabel>
+                        <Select
+                            required
+                            name="subCategory"
+                            value={formData.subCategory}
+                            onChange={handleChange}
+                            label='Sub-category'
+                        >
+
+                            <MenuItem disabled={formData.category === 'staff'} value='chairman'>Chairman</MenuItem>
+                            <MenuItem disabled={formData.category === 'staff'} value='member'>Member</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='campusChief'> Campus Chief</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='informationOfficer'>Information Officer</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='other'>Other</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
                 <Grid item md={4}>
                     <TextField
-                        required
+                        // required={formData.subCategory === 'other'}
+                        // disabled={formData.subCategory != 'other'}
                         InputLabelProps={{
                             sx: {
                                 '& .MuiInputLabel-asterisk': { color: 'brown' },
@@ -168,7 +219,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={4}>
                     <TextField
                         fullWidth
                         size='small'
@@ -191,7 +242,7 @@ function AddTeam() {
                         name='ppImage'
                         label='Member Image'
                         disabled={false}
-                        required={false}
+                        required={true}
                         onImageSelect={handleImageSelect}
                     />
                 </Grid>
@@ -218,7 +269,7 @@ function AddTeam() {
                     <RichEditor
                         ref={editorRef}
                         height='400px'
-                        placeholder="Enter project description"
+                        placeholder="Add description"
                         name='cvDetail'
                         value={formData.cvDetail}
                         onChange={handleChange}

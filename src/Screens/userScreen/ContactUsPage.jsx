@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import { addNewFeedback } from '../cmsScreen/cms-components/Feedback/feedbackApi';
 import { toast } from 'react-toastify';
+const map_iframe = import.meta.env.VITE_MAP_IFRAME
+const address = import.meta.env.VITE_ADDRESS
+const email = import.meta.env.VITE_EMAIL
+const phone = import.meta.env.VITE_PHONE
+
 
 function ContactUsPage() {
   const [formData, setFormData] = useState({
@@ -53,19 +58,19 @@ function ContactUsPage() {
               marginHeight="0"
               marginWidth="0"
               scrolling="no"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3518.783681196535!2d81.57242149999999!3d28.1226218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399861dfde7ef4db%3A0xb74a0fe71e10f79d!2sGyanodaya%20Multiple%20Public%20Campus!5e0!3m2!1sen!2snp!4v1737265903384!5m2!1sen!2snp"
+              src={map_iframe}
             ></iframe>
 
             <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
               <div className="lg:w-1/2 px-6">
                 <h2 className="title-font font-bold text-[#0368b0]  text-sm">ADDRESS</h2>
-                <p className="mt-1"> Khajura, Banke, Lumbini Province</p>
+                <p className="mt-1"> {address} </p>
               </div>
               <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
                 <h2 className="title-font font-bold text-[#0368b0]  text-sm">EMAIL</h2>
-                <a href="rerl@aepc.gov.np" className="text-blue-900 leading-relaxed"> rerl@aepc.gov.np </a>
+                <a href="rerl@aepc.gov.np" className="text-blue-900 leading-relaxed"> {email} </a>
                 <h2 className="title-font font-bold text-[#0368b0]  text-sm">PHONE</h2>
-                <p className="leading-relaxed">01-5544146</p>
+                <p className="leading-relaxed">{phone}</p>
               </div>
             </div>
           </div>

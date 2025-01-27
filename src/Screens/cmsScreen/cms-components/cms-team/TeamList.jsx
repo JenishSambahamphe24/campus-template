@@ -91,9 +91,15 @@ function TeamList() {
             headerName: 'Full Name',
             flex: 2.5,
         },
+       
         {
-            field: 'index',
-            headerName: 'Emp. Index',
+            field: 'category',
+            headerName: 'Type',
+            flex: 1.4,
+        },
+        {
+            field: 'subCategory',
+            headerName: 'Sub-category',
             flex: 1.4,
         },
         {
@@ -176,6 +182,8 @@ function TeamList() {
     const rows = allTeams?.sort((a, b) => b.id - a.id).map((team, index) => ({
         status: showStatus(team.status),
         index: team.index,
+        category: team.category,
+        subCategory: team.subCategory,
         sNo: index + 1,
         id: team.id,
         fullName: `${team.firstName || ''} ${team.middleName || ''} ${team.lastName || ''}`,

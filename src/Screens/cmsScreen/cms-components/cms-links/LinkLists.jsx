@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Grid,
@@ -10,12 +10,14 @@ import {
 import { DataGrid } from '@mui/x-data-grid'
 import EditLinkDialog from './EditLinkDialog'
 import { getAllLink } from './linkApi'
+import CommonDeleteDialog from '../cms-team/components/CommonDeleteDialog'
+import { deleteLink } from './linkApi'
 
 function LinkLists() {
     const [link, setLink] = useState([])
     const [linkId, setLinkId] = useState(0)
-
     const [editDialogOpen, setEditDialogOpen] = useState(false)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
     const fetchData = async () => {
         try {
@@ -29,6 +31,14 @@ function LinkLists() {
         fetchData()
     }, [])
 
+    const handleDeleteLinkDialogOpen = (id) => {
+        setLinkId(id)
+        setDeleteDialogOpen(true);
+    };
+    const handleDeleteTeamDialogClose = () => {
+        setDeleteDialogOpen(false);
+        fetchData()
+    };
     const columns = [
         { field: 'sNo', headerName: 'S.No.', flex: 50 },
         {
@@ -37,7 +47,12 @@ function LinkLists() {
             flex: 150,
             editable: true,
         },
-
+        {
+            field: 'type',
+            headerName: 'Link Type',
+            flex: 150,
+            editable: true,
+        },
         {
             field: 'url',
             headerName: 'URL',
@@ -63,6 +78,15 @@ function LinkLists() {
                     >
                         Edit
                     </Typography>
+                    <Typography
+                        fontSize='14px'
+                        color='error'
+                        mt='7px'
+                        ml='20px'
+                        onClick={() => handleDeleteLinkDialogOpen(params.row.id)}
+                    >
+                        Delete
+                    </Typography>
                 </Box>
             ),
         }
@@ -71,7 +95,8 @@ function LinkLists() {
         id: item.id,
         sNo: index + 1,
         name: item.name,
-        url: item.url
+        url: item.url,
+        type: item.type
     }));
 
 
@@ -137,10 +162,17 @@ function LinkLists() {
                     }}
                 />
                 <Link to='/admin/addLink'>
-                    <Button variant='contained' size='small' sx={{ textTransform: 'none', flex: '12rem' }}>Add a new Faculty</Button>
+                    <Button variant='contained' size='small' sx={{ textTransform: 'none', flex: '12rem' }}>Add a new Link</Button>
                 </Link>
                 <Box>
                     <EditLinkDialog linkId={linkId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
+                    <CommonDeleteDialog
+                        id={linkId}
+                        open={deleteDialogOpen}
+                        handleClose={handleDeleteTeamDialogClose}
+                        deleteApi={deleteLink}
+                        content='Link'
+                    />
                 </Box>
             </Stack>
         </Grid>

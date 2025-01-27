@@ -28,3 +28,11 @@ export const addLink = async (data) => {
     const response = await axios.post(`${BASE_URL}/application`, data, {headers});
     return response.data;
 };
+
+export const deleteLink = async (id) => {
+    const headers = {
+        'Authorization': `Bearer ${token}`
+      };
+    const response = await axios.delete(`${BASE_URL}/application/${id}`, {headers});
+    return response.data;
+};

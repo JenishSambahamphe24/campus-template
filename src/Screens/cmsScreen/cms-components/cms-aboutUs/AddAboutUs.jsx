@@ -75,11 +75,11 @@ function AddAboutUs() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='mb-8' onSubmit={handleSubmit}>
             <Typography mb="20px" variant="h5" textAlign="center">
                 Add Institutional content
             </Typography>
-            <Grid component={Paper} container width="70%" mx="auto" spacing="10px" padding="10px">
+            <Grid component={Paper}  container width="70%" mx="auto" spacing="10px" padding="10px">
                 <Grid item md={6}>
                     <FormControl size='small' fullWidth>
                         <InputLabel size='small'>Content-Type</InputLabel>
@@ -100,7 +100,6 @@ function AddAboutUs() {
                             <MenuItem value='About-us'> About Us</MenuItem>
                             <MenuItem value='Chairman-Message'> Message From Chairman</MenuItem>
                             <MenuItem value='Message-campus-chief'> Message From Campus Chiief</MenuItem>
-
                         </Select>
                     </FormControl>
                 </Grid>

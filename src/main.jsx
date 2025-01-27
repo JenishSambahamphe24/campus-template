@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from './context/AuthContextProvider.jsx';
 import { ThemeProvider } from '@material-tailwind/react'
-import AboutUsPage from './Screens/userScreen/about-us/AboutUsPage.jsx';
 import ContactUsPage from './Screens/userScreen/ContactUsPage.jsx';
 import HomeScreen from './Screens/userScreen/HomeScreen.jsx';
 import NewsPage from './Screens/userScreen/News/NewsPage.jsx';
@@ -50,7 +49,6 @@ import ScrollToTop from './ScrollToTop.js';
 import EditAboutUs from './Screens/cmsScreen/cms-components/cms-aboutUs/EditAboutUs.jsx';
 
 import ProgramPage from './Components/Programs/ProgramPage.jsx';
-import Programs from './Components/Programs/Programs.jsx';
 import FacultyList from './Screens/cmsScreen/cms-components/cms-academics/FacultyList.jsx';
 import ProgramList from './Screens/cmsScreen/cms-components/cms-academics/ProgramList.jsx';
 import AddFaculty from './Screens/cmsScreen/cms-components/cms-academics/AddFaculty.jsx';
@@ -63,18 +61,18 @@ import EditTestimonial from './Screens/cmsScreen/cms-components/cms-academics/cm
 import ReportTabs from './Components/ReportTab/ReportTabs.jsx';
 import LinkLists from './Screens/cmsScreen/cms-components/cms-links/LinkLists.jsx';
 import AddLink from './Screens/cmsScreen/cms-components/cms-links/AddLink.jsx';
+import ChairmanMessage from './Components/AboutUs/ChairmanMessage.jsx';
+import CampusChiefMessage from './Components/AboutUs/CampusChiefMessage.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />}>
         <Route index={true} path='/' element={<HomeScreen />} />
-        <Route index={true} path='/about/:id' element={<AboutUsPage />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />
         <Route index={true} path='/news/:id' element={<NewsPage />} />
         <Route index={true} path='/gallery' element={<GalleryPage />} />
-        {/* <Route path="/gallery/:tab" element={<GalleryPage />} /> */}
         <Route index={true} path='/galleryGrid/:id' element={<GalleryGrid />} />
         <Route index={true} path='/member-details/:id' element={<TeamMemberDetails />} />
         <Route index={true} path='/team' element={<OurTeam />} />
@@ -84,9 +82,11 @@ const router = createBrowserRouter(
         <Route index={true} path='/publication/:id' element={<PublicationPage />} />
         <Route index={true} path='/faq' element={<FaqPage />} />
         <Route index={true} path='/testimonials' element={<TestimonialsPage />} />
-        <Route index={true} path='/programs' element={<Programs />} />
         <Route index={true} path='/program/:id' element={<ProgramPage />} />
         <Route index={true} path='/program-list' element={<ProgramListUser />} />
+
+        <Route index={true} path='/message-from-chairman' element={<ChairmanMessage />} />
+        <Route index={true} path='/message-from-campus_chief' element={<CampusChiefMessage />} />
       </Route>
 
 

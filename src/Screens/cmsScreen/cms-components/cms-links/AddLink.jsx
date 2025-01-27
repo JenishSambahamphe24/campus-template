@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, FormControl, Button, Grid, TextareaAutosize, Typography, Paper, FormControlLabel, RadioGroup, Radio, FormLabel } from '@mui/material'
+import { TextField, FormControl, Button, Grid, Typography, Paper, InputLabel, Select, MenuItem } from '@mui/material'
 import { toast } from 'react-toastify';
 import { addLink } from './linkApi';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ function AddLink() {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
+        type: '',
         url: '',
     })
 
@@ -23,7 +24,7 @@ function AddLink() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const newFaq = await addLink(formData);
+            const newLink = await addLink(formData);
             toast.success('Link added successfully');
             navigate('/admin/links')
         } catch (error) {
@@ -37,16 +38,71 @@ function AddLink() {
                 Add a new Link
             </Typography>
             <Grid component={Paper} container width='70%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
+                <Grid item sm={12} md={6}>
+                    <FormControl size='small' fullWidth>
+                        <InputLabel>Link Type</InputLabel>
+                        <Select
+                            required InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
+                                },
+                            }}
+                            variant='standard'
+                            name="type"
+                            value={formData.type}
+                            onChange={handleChange}
+                            label='Link Type'
+                        >
+                            <MenuItem value='socials'> Social Links</MenuItem>
+                            <MenuItem value='application'>Applications</MenuItem>
+                            <MenuItem value='otherLink'>Other-Links</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
                 <Grid item xs={6}>
-                    <TextField
-                        fullWidth
-                        size='small'
-                        variant='standard'
-                        label='Link Name'
-                        name='name'
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
+                    {
+                        formData.type === 'socials' ?
+                            (
+                                <>
+                                    <FormControl size='small' fullWidth>
+                                        <InputLabel>Link Name</InputLabel>
+                                        <Select
+                                            required InputLabelProps={{
+                                                sx: {
+                                                    '& .MuiInputLabel-asterisk': {
+                                                        color: 'brown',
+                                                    },
+                                                },
+                                            }}
+                                            variant='standard'
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            label='Link Name'
+                                        >
+                                            <MenuItem value='socials'> FaceBook</MenuItem>
+                                            <MenuItem value='application'>Twitter (X)</MenuItem>
+                                            <MenuItem value='otherLink'>Youtube</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </>
+                            ) : (
+                                <>
+                                    <TextField
+                                        fullWidth
+                                        size='small'
+                                        variant='standard'
+                                        label='Link Name'
+                                        name='name'
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                    />
+                                </>
+                            )
+                    }
+
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
@@ -66,7 +122,7 @@ function AddLink() {
                         size='small'
                         variant='contained'
                     >
-                        Add a new FAQ
+                        Add a new Link
                     </Button>
                 </Grid>
 

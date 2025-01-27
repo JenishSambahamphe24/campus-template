@@ -30,14 +30,15 @@ function VideoPlayer() {
             <Divider style={{ width: '100%', backgroundColor: '#c2c2c2', }} />
 
             <Grid container sm={12}>
-                <Grid container sm={6} >
+                <Grid container gap='10px' sm={5.8} >
+                    <Grid className='bg-[#0368b0] text-center text-white' sm={12}>
+                        <h1 className='text-xl'> Image Gallery</h1>
+                    </Grid>
                     {
                         images.sort((a, b) => b.id - a.id).slice(0, 3).map((item, index) => (
-                            <Grid key={index} item sm={4}  >
-                                <h1 className='text-xl mb-2'>
-                                    Image Gallery
-                                </h1>
-                                <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-[200px] w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
+                            <Grid key={index} item sm={3}  >
+
+                                <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-[180px] w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
                                     <Grid className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
                                         <img
                                             src={item.thumbnailImage ? `${IMAGE_URL}${item.thumbnailImage}` : defaultImage}
@@ -53,20 +54,22 @@ function VideoPlayer() {
                         ))
                     }
                 </Grid>
-                <Grid container sm={6} >
+                <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: '#0368b0' }} />
+                <Grid container gap='10px' sm={5.8} >
+                    <Grid className='bg-[#0368b0] text-center text-white' sm={12}>
+                        <h1 className='text-xl '> Video Gallery</h1>
+                    </Grid>
                     {videos.slice(0, 2).map((item, index) => {
                         const videoId = videoIdParser(item.videoUrl)
                         return (
-                            <Grid key={index} item sm={4}>
-                                <h1 className='text-xl mb-2'>
-                                    Video Gallery
-                                </h1>
+                            <Grid key={index} item sm={3}>
+
                                 <YouTube
                                     videoId={videoId}
                                     className="video-player"
                                     opts={{
                                         width: '100%',
-                                        height: '200px'
+                                        height: '180px'
                                     }}
                                 />
                             </Grid>
@@ -75,7 +78,29 @@ function VideoPlayer() {
                 </Grid>
 
             </Grid>
-
+            <div className='w-full flex justify-center'>
+                <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
+                    <Link to='/gallery'>
+                        <Typography >
+                            More Gallery
+                        </Typography>
+                    </Link>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-4 w-4"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                        />
+                    </svg>
+                </Button>
+            </div>
         </Grid>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' ;
+import React, { useState, useEffect } from 'react';
 import {
     Typography,
     Stack,
@@ -13,6 +13,9 @@ import {
     Radio,
     FormControlLabel,
     Paper,
+    InputLabel,
+    MenuItem,
+    Select
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { getTeamById, updateTeamById } from '../teamApi';
@@ -34,6 +37,8 @@ function EditTeam() {
         email: '',
         phoneNo: '',
         position: '',
+        category: '',
+        subCategory: '',
         fbUrl: '',
         twitterUrl: '',
         cvDetail: '',
@@ -119,10 +124,12 @@ function EditTeam() {
         updatedData.append('twitterUrl', formData.twitterUrl);
         updatedData.append('cvDetail', formData.cvDetail);
         updatedData.append('status', formData.status);
+        updatedData.append('category', formData.category);
+        updatedData.append('subCategory', formData.subCategory);
         updatedData.append('index', formData.index);
 
         updatedData.append('createdAt', extractDate(formData.createdAt));
-        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date())); // Current date if not provided
+        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
 
         try {
             await updateTeamById(teamId, updatedData);
@@ -177,9 +184,8 @@ function EditTeam() {
                         </Grid>
                     </Grid>
 
-                    {/* Email, Phone Number, and Position */}
-                    <Grid container width="100%" spacing={2}>
-                        <Grid item xs={3}>
+                    <Grid container mt='2px'  width="100%" spacing={2}>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 size="small"
@@ -190,7 +196,7 @@ function EditTeam() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 size="small"
@@ -202,7 +208,64 @@ function EditTeam() {
                                 inputProps={{ pattern: "[0-9]*", inputMode: "numeric" }}
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item sm={12} md={4}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    size='small'
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Category</InputLabel>
+                                <Select
+                                    size='small'
+                                    required
+                                    variant='standard'
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    label='Category'
+                                >
+                                    <MenuItem value='campusChief'> Campus Chief</MenuItem>
+                                    <MenuItem value='committeMember'> Committee Member</MenuItem>
+                                    <MenuItem value='staff'>Staff</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+
+                    </Grid>
+                    <Grid mt='2px' container width="100%" spacing={2}>
+                        <Grid item sm={12} md={4}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Sub-category</InputLabel>
+                                <Select
+                                    size='small'
+                                    variant='standard'
+                                    required
+                                    name="subCategory"
+                                    value={formData.subCategory}
+                                    onChange={handleChange}
+                                    label='Sub-category'
+                                >
+
+                                    <MenuItem disabled={formData.category === 'staff'} value='chairman'>Chairman</MenuItem>
+                                    <MenuItem disabled={formData.category === 'staff'} value='member'>Member</MenuItem>
+                                    <MenuItem value='informationOfficer'>Information Officer</MenuItem>
+                                    <MenuItem value='other'>Other</MenuItem>
+
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 size="small"
@@ -216,7 +279,7 @@ function EditTeam() {
                                 value={formData.index}
                                 onChange={handleChange}
                                 inputProps={{
-                                    min: 1, 
+                                    min: 1,
                                 }}
                             />
                         </Grid>
@@ -234,9 +297,7 @@ function EditTeam() {
                                 }}
                             />
                         </Grid>
-                       
                     </Grid>
-
                     {/* Profile Picture Upload */}
                     <Grid border='1px solid #c2c2c2' borderRadius='8px' container width="100%" mt='10px' padding='10px'>
                         <Grid px='5px' item xs={6}>
