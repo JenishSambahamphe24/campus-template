@@ -25,10 +25,10 @@ function Slider() {
     const response = await getAllLink()
     setAllLinks(response.filter(item => item.type === 'application'))
   }
-console.log(allLinks)
+  console.log(allLinks)
   const fetchSliderImages = async () => {
     const data = await getAllGallery();
-    const sliderGallery = data.filter(item => item.galleryType === "Slider").sort((a, b) => b.id - a.id).slice(0, 2);
+    const sliderGallery = data.filter(item => item.galleryType === "Slider").sort((a, b) => b.id - a.id);
     const latestThreeSlider = sliderGallery.map(item => ({
       image: item.thumbnailImage,
       name: item.galleryName,
@@ -47,24 +47,24 @@ console.log(allLinks)
     <div className="grid grid-cols-10 mt-1 grid-rows-4 gap-2  px-2  h-[400px]">
       {/* application */}
       <div className="col-span-2 row-span-4 ">
-        <fieldset className="flex flex-col border-2 border-[#0368B0] h-full justify-between text-xl max-w-md rounded-lg px-4 min-h-[100%]">
+        <fieldset className="flex flex-col border-2 border-[#0368B0] h-full justify-between text-xl  rounded-lg min-h-[100%]">
           <div className="flex flex-col gap-1 text-sm">
-            <h1 className="px-1 text-lg font-semibold mt-3 text-center border-b-2 border-[#0368b0]">  Software Application under Implementation</h1>
-            <ul style={{ listStyle: 'disc', paddingLeft: '20px' }}>
+            <h1 className="bg-[#0368b0]  text-lg font-semibold text-white py-2  text-center border-b-2 border-[#]"> Software Application under Implementation</h1>
+            <div className="flex flex-col space-y-4 px-4">
               {
                 allLinks.length >= 1 ? (
                   allLinks.map((item, index) => (
-                    <li key={index}>
+                    <div className='bg-[#F36710] mt-6 p-3 text-md' key={index}>
                       <a
                         href={item.url}
                         download
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm transition-colors duration-300 ease-in-out hover:text-red-600"
+                        className="text-white text-lg font-bold  transition-colors duration-300 ease-in-out "
                       >
                         {item.name}
                       </a>
-                    </li>
+                    </div>
 
                   ))
                 )
@@ -73,14 +73,13 @@ console.log(allLinks)
                     <h1 className='text-center text-sm'> No any items !!</h1>
                   )
               }
-            </ul>
-
+            </div>
           </div>
         </fieldset>
       </div>
       {/* image */}
       <div className="col-span-6 row-span-4 col-start-3 row-start-1">
-        <Carousel className="relative ">
+        <Carousel autoplay={true} interval={1000} className="relative ">
           {newSlider.length > 0 ? newSlider.map((item, index) => (
             <Box height='100%' key={index} >
               <img
@@ -140,7 +139,7 @@ console.log(allLinks)
           </div>
           <Link style={{ width: '100%', display: 'flex', textDecoration: 'none', justifyContent: 'center', marginBottom: '5px' }} to='/team'>
             <Button sx={{ textTransform: 'none', }} size='small' className="flex  items-center gap-1">
-              View team
+              View College Management Team
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

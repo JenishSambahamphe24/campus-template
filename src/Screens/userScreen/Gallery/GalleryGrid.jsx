@@ -83,8 +83,8 @@ function GalleryGrid() {
           <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">{galleryData.galleryName}</h2>
           <p className="w-full text-center text-md text-gray-600 font-normal leading-2">{galleryData.galleryDescription}</p>
         </div>
-        <Grid  container  flex>
-          <Grid item md={9} >
+        <Grid  container gap='20px' justifyContent='center'>
+          <Grid item md={8} >
             <div className="box  w-full gallery">
               <div className="swiper main-slide-carousel swiper-container relative">
                 <div className="swiper-wrapper">

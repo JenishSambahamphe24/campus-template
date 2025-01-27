@@ -2,10 +2,10 @@ import { Grid, } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CiYoutube } from "react-icons/ci";
-import { useAuth } from '../context/AuthContextProvider';
 import { IoMdMail } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
+import {Divider} from '@mui/material';
 import { getAllLink } from '../Screens/cmsScreen/cms-components/cms-links/linkApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
@@ -39,12 +39,11 @@ function Footer() {
 
     return (
         <>
-            <footer className='bg-[#0368b0] px-[2rem] py-8'>
-                <div className="mx-auto max-w-screen-xl space-y-4  ">
+            <footer className='bg-[#0368b0] px-[2rem]  py-8'>
+                <div className="mx-auto w-full">
                     <Grid container >
-                        <Grid item md={2.9} >
-                            <p className="font-medium text-2xl text-white mb-2">Information Oficer</p>
-
+                        <Grid  item md={2.7} >
+                            <p className="font-medium text-2xl text-white mb-2 border-b-1">Information Oficer</p>
                             {officeInfo ? (
                                 <>
                                     <img
@@ -67,8 +66,8 @@ function Footer() {
 
 
                         </Grid>
-
-                        <Grid item md={2.9}>
+                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
+                        <Grid  item md={2.7}>
                             <p className="font-medium text-2xl text-white mb-2"> Similar Links</p>
                             <ul className="space-y-4 text-sm ">
                                 {
@@ -81,10 +80,11 @@ function Footer() {
                                 }
                             </ul>
                         </Grid>
-                        <Grid item md={2.9}>
+                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
+                        <Grid   item md={2.7}>
                             <p className="font-medium text-white text-2xl mb-2" >Contact Us</p>
-                            <div className='flex flex-col space-y-4'>
-                                <div className='flex text-white'>
+                            <div className='flex flex-col  space-y-4'>
+                                <div className='flex  text-white'>
                                     <IoMdMail className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{email}</span>
                                 </div>
                                 <div className='flex text-white'>
@@ -176,7 +176,8 @@ function Footer() {
 
                             </div>
                         </Grid>
-                        <Grid item lg={2.9}  >
+                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
+                        <Grid item md={2.7}  >
                             <p className="font-medium text-white text-2xl mb-2" >Find Us</p>
                             <Grid className="w-full h-[180px] bg-gray-300 rounded-lg overflow-hidden sm:mr-10  flex items-end justify-start relative">
                                 <iframe
@@ -192,8 +193,8 @@ function Footer() {
                     </Grid>
                 </div>
             </footer>
-            <Grid item lg={12} className='bg-gray-700 px-20 py-2'>
-                <p className="text-xs text-white"> Developed and managed by &copy;debugsoft pvt. ltd.</p>
+            <Grid item lg={12} className='bg-gray-700 px-[2rem] py-2'>
+                <p className="text-sm text-white"> &copy;debugsoft</p>
             </Grid>
         </>
     )

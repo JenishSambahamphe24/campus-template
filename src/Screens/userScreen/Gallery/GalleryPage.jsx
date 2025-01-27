@@ -89,8 +89,8 @@ function GalleryPage() {
                                                                     alt="Azores"
                                                                 />
                                                             </div>
-                                                            <div className="absolute backdrop-blur-sm rounded-b-xl  backdrop-brightness-150 w-[100%] bg-white-300  bottom-0 z-20 m-0 d ps-4 transition duration-300 ease-in-out ">
-                                                                <h1 className="font-serif  text-lg  font-bold text-[#0368b0] line-clamp-1">{item.galleryName}</h1>
+                                                            <div className="absolute  rounded-b-xl w-[100%] bg-[#F36710]  p-2  bottom-0 z-20 text-center text-white">
+                                                                <h1  className="font-serif text-md font-bold text-center tracking-tighter line-clamp-1 text-white">{item.galleryName}</h1>
                                                             </div>
                                                         </Link>
                                                     </Grid>

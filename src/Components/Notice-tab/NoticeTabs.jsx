@@ -57,7 +57,7 @@ function NoticeTabs() {
     return (
         <Grid container sm={12} mx='auto' className='px-2 mt-12 mb-4 justify-between' >
             <Grid sm={3.8} className='relative border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center'>Latest Notices</h1>
+                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
                     <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                         {paginatedItems.length > 0 ? (
@@ -66,12 +66,15 @@ function NoticeTabs() {
                                     <div>
                                         <p className="flex justify-between text-sm">
                                             {item.title}
-                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" >
-                                                <FaRegFilePdf fontSize="17px" style={{ marginLeft: '5px', marginTop: '2px', color: '#0368b0' }} />
+                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" className='flex px-2 py-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer" >
+                                                <span className='text-xs mt-[1px] text-white'>
+                                                    download
+                                                </span>
+                                                <FaRegFilePdf fontSize="17px" style={{ marginLeft: '5px', color: '#0368b0' }} />
                                             </a>
                                         </p>
                                         <p className="flex text-xs italic">
-                                            <SlCalender fontSize="12px" style={{ color: '#0368b0', marginTop: '2px', marginRight: '3px' }} />
+                                            <SlCalender fontSize="12px" style={{ color: '#0368b0', marginRight: '3px' }} />
                                             20/09/1990
                                         </p>
                                     </div>
@@ -80,6 +83,7 @@ function NoticeTabs() {
                         ) : (
                             <h1 className="text-center text-sm">No any items !!</h1>
                         )}
+
                     </ul>
                     <div className="absolute bottom-2 right-1 mt-3">
                         <PaginationForReports
@@ -92,7 +96,7 @@ function NoticeTabs() {
                 </div>
             </Grid>
             <Grid position='relative' sm={4} className='border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center'>Offered Programs</h1>
+                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
                 <Grid container padding='15px' gap='10px' rowGap='20px'>
                     {
                         allPrograms.map((item, index) => (
@@ -140,7 +144,7 @@ function NoticeTabs() {
                 </Grid>
             </Grid>
             <Grid position='relative' sm={3.8} className='border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center'>Latest News & Events</h1>
+                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
                         news.map((item, index) => (

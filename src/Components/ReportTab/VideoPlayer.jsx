@@ -37,17 +37,16 @@ function VideoPlayer() {
                     {
                         images.sort((a, b) => b.id - a.id).slice(0, 3).map((item, index) => (
                             <Grid key={index} item sm={3}  >
-
                                 <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-[180px] w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
-                                    <Grid className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
+                                    <Grid className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-100 transition duration-300 ease-in-out  dark:border-gray-700 ">
                                         <img
                                             src={item.thumbnailImage ? `${IMAGE_URL}${item.thumbnailImage}` : defaultImage}
-                                            className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
+                                            className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center  transition duration-300 group-hover:scale-110"
                                             alt="Azores"
                                         />
                                     </Grid>
-                                    <div className="absolute bottom-[-10px] z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
-                                        <h1 className="font-serif text-md font-bold text-zinc-950  line-clamp-1 ">{item.galleryName}</h1>
+                                    <div className="absolute w-full bottom-[-10px] z-10 bg-[#F36710] rounded-b-lg  p-1">
+                                        <h1 className="font-serif text-md font-bold text-center tracking-tighter line-clamp-1 text-white">{item.galleryName}</h1>
                                     </div>
                                 </Link>
                             </Grid>

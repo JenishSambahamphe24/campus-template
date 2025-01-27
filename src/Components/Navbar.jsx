@@ -83,7 +83,7 @@ function Navbar() {
                         <div className="ml-auto">
                             <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
                                 <PersonIcon sx={{ marginTop: '-3px', fontSize: '18px', marginRight: '5px' }} />
-                                Admin login
+                                 Login
                             </Link>
                         </div>
                     </div>

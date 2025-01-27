@@ -23,7 +23,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item => item.categoryName === 'Notices' || item.categoryName === 'Report');
+            const filteredData = data.filter(item => item.categoryName === 'Notices' || item.categoryName === 'Report' || item.categoryName === 'Publication');
             console.log(filteredData)
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             setSubCategories(uniqueSubCategories);
@@ -40,7 +40,7 @@ function ReportTabs() {
     }, []);
 
     const reportColumns = [
-        { field: 'sNo', headerName: 'S.No.', flex: 1 },
+        { field: 'sNo', headerName: 'S.No.', flex: .4 },
         { field: 'fileName', headerName: 'File Name', flex: 4 },
         { field: 'publishedDate', headerName: 'Published Date', flex: 2.5 },
         {
