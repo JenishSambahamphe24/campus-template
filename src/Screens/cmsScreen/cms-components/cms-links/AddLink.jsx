@@ -82,9 +82,9 @@ function AddLink() {
                                             onChange={handleChange}
                                             label='Link Name'
                                         >
-                                            <MenuItem value='socials'> FaceBook</MenuItem>
-                                            <MenuItem value='application'>Twitter (X)</MenuItem>
-                                            <MenuItem value='otherLink'>Youtube</MenuItem>
+                                            <MenuItem value='facebook'> FaceBook</MenuItem>
+                                            <MenuItem value='twitter'>Twitter (X)</MenuItem>
+                                            <MenuItem value='youtube'>Youtube</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </>

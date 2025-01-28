@@ -17,16 +17,22 @@ export const updateLinkById = async (id, data) => {
     const headers = {
         'Authorization': `Bearer ${token}`
       };
+  
     const response = await axios.patch(`${BASE_URL}/application/${id}`, data, {headers});
     return response.data;
 };
 
 export const addLink = async (data) => {
-    const headers = {
-        'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.post(`${BASE_URL}/application`, data, {headers});
-    return response.data;
+    try {
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        };
+        const response = await axios.post(`${BASE_URL}/application`, data, { headers });
+        return response.data;
+    } catch (error) {
+        console.error("Error in addLink:", error.response?.data || error.message);
+        throw error;
+    }
 };
 
 export const deleteLink = async (id) => {
