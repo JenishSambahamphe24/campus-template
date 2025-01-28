@@ -5,7 +5,7 @@ import { CiYoutube } from "react-icons/ci";
 import { IoMdMail } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
-import {Divider} from '@mui/material';
+import { Divider } from '@mui/material';
 import { getAllLink } from '../Screens/cmsScreen/cms-components/cms-links/linkApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
@@ -16,6 +16,9 @@ const phone = import.meta.env.VITE_PHONE
 function Footer() {
     const [officeInfo, setOfficerInfo] = useState({})
     const [links, setLinks] = useState([])
+    const [fbLink, setFbLink] = useState({})
+    const [xLink, setXLink] = useState({})
+    const [ytLink, setYTLink] = useState({})
 
     const [isLogged, setIsLoggedIn] = useState(false)
 
@@ -27,7 +30,12 @@ function Footer() {
     const fetchLinks = async () => {
         const response = await getAllLink()
         setLinks(response.filter(item => item.type === 'otherLink'))
+        setFbLink(response.find(item => item.name === 'facebook'))
+        setXLink(response.find(item => item.name === 'twitter'))
+        setYTLink(response.find(item => item.name === 'youtube'))
     }
+
+    console.log(ytLink)
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
@@ -42,7 +50,7 @@ function Footer() {
             <footer className='bg-[#0368b0] px-[2rem]  py-8'>
                 <div className="mx-auto w-full">
                     <Grid container >
-                        <Grid  item md={2.7} >
+                        <Grid item md={2.7} >
                             <p className="font-medium text-2xl text-white mb-2 border-b-1">Information Oficer</p>
                             {officeInfo ? (
                                 <>
@@ -61,13 +69,11 @@ function Footer() {
                                 </>
 
                             ) : (
-                                <p className="text-white">Loading...</p>
+                                <p className="text-white">No data uploaded</p>
                             )}
-
-
                         </Grid>
                         <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
-                        <Grid  item md={2.7}>
+                        <Grid item md={2.7}>
                             <p className="font-medium text-2xl text-white mb-2"> Similar Links</p>
                             <ul className="space-y-4 text-sm ">
                                 {
@@ -81,7 +87,7 @@ function Footer() {
                             </ul>
                         </Grid>
                         <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
-                        <Grid   item md={2.7}>
+                        <Grid item md={2.7}>
                             <p className="font-medium text-white text-2xl mb-2" >Contact Us</p>
                             <div className='flex flex-col  space-y-4'>
                                 <div className='flex  text-white'>
@@ -96,16 +102,17 @@ function Footer() {
                                             <a
                                                 className="text-muted inline-flex items-center rounded-lg  text-white hover:text-black p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200  "
                                                 aria-label="Youtube"
-                                                href="#"
+                                                href={ytLink?.url}
                                             >
-                                                <CiYoutube height='24' width='24' viewBox="0 0 24 24" className="h-5 w-5" />
+                                                <CiYoutube height='24' width='24' viewBox="0 0 24 24" className="h-5 w-5 hover:text-red-900" />
                                             </a>
                                         </li>
                                         <li>
                                             <a
+                                                target='_blank'
                                                 className="text-muted inline-flex items-center  text-white hover:text-black rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200  "
                                                 aria-label="Facebook"
-                                                href="#"
+                                                href={fbLink.url}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +124,7 @@ function Footer() {
                                                     strokeWidth="2"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
-                                                    className="h-5 w-5"
+                                                    className="h-5 w-5 hover:text-blue-800"
                                                 >
                                                     <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
                                                 </svg>
@@ -127,7 +134,7 @@ function Footer() {
                                             <a
                                                 className="text-muted inline-flex items-center rounded-lg p-2.5 text-sm text-white hover:text-black hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200  "
                                                 aria-label="Twitter"
-                                                href="#"
+                                                href={xLink?.url}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -145,32 +152,7 @@ function Footer() {
                                                 </svg>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a
-                                                className="text-muted inline-flex items-center rounded-lg  text-white hover:text-black p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200  "
-                                                aria-label="Instagram"
-                                                href="#"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="h-5 w-5"
-                                                >
-                                                    <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
-                                                    <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                    <path d="M16.5 7.5l0 .01" />
-                                                </svg>
-                                            </a>
-                                        </li>
-
-
+                                    
                                     </ul>
                                 </div>
 
@@ -194,7 +176,7 @@ function Footer() {
                 </div>
             </footer>
             <Grid item lg={12} className='bg-gray-700 px-[2rem] py-2'>
-                <p className="text-sm text-white"> &copy;debugsoft</p>
+                <p className="text-sm text-white"> Developed and managed by &copy;debugsoft</p>
             </Grid>
         </>
     )
