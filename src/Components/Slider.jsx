@@ -25,7 +25,6 @@ function Slider() {
     const response = await getAllLink()
     setAllLinks(response.filter(item => item.type === 'application'))
   }
-  console.log(allLinks)
   const fetchSliderImages = async () => {
     const data = await getAllGallery();
     const sliderGallery = data.filter(item => item.galleryType === "Slider").sort((a, b) => b.id - a.id);
@@ -106,10 +105,10 @@ function Slider() {
               <img
                 className='w-[140px] h-[100px] object-cover'
                 alt=""
-                src={chairmanInfo.ppImage ? `${IMAGE_URL}${chairmanInfo.ppImage}` : defaultImage}
+                src={chairmanInfo?.ppImage ? `${IMAGE_URL}${chairmanInfo?.ppImage}` : defaultImage}
                 onError={(e) => { e.target.src = defaultImage; }}
               />
-              <p className='text-sm text-center tracking-tighter'> {`${chairmanInfo.firstName} ${chairmanInfo.middleName} ${chairmanInfo.lastName}`}</p>
+              <p className='text-sm text-center tracking-tighter'> {`${chairmanInfo?.firstName} ${chairmanInfo?.middleName} ${chairmanInfo?.lastName}`}</p>
               <h1 className='text-sm font-semibold text-center'>Chairman</h1>
               <Link to='/message-from-chairman'>
                 <button
@@ -123,10 +122,10 @@ function Slider() {
               <img
                 className='w-[140px] h-[100px] object-cover'
                 alt=""
-                src={chiefInfo.ppImage ? `${IMAGE_URL}${chiefInfo.ppImage}` : defaultImage}
+                src={chiefInfo?.ppImage ? `${IMAGE_URL}${chiefInfo?.ppImage}` : defaultImage}
                 onError={(e) => { e.target.src = defaultImage; }}
               />
-              <p className='text-sm text-center tracking-tighter'> {`${chiefInfo.firstName} ${chiefInfo.middleName} ${chiefInfo.lastName}`}</p>
+              <p className='text-sm text-center tracking-tighter'> {`${chiefInfo?.firstName} ${chiefInfo?.middleName} ${chiefInfo?.lastName}`}</p>
               <h1 className='text-sm font-semibold text-center'>Campus Chief</h1>
               <Link to='/message-from-campus_chief'>
                 <button
@@ -139,7 +138,7 @@ function Slider() {
           </div>
           <Link style={{ width: '100%', display: 'flex', textDecoration: 'none', justifyContent: 'center', marginBottom: '5px' }} to='/team'>
             <Button sx={{ textTransform: 'none', }} size='small' className="flex  items-center gap-1">
-              View College Management Team
+              College Management Team
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

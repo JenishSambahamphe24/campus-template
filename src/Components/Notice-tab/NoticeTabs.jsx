@@ -55,7 +55,7 @@ function NoticeTabs() {
         setCurrentPage(page);
     };
     return (
-        <Grid container sm={12} mx='auto' className='px-2 mt-12 mb-4 justify-between' >
+        <Grid container sm={12} mx='auto' className='mt-12 mb-4 justify-between' >
             <Grid sm={3.8} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
@@ -63,18 +63,20 @@ function NoticeTabs() {
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
-                                    <div>
-                                        <p className="flex justify-between text-sm">
-                                            {item.title}
-                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" className='flex px-2 py-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer" >
+                                    <div className='line-clamp-1'>
+                                        <span className="flex justify-between text-sm  overflow-hidden">
+                                            <p className='line-clamp-2'>
+                                                {item.title}
+                                            </p>
+                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer">
                                                 <span className='text-xs mt-[1px] text-white'>
                                                     download
                                                 </span>
-                                                <FaRegFilePdf fontSize="17px" style={{ marginLeft: '5px', color: '#0368b0' }} />
+                                                <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
                                             </a>
-                                        </p>
-                                        <p className="flex text-xs italic">
-                                            <SlCalender fontSize="12px" style={{ color: '#0368b0', marginRight: '3px' }} />
+                                        </span>
+                                        <p className="flex text-xs mt-[-2px] italic">
+                                            <SlCalender fontSize="12px" style={{ color: '#0368b0', marginRight: '3px', marginTop: '2px' }} />
                                             20/09/1990
                                         </p>
                                     </div>
@@ -95,7 +97,7 @@ function NoticeTabs() {
                     </div>
                 </div>
             </Grid>
-            <Grid position='relative' sm={4} className='border-2 border-[#0368b0] h-[27rem]'>
+            <Grid position='relative' sm={4.3} className='border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
                 <Grid container padding='15px' gap='10px' rowGap='20px'>
                     {
@@ -104,16 +106,16 @@ function NoticeTabs() {
                                 item
                                 key={index}
                                 sm={3.8}
-                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-gray-200 h-32 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
+                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0] h-32 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
                             >
                                 <Link to={`/program/${item.id}`}>
-                                    <span className="absolute invisible group-hover:visible top-4 z-0 h-10 w-10 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[8]"></span>
+                                    <span className="absolute invisible group-hover:visible top-4 z-0 h-10 w-10 rounded-full bg-[#f36710]  transition-all duration-300 group-hover:scale-[8]"></span>
                                     <div className="relative z-10 flex flex-col items-center">
-                                        <span className="grid h-12 w-12 place-items-center rounded-full bg-[#0368b0] transition-all duration-300 group-hover:bg-sky-400">
+                                        <span className="grid h-12 w-12 place-items-center rounded-full bg-[#f36710]  transition-all duration-300 group-hover:bg-[#f36710]">
                                             <FaBookReader className="h-6 w-6 text-white transition-all" />
                                         </span>
                                         <div className="pt-1 text-base font-semibold leading-6 text-center">
-                                            <p className="text-[#0368b0] transition-all duration-300 group-hover:text-white text-sm">
+                                            <p className="text-white transition-all duration-300 group-hover:text-white text-md">
                                                 {item.shortName}
                                             </p>
                                         </div>
@@ -143,7 +145,7 @@ function NoticeTabs() {
                     </Link>
                 </Grid>
             </Grid>
-            <Grid position='relative' sm={3.8} className='border-2 border-[#0368b0] h-[27rem]'>
+            <Grid position='relative' sm={3.5} className='border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
@@ -195,5 +197,4 @@ function NoticeTabs() {
         </Grid>
     );
 }
-
 export default NoticeTabs;
