@@ -6,15 +6,36 @@ import { Link } from 'react-router-dom';
 function NoticeMarque() {
   const [notices, setNotices] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getAllpublication();
+  //     setNotices(data)
+  //   };
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllpublication();
-      setNotices(data)
+      const latestReports = data
+        .filter(item => item.categoryName === 'Report' || item.categoryName === 'Notice'  && item.isScrollable === true)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 2).map(item => ({
+          ...item,
+          route: "/report"
+        }));
+        const latestNews = data
+        .filter(item => item.categoryName === 'News and Events')
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 2).map(item => ({
+          ...item,
+          route: "/news"
+        }));
+    
+      setNotices([...latestReports, ...latestNews]);
     };
     fetchData();
   }, []);
 
-  console.log(notices)
 
 
   return (

@@ -57,7 +57,6 @@ function Slider() {
                       <a
                         href={item.url}
                         download
-                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-white text-lg font-bold  transition-colors duration-300 ease-in-out "
                       >
