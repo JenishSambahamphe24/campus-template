@@ -82,7 +82,7 @@ function ProgramListUser() {
               activeTab === 'Bachelor' ? (
                 <TabPanel style={{ marginTop: '20px', padding: '0'}} value='Bachelor'>
                
-                    <Grid container gap='15px' >
+                    <Grid justifyContent='space-between' container gap='10px' >
                       {
                         bachelorPrograms.map((item, index) => (
                           <Grid
@@ -112,7 +112,7 @@ function ProgramListUser() {
               ) :
                 (
                   <TabPanel value='Master' style={{ padding: '0px', marginTop: '20px' }}>
-                    <Grid container gap='15px' >
+                    <Grid container gap='10px' >
                       {masterPrograms.map((item, index) => {
                         return (
                           <Grid
