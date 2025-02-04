@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('authToken') 
+const token = localStorage.getItem('authToken')
 
 //  Faculties
 export const getAllFaculties = async () => {
@@ -17,16 +17,16 @@ export const getFacultyById = async (id) => {
 export const updateFacultyById = async (id, data) => {
     const headers = {
         'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.patch(`${BASE_URL}/faculty/${id}`, data, {headers});
+    };
+    const response = await axios.patch(`${BASE_URL}/faculty/${id}`, data, { headers });
     return response.data;
 };
 
 export const addFaculty = async (data) => {
     const headers = {
         'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.post(`${BASE_URL}/faculty`, data, {headers});
+    };
+    const response = await axios.post(`${BASE_URL}/faculty`, data, { headers });
     return response.data;
 };
 
@@ -43,26 +43,33 @@ export const getProgramById = async (id) => {
 };
 
 export const updateProgramById = async (id, data) => {
-    const headers = {
-        'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.patch(`${BASE_URL}/program/${id}`, data, {headers});
-    return response.data;
+    try {
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+        const response = await axios.patch(`${BASE_URL}/program/${id}`, data, { headers });
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+
+
 };
 
 export const addProgram = async (data) => {
     const headers = {
         'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.post(`${BASE_URL}/program`, data, {headers});
+    };
+    const response = await axios.post(`${BASE_URL}/program`, data, { headers });
     return response.data;
 };
 
 export const deleteProgram = async (id) => {
     const headers = {
         'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.delete(`${BASE_URL}/program/${id}`, {headers});
+    };
+    const response = await axios.delete(`${BASE_URL}/program/${id}`, { headers });
     return response.data;
 };
 
