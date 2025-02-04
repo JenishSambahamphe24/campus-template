@@ -85,18 +85,18 @@ function TeamList() {
     }, [])
 
     const columns = [
-        { field: 'sNo', headerName: 'SNo', flex: .7 },
+        { field: 'sNo', headerName: 'SNo', flex: .6 },
         {
             field: 'fullName',
             headerName: 'Full Name',
             flex: 2.5,
         },
        
-        {
-            field: 'category',
-            headerName: 'Type',
-            flex: 1.4,
-        },
+        // {
+        //     field: 'category',
+        //     headerName: 'Type',
+        //     flex: 1.4,
+        // },
         {
             field: 'subCategory',
             headerName: 'Sub-category',
@@ -110,14 +110,14 @@ function TeamList() {
         {
             field: 'contactNumber',
             headerName: 'Contact Number',
-            flex: 1.7,
+            flex: 1.3,
         },
 
 
         {
             field: 'status',
             headerName: 'Status',
-            flex: 1.7,
+            flex: 1,
         },
         {
             field: 'Action',

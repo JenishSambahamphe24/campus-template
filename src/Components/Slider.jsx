@@ -17,8 +17,8 @@ function Slider() {
 
   const fetchTeams = async () => {
     const response = await getAllTeams()
-    setChairmanInfo(response.find(item => item.subCategory === 'chairman'))
-    setChiefInfo(response.find(item => item.subCategory === 'campusChief'))
+    setChairmanInfo(response.find(item => item.subCategory === 'Chairman'))
+    setChiefInfo(response.find(item => item.subCategory === 'Campus Chief'))
   }
 
   const fetchLinks = async () => {
@@ -102,7 +102,7 @@ function Slider() {
             {/* chairman */}
             <div className='mx-auto '>
               <img
-                className='w-[140px] h-[100px] object-cover'
+                className='w-[140px] h-[100px] mx-auto object-contain'
                 alt=""
                 src={chairmanInfo?.ppImage ? `${IMAGE_URL}${chairmanInfo?.ppImage}` : defaultImage}
                 onError={(e) => { e.target.src = defaultImage; }}
@@ -118,12 +118,14 @@ function Slider() {
             </div>
             {/* Campus Chief */}
             <div className='mx-auto '>
+              <div className='w-[140px] h-[100px]'>
               <img
-                className='w-[140px] h-[100px] object-cover'
+                className='w-full bg-red-500 h-full object-fit'
                 alt=""
                 src={chiefInfo?.ppImage ? `${IMAGE_URL}${chiefInfo?.ppImage}` : defaultImage}
                 onError={(e) => { e.target.src = defaultImage; }}
               />
+              </div>
               <p className='text-sm text-center tracking-tighter'> {`${chiefInfo?.firstName} ${chiefInfo?.middleName} ${chiefInfo?.lastName}`}</p>
               <h1 className='text-sm font-semibold text-center'>Campus Chief</h1>
               <Link to='/message-from-campus_chief'>

@@ -194,11 +194,11 @@ function AddTeam() {
                             label='Sub-category'
                         >
 
-                            <MenuItem disabled={formData.category === 'staff'} value='chairman'>Chairman</MenuItem>
-                            <MenuItem disabled={formData.category === 'staff'} value='member'>Member</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='campusChief'> Campus Chief</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='informationOfficer'>Information Officer</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='other'>Other</MenuItem>
+                            <MenuItem disabled={formData.category === 'staff'} value='Chairman'>Chairman</MenuItem>
+                            <MenuItem disabled={formData.category === 'staff'} value='Member'>Member</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='Campus Chief'> Campus Chief</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='Information Officer'>Information Officer</MenuItem>
+                            <MenuItem disabled={formData.category === 'committeMember'} value='Other'>Other</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

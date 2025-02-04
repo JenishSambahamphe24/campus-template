@@ -30,7 +30,7 @@ function RichEditor({ placeholder, name, value, onChange, height }) {
             ref={editor}
             value={value}
             tabIndex={1}
-            onBlur={newContent => onChange({ target: { name, value: newContent } })}
+            // onBlur={newContent => onChange({ target: { name, value: newContent } })}
             // onBlur={(newContent) => onChange(newContent)}
             onChange={newContent => { }}
             config={config}

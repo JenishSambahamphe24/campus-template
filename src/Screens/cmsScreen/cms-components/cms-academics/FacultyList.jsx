@@ -15,6 +15,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { getPublicationCategory } from '../cms-publication/publicationApi'
 import EditCategoryDialog from '../cms-publication/EditCategoryDialog'
 import { getAllFaculties } from './academicsApi'
+import EditFaculty from './EditFaculty'
 
 function FacultyList() {
     const [selectedLevel, setSelectedLevel] = useState("All");
@@ -97,7 +98,7 @@ function FacultyList() {
     const handleEditDialogClose = async () => {
         setEditDialogOpen(false);
         try {
-            const updateCategory = await getPublicationCategory();
+            const updateCategory = await getAllFaculties();
             setCategory(updateCategory);
         } catch (error) {
             console.error('Error fetching teams:', error);
@@ -181,7 +182,7 @@ function FacultyList() {
                     <Button variant='contained' size='small' sx={{ textTransform: 'none', flex: '12rem' }}>Add a new Faculty</Button>
                 </Link>
                 <Box>
-                    <EditCategoryDialog categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
+                    <EditFaculty categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
                 </Box>
             </Stack>
         </Grid>

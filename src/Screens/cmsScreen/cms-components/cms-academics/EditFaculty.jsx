@@ -3,8 +3,9 @@ import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button,
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
-import { getPublicationCategoryById, updatePublicationCategoryById } from './publicationApi';
+// import { getPublicationCategoryById, updatePublicationCategoryById } from './publicationApi';
 import { extractDate } from '../../../../Components/utilityFunctions';
+import { getFacultyById, updateFacultyById } from './academicsApi';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -17,17 +18,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-function EditCategoryDialog({handleClose, open, categoryId}) {
+function EditFaculty({handleClose, open, categoryId}) {
 
     const [formData, setFormData] = useState({
-        categoryName: '',
-        subCategoryName: ''
+        level: '',
+        facultyName: ''
     })
 console.log(formData)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getPublicationCategoryById(categoryId)
+                const data = await getFacultyById(categoryId)
                 setFormData(data)
             } catch (error) {
                 console.error('Error fetching team data:', error);
@@ -47,10 +48,11 @@ console.log(formData)
         e.preventDefault();
         const formattedData = {
             ...formData,
+            createdAt: extractDate(formData.createdAt),
             updatedAt: extractDate(formData.updatedAt)
         }
         try {
-            await updatePublicationCategoryById(categoryId, formattedData);
+            await updateFacultyById(categoryId, formattedData);
             toast.success('Category  updated successfully');
             handleClose();
         } catch (error) {
@@ -90,9 +92,9 @@ console.log(formData)
                                     fullWidth
                                     size='small'
                                     variant='standard'
-                                    label='CategoryName'
-                                    name='categoryName'
-                                    value={formData.categoryName}
+                                    label='Level'
+                                    name='level'
+                                    value={formData.level}
                                     onChange={handleChange}
 
                                 />
@@ -100,9 +102,9 @@ console.log(formData)
                             <Grid item xs={6}>
                                 <TextField
                                     variant='standard'
-                                    name="subCategoryName"
-                                    label='sub category'
-                                    value={formData.subCategoryName}
+                                    name="facultyName"
+                                    label='Faculty Name'
+                                    value={formData.facultyName}
                                     onChange={handleChange}
                                 />
                             </Grid>
@@ -120,4 +122,4 @@ console.log(formData)
     )
 }
 
-export default EditCategoryDialog
+export default EditFaculty

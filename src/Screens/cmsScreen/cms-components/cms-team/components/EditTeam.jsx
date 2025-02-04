@@ -143,6 +143,8 @@ function EditTeam() {
         }
     };
 
+    console.log(formData)
+
     return (
         <Grid container mx='auto' md={10} className='px-20 pb-10' >
             <h1 className='text-center pb-3 text-2xl  mx-auto'>  Edit Member </h1>
@@ -184,7 +186,7 @@ function EditTeam() {
                         </Grid>
                     </Grid>
 
-                    <Grid container mt='2px'  width="100%" spacing={2}>
+                    <Grid container mt='2px' width="100%" spacing={2}>
                         <Grid item xs={4}>
                             <TextField
                                 fullWidth
@@ -228,7 +230,6 @@ function EditTeam() {
                                     onChange={handleChange}
                                     label='Category'
                                 >
-                                    <MenuItem value='campusChief'> Campus Chief</MenuItem>
                                     <MenuItem value='committeMember'> Committee Member</MenuItem>
                                     <MenuItem value='staff'>Staff</MenuItem>
                                 </Select>
@@ -256,9 +257,9 @@ function EditTeam() {
                                     onChange={handleChange}
                                     label='Sub-category'
                                 >
-
                                     <MenuItem disabled={formData.category === 'staff'} value='chairman'>Chairman</MenuItem>
                                     <MenuItem disabled={formData.category === 'staff'} value='member'>Member</MenuItem>
+                                    <MenuItem value='campusChief'> Campus Chief</MenuItem>
                                     <MenuItem value='informationOfficer'>Information Officer</MenuItem>
                                     <MenuItem value='other'>Other</MenuItem>
 
