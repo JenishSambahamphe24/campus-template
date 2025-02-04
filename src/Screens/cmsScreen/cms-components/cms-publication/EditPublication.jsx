@@ -71,7 +71,6 @@ function EditPublication() {
         const fetchData = async () => {
             try {
                 const data = await getPublicationById(pubId)
-                console.log(data)
                 setFormData((prev) => ({
                     ...prev,
                     ...data,

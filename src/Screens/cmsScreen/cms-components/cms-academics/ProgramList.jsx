@@ -70,7 +70,7 @@ function ProgramList() {
                         fontSize='14px'
                         color='primary'
                         mt='7px'
-                        onClick={() => navigate(`/admin/editPublication/${params.row.id}`)}
+                        onClick={() => navigate(`/admin/editProgram/${params.row.id}`)}
                     >
                         Edit
                     </Typography>

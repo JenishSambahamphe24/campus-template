@@ -63,6 +63,7 @@ import LinkLists from './Screens/cmsScreen/cms-components/cms-links/LinkLists.js
 import AddLink from './Screens/cmsScreen/cms-components/cms-links/AddLink.jsx';
 import ChairmanMessage from './Components/AboutUs/ChairmanMessage.jsx';
 import CampusChiefMessage from './Components/AboutUs/CampusChiefMessage.jsx';
+import EditProgram from './Screens/cmsScreen/cms-components/cms-academics/EditProgram.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -124,6 +125,8 @@ const router = createBrowserRouter(
           <Route index={true} path='faculties' element={<FacultyList />} />
           <Route index={true} path='programs' element={<ProgramList />} />
           <Route index={true} path='addProgram' element={<AddProgram />} />
+        <Route index={true} path='editProgram/:id' element={< EditProgram/>} />
+
 
         </Route>
       </Route>

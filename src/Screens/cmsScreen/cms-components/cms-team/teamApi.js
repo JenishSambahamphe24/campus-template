@@ -15,27 +15,45 @@ export const getTeamById = async (id) => {
 };
 
 export const updateTeamById = async (id, data) => {
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
-  const response = await axios.patch(`${BASE_URL}/teams/${id}`, data, { headers });
-  return response.data;
+  try{
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    const response = await axios.patch(`${BASE_URL}/teams/${id}`, data, { headers });
+    return response.data;
+  } catch(error) {
+    console.error("Error while updating team:", error.response?.data || error.message);
+    throw error;
+  }
 };
 
 export const addTeam = async (data) => {
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
-  const response = await axios.post(`${BASE_URL}/teams`, data, { headers });
-  return response.data;
+  try {
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    const response = await axios.post(`${BASE_URL}/teams`, data, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error while adding team:", error.response?.data || error.message);
+    throw error;
+  }
+
 };
+
 export const deleteTeam = async (id) => {
-  const token = localStorage.getItem('authToken')
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
-  const response = await axios.delete(`${BASE_URL}/teams/${id}`, {headers});
-  return response.data;
+  try{
+    const token = localStorage.getItem('authToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    const response = await axios.delete(`${BASE_URL}/teams/${id}`, {headers});
+    return response.data;
+  }catch(error){
+    console.error("Error while deleting team:", error.response?.data || error.message);
+    throw error;
+  }
+  
 };
 
 export const getAllUsers = async () => {

@@ -109,10 +109,9 @@ function Footer() {
                                         </li>
                                         <li>
                                             <a
-                                                target='_blank'
-                                                className="text-muted inline-flex items-center  text-white hover:text-black rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200  "
+                                                className="text-muted inline-flex items-center  text-white hover:text-black rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200"
                                                 aria-label="Facebook"
-                                                href={fbLink.url}
+                                                href={fbLink?.url}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

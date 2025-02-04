@@ -1,25 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import RichEditor from '../cms-project/components/RichEditor';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import {
+    Typography,
+    InputLabel,
+    Select,
+    MenuItem,
+    Grid,
+    Button,
+    TextField,
+    FormControl,
+    FormLabel,
+    RadioGroup,
+    Radio,
+    FormControlLabel,
+    Paper,
+} from '@mui/material';
 import FileUpload from '../../../FileUpload';
-import { getAllFaculties, addProgram } from './academicsApi';
+import { toast } from 'react-toastify';
+import { useParams, useNavigate } from 'react-router-dom';
+import RichEditor from '../cms-project/components/RichEditor';
+import { extractDate } from '../../../../Components/utilityFunctions';
+import { getPublicationById, updatePublicationById, getPublicationCategory } from '../cms-publication/publicationApi';
+import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
+import { getFacultyById, getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
+const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
-function AddProgram() {
-    const navigate = useNavigate();
-    const [level, setLevel] = useState([])
+
+function EditProgram() {
+    const navigate = useNavigate()
+    const { id } = useParams()
+    const [category, setCategory] = useState([])
     const [facultyName, setFacultyName] = useState([]);
     const [formData, setFormData] = useState({
-        facultyId: '',
         programName: '',
+        programDetails: '',
+        facultyName: '',
+        status: false,
         shortName: '',
         runningFrom: '',
-        hasProgramBroucher: true,
-        programBroucher: '',
-        programDetails: '',
-        status: true
+        hasProgramBroucher: false,
+        programBrochureFile: null
     });
+    const [fetchedFile, setFetchedFile] = useState(null)
+    useEffect(() => {
+        const fetchCategory = async () => {
+            const faculty = await getAllFaculties();
+            const bindedFaculty = faculty.reduce((acc, item) => {
+                const { level, facultyName, id } = item;
+                let existingLevel = acc.find(entry => entry.level === level);
+
+                if (existingLevel) {
+                    existingLevel.faculties.push({ facultyName, id });
+                } else {
+                    acc.push({
+                        level,
+                        faculties: [{ facultyName, id }]
+                    });
+                }
+                return acc;
+            }, []);
+
+            setCategory(bindedFaculty);
+        };
+
+        fetchCategory();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getProgramById(id);
+                const formattedDate = data.runningFrom ?
+                    new Date(data.runningFrom).toISOString().split('T')[0] : '';
+    
+                // Find the matching category and set facultyName options
+                const selectedCategory = category.find(cat => cat.level === data.level);
+                if (selectedCategory) {
+                    setFacultyName(selectedCategory.faculties);
+                }
+                    
+                setFormData((prev) => ({
+                    ...prev,
+                    ...data,
+                    runningFrom: formattedDate,
+                    level: data.level, // Explicitly set level
+                    facultyId: data.facultyId, // Explicitly set facultyId
+                    programBrochureFile: null,
+                }));
+                setFetchedFile(data.programBrochureFile);
+            } catch (error) {
+                console.error('Error fetching program data:', error);
+            }
+        };
+        // Only fetch data if category is loaded
+        if (category.length > 0) {
+            fetchData();
+        }
+    }, [id, category]);
 
     const handleFileSelect = (file) => {
         setFormData(prev => ({
@@ -28,64 +104,47 @@ function AddProgram() {
         }));
     };
 
-    useEffect(() => {
-        const fetchLevel = async () => {
-            const levelData = await getAllFaculties();
-            console.log('Fetched Level Data:', levelData); // Debugging line
-            const bindedFacultyName = levelData.reduce((acc, item) => {
-                const { level, facultyName, id } = item;
-                const existingLevel = acc.find(levelObj => levelObj.level === level);
-                if (existingLevel) {
-                    existingLevel.facultyName.push({ facultyName, id });
-                } else {
-                    acc.push({
-                        level,
-                        facultyName: [{ facultyName, id }],
-                    });
-                }
-                return acc;
-            }, []);
-            setLevel(bindedFacultyName);
-        };
-        fetchLevel();
-    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const newValue = (value === 'true');
-
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'isPopUp' || name === 'isScrollable' || name === 'displayStatus' ? newValue : value
+            [name]: value
         }));
 
         if (name === 'level') {
-            const selectedLevel = level.find(cat => cat.level === value);
-            console.log('Selected Level:', selectedLevel);
-            setFacultyName(selectedLevel ? selectedLevel.facultyName : []);
-        } else if (name === 'facultyId') {
-            setFormData(prev => ({
-                ...prev,
-                facultyId: value
-            }));
+            const selectedCategory = category.find(cat => cat.level === value);
+            setFacultyName(selectedCategory ? selectedCategory.faculties : []);
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formDataToSend = new FormData();
-        Object.keys(formData).forEach((key) => {
-            formDataToSend.append(key, formData[key]);
-        });
+        const updatedData = new FormData();
+        if (formData.programBrochureFile) {
+            updatedData.append('programBrochureFile', formData.programBrochureFile)
+        } else if (fetchedFile) {
+            updatedData.append('programBrochureFile', fetchedFile)
+        }
+        updatedData.append('hasProgramBrochure', formData.hasProgramBrochure || '')
+        updatedData.append('facultyId', formData.facultyId || '')
+        updatedData.append('shortName', formData.shortName || '');
+        updatedData.append('runningFrom', formData.runningFrom || '');
+        updatedData.append('level', formData.level || '')
+        updatedData.append('programName', formData.programName || '');
+        updatedData.append('programDetails', formData.programDetails || '');
+        updatedData.append('facultyName', formData.facultyName || '');
+        updatedData.append('status', formData.status || false);
+        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
         try {
-            const newProgram = await addProgram(formDataToSend);
-            toast.success('Program added successfully');
+            await updateProgramById(id, updatedData);
+            toast.success('Program updated successfully');
             setTimeout(() => {
-                navigate('/admin/programs');
+                navigate('/admin/programs')
             }, 700)
         } catch (error) {
-            console.error('Error adding Program:', error);
-            toast.error('Error adding Program');
+            console.error('Error updating Program:', error);
+            toast.error('Failed to update Program');
         }
     };
 
@@ -93,7 +152,7 @@ function AddProgram() {
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
                 <Typography mb='20px' variant='h5' textAlign='center'>
-                    Add new Program
+                    Edit new Program
                 </Typography>
                 <Grid component={Paper} elevation={4} container width='90%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
 
@@ -105,11 +164,12 @@ function AddProgram() {
                                 size="small"
                                 label="Level"
                                 name="level"
+                                value={formData.level || ''} 
                                 required
                                 onChange={handleChange}
                             >
                                 {
-                                    level.map((item, index) => (
+                                    category.map((item, index) => (
                                         <MenuItem key={index} value={item.level}>{item.level}</MenuItem>
                                     ))
                                 }
@@ -131,6 +191,7 @@ function AddProgram() {
                                         },
                                     },
                                 }}
+                                value={formData.facultyId || ''}
                                 onChange={handleChange}
                             >
                                 {facultyName.length > 0 ? (
@@ -145,6 +206,7 @@ function AddProgram() {
                             </Select>
                         </FormControl>
                     </Grid>
+
                     <Grid item sm={12} md={8}>
                         <TextField
                             fullWidth
@@ -192,9 +254,9 @@ function AddProgram() {
                             <RadioGroup
                                 sx={{ marginTop: '-10px' }}
                                 row
-                                name="displayStatus"
+                                name="status"
                                 onChange={handleChange}
-                                value={formData.displayStatus}
+                                value={formData.status}
                             >
                                 <FormControlLabel value={true} control={<Radio size='small' />} label="Active" />
                                 <FormControlLabel value={false} control={<Radio size='small' />} label="Inactive" />
@@ -210,11 +272,11 @@ function AddProgram() {
                                 label='Do you want to upload Program Broucher?'
                                 name='hasProgramBroucher'
                                 onChange={handleChange}
+                                value={formData.hasProgramBroucher}
                                 required
                             >
                                 <MenuItem value={true}>Yes</MenuItem>
                                 <MenuItem value={false}>No</MenuItem>
-
                             </Select>
                         </FormControl>
                     </Grid>
@@ -243,14 +305,13 @@ function AddProgram() {
                             variant='contained'
                             type='submit'
                         >
-                            Add Content
+                            Edit Program
                         </Button>
                     </Grid>
                 </Grid>
             </form>
         </div>
-    );
+    )
 }
 
-export default AddProgram;
-
+export default EditProgram

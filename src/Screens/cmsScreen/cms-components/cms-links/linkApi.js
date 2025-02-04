@@ -14,12 +14,16 @@ export const getLinkById = async (id) => {
 };
 
 export const updateLinkById = async (id, data) => {
-    const headers = {
-        'Authorization': `Bearer ${token}`
-      };
-  
-    const response = await axios.patch(`${BASE_URL}/application/${id}`, data, {headers});
-    return response.data;
+    try{
+        const headers = {
+            'Authorization': `Bearer ${token}`
+          };
+        const response = await axios.patch(`${BASE_URL}/application/${id}`, data, {headers});
+        return response.data;
+    } catch (error) {
+        console.error("Error in addLink:", error.response?.data || error.message);
+        throw error;
+    }
 };
 
 export const addLink = async (data) => {
@@ -36,9 +40,14 @@ export const addLink = async (data) => {
 };
 
 export const deleteLink = async (id) => {
-    const headers = {
-        'Authorization': `Bearer ${token}`
-      };
-    const response = await axios.delete(`${BASE_URL}/application/${id}`, {headers});
-    return response.data;
+    try{
+        const headers = {
+            'Authorization': `Bearer ${token}`
+          };
+        const response = await axios.delete(`${BASE_URL}/application/${id}`, {headers});
+        return response.data;
+    } catch (error){
+        console.error("Error while deleting Link", error.response?.data || error.message);
+        throw error;
+    }
 };

@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import daisyui from 'daisyui';
 
 module.exports = {
   content: [
@@ -9,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        marquee: 'marquee 60s linear infinite',
-        paused: 'marquee 60s linear infinite paused',
+        marquee: 'marquee 35s linear infinite',
+        paused: 'marquee 35s linear infinite paused',
       },
       keyframes: {
         marquee: {
