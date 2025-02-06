@@ -101,7 +101,7 @@ function NoticeTabs() {
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
                 <Grid container padding='15px' gap='10px' rowGap='20px'>
                     {
-                        allPrograms.map((item, index) => (
+                        allPrograms.sort((a,b) => b.id-a.id).slice(0,6).map((item, index) => (
                             <Grid
                                 item
                                 key={index}
@@ -149,7 +149,7 @@ function NoticeTabs() {
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
-                        news.map((item, index) => (
+                        news.sort((a,b) => b.id-a.id).slice(0,4).map((item, index) => (
                             <Link to={`/publication/${item.id}`} key={index} className="flex border-2 items-center ">
                                 <div className="inline-block mr-3">
                                     <div className="w-16 h-16">

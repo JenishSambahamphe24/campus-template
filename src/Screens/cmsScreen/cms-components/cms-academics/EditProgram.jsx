@@ -10,18 +10,19 @@ import {
     FormControl,
     FormLabel,
     RadioGroup,
+    IconButton,
     Radio,
     FormControlLabel,
     Paper,
 } from '@mui/material';
-import FileUpload from '../../../FileUpload';
+import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import RichEditor from '../cms-project/components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
+
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
-import { getFacultyById, getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
-const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+import { getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
 
 
 function EditProgram() {
@@ -70,19 +71,17 @@ function EditProgram() {
                 const data = await getProgramById(id);
                 const formattedDate = data.runningFrom ?
                     new Date(data.runningFrom).toISOString().split('T')[0] : '';
-    
-                // Find the matching category and set facultyName options
                 const selectedCategory = category.find(cat => cat.level === data.level);
                 if (selectedCategory) {
                     setFacultyName(selectedCategory.faculties);
                 }
-                    
+
                 setFormData((prev) => ({
                     ...prev,
                     ...data,
                     runningFrom: formattedDate,
-                    level: data.level, // Explicitly set level
-                    facultyId: data.facultyId, // Explicitly set facultyId
+                    level: data.level,
+                    facultyId: data.facultyId,
                     programBrochureFile: null,
                 }));
                 setFetchedFile(data.programBrochureFile);
@@ -96,10 +95,20 @@ function EditProgram() {
         }
     }, [id, category]);
 
-    const handleFileSelect = (file) => {
-        setFormData(prev => ({
+
+    const handleFileChange = (uploadedFile, type) => {
+        setFormData((prev) => ({
             ...prev,
-            file: file
+            [type]: uploadedFile[0] || null,
+        }));
+        setFetchedFile(null);
+    };
+
+    const handleRemoveFetchedFile = () => {
+        setFetchedFile(null);
+        setFormData((prev) => ({
+            ...prev,
+            programBrochureFile: null,
         }));
     };
 
@@ -151,7 +160,7 @@ function EditProgram() {
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
                 <Typography mb='20px' variant='h5' textAlign='center'>
-                    Edit new Program
+                    Edit  Program
                 </Typography>
                 <Grid component={Paper} elevation={4} container width='90%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
 
@@ -163,7 +172,7 @@ function EditProgram() {
                                 size="small"
                                 label="Level"
                                 name="level"
-                                value={formData.level || ''} 
+                                value={formData.level || ''}
                                 required
                                 onChange={handleChange}
                             >
@@ -263,7 +272,7 @@ function EditProgram() {
                         </FormControl>
                     </Grid>
 
-                    <Grid item sm={12} md={6}>
+                    <Grid item sm={12} md={4}>
                         <FormControl size='small' fullWidth>
                             <InputLabel size='small'> Do you want to upload Program Broucher?</InputLabel>
                             <Select
@@ -280,14 +289,33 @@ function EditProgram() {
                         </FormControl>
                     </Grid>
 
-                    <Grid item sm={12} md={6}>
-                        <FileUpload
-                            required={formData.hasProgramBroucher}
-                            disabled={!formData.hasProgramBroucher}
-                            name='programBroucher'
-                            label='upload Broucher'
-                            onFileSelect={handleFileSelect}
+                    <Grid item sm={12} md={4}>
+                        <FileDroppableForFile
+                            name="file"
+                            allowMultiple={false}
+                            onFilesChange={(uploadedFile) => handleFileChange(uploadedFile, 'programBrochureFile')}
                         />
+                        {fetchedFile && (
+                            <div
+                                className="relative mt-1 bg-gray-200 p-2 rounded-md inline-flex items-center"
+                                style={{ paddingRight: '50px' }}
+                            >
+                                <p className="text-sm">{fetchedFile}</p>
+
+                                <IconButton
+                                    size="small"
+                                    onClick={handleRemoveFetchedFile}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '3px',
+                                        right: '3px',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                    }}
+                                >
+                                    <CloseIcon fontSize="small" />
+                                </IconButton>
+                            </div>
+                        )}
                     </Grid>
 
                     <Grid item sm={12} md={12}>

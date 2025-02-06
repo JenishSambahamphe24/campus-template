@@ -120,7 +120,7 @@ function Slider() {
             <div className='mx-auto '>
               <div className='w-[140px] h-[100px]'>
               <img
-                className='w-full bg-red-500 h-full object-fit'
+                className='w-full bg-red-500 h-full object-fill'
                 alt=""
                 src={chiefInfo?.ppImage ? `${IMAGE_URL}${chiefInfo?.ppImage}` : defaultImage}
                 onError={(e) => { e.target.src = defaultImage; }}

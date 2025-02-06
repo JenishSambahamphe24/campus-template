@@ -56,7 +56,7 @@ const FileDroppableForFile = ({ allowMultiple = false, onFilesChange, name }) =>
           onClick={handleClick}
           style={{
             border: '2px dashed #ccc',
-            padding: '10px',
+            padding: '6px  10px',
             textAlign: 'center',
             cursor: 'pointer',
             marginBottom: '10px',
