@@ -19,7 +19,6 @@ import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import RichEditor from '../cms-project/components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
-import { getPublicationById, updatePublicationById, getPublicationCategory } from '../cms-publication/publicationApi';
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
 import { getFacultyById, getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
