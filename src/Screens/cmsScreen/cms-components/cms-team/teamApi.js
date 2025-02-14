@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = localStorage.getItem('authToken')
+const getAuthToken = () => localStorage.getItem("authToken");
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -15,13 +15,15 @@ export const getTeamById = async (id) => {
 };
 
 export const updateTeamById = async (id, data) => {
-  try{
+  try {
+    const token = getAuthToken();
+    if (!token) throw new Error("Token is missing");
     const headers = {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
     const response = await axios.patch(`${BASE_URL}/teams/${id}`, data, { headers });
     return response.data;
-  } catch(error) {
+  } catch (error) {
     console.error("Error while updating team:", error.response?.data || error.message);
     throw error;
   }
@@ -29,8 +31,10 @@ export const updateTeamById = async (id, data) => {
 
 export const addTeam = async (data) => {
   try {
+    const token = getAuthToken();
+    if (!token) throw new Error("Token is missing");
     const headers = {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
     const response = await axios.post(`${BASE_URL}/teams`, data, { headers });
     return response.data;
@@ -42,18 +46,19 @@ export const addTeam = async (data) => {
 };
 
 export const deleteTeam = async (id) => {
-  try{
-    const token = localStorage.getItem('authToken')
+  try {
+    const token = getAuthToken();
+    if (!token) throw new Error("Token is missing");
     const headers = {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
-    const response = await axios.delete(`${BASE_URL}/teams/${id}`, {headers});
+    const response = await axios.delete(`${BASE_URL}/teams/${id}`, { headers });
     return response.data;
-  }catch(error){
+  } catch (error) {
     console.error("Error while deleting team:", error.response?.data || error.message);
     throw error;
   }
-  
+
 };
 
 export const getAllUsers = async () => {

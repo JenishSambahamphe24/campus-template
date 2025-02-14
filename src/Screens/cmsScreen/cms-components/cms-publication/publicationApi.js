@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('authToken')
+
+const getAuthToken = () => localStorage.getItem("authToken");
+
+
 export const getAllpublication = async () => {
     const response = await axios.get(`${BASE_URL}/publication`);
     return response.data;
@@ -16,9 +19,11 @@ export const getPublicationByCategoryId = async (id) => {
 };
 export const updatePublicationById = async (id, data) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-        }
+            Authorization: `Bearer ${token}`,
+        };
         const response = await axios.patch(`${BASE_URL}/publication/${id}`, data, { headers });
         return response.data;
     } catch (error) {
@@ -28,9 +33,11 @@ export const updatePublicationById = async (id, data) => {
 };
 export const addPublication = async (data) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-        }
+            Authorization: `Bearer ${token}`,
+        };
         const response = await axios.post(`${BASE_URL}/publication`, data, { headers });
         return response.data;
     } catch (error) {
@@ -40,9 +47,11 @@ export const addPublication = async (data) => {
 };
 export const deletePublication = async (id) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        };
         const response = await axios.delete(`${BASE_URL}/publication/${id}`, { headers });
         return response.data;
     } catch (error) {
@@ -66,9 +75,11 @@ export const getPublicationCategoryById = async (id) => {
 
 export const addPublicationCategory = async (data) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        };
         const response = await axios.post(`${BASE_URL}/publicationCategories`, data, { headers })
         return response.data
     } catch (error) {
@@ -80,9 +91,11 @@ export const addPublicationCategory = async (data) => {
 
 export const updatePublicationCategoryById = async (id, data) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        };
         const response = await axios.patch(`${BASE_URL}/publicationCategories/${id}`, data, { headers });
         return response.data;
     } catch (error) {

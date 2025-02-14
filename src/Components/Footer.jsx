@@ -37,13 +37,11 @@ function Footer() {
 
     const fetchLinks = async () => {
         const response = await getAllLink()
-        setLinks(response.filter(item => item.type === 'otherLink'))
         setFbLink(response.find(item => item.name === 'facebook'))
         setXLink(response.find(item => item.name === 'twitter'))
         setYTLink(response.find(item => item.name === 'youtube'))
     }
 
-    console.log(ytLink)
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {

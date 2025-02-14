@@ -1,4 +1,5 @@
 import axios from "axios";
+const getAuthToken = () => localStorage.getItem("authToken");
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -13,19 +14,25 @@ export const getProjectById = async (id) => {
 };
 
 export const updateProjectById = async (id, data) => {
-    const token = localStorage.getItem('authToken')
-    console.log(token)
-    const headers = {
-        'Authorization': `Bearer ${token}`
-    };
-    const response = await axios.patch(`${BASE_URL}/projects/${id}`, data, { headers });
-    return response.data;
+    try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+        const response = await axios.patch(`${BASE_URL}/projects/${id}`, data, { headers });
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 };
 
 export const addProject = async (data) => {
-    const token = localStorage.getItem('authToken')
+    const token = getAuthToken();
+    if (!token) throw new Error("Token is missing");
     const headers = {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
     };
     const response = await axios.post(`${BASE_URL}/projects`, data, { headers });
     return response.data;

@@ -1,7 +1,7 @@
 import axios from "axios";
+const getAuthToken = () => localStorage.getItem("authToken");
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('authToken') 
 
 export const getAllLink = async () => {
     const response = await axios.get(`${BASE_URL}/application`);
@@ -15,9 +15,11 @@ export const getLinkById = async (id) => {
 
 export const updateLinkById = async (id, data) => {
     try{
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-          };
+          Authorization: `Bearer ${token}`,
+        };
         const response = await axios.patch(`${BASE_URL}/application/${id}`, data, {headers});
         return response.data;
     } catch (error) {
@@ -28,8 +30,10 @@ export const updateLinkById = async (id, data) => {
 
 export const addLink = async (data) => {
     try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         };
         const response = await axios.post(`${BASE_URL}/application`, data, { headers });
         return response.data;
@@ -41,9 +45,11 @@ export const addLink = async (data) => {
 
 export const deleteLink = async (id) => {
     try{
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
         const headers = {
-            'Authorization': `Bearer ${token}`
-          };
+          Authorization: `Bearer ${token}`,
+        };
         const response = await axios.delete(`${BASE_URL}/application/${id}`, {headers});
         return response.data;
     } catch (error){
