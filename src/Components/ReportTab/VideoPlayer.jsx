@@ -35,7 +35,7 @@ function VideoPlayer() {
             <Grid container rowGap='20px' sm={12}>
                 <Grid container gap='10px' justifyContent={isMobile ? 'flex-start' : 'flex-start'} rowGap='25px' sm={12} lg={5.8} >
                     <Grid className=' text-white' sm={12} >
-                        <h1 className='inline-block p-1 bg-[#0368b0]  text-md'> Image Gallery</h1>
+                        <h1 className='inline-block px-1  bg-[#0368b0]  text-md'> Image Gallery</h1>
                     </Grid>
                     {
                         images.sort((a, b) => b.id - a.id).slice(0, 3).map((item, index) => (
@@ -59,7 +59,7 @@ function VideoPlayer() {
                 <Divider orientation={isMobile ? 'horizontal' : 'vertical'} flexItem style={{ margin: '0 15px', backgroundColor: '#0368b0' }} />
                 <Grid container gap='10px' justifyContent={isMobile ? 'flex-start' : 'flex-start'} rowGap='25px' sm={12} lg={5.8} >
                     <Grid className=' text-white' sm={12} >
-                        <h1 className='inline-block p-1 bg-[#0368b0]  text-md'> Video Gallery</h1>
+                        <h1 className='inline-block px-1 bg-[#0368b0]  text-md'> Video Gallery</h1>
                     </Grid>
                     {videos.slice(0, 2).map((item, index) => {
                         const videoId = videoIdParser(item.videoUrl)

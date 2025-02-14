@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles';
-import { Box, Grid, Button } from '@mui/material'
+import {  Grid } from '@mui/material'
 import {
   Tabs,
   TabsHeader,
@@ -15,7 +14,6 @@ import { getAllPrograms } from '../../Screens/cmsScreen/cms-components/cms-acade
 
 function ProgramListUser() {
   const { tab } = useParams();
-
   const [bachelorPrograms, setBachelorPrograms] = useState([])
   const [masterPrograms, setMasterPrograms] = useState([])
 
@@ -43,21 +41,14 @@ function ProgramListUser() {
       label: "Master",
       value: "Master",
     },
-    {
-      label: "MPhil",
-      value: "MPhil",
-    },
-    {
-      label: "PHD",
-      value: "PHD",
-    },
-  
   ];
 
   return (
-    <Grid container className='px-14' my='25px'>
-        <h1 className='mx-auto text-center text-2xl mb-6 font-bold'>Our Programs</h1>
-      <Grid mx='30px' item md={12}>
+    <Grid container className='px-2 md:px-6 lg:px-9' my='25px'>
+      <Grid item sm={12}>
+        <h1 className='text-center mb-4 text-2xl  font-bold'>Our Programs</h1>
+      </Grid>
+      <Grid item xs={12}>
         <Tabs value={activeTab}>
           <Grid item md={12} >
             <TabsHeader
@@ -80,34 +71,35 @@ function ProgramListUser() {
           <TabsBody>
             {
               activeTab === 'Bachelor' ? (
-                <TabPanel style={{ marginTop: '20px', padding: '0'}} value='Bachelor'>
-               
-                    <Grid justifyContent='space-between' container gap='10px' >
-                      {
-                        bachelorPrograms.map((item, index) => (
-                          <Grid
-                            component={Link}
-                            to={`/program/${item.id}`}
-                            item
-                            key={index}
-                            sm={1.9}
-                            className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
-                          >
-                            <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
-                            <div className="relative z-10 flex flex-col items-center">
-                              <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f36710] transition-all duration-300 group-hover:bg-[#f36710]">
-                                <FaBookReader className="h-10 w-10 text-white transition-all" />
-                              </span>
-                              <div className="pt-3 text-base font-semibold leading-7 text-center">
-                                <p className="text-white transition-all duration-300 group-hover:text-white text-md">
-                                  {item.shortName}
-                                </p>
-                              </div>
+                <TabPanel style={{ marginTop: '20px', padding: '0' }} value='Bachelor'>
+                  <Grid justifyContent='space-between' container gap='10px' >
+                    {
+                      bachelorPrograms.map((item, index) => (
+                        <Grid
+                          component={Link}
+                          to={`/program/${item.id}`}
+                          item
+                          key={index}
+                          xs={5.8}
+                          sm={3.8}
+                          lg={1.9}
+                          className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
+                        >
+                          <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
+                          <div className="relative z-10 flex flex-col items-center">
+                            <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f36710] transition-all duration-300 group-hover:bg-[#f36710]">
+                              <FaBookReader className="h-10 w-10 text-white transition-all" />
+                            </span>
+                            <div className="pt-3 text-base font-semibold leading-7 text-center">
+                              <p className="text-white transition-all duration-300 group-hover:text-white text-md">
+                                {item.shortName}
+                              </p>
                             </div>
-                          </Grid>
-                        ))
-                      }
-                    </Grid>
+                          </div>
+                        </Grid>
+                      ))
+                    }
+                  </Grid>
                 </TabPanel>
               ) :
                 (
@@ -120,16 +112,18 @@ function ProgramListUser() {
                             to={`/program/${item.id}`}
                             item
                             key={index}
-                            sm={1.9}
-                            className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-gray-200 px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
+                            xs={6}
+                            sm={4}
+                            lg={1.9}
+                            className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
                           >
-                            <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]"></span>
+                            <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
                             <div className="relative z-10 flex flex-col items-center">
-                              <span className="grid h-20 w-20 place-items-center rounded-full bg-[#0368b0] transition-all duration-300 group-hover:bg-sky-400">
+                              <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f36710] transition-all duration-300 group-hover:bg-[#f36710]">
                                 <FaBookReader className="h-10 w-10 text-white transition-all" />
                               </span>
                               <div className="pt-3 text-base font-semibold leading-7 text-center">
-                                <p className="text-[#0368b0] transition-all duration-300 group-hover:text-white text-sm">
+                                <p className="text-white transition-all duration-300 group-hover:text-white text-sm">
                                   {item.shortName}
                                 </p>
                               </div>

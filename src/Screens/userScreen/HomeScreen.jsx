@@ -1,4 +1,3 @@
-import React from 'react';
 import Slider from '../../Components/Slider';
 import VideoPlayer from '../../Components/ReportTab/VideoPlayer';
 import { Stack, Box } from '@mui/material';

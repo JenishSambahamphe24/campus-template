@@ -13,8 +13,6 @@ function Navbar() {
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
 
-
-
     return (
         <nav className="relative bg-white shadow ">
             <div className=" py-1 pb-0 mx-auto">
@@ -34,7 +32,7 @@ function Navbar() {
                     </div>
                 </div>
                 {/* main navigation */}
-                <div style={{ backgroundColor: '#0368B0' }} className=" flex  justify-between px-20 py-3 mt-2 overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
+                <div style={{ backgroundColor: '#0368B0' }} className="flex justify-between px-20 py-3 mt-2 overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
                     <div className="hidden md:flex w-full">
                         <div className="flex">
                             <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white " to="/">Home</Link>
@@ -90,7 +88,7 @@ function Navbar() {
                             </Link>
                         </div>
                     </div>
-                    <div className="md:hidden relative right-[70px]   text-left"  >
+                    <div className="md:hidden relative right-[70px]  text-left"  >
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             type="button"
@@ -114,7 +112,7 @@ function Navbar() {
                         }`}
                 >
                     <div className="flex  mt-[-14px] flex-col md:hidden">
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform  hover:text-[#f36710] text-md" to="#">Home</Link>
+                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform  hover:text-[#f36710] text-md" to="/">Home</Link>
 
                         <div className="divide-y divide-gray-100">
                             <details className="group" open={mobileAboutOpen} onToggle={(e) => setMobileAboutOpen(e.target.open)}>
@@ -173,8 +171,9 @@ function Navbar() {
                                 </div>
                             </details>
                         </div>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="#">Contact Us</Link>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="#">Publications</Link>
+                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/program-list">Programs</Link>
+                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/gallery">Gallery</Link>
+                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/contact">Contact Us</Link>
                     </div>
                 </div>
 

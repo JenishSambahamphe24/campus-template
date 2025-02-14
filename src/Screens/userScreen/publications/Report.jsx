@@ -1,5 +1,5 @@
-import  { useState, useEffect } from 'react'
-import { Grid,  } from '@mui/material'
+import { useState, useEffect } from 'react'
+import { Grid, } from '@mui/material'
 import { MdOutlineFileDownload } from "react-icons/md";
 import PaginationForReports from './component/PaginationForReports'
 import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
@@ -52,8 +52,8 @@ function Report() {
         setCurrentPageOther(page);
     };
     return (
-        <Grid container className='px-20 py-16' gap='26px' sm={12}>
-            <Grid sm={11.8} lg={3.8} md={5.8}>
+        <Grid container className='justify-center px-4 py-4 lg:px-20 lg:py-16' gap='20px' sm={12}>
+            <Grid  xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Notice Boards
                 </h1>
@@ -90,7 +90,7 @@ function Report() {
                 </div>
 
             </Grid>
-            <Grid sm={11.8} lg={3.8} md={5.8}>
+            <Grid xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Reports
                 </h1>
@@ -126,7 +126,7 @@ function Report() {
                     </div>
                 </div>
             </Grid>
-            <Grid sm={11.8} lg={3.8} md={5.8}>
+            <Grid xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Other downloads
                 </h1>
