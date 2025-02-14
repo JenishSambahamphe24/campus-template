@@ -43,11 +43,11 @@ function ContactUsPage() {
 
 
   return (
-    <div className='px-20 '>
+    <div className='p-4 lg:px-20 '>
       <section className=" text-gray-600 body-font relative">
-        <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+        <div className="container px-5 py-4 lg:py-16 mx-auto flex sm:flex-nowrap flex-wrap">
           <div
-            className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-6 flex items-end justify-start relative"
+            className="w-full min-h-52 lg:w-2/3 md:w-2/3 bg-red-900 rounded-lg overflow-hidden sm:mr-10 p-6 flex items-end justify-start relative"
           >
             <iframe
               width="100%"
@@ -61,7 +61,7 @@ function ContactUsPage() {
               src={map_iframe}
             ></iframe>
 
-            <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
+            <div className="bg-white hidden lg:relative lg:flex flex-wrap py-6 rounded shadow-md">
               <div className="lg:w-1/2 px-6">
                 <h2 className="title-font font-bold text-[#0368b0]  text-sm">ADDRESS</h2>
                 <p className="mt-1"> {address} </p>

@@ -32,7 +32,6 @@ function ReportTabs() {
                 ...item,
                 sNo: index + 1
             }));
-
             setAllReports(dataWithSno);
             setActiveTab(uniqueSubCategories[0]);
         };
@@ -62,7 +61,6 @@ function ReportTabs() {
         },
     ];
 
-
     const getCurrentRows = () => {
         return allReports
             .filter(item => item.subCategoryName === activeTab)
@@ -75,15 +73,13 @@ function ReportTabs() {
             }));
     };
 
-
     return (
         <Grid container rowGap='20px'>
             <Divider style={{ width: '100%', backgroundColor: '#c2c2c2' }} />
             <h1 className='text-2xl'>
                 Downloads
             </h1>
-          
-            <Grid item mx='auto' sm={12}>
+            <Grid item mx='auto' xs={12}>
                 {
                     allReports.length > 0 && (
                         <Tabs value={activeTab}>
@@ -113,7 +109,9 @@ function ReportTabs() {
                                         value={subCategory}
                                         onClick={() => setActiveTab(subCategory)}
                                     >
-                                        {subCategory}
+                                        <h1 className='xs:text-xs'>
+                                            {subCategory}
+                                        </h1>
                                     </Tab>
                                 ))}
                             </TabsHeader>
@@ -177,27 +175,27 @@ function ReportTabs() {
 
             </Grid>
             <div className='w-full flex justify-center'>
-            <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
-                        <Link to='/report'>
-                            <Typography >
-                                All publications
-                            </Typography>
-                        </Link>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                            stroke="currentColor"
-                            className="h-4 w-4"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                        </svg>
-                    </Button>
+                <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
+                    <Link to='/report'>
+                        <Typography >
+                            All publications
+                        </Typography>
+                    </Link>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-4 w-4"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                        />
+                    </svg>
+                </Button>
 
             </div>
         </Grid>

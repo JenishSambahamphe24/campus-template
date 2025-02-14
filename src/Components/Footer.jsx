@@ -15,7 +15,15 @@ const phone = import.meta.env.VITE_PHONE
 
 function Footer() {
     const [officeInfo, setOfficerInfo] = useState({})
-    const [links, setLinks] = useState([])
+    // const [links, setLinks] = useState([])
+    const links = [
+        { id: 1, name: "Google", url: "https://www.google.com" },
+        { id: 2, name: "GitHub", url: "https://github.com" },
+        { id: 3, name: "Stack Overflow", url: "https://stackoverflow.com" },
+        { id: 4, name: "MDN Web Docs", url: "https://developer.mozilla.org" },
+        { id: 5, name: "React Docs", url: "https://react.dev" },
+        { id: 6, name: "Tailwind CSS", url: "https://tailwindcss.com" }
+      ];
     const [fbLink, setFbLink] = useState({})
     const [xLink, setXLink] = useState({})
     const [ytLink, setYTLink] = useState({})
@@ -49,8 +57,8 @@ function Footer() {
         <>
             <footer className='bg-[#0368b0] px-[2rem]  py-8'>
                 <div className="mx-auto w-full">
-                    <Grid container >
-                        <Grid item md={2.7} >
+                    <Grid container columnGap='10px' rowGap='20px' justifyContent='center'>
+                        <Grid item  xs={12} sm={12} md={5.8} lg={2.9} >
                             <p className="font-medium text-2xl text-white mb-2 border-b-1">Information Oficer</p>
                             {officeInfo ? (
                                 <>
@@ -61,7 +69,7 @@ function Footer() {
                                         alt=""
                                     />
                                     <div className=" mt-2 text-white gap-y-[2px] text-sm flex flex-col">
-                                        <p className='text-sm font-medium'>{`${officeInfo.firstName} ${officeInfo.middleName} ${officeInfo.lastName}`}</p>
+                                        <p className='text-sm font-medium'>{ officeInfo.firstName ? `${officeInfo.firstName} ${officeInfo.middleName} ${officeInfo.lastName}`: 'No data uploaded'}</p>
                                         <div className='flex text-white'>
                                             <IoMdCall className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{officeInfo.phoneNo}</span>
                                         </div>
@@ -72,8 +80,8 @@ function Footer() {
                                 <p className="text-white">No data uploaded</p>
                             )}
                         </Grid>
-                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
-                        <Grid item md={2.7}>
+                       
+                        <Grid item xs={12} sm={12} md={5.8} lg={2.9}>
                             <p className="font-medium text-2xl text-white mb-2"> Similar Links</p>
                             <ul className="space-y-4 text-sm ">
                                 {
@@ -86,8 +94,8 @@ function Footer() {
                                 }
                             </ul>
                         </Grid>
-                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
-                        <Grid item md={2.7}>
+                       
+                        <Grid item  xs={12} sm={12} md={5.8} lg={2.9}>
                             <p className="font-medium text-white text-2xl mb-2" >Contact Us</p>
                             <div className='flex flex-col  space-y-4'>
                                 <div className='flex  text-white'>
@@ -157,8 +165,8 @@ function Footer() {
 
                             </div>
                         </Grid>
-                        <Divider orientation="vertical" flexItem style={{ margin: '0 15px', backgroundColor: 'white' }} />
-                        <Grid item md={2.7}  >
+                       
+                        <Grid item  xs={12} sm={12} md={5.8} lg={2.9}  >
                             <p className="font-medium text-white text-2xl mb-2" >Find Us</p>
                             <Grid className="w-full h-[180px] bg-gray-300 rounded-lg overflow-hidden sm:mr-10  flex items-end justify-start relative">
                                 <iframe
