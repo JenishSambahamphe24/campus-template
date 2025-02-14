@@ -128,9 +128,6 @@ function TeamList() {
                 </div>
             },
             renderCell: (params) => {
-                const teamMemberEmail = params.row.email;
-                const hasRole = teamWithRole.some((user) => user.email === teamMemberEmail);
-
                 return (
                     <Box display='flex' justifyContent='space-around' >
                         <Typography
@@ -146,31 +143,13 @@ function TeamList() {
                                 <>
                                     <Typography
                                         fontSize='14px'
-                                        color='primary'
-                                        mt='7px'
-                                        onClick={() => handleMakeAdminDialogOpen(params.row.id)}
-                                    >
-                                        Assign role
-                                    </Typography>
-                                    <Typography
-                                        fontSize='14px'
                                         color='error'
                                         mt='7px'
                                         onClick={() => handleDeleteTeamDialogOpen(params.row.id)}
                                     >
                                         Delete
                                     </Typography>
-
-                                    {hasRole && (
-                                        <Typography
-                                            fontSize='14px'
-                                            color='primary'
-                                            mt='7px'
-                                            onClick={() => handleRemoveAdminDialogOpen(params.row.id)}
-                                        >
-                                            Remove role
-                                        </Typography>
-                                    )}
+                                   
                                 </>
                             )
                         }
