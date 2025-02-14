@@ -30,16 +30,12 @@ function Publication() {
     };
 
     return (
-        <Grid container sm={12} className='px-20 py-6'>
-            <Grid mt='30px' item md={12} textAlign='center'>
-                <div>
-                    <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">Our Publication </h2>
-                </div>
-            </Grid>
+        <Grid container sm={12} className='p-4 lg:px-20 lg:py-6'>
+            <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">Our Publication </h2>
             <Grid mt='10px' container mx='20px' spacing='20px'>
                 {
                     allPublication.map((item, index) => (
-                        <Grid key={index} item xs={6} lg={3} >
+                        <Grid key={index} item xs={12} sm={4} lg={3} >
                             <article style={{ minHeight: '320px' }} className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400  shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer">
                                 <Link to={`/publication/${item.id}`}>
                                     <img
@@ -76,9 +72,9 @@ function Publication() {
                                         {formatDate(item.publishedAt)}
                                     </span>
                                 </div>
-                                
+
                             </article>
-                           
+
                         </Grid>
                     ))
                 }

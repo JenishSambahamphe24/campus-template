@@ -9,6 +9,8 @@ const FILE_URL = import.meta.env.VITE_FILE_URL;
 import PaginationForReports from '../../Screens/userScreen/publications/component/PaginationForReports';
 import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../utilityFunctions';
+import {useMediaQuery} from '@mui/material';
+import {useTheme} from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
 
@@ -18,6 +20,8 @@ function NoticeTabs() {
     const [allNotices, setAllNotices] = useState([])
     const [allPrograms, setAllPrograms] = useState([])
     const [news, setNews] = useState([])
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const fetchData = async () => {
         const noticeResponse = await getAllpublication()
@@ -55,8 +59,8 @@ function NoticeTabs() {
         setCurrentPage(page);
     };
     return (
-        <Grid container sm={12} mx='auto' className='mt-12 mb-4 justify-between' >
-            <Grid sm={3.8} className='relative border-2 border-[#0368b0] h-[27rem]'>
+      <Grid container justifyContent='center' gap='15px' sx={{ minHeight: { xs: 'auto', lg: '27rem' } }}>
+            <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
                     <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
@@ -64,7 +68,7 @@ function NoticeTabs() {
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
                                     <div className='line-clamp-1'>
-                                        <span className="flex justify-between text-sm  overflow-hidden">
+                                        <span className="flex justify-between text-lg  overflow-hidden">
                                             <p className='line-clamp-2'>
                                                 {item.title}
                                             </p>
@@ -97,16 +101,17 @@ function NoticeTabs() {
                     </div>
                 </div>
             </Grid>
-            <Grid position='relative' sm={4.3} className='border-2 border-[#0368b0] h-[27rem]'>
+            <Grid  item xs={12} sm={12} md={12} lg={5.8} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
-                <Grid container padding='15px' gap='10px' rowGap='20px'>
+                <Grid container padding='15px' justifyContent={isMobile? 'center': 'flex-start'} gap='10px' rowGap='20px'>
                     {
                         allPrograms.sort((a,b) => b.id-a.id).slice(0,6).map((item, index) => (
                             <Grid
                                 item
                                 key={index}
-                                sm={3.8}
-                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0] h-32 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
+                                md={3.8}
+                                xs={5.8}
+                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0] h-36 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
                             >
                                 <Link to={`/program/${item.id}`}>
                                     <span className="absolute invisible group-hover:visible top-4 z-0 h-10 w-10 rounded-full bg-[#f36710]  transition-all duration-300 group-hover:scale-[8]"></span>
@@ -145,12 +150,12 @@ function NoticeTabs() {
                     </Link>
                 </Grid>
             </Grid>
-            <Grid position='relative' sm={3.5} className='border-2 border-[#0368b0] h-[27rem]'>
+            <Grid  item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
                         news.sort((a,b) => b.id-a.id).slice(0,4).map((item, index) => (
-                            <Link to={`/publication/${item.id}`} key={index} className="flex border-2 items-center ">
+                            <Link to={`/publication/${item.id}`} key={index} className="flex border-[1px] rounded-sm border-[#f36710] items-center ">
                                 <div className="inline-block mr-3">
                                     <div className="w-16 h-16">
                                         <img
@@ -162,7 +167,7 @@ function NoticeTabs() {
                                     </div>
                                 </div>
                                 <div className="text-sm flex flex-col justify-center">
-                                    <a href="#" className="text-gray-900 font-medium hover:text-indigo-600 leading-none line-clamp-2">
+                                    <a href="#" className="text-gray-900 font-medium hover:text-[#f36710] leading-none line-clamp-2">
                                         {item.title}
                                     </a>
                                     <p className="flex text-gray-600 text-xs items-center italic">

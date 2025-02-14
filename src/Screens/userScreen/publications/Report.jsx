@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Grid, Stack, Divider, Button } from '@mui/material'
-import ReportTabs from '../../../Components/ReportTab/ReportTabs'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Grid, } from '@mui/material'
 import { MdOutlineFileDownload } from "react-icons/md";
 import PaginationForReports from './component/PaginationForReports'
 import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
@@ -32,7 +30,6 @@ function Report() {
     const handlePageChangeNotice = (page) => {
         setCurrentPage(page);
     };
-
     // pagination for Annual Reports
     const [currentPageAnnual, setCurrentPageAnnual] = useState(1)
     const itemsPerPageAnnual = 10;
@@ -43,7 +40,6 @@ function Report() {
     const handlePageChangeAnnual = (page) => {
         setCurrentPageAnnual(page);
     };
-    console.log(paginatedAnnualReport.length)
 
     // pagination for Other application
     const [currentPageOther, setCurrentPageOther] = useState(1)
@@ -56,8 +52,8 @@ function Report() {
         setCurrentPageOther(page);
     };
     return (
-        <Grid container className='px-20 py-16' gap='26px' sm={12}>
-            <Grid sm={3.8}>
+        <Grid container className='justify-center px-4 py-4 lg:px-20 lg:py-16' gap='20px' sm={12}>
+            <Grid  xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Notice Boards
                 </h1>
@@ -70,7 +66,7 @@ function Report() {
                                         <div>
                                             <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" className='flex text-sm'>
                                                 {item.title}
-                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px',marginLeft:'5px', color:'#0368b0' }} />
+                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px', marginLeft: '5px', color: '#0368b0' }} />
 
                                             </a>
                                         </div>
@@ -94,7 +90,7 @@ function Report() {
                 </div>
 
             </Grid>
-            <Grid sm={3.8}>
+            <Grid xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Reports
                 </h1>
@@ -105,9 +101,9 @@ function Report() {
                                 paginatedAnnualReport.map((item, index) => (
                                     <li key={index}>
                                         <div>
-                                        <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" className='flex text-sm'>
+                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" className='flex text-sm'>
                                                 {item.title}
-                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px',marginLeft:'5px', color:'#0368b0' }} />
+                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px', marginLeft: '5px', color: '#0368b0' }} />
 
                                             </a>
                                         </div>
@@ -130,7 +126,7 @@ function Report() {
                     </div>
                 </div>
             </Grid>
-            <Grid sm={3.8}>
+            <Grid xs={11.8} lg={3.8} md={5.8}>
                 <h1 className="border-b border-[#0368b0]">
                     Other downloads
                 </h1>
@@ -141,9 +137,9 @@ function Report() {
                                 paginatedOther.map((item, index) => (
                                     <li key={index}>
                                         <div>
-                                        <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" className='flex text-sm'>
+                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" rel="noopener noreferrer" className='flex text-sm'>
                                                 {item.title}
-                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px',marginLeft:'5px', color:'#0368b0' }} />
+                                                <MdOutlineFileDownload fontSize='17px' style={{ marginTop: '2px', marginLeft: '5px', color: '#0368b0' }} />
 
                                             </a>
                                         </div>
