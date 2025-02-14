@@ -83,7 +83,7 @@ function Navbar() {
                         <div className="ml-auto">
                             <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
                                 <PersonIcon sx={{ marginTop: '-3px', fontSize: '18px', marginRight: '5px' }} />
-                                 Login
+                                Login
                             </Link>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ function Navbar() {
                         <Link className="my-1 text-sm leading-5 text-white transition-colors duration-300 transform  hover:text-blue-600 dark:hover:text-blue-400 " to="#">Home</Link>
                         <div className="divide-y divide-gray-100">
                             <details className="group" open={mobileAboutOpen} onToggle={(e) => setMobileAboutOpen(e.target.open)}>
-                                <summary className='flex my-1 text-sm leading-5 text-white transition-colors duration-300 transform text-white hover:cursor-pointer' style={{ listStyle: 'none' }}>
+                                <summary className='flex my-1 text-sm leading-5  transition-colors duration-300 transform text-white hover:cursor-pointer' style={{ listStyle: 'none' }}>
                                     About
                                     <div className="flex items-center">
                                         {mobileAboutOpen ? (
@@ -127,7 +127,7 @@ function Navbar() {
                                         )}
                                     </div>
                                 </summary>
-                                <Link className="block text-gray-200  text-sm text-white transition-colors duration-300 transform  hover:text-blue-400">Our Team</Link>
+                                <Link className="block text-gray-200  text-sm  transition-colors duration-300 transform  hover:text-blue-400">Our Team</Link>
 
                             </details>
                         </div>
