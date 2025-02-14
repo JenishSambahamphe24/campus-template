@@ -4,8 +4,10 @@ import { BsTwitterX } from "react-icons/bs";
 import { BsFacebook } from "react-icons/bs";
 import { FaLink } from "react-icons/fa";
 import { Link, useParams } from 'react-router-dom';
-import { formatDateShort, formatDate, cleanDescription } from '../../../Components/utilityFunctions';
+import { formatDateShort, cleanDescription } from '../../../Components/utilityFunctions';
 import { getAllpublication, getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
 
@@ -13,7 +15,8 @@ function NewsPage() {
     const [allNewsEvents, setAllNewsEvents] = useState([]);
     const [newsDetail, setNewsDetail] = useState({});
     const { id } = useParams()
-
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const imageForSideCard = 'https://media.istockphoto.com/id/1407890983/vector/newspaper-realistic-vector-illustration-background-of-the-page-headline-and-cover-of-old.jpg?s=612x612&w=0&k=20&c=uyB-_t4SbgkZxpc2CPk8_ELgNcnHTuUBPenHTIiRZIc='
 
     const defaultImage = 'https://media.istockphoto.com/id/1389157460/photo/newspaper-and-digital-tablet-on-wooden-table.jpg?s=612x612&w=0&k=20&c=CNKIHIEE4HnEnqDpUCyvnEfbf8nn90jRfX6TmhbGBxc='
@@ -41,32 +44,30 @@ function NewsPage() {
                         className="h-[250px] w-full object-cover"
                         alt="..." />
                 </div>
-                <Box width='70%' sx={{ position: 'absolute', bottom: '20%', padding: '20px', marginLeft: '20px', borderLeft: '10px solid yellowgreen', }}>
-                    <Typography color='white' fontWeight='bold' variant='h3' mt='-10px'>
+                <Box width={isMobile ? '100%' : '70%'} sx={{ position: 'absolute', bottom: '20%', padding: '20px', marginLeft: '20px', borderLeft: '10px solid yellowgreen', }}>
+                    <h1 className='text-white text-2xl font-bold'>
                         {newsDetail.title}
-                    </Typography>
+                    </h1>
                 </Box>
             </Grid>
 
-            <Grid container className='px-20' spacing='15px' my='20px'>
-                <Grid item xs='2' pr='10px' rowGap='20px' display='flex' flexDirection='column'  >
+            <Grid container className='px-4 lg:px-20 mx-auto' spacing='15px' my='20px'>
+                <Grid item xs={12} sm={12} lg='2' rowGap='20px' display='flex' flexDirection={isMobile ? 'row' : 'column'} justifyContent={isMobile ? 'space-between' : 'flex-start'} >
                     <Stack width='100%' spacing='5px' direction='column'>
                         <Typography fontWeight='bold' variant='subtitle1'>Published Date </Typography>
                         <Typography variant='subtitle2'>
                             {`${formatDateShort(newsDetail.createdAt)}`}
                         </Typography>
-                        <Divider sx={{ marginTop: '5px' }} />
                     </Stack>
                     <Stack width='100%' spacing='5px' direction='column'>
                         <Typography fontWeight='bold' variant='subtitle1'>Category </Typography>
                         <Typography variant='subtitle2'>
                             {newsDetail.subCategoryName}
                         </Typography>
-                        <Divider sx={{ marginTop: '5px' }} />
                     </Stack>
                     <Stack width='100%' spacing='15px' direction='column'>
                         <Typography fontWeight='bold' variant='subtitle1'>social media</Typography>
-                        <Stack mt='5px' direction='row' spacing='10px'>
+                        <Stack direction='row' mt={isMobile ? '-10px' : '0'} spacing='10px'>
                             <Link to="https://www.facebook.com/www.aepc.gov.np/"
                                 target="_blank">
                                 <BsFacebook style={{ fontSize: '18px' }} />
@@ -78,21 +79,24 @@ function NewsPage() {
                                 <FaLink style={{ fontSize: '18px' }} />
                             </Link>
                         </Stack>
-                        <Divider sx={{ marginTop: '5px' }} />
                     </Stack>
                 </Grid>
-
+                {
+                    isMobile && (
+                            <Divider  style={{ width: '100%', backgroundColor: '#c2c2c2', marginBlock: '10px' }} />
+                    )
+                }
                 <Grid display='flex' flexDirection='column' item md={7}>
                     <Typography variant='h5' mb={4} fontSize='18px' fontWeight='bold'> {newsDetail.title} </Typography>
                     <Stack direction='column' spacing='20px'>
                         <div
-                            style={{  fontSize: '16px' }}
+                            style={{ fontSize: '16px' }}
                             dangerouslySetInnerHTML={{ __html: cleanDescription(newsDetail.description) }}
                         />
                     </Stack>
                 </Grid>
 
-                <Grid item xs='3' sx={{ minHeight: '94px' }}  >
+                <Grid item xs='12'   sx={{ minHeight: '94px' }}  >
                     <div className='mb-3 bg-[#0368b0]'>
                         <h5 className='font-medium text-lg text-center text-white py-1'>Latest News</h5>
                     </div>
@@ -113,7 +117,7 @@ function NewsPage() {
                                                 <h1 className="line-clamp-1 text-[14px] font-bold text-gray-800 ">{item.title}</h1>
                                                 <p className="text-sm text-gray-700 line-clamp-2 ">
                                                     <div
-                                                        style={{  fontSize: '16px' }}
+                                                        style={{ fontSize: '16px' }}
                                                         dangerouslySetInnerHTML={{ __html: cleanDescription(item.description) }}
                                                     />
                                                 </p>
