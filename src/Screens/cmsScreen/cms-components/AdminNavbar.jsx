@@ -119,7 +119,7 @@ function AdminNavbar() {
                                 <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="viewTeam">Team</Link>
                                 <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="feedback">Feedbacks</Link>
                                 <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="faq">FAQs</Link>
-                                <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="testimonials">Testimonials</Link>
+                                {/* <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="testimonials">Testimonials</Link> */}
                                 <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="links">External Links</Link>
                             </div>
                         </div>

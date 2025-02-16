@@ -84,7 +84,7 @@ function Footer() {
                             <p className="font-medium text-2xl text-white mb-2"> Similar Links</p>
                             <ul className="space-y-4 text-sm ">
                                 {
-                                    links.sort((a, b) => b.id > a.id).slice(0, 5).map((item, index) => (
+                                    otherLinks.sort((a, b) => b.id > a.id).slice(0, 5).map((item, index) => (
                                         <li key={index}>
                                             <Link to={item.url} className="text-white transition hover:opacity-75" target='_blank' > {item.name} </Link>
                                         </li>
