@@ -5,10 +5,10 @@ import { CiYoutube } from "react-icons/ci";
 import { IoMdMail } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
-import { Divider } from '@mui/material';
 import { getAllLink } from '../Screens/cmsScreen/cms-components/cms-links/linkApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
+const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const defaultImage = 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80';
 const email = import.meta.env.VITE_EMAIL
 const phone = import.meta.env.VITE_PHONE
@@ -180,8 +180,9 @@ function Footer() {
                     </Grid>
                 </div>
             </footer>
-            <Grid item lg={12} className='bg-gray-700 px-[2rem] py-2'>
-                <p className="text-sm text-white"> Developed and managed by &copy;debugsoft</p>
+            <Grid item lg={12} justifyContent='space-between' className='flex bg-gray-700 px-[2rem] py-2'>
+                <p className="text-sm text-white lowe">  &copy; <span className='text-[13px]'>{collegeName}</span></p>
+                <p className="text-sm text-white"> Developed & Managed By @<Link to='http://panhimalayan.dibugsoft.com/' target='_blank' className='text-[#f26710]'>Debugsoft</Link></p>
             </Grid>
         </>
     )
