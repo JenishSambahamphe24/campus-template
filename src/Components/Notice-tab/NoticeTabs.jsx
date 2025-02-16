@@ -9,8 +9,8 @@ const FILE_URL = import.meta.env.VITE_FILE_URL;
 import PaginationForReports from '../../Screens/userScreen/publications/component/PaginationForReports';
 import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../utilityFunctions';
-import {useMediaQuery} from '@mui/material';
-import {useTheme} from '@mui/material';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
 
@@ -59,7 +59,7 @@ function NoticeTabs() {
         setCurrentPage(page);
     };
     return (
-      <Grid container justifyContent='center' gap='15px' sx={{ minHeight: { xs: 'auto', lg: '27rem' } }}>
+        <Grid container justifyContent='center' gap='15px' sx={{ minHeight: { xs: 'auto', lg: '27rem' } }}>
             <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
@@ -101,11 +101,20 @@ function NoticeTabs() {
                     </div>
                 </div>
             </Grid>
-            <Grid  item xs={12} sm={12} md={12} lg={5.8} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
+            <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={5.8}
+                order={{ xs: 1, sm: 1, md: 1, lg: 2 }}
+                className={`relative border-2 border-[#0368b0] ${isMobile ? 'h-[37rem]' : 'h-[27rem]'}`}
+            >
+
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
-                <Grid container padding='15px' justifyContent={isMobile? 'center': 'flex-start'} gap='10px' rowGap='20px'>
+                <Grid container padding='15px' justifyContent={isMobile ? 'center' : 'flex-start'} gap='10px' rowGap='20px'>
                     {
-                        allPrograms.sort((a,b) => b.id-a.id).slice(0,6).map((item, index) => (
+                        allPrograms.sort((a, b) => b.id - a.id).slice(0, 6).map((item, index) => (
                             <Grid
                                 item
                                 key={index}
@@ -150,11 +159,11 @@ function NoticeTabs() {
                     </Link>
                 </Grid>
             </Grid>
-            <Grid  item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
+            <Grid item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
                 <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
-                        news.sort((a,b) => b.id-a.id).slice(0,4).map((item, index) => (
+                        news.sort((a, b) => b.id - a.id).slice(0, 4).map((item, index) => (
                             <Link to={`/publication/${item.id}`} key={index} className="flex border-[1px] rounded-sm border-[#f36710] items-center ">
                                 <div className="inline-block mr-3">
                                     <div className="w-16 h-16">
