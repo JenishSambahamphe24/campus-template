@@ -24,6 +24,7 @@ function Slider() {
     const response = await getAllLink()
     setAllLinks(response.filter(item => item.type === 'application'))
   }
+  
   const fetchSliderImages = async () => {
     const data = await getAllGallery();
     const sliderGallery = data.filter(item => item.galleryType === "Slider").sort((a, b) => b.id - a.id);
