@@ -61,7 +61,7 @@ function NoticeTabs() {
     return (
         <Grid container justifyContent='center' gap='15px' sx={{ minHeight: { xs: 'auto', lg: '27rem' } }}>
             <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Latest Notices</h1>
+                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
                     <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                         {paginatedItems.length > 0 ? (
@@ -111,7 +111,7 @@ function NoticeTabs() {
                 className={`relative border-2 border-[#0368b0] ${isMobile ? 'h-[37rem]' : 'h-[27rem]'}`}
             >
 
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>Offered Programs</h1>
+                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>Offered Programs</h1>
                 <Grid container padding='15px' justifyContent={isMobile ? 'center' : 'flex-start'} gap='10px' rowGap='20px'>
                     {
                         allPrograms.sort((a, b) => b.id - a.id).slice(0, 6).map((item, index) => (
@@ -160,7 +160,7 @@ function NoticeTabs() {
                 </Grid>
             </Grid>
             <Grid item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-2xl text-center font-bold uppercase py-2'>latest news & events</h1>
+                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
                         news.sort((a, b) => b.id - a.id).slice(0, 4).map((item, index) => (
