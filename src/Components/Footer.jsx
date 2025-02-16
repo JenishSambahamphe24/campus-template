@@ -15,7 +15,7 @@ const phone = import.meta.env.VITE_PHONE
 
 function Footer() {
     const [officeInfo, setOfficerInfo] = useState({})
-    // const [links, setLinks] = useState([])
+    const [otherLinks, setLinks] = useState([])
     const links = [
         { id: 1, name: "Google", url: "https://www.google.com" },
         { id: 2, name: "GitHub", url: "https://github.com" },
@@ -27,9 +27,8 @@ function Footer() {
     const [fbLink, setFbLink] = useState({})
     const [xLink, setXLink] = useState({})
     const [ytLink, setYTLink] = useState({})
-
     const [isLogged, setIsLoggedIn] = useState(false)
-
+    
     const fetchInfoOfficer = async () => {
         const response = await getAllTeams()
         setOfficerInfo(response.find(item => item.subCategory === 'informationOfficer'))
@@ -37,11 +36,13 @@ function Footer() {
 
     const fetchLinks = async () => {
         const response = await getAllLink()
+        const otherLinks = response.filter((item) => item.type === 'otherLink')
+        setLinks(otherLinks)
         setFbLink(response.find(item => item.name === 'facebook'))
         setXLink(response.find(item => item.name === 'twitter'))
         setYTLink(response.find(item => item.name === 'youtube'))
     }
-
+   
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
