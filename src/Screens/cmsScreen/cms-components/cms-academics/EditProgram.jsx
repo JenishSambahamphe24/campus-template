@@ -37,7 +37,7 @@ function EditProgram() {
         status: false,
         shortName: '',
         runningFrom: '',
-        hasProgramBroucher: false,
+        hasProgramBrochure: false,
         programBrochureFile: null
     });
     const [fetchedFile, setFetchedFile] = useState(null)
@@ -168,12 +168,12 @@ function EditProgram() {
                     Edit  Program
                 </Typography>
                 <Grid component={Paper} elevation={4} container width='90%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
-
                     <Grid item sm={12} md={2}>
                         <FormControl size='small' fullWidth>
                             <InputLabel size='small'>Level</InputLabel>
                             <Select
                                 id="demo-simple-select"
+                                disabled
                                 size="small"
                                 label="Level"
                                 name="level"
@@ -194,6 +194,7 @@ function EditProgram() {
                             <InputLabel size='small'>Faculty Name</InputLabel>
                             <Select
                                 size='small'
+                                disabled
                                 label='Faculty Name'
                                 name='facultyId'
                                 required
@@ -272,9 +273,9 @@ function EditProgram() {
                             <Select
                                 size='small'
                                 label='Do you want to upload Program Broucher?'
-                                name='hasProgramBroucher'
+                                name='hasProgramBrochure'
                                 onChange={handleChange}
-                                value={formData.hasProgramBroucher}
+                                value={formData.hasProgramBrochure}
                                 required
                             >
                                 <MenuItem value={true}>Yes</MenuItem>

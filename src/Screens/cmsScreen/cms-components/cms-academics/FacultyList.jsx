@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Grid,
@@ -107,7 +107,7 @@ function FacultyList() {
             <Stack direction='column' gap='20px' sx={{ height: 'auto', flex: '100%', padding: '0 20px' }}>
                 <Typography mx='auto' variant='h4' mb='.7rem'> List of Faculties </Typography>
                 <FormControl fullWidth sx={{ maxWidth: "30%" }} size="small">
-                    <InputLabel>Select Faculty</InputLabel>
+                    <InputLabel>Select Level</InputLabel>
                     <Select
                         size="small"
                         sx={{

@@ -55,7 +55,7 @@ function ProgramPage() {
                 </Link>
             </Grid>
 
-            <Grid  item xs={12} sm={4.3} md={3.5} lg={3} order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
+            <Grid item xs={12} sm={4.3} md={3.5} lg={3} order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
                 <div className="full group relative block  rounded-3xl overflow-hidden">
                     <Grid
                         className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300   sm:mx-auto sm:max-w-sm  sm:px-10"
@@ -73,7 +73,7 @@ function ProgramPage() {
                         </div>
                     </Grid>
 
-                    <div className='bg-[#1169bf] px-4'>
+                    <div className='bg-[#1169bf] px-4 pb-4'>
                         <div className="relative">
                             <h3 className="mt md:text-sm lg:text-md font-bold text-white underline">{programDetail.programName} {`(${programDetail.shortName})`}</h3>
                         </div>
@@ -102,7 +102,19 @@ function ProgramPage() {
                                     {extractDate(programDetail.runningFrom)}
                                 </span>
                             </h1>
-                            <Divider sx={{ color: 'red', marginTop: '10px' }} />
+                            <div className='flex justify-center'>
+                                {
+                                    programDetail.hasProgramBrochure && (
+                                        <Link
+                                            target='_blank'
+                                            className='rounded-md text-white text-sm border-[1px] border-[#F36710]  mx-auto px-3 py-1'
+                                            to={`${FILE_URL}/${programDetail.programBrochure}`}
+                                            download
+                                        >
+                                            Download Brochure
+                                        </Link>
+                                    )}
+                            </div>
                         </Stack>
 
                     </div>

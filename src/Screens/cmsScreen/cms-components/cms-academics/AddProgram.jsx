@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
 import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
@@ -15,8 +15,8 @@ function AddProgram() {
         programName: '',
         shortName: '',
         runningFrom: '',
-        hasProgramBroucher: true,
-        programBroucher: '',
+        hasProgramBrochure: true,
+        programBrochureFile: '',
         programDetails: '',
         status: true
     });
@@ -24,7 +24,7 @@ function AddProgram() {
     const handleFileChange = (file) => {
         setFormData(prev => ({
             ...prev,
-            programBroucher: file
+            programBrochureFile: file
         }));
     };
 
@@ -203,7 +203,7 @@ function AddProgram() {
                             <Select
                                 size='small'
                                 label='Do you want to upload Program Broucher?'
-                                name='hasProgramBroucher'
+                                name='hasProgramBrochure'
                                 onChange={handleChange}
                                 required
                             >
@@ -216,9 +216,9 @@ function AddProgram() {
 
                     <Grid item sm={12} md={6}>
                         <FileUpload
-                            required={formData.hasProgramBroucher}
-                            disabled={!formData.hasProgramBroucher}
-                            name='programBroucher'
+                            required={formData.hasProgramBrochure}
+                            disabled={!formData.hasProgramBrochure}
+                            name='programBrochureFile'
                             label='upload a program Broucher'
                             onFileSelect={handleFileChange}
                         />
