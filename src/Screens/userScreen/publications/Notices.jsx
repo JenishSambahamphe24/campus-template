@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import PaginationForReports from './component/PaginationForReports';
 import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { extractDate } from '../../../Components/utilityFunctions';
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
@@ -42,8 +43,7 @@ function Notices() {
                 const totalPages = Math.ceil(items.length / itemsPerPage);
                 const indexOfLastItem = currentPage * itemsPerPage;
                 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-                const paginatedItems = items.slice(indexOfFirstItem, indexOfLastItem);
-
+                const paginatedItems = items.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)).slice(indexOfFirstItem, indexOfLastItem);
                 return (
                     <Grid item xs={11.8} lg={3.8} md={5.8} key={subCategory}>
                         <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
@@ -53,17 +53,21 @@ function Notices() {
                                     paginatedItems.map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}${item.file}`}
+                                                href={`${FILE_URL}content/${item.file}`}
                                                 download
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex text-sm"
                                             >
                                                 {item.title}
+                                                {`
+                                                    (${extractDate(item.publishedAt)})`
+                                                }
                                                 <MdOutlineFileDownload
                                                     fontSize="17px"
                                                     style={{ marginTop: '2px', marginLeft: '5px', color: '#1169bf' }}
                                                 />
+
                                             </a>
                                         </li>
                                     ))

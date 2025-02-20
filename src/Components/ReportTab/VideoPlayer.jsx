@@ -40,7 +40,7 @@ function VideoPlayer() {
                             <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-[180px] w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
                                 <Grid className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-100 transition duration-300 ease-in-out  dark:border-gray-700 ">
                                     <img
-                                        src={item.thumbnailImage ? `${IMAGE_URL}${item.thumbnailImage}` : defaultImage}
+                                        src={item.thumbnailImage ? `${IMAGE_URL}content/${item.thumbnailImage}` : defaultImage}
                                         className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center  transition duration-300 group-hover:scale-110"
                                         alt="Azores"
                                     />

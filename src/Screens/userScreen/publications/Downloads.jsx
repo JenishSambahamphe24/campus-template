@@ -50,10 +50,10 @@ function Downloads() {
                         <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                             <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                                 {paginatedItems.length > 0 ? (
-                                    paginatedItems.map((item, index) => (
+                                    paginatedItems.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt)).map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}${item.file}`}
+                                                href={`${FILE_URL}content/${item.file}`}
                                                 download
                                                 target="_blank"
                                                 rel="noopener noreferrer"

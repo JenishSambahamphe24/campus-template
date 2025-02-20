@@ -11,14 +11,14 @@ import { FaFacebook } from "react-icons/fa6";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
-const defaultImage = 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80';
+const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png';
 const email = import.meta.env.VITE_EMAIL
 const phone = import.meta.env.VITE_PHONE
 
 function Footer() {
     const [officeInfo, setOfficerInfo] = useState({})
     const [otherLinks, setLinks] = useState([])
-   
+
     const [fbLink, setFbLink] = useState({})
     const [ytLink, setYTLink] = useState({})
 
@@ -71,7 +71,6 @@ function Footer() {
                                 <p className="text-white">No data uploaded</p>
                             )}
                         </Grid>
-
                         <Grid item xs={12} sm={12} md={5.8} lg={2.9}>
                             <p className="font-medium text-2xl text-white mb-2"> Related Links</p>
                             <ul className="space-y-4 text-sm ">
@@ -95,7 +94,7 @@ function Footer() {
                                 <div className='flex text-white'>
                                     <IoMdCall className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{phone}</span>
                                 </div>
-                                <div className='flex space-x-4 '> 
+                                <div className='flex space-x-4 '>
                                     <Link target='_blank' to={ytLink?.url}>
                                         <FaYoutube className="h-10 w-10  text-red-600 " />
                                     </Link>
@@ -116,7 +115,6 @@ function Footer() {
                                     title="map"
                                     src={map_iframe}
                                 ></iframe>
-
                             </Grid>
                         </Grid>
                     </Grid>

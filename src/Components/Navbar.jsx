@@ -27,7 +27,7 @@ function Navbar() {
                                 alt="Logo"
                             />
                         </Link>
-                        <div className="ml-2 mt-4 md:mt-1 lg:ml-4 flex flex-col justify-center">
+                        <div className="ml-2 mt-4  md:mt-1 lg:ml-4 flex flex-col justify-center">
                             <h1 className="text-xs text-center lg:text-sm text-white  font-bold tracking-wide"> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
                             <p className="text-xs text-white text-center lg:text-xs"> Affiliated to Tribhuwan University </p>
                             <h1 className='text-md lg:text-2xl font-bold text-white text-center mt-1'>{collegeNameNepali}</h1>
