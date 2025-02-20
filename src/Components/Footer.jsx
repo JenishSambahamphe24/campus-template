@@ -32,7 +32,6 @@ function Footer() {
         const otherLinks = response.filter((item) => item.type === 'otherLink')
         setLinks(otherLinks)
         setFbLink(response.find(item => item.name === 'facebook'))
-        setXLink(response.find(item => item.name === 'twitter'))
         setYTLink(response.find(item => item.name === 'youtube'))
     }
 
