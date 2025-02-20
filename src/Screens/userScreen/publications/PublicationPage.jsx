@@ -9,7 +9,6 @@ import { getAllpublication, getPublicationById } from '../../cmsScreen/cms-compo
 import DownloadIcon from '@mui/icons-material/Download';
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const FILE_URL = import.meta.env.VITE_FILE_URL
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
 
@@ -18,12 +17,8 @@ function PublicationPage() {
     const [publicationDetail, setPublicationDetail] = useState({});
     const { id } = useParams()
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
-
 
     const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
-
     useEffect(() => {
         const fetchAllPubData = async () => {
             const data = await getAllpublication()
@@ -76,7 +71,7 @@ function PublicationPage() {
             <Grid item xs={12} sm={4.3} md={3.5} lg={3} className='border border-gray-100' order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
                 <div className="full group relative block overflow-hidden">
                     <img
-                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}${publicationDetail.thumbnailImage}` : defaultImage}
+                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}content/${publicationDetail.thumbnailImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
                         className={`h-52 transition duration-500 sm:h-52 object-cover ${publicationDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"

@@ -39,7 +39,7 @@ function OurTeam() {
             value: "Non-teaching staff",
         },
     ];
-    
+
     console.log(allTeamMember)
     return (
         <Grid container className='px-2 md:px-6 lg:px-9 py-8'>
@@ -90,7 +90,7 @@ function OurTeam() {
                                     .map((item, index) => (
                                         <Grid item xs={11.8} sm={5.8} md={2.9} lg={2.9} key={index} sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <img
-                                                src={item.ppImage ? `${IMAGE_URL}${item.ppImage}` : defaultImage}
+                                                src={item.ppImage ? `${IMAGE_URL}team/${item.ppImage}` : defaultImage}
                                                 alt=""
                                                 className="h-[250px] w-full object-cover transition duration-500 group-hover:scale-105"
                                             />
