@@ -120,7 +120,7 @@ function GalleryList() {
             minHeight: '360px',
             maxHeight: '464px',
             '.MuiDataGrid-columnHeader': {
-              backgroundColor: '#0368b0',
+              backgroundColor: '#1169bf',
               color: 'white',
               fontWeight: '600',
               borderRight: '1px solid white',

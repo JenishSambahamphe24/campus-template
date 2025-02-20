@@ -223,6 +223,8 @@ function GalleryGrid() {
     fetchData();
   }, [id]);
 
+  console.log(galleryData)
+  
   const handleImageClick = (index) => {
     if (mainSwiper) {
       mainSwiper.slideToLoop(index);

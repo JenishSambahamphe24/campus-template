@@ -20,92 +20,136 @@ import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import FileDroppable from '../cms-gallery/FileDroppable';
-import RichEditor from '../cms-project/components/RichEditor';
+import RichEditor from '../../../../Components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
 import { getPublicationById, updatePublicationById, getPublicationCategory } from './publicationApi';
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
+import DateInputField from '../../../../Components/DateInputField';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
 
+
 function EditPublication() {
-    const navigate = useNavigate()
-    const { pubId } = useParams()
-    const [category, setCategory] = useState([])
+    const navigate = useNavigate();
+    const { pubId } = useParams();
+    const [category, setCategory] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         categoryName: '',
+        categoryId: '',
         subCategoryName: '',
         isScrollable: false,
         isPopUp: false,
         isTextDisplay: false,
         displayStatus: false,
+        publishedAt: '',
+        expiredAt: '',
+        thumbnailImage: null,
+        file: null
     });
     const [fetchedImage, setFetchedImage] = useState(null);
-    const [fetchedFile, setFetchedFile] = useState(null)
+    const [fetchedFile, setFetchedFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchCategory = async () => {
-            const category = await getPublicationCategory();
-            const bindedCategory = category.reduce((acc, item) => {
-                const { categoryName, subCategoryName, id } = item;
-                const existingCategory = acc.find(category => category.categoryName === categoryName);
-                if (existingCategory) {
-                    existingCategory.subCategories.push({ subCategoryName, id });
-                } else {
-                    acc.push({
-                        categoryName: categoryName,
-                        subCategories: [{ subCategoryName, id }]
-                    });
-                }
-                return acc;
-            }, []);
-            setCategory(bindedCategory);
+            try {
+                const categoryData = await getPublicationCategory();
+                const bindedCategory = categoryData.reduce((acc, item) => {
+                    const { categoryName, subCategoryName, id } = item;
+                    const existingCategory = acc.find(category => category.categoryName === categoryName);
+                    if (existingCategory) {
+                        existingCategory.subCategories.push({ subCategoryName, id });
+                    } else {
+                        acc.push({
+                            categoryName: categoryName,
+                            subCategories: [{ subCategoryName, id }]
+                        });
+                    }
+                    return acc;
+                }, []);
+                setCategory(bindedCategory);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                toast.error('Failed to load categories');
+            }
         };
 
         fetchCategory();
-    }, [pubId]);
+    }, []);
 
+    // Fetch publication data
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getPublicationById(pubId)
-                setFormData((prev) => ({
+                const data = await getPublicationById(pubId);
+
+                // Find the category and set subcategories
+                const selectedCategory = category.find(cat => cat.categoryName === data.categoryName);
+                if (selectedCategory) {
+                    setSubcategories(selectedCategory.subCategories);
+                }
+
+                setFormData(prev => ({
                     ...prev,
                     ...data,
                     thumbnailImage: null,
-                    file: null,
+                    file: null
                 }));
+
                 setFetchedImage(data.thumbnailImage);
-                setFetchedFile(data.file)
+                setFetchedFile(data.file);
             } catch (error) {
-                console.error('Error fetching team data:', error);
+                console.error('Error fetching publication data:', error);
+                toast.error('Failed to load publication data');
+            } finally {
+                setIsLoading(false);
             }
         };
-        fetchData()
-    }, [pubId])
+
+        if (category.length > 0 && pubId) {
+            fetchData();
+        }
+    }, [pubId, category]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
 
         if (name === 'categoryName') {
             const selectedCategory = category.find(cat => cat.categoryName === value);
-            setSubcategories(selectedCategory ? selectedCategory.subCategories : []);
+            if (selectedCategory) {
+                setSubcategories(selectedCategory.subCategories);
+                // Check if current subcategory exists in new category
+                const existingSubCategory = selectedCategory.subCategories.find(
+                    sub => sub.id === formData.categoryId
+                );
+
+                setFormData(prev => ({
+                    ...prev,
+                    categoryName: value,
+                    categoryId: existingSubCategory ? prev.categoryId : '',
+                    subCategoryName: existingSubCategory ? prev.subCategoryName : ''
+                }));
+            }
         } else if (name === 'categoryId') {
+            const selectedSubCategory = subcategories.find(sub => sub.id === value);
             setFormData(prev => ({
                 ...prev,
-                categoryId: value
+                categoryId: value,
+                subCategoryName: selectedSubCategory ? selectedSubCategory.subCategoryName : ''
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
             }));
         }
     };
 
     const handleImageChange = (updatedFile, type) => {
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             [type]: updatedFile[0] || null,
         }));
@@ -114,14 +158,14 @@ function EditPublication() {
 
     const handleRemoveFetchedImage = () => {
         setFetchedImage(null);
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             thumbnailImage: null,
         }));
     };
 
     const handleFileChange = (uploadedFile, type) => {
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             [type]: uploadedFile[0] || null,
         }));
@@ -130,55 +174,79 @@ function EditPublication() {
 
     const handleRemoveFetchedFile = () => {
         setFetchedFile(null);
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             file: null,
         }));
     };
 
+    const handleDateChange = (name, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
+        if (!formData.categoryName || !formData.categoryId) {
+            toast.error('Please select both category and subcategory');
+            return;
+        }
+    
         const updatedData = new FormData();
+    
+        // Handle image and file uploads
         if (formData.thumbnailImage) {
             updatedData.append('thumbnailImage', formData.thumbnailImage);
         } else if (fetchedImage) {
             updatedData.append('thumbnailImage', fetchedImage);
         }
-
+    
         if (formData.file) {
-            updatedData.append('file', formData.file)
+            updatedData.append('file', formData.file);
         } else if (fetchedFile) {
-            updatedData.append('file', fetchedFile)
+            updatedData.append('file', fetchedFile);
         }
-
-        updatedData.append('title', formData.title || '');
-        updatedData.append('description', formData.description || '');
-        updatedData.append('categoryName', formData.categoryName || '');
-        updatedData.append('subCategoryName', formData.subCategoryName || '');
-        updatedData.append('isScrollable', formData.isScrollable || false);
-        updatedData.append('isPopUp', formData.isPopUp || false);
-        updatedData.append('isTextDisplay', formData.isTextDisplay || false);
-        updatedData.append('displayStatus', formData.displayStatus || false);
-        updatedData.append('categoryId', formData.categoryId || '')
-        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
+    
+        Object.keys(formData).forEach(key => {
+            if (!['thumbnailImage', 'file', 'publishedAt', 'expiredAt', 'updatedAt'].includes(key)) {
+                updatedData.append(key, formData[key] || '');
+            }
+        });
+    
+        if (formData.publishedAt) {
+            updatedData.append('publishedAt', extractDate(formData.publishedAt));
+        }
+        if (formData.expiredAt) {
+            updatedData.append('expiredAt', extractDate(formData.expiredAt));
+        }
+        updatedData.append('updatedAt', extractDate(new Date()));
+    
         try {
             await updatePublicationById(pubId, updatedData);
-            toast.success('Project updated successfully');
+            toast.success('Publication updated successfully');
             setTimeout(() => {
-                navigate('/admin/publications')
-            }, 700)
+                navigate('/admin/publications');
+            }, 700);
         } catch (error) {
-            console.error('Error updating project:', error);
-            toast.error('Failed to update project');
+            console.error('Error updating publication:', error);
+            toast.error('Failed to update publication');
         }
     };
+    
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Grid container className='lg:px-20 pb-10'>
-            <h1 className='text-center pb-3 text-2xl  mx-auto'> Edit content</h1>
-            <Stack component={Paper} width='100%' elevation='5' padding='20px' direction='column' rowGap='10px'>
+            <h1 className='text-center pb-3 text-2xl mx-auto'>Edit Publication</h1>
+            <Stack component={Paper} width='100%' elevation={5} padding='20px' direction='column' spacing={2}>
                 <form onSubmit={handleSubmit}>
-                    <Grid container spacing='1rem'>
+                    <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
@@ -188,51 +256,37 @@ function EditPublication() {
                                 name='title'
                                 value={formData.title}
                                 onChange={handleChange}
+                                required
                             />
                         </Grid>
                         <Grid item xs={3}>
-                            <FormControl size='small' fullWidth>
-                                <InputLabel size='small'>Category</InputLabel>
+                            <FormControl size='small' fullWidth required>
+                                <InputLabel>Category</InputLabel>
                                 <Select
                                     variant='standard'
-                                    id="demo-simple-select"
-                                    size='small'
+                                    disabled
                                     label='Category'
                                     name='categoryName'
                                     value={formData.categoryName}
-                                    required InputLabelProps={{
-                                        sx: {
-                                            '& .MuiInputLabel-asterisk': {
-                                                color: 'brown',
-                                            },
-                                        },
-                                    }}
                                     onChange={handleChange}
                                 >
-                                    {
-                                        category.map((item, index) => (
-                                            <MenuItem key={index} value={item.categoryName}>{item.categoryName}</MenuItem>
-                                        ))
-                                    }
+                                    {category.map((item, index) => (
+                                        <MenuItem key={index} value={item.categoryName}>
+                                            {item.categoryName}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>
                         <Grid item xs={3}>
-                            <FormControl size='small' fullWidth>
-                                <InputLabel size='small'>Sub-category</InputLabel>
+                            <FormControl size='small' fullWidth required>
+                                <InputLabel>Sub-category</InputLabel>
                                 <Select
                                     variant='standard'
-                                    id="demo-simple-select"
-                                    size='small'
+                                    disabled
                                     label='Sub-category'
                                     name='categoryId'
-                                    required InputLabelProps={{
-                                        sx: {
-                                            '& .MuiInputLabel-asterisk': {
-                                                color: 'brown',
-                                            },
-                                        },
-                                    }}
+                                    value={formData.categoryId}
                                     onChange={handleChange}
                                 >
                                     {subcategories.map((subCategory, index) => (
@@ -245,30 +299,27 @@ function EditPublication() {
                         </Grid>
                     </Grid>
 
-                    <Grid mt='.3rem' container>
+                    <Grid container spacing={2} mt={1}>
+                        <Grid item xs={3}>
+                            <DateInputField
+                                variant='standard'
+                                name="publishedAt"
+                                label="Published Date"
+                                value={formData.publishedAt}
+                                onChange={(value) => handleDateChange("publishedAt", value)}
+                                format="YYYY-MM-DD"
+                                required
+                            />
+                        </Grid>
                         <Grid item xs={3}>
                             <FormControl>
-                                <FormLabel id="status"> Scrollable status ?</FormLabel>
-                                <RadioGroup row value={formData.isScrollable} onChange={handleChange} name="isScrollable">
-                                    <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
-                                    <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-                        <Grid item md={3}>
-                            <FormControl>
-                                <FormLabel id="status">Popuup Status</FormLabel>
-                                <RadioGroup row value={formData.isPopUp} onChange={handleChange} name="isPopUp">
-                                    <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
-                                    <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item md={3}>
-                            <FormControl>
-                                <FormLabel id="status">Display Status ?</FormLabel>
-                                <RadioGroup row value={formData.isTextDisplay} onChange={handleChange} name="isTextDisplay">
+                                <FormLabel>Scrollable Status</FormLabel>
+                                <RadioGroup
+                                    row
+                                    value={formData.isScrollable}
+                                    onChange={handleChange}
+                                    name="isScrollable"
+                                >
                                     <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
                                     <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
                                 </RadioGroup>
@@ -276,30 +327,75 @@ function EditPublication() {
                         </Grid>
                         <Grid item xs={3}>
                             <FormControl>
-                                <FormLabel>Active Status</FormLabel>
-                                <RadioGroup row value={formData.displayStatus} onChange={handleChange} name="displayStatus">
+                                <FormLabel>Popup Status</FormLabel>
+                                <RadioGroup
+                                    row
+                                    value={formData.isPopUp}
+                                    onChange={handleChange}
+                                    name="isPopUp"
+                                >
+                                    <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
+                                    <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <FormControl>
+                                <FormLabel>Display Status</FormLabel>
+                                <RadioGroup
+                                    row
+                                    value={formData.displayStatus}
+                                    onChange={handleChange}
+                                    name="displayStatus"
+                                >
                                     <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
                                     <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Grid border='1px solid #c2c2c2' borderRadius='8px' container width="100%" mt='10px' padding='10px'>
-                        <Grid px='5px' item xs={6}>
+
+                    <Grid container className='border border-gray-300 rounded-lg mt-3 p-3'>
+                        <Grid item xs={6} className='px-2'>
                             <Typography>Thumbnail Image</Typography>
                             <FileDroppable
-                                placeholder='New thumbnail image'
+                                placeholder='Drop new thumbnail image here'
                                 name="thumbnailImage"
                                 allowMultiple={false}
                                 onImagesChange={(updatedFiles) => handleImageChange(updatedFiles, 'thumbnailImage')}
                             />
                             {fetchedImage && (
-                                <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
-                                    <img src={`${IMAGE_URL}/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
-
+                                <div className="relative mt-2 w-16 h-16">
+                                    <img
+                                        src={`${IMAGE_URL}/${fetchedImage}`}
+                                        alt="Thumbnail"
+                                        className="w-full h-full object-cover rounded-lg"
+                                    />
                                     <IconButton
                                         size="small"
                                         onClick={handleRemoveFetchedImage}
+                                        className="absolute -top-2 -right-2 bg-white/80 hover:bg-white"
+                                    >
+                                        <h1 className="h-4 w-4">
+                                        X
+                                        </h1>
+                                    </IconButton>
+                                </div>
+                            )}
+                        </Grid>
+                        <Grid item xs={6} className='px-2'>
+                            <Typography>File</Typography>
+                            <FileDroppableForFile
+                                name="file"
+                                allowMultiple={false}
+                                onFilesChange={(uploadedFile) => handleFileChange(uploadedFile, 'file')}
+                            />
+                            {fetchedFile && (
+                                <div className="relative mt-2 bg-gray-100 p-2 rounded-md inline-flex items-center pr-12">
+                                    <p className="text-sm truncate max-w-[200px]">{fetchedFile}</p>
+                                    <IconButton
+                                        size="small"
+                                        onClick={handleRemoveFetchedFile}
                                         style={{
                                             position: 'absolute',
                                             top: '-10px',
@@ -312,54 +408,30 @@ function EditPublication() {
                                 </div>
                             )}
                         </Grid>
-                        <Grid px='5px' item xs={6}>
-                            <Typography>File</Typography>
-                            <FileDroppableForFile
-                                name="file"
-                                allowMultiple={false}
-                                onFilesChange={(uploadedFile) => handleFileChange(uploadedFile, 'file')}
-                            />
-                            {fetchedFile && (
-                                <div
-                                    className="relative mt-1 bg-gray-200 p-2 rounded-md inline-flex items-center"
-                                    style={{ paddingRight: '50px' }}
-                                >
-                                    <p className="text-sm">{fetchedFile}</p>
-
-                                    <IconButton
-                                        size="small"
-                                        onClick={handleRemoveFetchedFile}
-                                        style={{
-                                            position: 'absolute',
-                                            top: '3px',
-                                            right: '3px',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                        }}
-                                    >
-                                        <CloseIcon fontSize="small" />
-                                    </IconButton>
-                                </div>
-                            )}
-                        </Grid>
-
-
                     </Grid>
-                    <Grid md={12} mt='.5rem'>
+
+                    <Grid item xs={12} mt={2}>
                         <RichEditor
-                            placeholder=""
-                            name='description'
+                            placeholder="Enter description..."
+                            name="description"
                             value={formData.description}
-                            onChange={handleChange}
-                            height='400px'
+                            onChange={(value) => setFormData(prev => ({ ...prev, description: value }))}
+                            height="400px"
                         />
                     </Grid>
-                    <Button sx={{ marginTop: '10px' }} type='submit' size='small' variant='contained' >
-                        Update  content
+
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        size='small'
+                        className="mt-4"
+                    >
+                        Update Publication
                     </Button>
                 </form>
             </Stack>
         </Grid>
-    )
+    );
 }
 
 export default EditPublication

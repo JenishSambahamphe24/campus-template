@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Grid, FormControl, Paper, Typography, Button, RadioGroup, FormControlLabel, Radio, FormLabel } from '@mui/material';
-import RichEditor from '../../cms-project/components/RichEditor';
+import RichEditor from '../../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../../Components/ImageUpload';

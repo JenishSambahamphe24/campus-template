@@ -132,7 +132,7 @@ function LinkLists() {
                     }}
                     sx={{
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#0368b0',
+                            backgroundColor: '#1169bf',
                             color: 'white',
                             fontWeight: '40px',
                             borderRight: '1px solid white',

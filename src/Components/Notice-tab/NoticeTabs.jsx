@@ -50,7 +50,7 @@ function NoticeTabs() {
         fetchData()
     }, [])
     const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 5;
+    const itemsPerPage = 6;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstOtherItem = indexOfLastItem - itemsPerPage;
@@ -60,15 +60,15 @@ function NoticeTabs() {
     };
     return (
         <Grid container justifyContent='center' gap='15px' sx={{ minHeight: { xs: 'auto', lg: '27rem' } }}>
-            <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>Latest Notices</h1>
+            <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative rounded-l-lg border-2 border-[#1169bf] h-[27rem]'>
+                <h1 className='bg-[#1169bf]  text-white text-lg text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
                     <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
                                     <div className='line-clamp-1'>
-                                        <span className="flex justify-between text-lg  overflow-hidden">
+                                        <span className="flex justify-between text-md  overflow-hidden">
                                             <p className='line-clamp-2'>
                                                 {item.title}
                                             </p>
@@ -80,7 +80,7 @@ function NoticeTabs() {
                                             </a>
                                         </span>
                                         <p className="flex text-xs mt-[-2px] italic">
-                                            <SlCalender fontSize="12px" style={{ color: '#0368b0', marginRight: '3px', marginTop: '2px' }} />
+                                            <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
                                             20/09/1990
                                         </p>
                                     </div>
@@ -108,10 +108,10 @@ function NoticeTabs() {
                 md={12}
                 lg={5.8}
                 order={{ xs: 1, sm: 1, md: 1, lg: 2 }}
-                className={`relative border-2 border-[#0368b0] ${isMobile ? 'h-[37rem]' : 'h-[27rem]'}`}
+                className={`relative border-2 border-[#1169bf] ${isMobile ? 'h-[37rem]' : 'h-[27rem]'}`}
             >
 
-                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>Offered Programs</h1>
+                <h1 className='bg-[#1169bf] text-white text-lg text-center font-bold uppercase py-2'>Offered Programs</h1>
                 <Grid container padding='15px' justifyContent={isMobile ? 'center' : 'flex-start'} gap='10px' rowGap='20px'>
                     {
                         allPrograms.sort((a, b) => b.id - a.id).slice(0, 6).map((item, index) => (
@@ -120,7 +120,7 @@ function NoticeTabs() {
                                 key={index}
                                 md={3.8}
                                 xs={5.8}
-                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0] h-36 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
+                                className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf] h-36 px-4 pt-3 pb-2 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-3xl"
                             >
                                 <Link to={`/program/${item.id}`}>
                                     <span className="absolute invisible group-hover:visible top-4 z-0 h-10 w-10 rounded-full bg-[#f36710]  transition-all duration-300 group-hover:scale-[8]"></span>
@@ -159,8 +159,8 @@ function NoticeTabs() {
                     </Link>
                 </Grid>
             </Grid>
-            <Grid item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 border-[#0368b0] h-[27rem]'>
-                <h1 className='bg-[#0368b0] text-white text-lg text-center font-bold uppercase py-2'>latest news & events</h1>
+            <Grid item xs={12} sm={5.8} md={5.8} lg={2.8} order={{ xs: 3, sm: 3, md: 3, lg: 3 }} className='relative border-2 rounded-r-lg  border-[#1169bf] h-[27rem]'>
+                <h1 className='bg-[#1169bf] text-white text-lg text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
                         news.sort((a, b) => b.id - a.id).slice(0, 4).map((item, index) => (

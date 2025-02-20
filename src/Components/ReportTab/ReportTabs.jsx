@@ -23,8 +23,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item => item.categoryName === 'Notices' || item.categoryName === 'Report' || item.categoryName === 'Publication');
-            console.log(filteredData)
+            const filteredData = data.filter(item =>   item.categoryName === 'Report' || item.categoryName === 'Publication');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             setSubCategories(uniqueSubCategories);
 
@@ -85,7 +84,7 @@ function ReportTabs() {
                         <Tabs value={activeTab}>
                             <TabsHeader
                                 style={{
-                                    background: '#0368B0',
+                                    background: '#1169bf',
                                     color: 'white',
                                     zIndex: '1',
                                     height: '35px',

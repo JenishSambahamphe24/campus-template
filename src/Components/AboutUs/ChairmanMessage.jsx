@@ -13,7 +13,7 @@ function ChairmanMessage() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllaboutUs()
-            setData(data.find(item => item.heading === 'Chairman-Message'))
+            setData(data.find(item => item.heading === 'Message-chairman'))
         };
         fetchData()
     }, [])

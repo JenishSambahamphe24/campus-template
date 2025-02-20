@@ -33,7 +33,7 @@ function NewsPage() {
         };
         fetchData()
         fetchAllNewsData()
-    }, [newsDetail])
+    }, [])
 
     return (
         <Box>
@@ -93,7 +93,7 @@ function NewsPage() {
                 </Grid>
 
                 <Grid item xs='12' md={4.9} lg={2.8} sx={{ minHeight: '94px' }}  >
-                    <div className='mt-3 md:mt-0 mb-3  bg-[#0368b0]'>
+                    <div className='mt-3 md:mt-0 mb-3  bg-[#1169bf]'>
                         <h5 className='font-medium text-lg text-center text-white py-1'>Latest News</h5>
                     </div>
                     <Stack className='px-2 lg:px-4' spacing='1rem'>

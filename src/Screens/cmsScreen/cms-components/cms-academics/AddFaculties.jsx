@@ -34,7 +34,7 @@ function AddFaculties() {
     return (
         <form onSubmit={handleSubmit}>
             <Typography mb='20px' variant='h5' textAlign='center'>
-                Add a new Publication Category
+                Add a new Faculty
             </Typography>
             <Grid component={Paper} elevation={4} container width='70%' mx='auto' spacing={2} padding='10px'>
                 <Grid item md={6}>
@@ -47,13 +47,13 @@ function AddFaculties() {
                             name='categoryName'
                             value={formData.categoryName}
                             label='Category Name'
-                            required   InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': {
-                                    color: 'brown',
+                            required InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
                                 },
-                            },
-                        }}
+                            }}
                             onChange={handleChange}
                         >
                             <MenuItem value='Publication'>Publication</MenuItem>

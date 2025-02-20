@@ -42,10 +42,6 @@ function GalleryPage() {
             label: "Video gallery",
             value: "video",
         },
-        {
-            label: "Audio gallery",
-            value: "audio",
-        }
     ];
 
     return (
@@ -55,7 +51,7 @@ function GalleryPage() {
                 <Tabs className='min-w-full' value={activeTab}>
                     <Grid item sm={12} md={12} >
                         <TabsHeader
-                            style={{ background: '#0368B0', color: 'white', zIndex: '1' }}
+                            style={{ background: '#1169bf', color: 'white', zIndex: '1' }}
                             className='rounded'
                         >
                             {data.map(({ label, value }) => (

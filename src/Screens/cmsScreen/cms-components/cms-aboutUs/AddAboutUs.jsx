@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Paper, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, InputLabel, MenuItem, Select } from '@mui/material';
-import RichEditor from '../cms-project/components/RichEditor';
+import RichEditor from '../../../../Components/RichEditor';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addAboutUs } from './aboutsAPI';
@@ -13,7 +13,7 @@ function AddAboutUs() {
         heading: '',
         description: '',
         workingAreaImage: '',
-        status: false
+        status: true
     });
 
     const handleChange = (e) => {
@@ -21,13 +21,14 @@ function AddAboutUs() {
         if (name === 'status') {
             setFormData(prev => ({
                 ...prev,
-                [name]: e.target.value === 'true' ? true : false
+                [name]: value === 'true'
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
             }));
         }
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
     };
 
     const handleFileUpload = (e) => {
@@ -35,7 +36,6 @@ function AddAboutUs() {
         const file = files[0];
         let errorMsg = '';
 
-        // Check if file is valid image
         if (file && !['image/jpeg', 'image/png'].includes(file.type)) {
             errorMsg = 'Only JPEG and PNG image files are allowed';
         }
@@ -45,7 +45,6 @@ function AddAboutUs() {
             [name]: errorMsg,
         }));
 
-        // If valid file, set it in state
         if (!errorMsg) {
             setFormData((prev) => ({
                 ...prev,
@@ -67,7 +66,6 @@ function AddAboutUs() {
             setTimeout(() => {
                 navigate('/admin/aboutUs')
             }, 1000);
-
         } catch (error) {
             toast.error('Error adding content');
             console.error('Error adding content:', error);
@@ -79,7 +77,7 @@ function AddAboutUs() {
             <Typography mb="20px" variant="h5" textAlign="center">
                 Add Institutional content
             </Typography>
-            <Grid component={Paper}  container width="70%" mx="auto" spacing="10px" padding="10px">
+            <Grid component={Paper} container width="70%" mx="auto" spacing="10px" padding="10px">
                 <Grid item md={6}>
                     <FormControl size='small' fullWidth>
                         <InputLabel size='small'>Content-Type</InputLabel>
@@ -88,6 +86,7 @@ function AddAboutUs() {
                             label='Content-Type'
                             name='heading'
                             required
+                            value={formData.heading}
                             InputLabelProps={{
                                 sx: {
                                     '& .MuiInputLabel-asterisk': {
@@ -97,15 +96,16 @@ function AddAboutUs() {
                             }}
                             onChange={handleChange}
                         >
-                            <MenuItem value='About-us'> About Us</MenuItem>
-                            <MenuItem value='Chairman-Message'> Message From Chairman</MenuItem>
-                            <MenuItem value='Message-campus-chief'> Message From Campus Chiief</MenuItem>
+                            <MenuItem value='Introduction'>Introduction</MenuItem>
+                            <MenuItem value='Message-chairman'>Message From Chairman</MenuItem>
+                            <MenuItem value='Message-campus-chief'>Message From Campus Chief</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
                 <Grid item md={6}>
                     <TextField
-                        required InputLabelProps={{
+                        required
+                        InputLabelProps={{
                             shrink: true,
                             sx: {
                                 '& .MuiInputLabel-asterisk': {
@@ -126,7 +126,7 @@ function AddAboutUs() {
                 </Grid>
 
                 <Grid display='flex' item md={12}>
-                    <FormControl >
+                    <FormControl>
                         <FormLabel id="status">Status</FormLabel>
                         <RadioGroup
                             row
@@ -140,21 +140,15 @@ function AddAboutUs() {
                     </FormControl>
                 </Grid>
 
-
                 <Grid item md={12}>
                     <RichEditor
                         height="320px"
-                        required InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': {
-                                    color: 'brown',
-                                },
-                            },
-                        }}
                         placeholder="Enter introduction"
                         name="description"
                         value={formData.description}
-                        onChange={handleChange}
+                        onChange={(content) => {
+                            setFormData(prev => ({ ...prev, description: content }));
+                        }}
                     />
                 </Grid>
 

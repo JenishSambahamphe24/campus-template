@@ -5,8 +5,6 @@ import { Grid, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { getAllTeams, getAllUsers } from './teamApi';
 import { GridOverlay } from '@mui/x-data-grid';
-import AdminRoleDialog from './components/AdminRoleDialog';
-import RemoveRole from './components/RemoveRole';
 import { useAuth } from '../../../../context/AuthContextProvider';
 import { showStatus } from '../../../../Components/utilityFunctions';
 import { useNavigate } from 'react-router-dom';
@@ -16,24 +14,11 @@ import DeleteDialog from './components/DeleteDialog';
 
 function TeamList() {
     const [allTeams, setAllTeams] = useState([])
-    const [teamWithRole, setTeamWithRole] = useState([])
     const [teamId, setTeamId] = useState(0)
     const { role } = useAuth()
     const navigate = useNavigate()
 
-    const [makeAdminDialogOpen, setMakeAdminDialogOpen] = useState(false)
-    const [removeAdminDialogOpen, setRemoveAdminDialogOpen] = useState(false)
-
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-
-    const handleMakeAdminDialogOpen = (id) => {
-        setTeamId(id)
-        setMakeAdminDialogOpen(true);
-    };
-    const handleRemoveAdminDialogOpen = (id) => {
-        setTeamId(id)
-        setRemoveAdminDialogOpen(true);
-    };
 
     const handleDeleteTeamDialogOpen = (id) => {
         setTeamId(id)
@@ -45,13 +30,6 @@ function TeamList() {
         fetchData()
     };
 
-    const handleMakeAdminDialogClose = async () => {
-        setMakeAdminDialogOpen(false);
-
-    };
-    const handleRemoveAdminDialogClose = async () => {
-        setRemoveAdminDialogOpen(false);
-    };
     
     const fetchData = async () => {
         try {
@@ -75,7 +53,6 @@ function TeamList() {
         const fetchData = async () => {
             try {
                 const data = await getAllUsers()
-                setTeamWithRole(data)
             }
             catch (error) {
                 console.error('Error fetching teams:', error);
@@ -92,14 +69,9 @@ function TeamList() {
             flex: 2.5,
         },
        
-        // {
-        //     field: 'category',
-        //     headerName: 'Type',
-        //     flex: 1.4,
-        // },
         {
             field: 'subCategory',
-            headerName: 'Sub-category',
+            headerName: 'Position',
             flex: 1.4,
         },
         {
@@ -210,7 +182,7 @@ function TeamList() {
                         minHeight: '360px',
                         maxHeight: '464px',
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#0368b0',
+                            backgroundColor: '#1169bf',
                             color: 'white',
                             fontWeight: '40px',
                             borderRight: '1px solid white',
@@ -240,8 +212,6 @@ function TeamList() {
                     }}
                 />
                 <Box>
-                    <AdminRoleDialog itemId={teamId} open={makeAdminDialogOpen} handleClose={handleMakeAdminDialogClose} setOpen={setMakeAdminDialogOpen} />
-                    <RemoveRole itemId={teamId} open={removeAdminDialogOpen} handleClose={handleRemoveAdminDialogClose} setOpen={setRemoveAdminDialogOpen} />
                     <DeleteDialog id={teamId} open={deleteDialogOpen} handleClose={handleDeleteTeamDialogClose} />
                 </Box>
             </Box>

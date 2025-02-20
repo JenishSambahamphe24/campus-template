@@ -61,7 +61,7 @@ function AdminSignIn() {
                                 id="login_email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="block w-full h-12 px-4 py-3 placeholder-gray-500 bg-gray-100 border-0 rounded-lg appearance-none text-[#0368b0] focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-[#0368b0] focus:ring-inset focus:ring-2 text-sm"
+                                className="block w-full h-12 px-4 py-3 placeholder-gray-500 bg-gray-100 border-0 rounded-lg appearance-none text-[#1169bf] focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-[#1169bf] focus:ring-inset focus:ring-2 text-sm"
                                 placeholder="Enter your email"
                                 required
                                
@@ -79,7 +79,7 @@ function AdminSignIn() {
                                     name='password'
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="block w-full h-12 px-4 py-3 placeholder-gray-500 bg-gray-100 border-0 rounded-lg appearance-none text-[#0368b0] focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-[#0368b0] focus:ring-2 focus:ring-inset text-sm"
+                                    className="block w-full h-12 px-4 py-3 placeholder-gray-500 bg-gray-100 border-0 rounded-lg appearance-none text-[#1169bf] focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-[#1169bf] focus:ring-2 focus:ring-inset text-sm"
                                     placeholder="Enter your password"
                                     required 
                                 />
@@ -95,7 +95,7 @@ function AdminSignIn() {
                         <div className="mt-4">
                             <button
                                 type="submit"
-                                style={{ backgroundColor: '#0368b0' }}
+                                style={{ backgroundColor: '#1169bf' }}
                                 className="rounded-full px-8 py-1 h-10 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full"
                             >
                                 Login

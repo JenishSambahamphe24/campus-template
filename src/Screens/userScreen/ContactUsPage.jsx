@@ -63,13 +63,13 @@ function ContactUsPage() {
 
             <div className="bg-white hidden lg:relative lg:flex flex-wrap py-6 rounded shadow-md">
               <div className="lg:w-1/2 px-6">
-                <h2 className="title-font font-bold text-[#0368b0]  text-sm">ADDRESS</h2>
+                <h2 className="title-font font-bold text-[#1169bf]  text-sm">ADDRESS</h2>
                 <p className="mt-1"> {address} </p>
               </div>
               <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
-                <h2 className="title-font font-bold text-[#0368b0]  text-sm">EMAIL</h2>
+                <h2 className="title-font font-bold text-[#1169bf]  text-sm">EMAIL</h2>
                 <a href="rerl@aepc.gov.np" className="text-blue-900 leading-relaxed"> {email} </a>
-                <h2 className="title-font font-bold text-[#0368b0]  text-sm">PHONE</h2>
+                <h2 className="title-font font-bold text-[#1169bf]  text-sm">PHONE</h2>
                 <p className="leading-relaxed">{phone}</p>
               </div>
             </div>

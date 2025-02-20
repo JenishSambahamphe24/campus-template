@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import RichEditor from '../cms-project/components/RichEditor';
+import { useState, useEffect } from 'react';
+import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
+import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { addPublication, getPublicationCategory } from './publicationApi';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../Components/ImageUpload';
 import FileUpload from '../../../../Components/FileUpload';
+import DateInputField from '../../../../Components/DateInputField';
 
 function AddPublication() {
     const navigate = useNavigate();
@@ -38,12 +39,6 @@ function AddPublication() {
         }))
     }
 
-    const popUpImageSelect = (file) => {
-        setFormData(prev => ({
-            ...prev,
-            popUpImage: file
-        }))
-    }
     const handleFileSelect = (file) => {
         setFormData(prev => ({
             ...prev,
@@ -76,9 +71,7 @@ function AddPublication() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         const newValue = (value === 'true');
-
         setFormData(prev => ({
             ...prev,
             [name]: name === 'isPopUp' || name === 'isScrollable' || name === 'displayStatus' ? newValue : value
@@ -112,13 +105,13 @@ function AddPublication() {
         }
 
         if (!formData.expiredAt) {
-            delete formData.expiredAt; 
+            delete formData.expiredAt;
         } else {
             formDataToSend.append('expiredAt', formData.expiredAt);
         }
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key] !== undefined && key !== 'expiredAt' && key !== 'scrollExpiryDate' && key !== 'popUpExpiryDate') { 
+            if (formData[key] !== undefined && key !== 'expiredAt' && key !== 'scrollExpiryDate' && key !== 'popUpExpiryDate') {
                 formDataToSend.append(key, formData[key]);
             }
         });
@@ -134,11 +127,18 @@ function AddPublication() {
         }
     };
 
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: newValue
+        }));
+    };
+
     return (
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
                 <h1 className='text-center mb-6 text-2xl'>
-                    Add new Publicatin
+                    Add new content
                 </h1>
                 <Grid component={Paper} elevation={4} container width='90%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
 
@@ -207,7 +207,7 @@ function AddPublication() {
                     </Grid>
                     <Grid border='1px solid #c2c2c2' borderRadius='5px' mt='10px' ml='10px' container paddingLeft='10px' justifyContent='space-between'>
                         <Grid item sm={12} md={4}>
-                            <FormControl disabled size='small'>
+                            <FormControl size='small'>
                                 <FormLabel id="demo-row-radio-buttons-group-label">Popup status ?</FormLabel>
                                 <RadioGroup
                                     row
@@ -221,7 +221,7 @@ function AddPublication() {
                             </FormControl>
                         </Grid>
                         <Grid item sm={12} md={4}>
-                            <FormControl disabled size='small'>
+                            <FormControl size='small'>
                                 <FormLabel id="demo-row-radio-buttons-group-label">Scrollable status ?</FormLabel>
                                 <RadioGroup
                                     row
@@ -249,96 +249,21 @@ function AddPublication() {
                             </FormControl>
                         </Grid>
                     </Grid>
-
                     <Grid item sm={12} md={2}>
-                        <ImageUpload
-                            name='popUpImage'
-                            label='Pouup Image'
-                            disabled={formData.isPopUp !== true}
-                            required={formData.isPopUp === true}
-                            onImageSelect={popUpImageSelect}
-                        />
-                    </Grid>
-                    <Grid item sm={12} md={2}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            label='Popup expiry date'
-                            type='date'
-                            disabled={formData.isPopUp !== true}
-                            required={formData.isPopUp === true}
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
-                            name="popUpExpiryDate"
-                            value={formData.popUpExpiryDate}
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item sm={12} md={2}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            label='Scroll expire date'
-                            type='date'
-                            disabled={formData.isScrollable !== true}
-                            required={formData.isScrollable === true}
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
-                            name="scrollExpiryDate"
-                            value={formData.scrollExpiryDate}
-                            onChange={handleChange}
-                        />
-                    </Grid>
-
-                    <Grid item sm={12} md={2}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            label='Published At'
-                            type='date'
-                            required InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
+                        <DateInputField
+                            label="Published Date (B.S)"
                             name="publishedAt"
                             value={formData.publishedAt}
-                            onChange={handleChange}
+                            onChange={(newValue) => handleDateChange("publishedAt", newValue)}
                         />
+
                     </Grid>
                     <Grid item sm={12} md={2}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            required={formData.categoryName === 'Procurement'}
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
-                            label='Expire At'
-                            type='date'
+                        <DateInputField
+                            label="Expiry Date (B.S)"
                             name="expiredAt"
                             value={formData.expiredAt}
-                            onChange={handleChange}
+                            onChange={(newValue) => handleDateChange("expiredAt", newValue)}
                         />
                     </Grid>
                     <Grid item sm={12} md={2}>
@@ -359,7 +284,7 @@ function AddPublication() {
                     <Grid item sm={12} md={3}>
                         <ImageUpload
                             name='thumbnailImage'
-                            label='Project thumbnail Image'
+                            label='Thumbnail Image'
                             disabled={!formData.isImage}
                             required={formData.isImage}
                             onImageSelect={thumbnailImageSelect}
@@ -397,7 +322,10 @@ function AddPublication() {
                             placeholder="Enter Publication details"
                             name='description'
                             value={formData.description}
-                            onChange={handleChange}
+                            onChange={(content) => setFormData((prev) => ({
+                                ...prev,
+                                description: content
+                            }))}
                         />
                     </Grid>
                     <Grid item sm={12} md={12}>
