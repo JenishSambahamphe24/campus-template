@@ -54,14 +54,15 @@ function Slider() {
               </h1>
               <div className="flex flex-col space-y-4 px-4 py-2">
                 {allLinks.length >= 1 ? (
-                  allLinks.map((item, index) => (
-                    <a
+                  allLinks.slice(0,4).map((item, index) => (
+                    <Link
+                      target='_blank'
                       key={index}
-                      href={item.url}
+                      to={item.url}
                       className="bg-[#F36710] p-3 text-md text-white text-lg font-bold transition-colors duration-300 ease-in-out"
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))
                 ) : (
                   <h1 className="text-center text-sm py-4">No any items !!</h1>

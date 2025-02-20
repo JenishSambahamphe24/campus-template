@@ -2,12 +2,7 @@ import { useState, useEffect } from 'react'
 import { Grid, Button, Typography, Stack, Divider, Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
-import { BsFacebook, BsTwitterX } from 'react-icons/bs'
-const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 import { FaBookReader } from 'react-icons/fa';
-
-
-
 import DownloadIcon from '@mui/icons-material/Download';
 import { getProgramById } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi'
 import { extractDate } from '../utilityFunctions'
@@ -29,7 +24,6 @@ function ProgramPage() {
         fetchData();
     }, [id]);
 
-    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
 
     return (
         <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>

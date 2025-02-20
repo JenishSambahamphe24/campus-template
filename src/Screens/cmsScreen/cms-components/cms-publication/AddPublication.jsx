@@ -39,12 +39,6 @@ function AddPublication() {
         }))
     }
 
-    const popUpImageSelect = (file) => {
-        setFormData(prev => ({
-            ...prev,
-            popUpImage: file
-        }))
-    }
     const handleFileSelect = (file) => {
         setFormData(prev => ({
             ...prev,
@@ -77,9 +71,7 @@ function AddPublication() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         const newValue = (value === 'true');
-
         setFormData(prev => ({
             ...prev,
             [name]: name === 'isPopUp' || name === 'isScrollable' || name === 'displayStatus' ? newValue : value

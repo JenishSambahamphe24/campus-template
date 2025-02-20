@@ -3,10 +3,9 @@ import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typ
 import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import FileUpload from '../../../FileUpload';
 import { getAllFaculties, addProgram } from './academicsApi';
 import DateInputField from '../../../../Components/DateInputField';
-
+import FileUpload from '../../../../Components/FileUpload';
 function AddProgram() {
     const navigate = useNavigate();
     const [level, setLevel] = useState([])
@@ -22,10 +21,10 @@ function AddProgram() {
         status: true
     });
 
-    const handleFileSelect = (file) => {
+    const handleFileChange = (file) => {
         setFormData(prev => ({
             ...prev,
-            file: file
+            programBroucher: file
         }));
     };
 
@@ -175,7 +174,7 @@ function AddProgram() {
                         />
                     </Grid>
                     <Grid item sm={12} md={3}>
-                    <DateInputField
+                        <DateInputField
                             label="Program starting Date (B.S)"
                             name="runningFrom"
                             value={formData.runningFrom}
@@ -220,8 +219,8 @@ function AddProgram() {
                             required={formData.hasProgramBroucher}
                             disabled={!formData.hasProgramBroucher}
                             name='programBroucher'
-                            label='upload Broucher'
-                            onFileSelect={handleFileSelect}
+                            label='upload a program Broucher'
+                            onFileSelect={handleFileChange}
                         />
                     </Grid>
 
@@ -232,7 +231,7 @@ function AddProgram() {
                             value={formData.programDetails}
                             onChange={(content) => {
                                 setFormData(prev => ({
-                                    ...prev, programDetails:content
+                                    ...prev, programDetails: content
                                 }))
                             }}
                         />
