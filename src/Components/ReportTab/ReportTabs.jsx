@@ -23,7 +23,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item =>   item.categoryName === 'Report' || item.categoryName === 'Publication');
+            const filteredData = data.filter(item => item.categoryName === 'Report' || item.categoryName === 'Publication');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             setSubCategories(uniqueSubCategories);
 
@@ -171,7 +171,6 @@ function ReportTabs() {
                         </Tabs>
                     )
                 }
-
             </Grid>
             <div className='w-full flex justify-center'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
