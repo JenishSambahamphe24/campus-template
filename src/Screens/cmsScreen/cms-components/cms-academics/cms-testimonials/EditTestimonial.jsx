@@ -18,7 +18,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-import RichEditor from '../../cms-project/components/RichEditor';
+import RichEditor from '../../../../../Components/RichEditor';
 import { getTestimonialById, updateTestimonialById } from './testimonialsApi';
 import { extractDate } from '../../../../../Components/utilityFunctions';
 import FileDroppable from '../../cms-gallery/FileDroppable';

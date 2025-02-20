@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Divider, Typography } from '@mui/material';
+import { Divider } from '@mui/material';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, } from '@heroicons/react/20/solid'
 import { useAuth } from '../../../context/AuthContextProvider';
@@ -8,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
+const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
+const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
+const logoURL = import.meta.env.VITE_LOGO_URL
 
 function AdminNavbar() {
     const navigate = useNavigate()
@@ -23,26 +25,31 @@ function AdminNavbar() {
     return (
         <div>
             <nav className="relative bg-white shadow ">
-                <div className="py-1 pb-0 mx-auto">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <div className="px-20 h-full items-center mx-auto flex justify-between w-full">
-                        <Link className="flex items-center" to="/">
-                            <img
-                                className="w-[80px] h-auto"
-                                src="https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Tribhuvan_University_logo.svg/800px-Tribhuvan_University_logo.svg.png"
-                                alt="Logo"
-                            />
-                            <div className="ml-4 flex flex-col justify-center">
-                                <h1 className="text-2xl tracking-tight">{collegeName}</h1>
-                                <p className="text-lg">{address}</p>
+                <div className="bg-[#024282]  py-1 pb-0 mx-auto">
+                    <div className="flex  flex-col md:flex-row md:justify-between md:items-center">
+                        <div className="px-4 lg:px-20 bg-[#024282]  h-full items-center mx-auto flex justify-between w-full">
+                            <Link className="flex items-center" to="/">
+                                <img
+                                    className="w-[120px] h-auto"
+                                    src={logoURL}
+                                    alt="Logo"
+                                />
+                            </Link>
+                            <div className="ml-2 py-1 lg:ml-4 flex flex-col justify-center">
+                                <h1 className="text-sm text-center lg:text-sm text-white  font-bold tracking-wide"> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
+                                <p className="text-xs text-white text-center lg:text-xs"> Affiliated to Tribhuwan University </p>
+                                <h1 className='text-2xl font-bold text-white text-center mt-2'>{collegeNameNepali}</h1>
+                                <h1 className='text-sm font-bold text-white uppercase text-center'>{collegeName}</h1>
+                                <h1 className='text-sm font-bold text-white uppercase text-center'>{addressNepali}</h1>
+                                <h1 className='text-xs font-bold text-white  text-center'>{address}</h1>
                             </div>
-                        </Link>
-                    </div>
-                </div>
+                            <div>
+                                <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="" />
+                            </div>
+                        </div>
                     </div>
                     {/* main navigation */}
-                    <div style={{ backgroundColor: '#0368B0' }} className="flex justify-between px-20 p-3  mt-3 overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start">
+                    <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 p-3  mt-3 overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start">
                         <div className="flex ">
                             <div className='flex'>
                                 <Link className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/admin">Home</Link>
@@ -53,7 +60,7 @@ function AdminNavbar() {
                                         <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-white" />
                                     </MenuButton>
                                     <MenuItems
-                                        style={{ backgroundColor: '#0368b0' }}
+                                        style={{ backgroundColor: '#1169bf' }}
                                         transition
                                         className="absolute left-45% z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg transition focus:outline-none"
                                     >
@@ -79,11 +86,11 @@ function AdminNavbar() {
                                 </Menu>
                                 <Menu as="div" className="inline-block text-left z-10">
                                     <MenuButton className="mx-4 flex leading-2 text-sm text-white">
-                                        Publications
+                                        Contents
                                         <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-white" />
                                     </MenuButton>
                                     <MenuItems
-                                        style={{ backgroundColor: '#0368b0' }}
+                                        style={{ backgroundColor: '#1169bf' }}
                                         transition
                                         className="absolute left-45% z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg transition focus:outline-none"
                                     >
@@ -93,15 +100,15 @@ function AdminNavbar() {
                                                     to="publications"
                                                     className="block px-4 py-2 text-sm text-white hover:text-gray-900"
                                                 >
-                                                    Publication management
+                                                    Content management
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem>
                                                 <Link
-                                                    to="publicationCategories"
+                                                    to="addCategory"
                                                     className="block px-4 py-2 text-sm text-white hover:text-gray-900"
                                                 >
-                                                    Publication categories
+                                                    Content categories
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem>
@@ -125,27 +132,31 @@ function AdminNavbar() {
                         </div>
 
                         <div className="flex ">
-                            <Menu as="div" className="inline-block text-left ">
+                            <Menu  as="div" className="inline-block  text-left ">
                                 <MenuButton
                                     className="mx-4 flex leading-2 text-sm text-white">
                                     Profile
                                     <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-white" />
                                 </MenuButton>
-                                <MenuItems className="absolute bg-gray-300 rounded-md  rounded-t-none right-[0px] bottom-[-46%] text-black z-10 mt-2 w-44 overflow-hidden">
+                                <MenuItems className="absolute bg-gray-300 rounded-md  rounded-t-none right-[0px] bottom-[-58%] text-black z-10 mt-2 w-44 overflow-hidden">
                                     <MenuItem>
                                         <h1 className="text-sm px-4 pt-2">
                                             Signed in as
                                         </h1>
                                     </MenuItem>
                                     <MenuItem>
-                                        <h2 className="px-4 font-bold text-sm">
+                                        <h2 className="px-4  text-xs">
                                             {email}
                                         </h2>
                                     </MenuItem>
                                     <Divider />
-
                                     <MenuItem>
-                                        <Link type='Button' onClick={handleLogout} className="hover:bg-[#0368b0] block px-4 py-2 text-sm">
+                                        <Link type='Button' to='password-settings' className="hover:bg-[#1169bf] block px-4 py-2 text-sm">
+                                            password change
+                                        </Link>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Link type='Button' onClick={handleLogout} className="hover:bg-[#1169bf] block px-4 py-2 text-sm">
                                             Logout
                                         </Link>
                                     </MenuItem>
@@ -153,7 +164,6 @@ function AdminNavbar() {
                             </Menu>
                         </div>
                     </div>
-
                 </div>
             </nav>
         </div>

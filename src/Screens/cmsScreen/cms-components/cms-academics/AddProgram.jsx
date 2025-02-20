@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import RichEditor from '../cms-project/components/RichEditor';
+import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import FileUpload from '../../../FileUpload';
 import { getAllFaculties, addProgram } from './academicsApi';
+import DateInputField from '../../../../Components/DateInputField';
 
 function AddProgram() {
     const navigate = useNavigate();
@@ -69,6 +70,13 @@ function AddProgram() {
                 facultyId: value
             }));
         }
+    };
+
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: newValue
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -167,23 +175,11 @@ function AddProgram() {
                         />
                     </Grid>
                     <Grid item sm={12} md={3}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
-                            label='Program running From'
-                            type='date'
+                    <DateInputField
+                            label="Program starting Date (B.S)"
                             name="runningFrom"
                             value={formData.runningFrom}
-                            onChange={handleChange}
+                            onChange={(newValue) => handleDateChange("runningFrom", newValue)}
                         />
                     </Grid>
                     <Grid item sm={12} ml='10px ' md={4}>
@@ -234,7 +230,11 @@ function AddProgram() {
                             placeholder="Enter Program details"
                             name='programDetails'
                             value={formData.programDetails}
-                            onChange={handleChange}
+                            onChange={(content) => {
+                                setFormData(prev => ({
+                                    ...prev, programDetails:content
+                                }))
+                            }}
                         />
                     </Grid>
                     <Grid item sm={12} md={12}>

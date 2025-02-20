@@ -3,17 +3,19 @@ import { Grid, Button, Typography, Stack, Divider } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { BsFacebook, BsTwitterX } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
-import { getTeamById } from '../../cmsScreen/cms-components/cms-team/teamApi'
+import { getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
+import { extractDate } from '../../../Components/utilityFunctions'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
-function TeamMemberDetails() {
+function CurriculumPage() {
     const { id } = useParams();
-    const [teamDetail, setTeamDetail] = useState({})
+
+    const [curriculumDetail, setCurriculumDetail] = useState({})
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getTeamById(id)
-            setTeamDetail(data)
+            const data = await getPublicationById(id)
+            setCurriculumDetail(data)
         };
         fetchData()
     }, [id])
@@ -25,14 +27,14 @@ function TeamMemberDetails() {
                     <Typography fontFamily='fantasy'>
                         <div
                             style={{ fontSize: '16px' }}
-                            dangerouslySetInnerHTML={{ __html: teamDetail.cvDetail } || "No CV details available"}
+                            dangerouslySetInnerHTML={{ __html: curriculumDetail.cvDetail } || "No CV details available"}
                         />
                     </Typography>
                 </div>
 
-                <Link to='/team'>
+                <Link to='/curriculum'>
                     <Button sx={{ textTransform: 'none', mt: '30px' }} size="small" variant="outlined" className="flex items-center gap-3 bg-red-900">
-                        See all teams
+                        See all Curriculum
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -51,31 +53,22 @@ function TeamMemberDetails() {
                 </Link>
             </Grid>
 
-            <Grid  item xs={12} sm={4.3}  md={3.5} lg={3}   order={{xs:1, sm:1 , md:1, lg:1}}>
+            <Grid  item xs={12} sm={4.3}  md={3.5} lg={3} className='border border-gray-100'   order={{xs:1, sm:1 , md:1, lg:1}}>
                 <div  className="full group relative block overflow-hidden">
                     <img
-                        src={teamDetail.ppImage ? `${IMAGE_URL}${teamDetail.ppImage}` : defaultImage}
+                        src={curriculumDetail.thumbnailImage ? `${IMAGE_URL}${curriculumDetail.thumbnailImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
-                        className={`h-52 transition duration-500 sm:h-52 object-cover ${teamDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"
-                        }`}
+                        className="h-52 w-2/3 mx-auto object-cover transition duration-500 group-hover:scale-105  sm:h-52"
                     />
-                    <div className="relative border border-gray-100 bg-white">
-                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"}</h3>
-                        <h3 className="text-sm font-medium text-gray-900">{teamDetail.position || "Unknown Position"}</h3>
+                    <div className="relative px-2 bg-white">
+                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${curriculumDetail.title}`}</h3>
+                        <h3 className="text-sm font-medium text-gray-900">{ extractDate(curriculumDetail.publishedAt)}</h3>
                     </div>
-                    <Stack mt='20px' spacing='10px' direction='column'>
-                        <Typography fontWeight='bold' variant='subtitle1'>social media</Typography>
-                        <Stack mt='5px' direction='row' spacing='10px'>
-                            <BsFacebook className='text-gray-700' style={{ fontSize: '18px' }} />
-                            <BsTwitterX className='text-gray-700' style={{ fontSize: '18px' }} />
-                        </Stack>
-                        <Divider sx={{ color: 'red', marginTop: '10px' }} />
-                    </Stack>
                 </div>
             </Grid>
         </Grid>
     )
 }
 
-export default TeamMemberDetails
+export default CurriculumPage

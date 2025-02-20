@@ -17,7 +17,6 @@ function EditGallery() {
         galleryDescription: '',
         thumbnailImage: null,
         videoUrl: '',
-        audioFile: '',
         sliderImage: null,
         status: null,
         multipleImage: null,
@@ -100,7 +99,6 @@ function EditGallery() {
         }));
     }
 
-    console.log(formData)
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedData = new FormData();
@@ -116,7 +114,6 @@ function EditGallery() {
         updatedData.append('galleryName', formData.galleryName || '');
         updatedData.append('galleryDescription', formData.galleryDescription || '');
         updatedData.append('videoUrl', formData.videoUrl || '');
-        updatedData.append('audioFile', formData.audioFile || null);
         updatedData.append('status', formData.status || '');
         updatedData.append('sliderImage', formData.sliderImage || null);
 
@@ -162,7 +159,6 @@ function EditGallery() {
                                     onChange={handleChange}
                                 >
                                     <option value='Image'>Image</option>
-                                    <option value='Audio'>Audio</option>
                                     <option value='Video'>Video</option>
                                     <option value='Slider'>Slider</option>
                                 </NativeSelect>
@@ -214,25 +210,7 @@ function EditGallery() {
                                 </Grid>
                             )
                         }
-                        {
-                            formData.galleryType === 'Audio' && (
-                                <Grid item sm={12} md={6}>
-                                    <TextField
-                                        fullWidth
-                                        size='small'
-                                        name='audioURL'
-                                        disabled={formData.galleryType !== 'Audio'}
-                                        value={formData.audioURL}
-                                        label='Audio File'
-                                        onChange={handleChange}
-                                        InputLabelProps={{
-                                            shrink: true
-                                        }}
-                                        type='file'
-                                    />
-                                </Grid>
-                            )
-                        }
+                      
                         <Grid item sm={12} md={6}>
                             <FormControl>
                                 <div className='flex '>

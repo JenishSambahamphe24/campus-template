@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import {
     TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
     RadioGroup, FormLabel, Radio, FormControlLabel
@@ -18,7 +18,6 @@ function AddGallery() {
         galleryDescription: '',
         thumbnailImage: null,
         videoUrl: '',
-        audioFile: null,
         status: true,
         multipleImage: null,
     });
@@ -38,14 +37,6 @@ function AddGallery() {
         }));
     };
 
-    const handleFileUpload = (e) => {
-        const { name, files } = e.target;
-        const file = files[0];
-        setFormData(prev => ({
-            ...prev,
-            [name]: file,
-        }));
-    };
     const handleMultipleImageUpload = (images) => {
         const newImages = images.map((image) => ({
             name: image.name,
@@ -57,12 +48,12 @@ function AddGallery() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!formData.galleryName || !formData.galleryType) {
             toast.error('Please fill all required fields');
             return;
         }
-    
+
         const payload = new FormData();
         payload.append('galleryType', formData.galleryType);
         payload.append('galleryName', formData.galleryName);
@@ -71,27 +62,26 @@ function AddGallery() {
         payload.append('videoUrl', formData.videoUrl);
         payload.append('audioFile', formData.audioFile);
         payload.append('status', formData.status);
-    
+
         // Append multiple images only if gallery type is 'Image' and there are images
         if (formData.galleryType === 'Image' && formData.multipleImage) {
             formData.multipleImage.forEach((image) => {
                 payload.append('multipleImage', image.value);
             });
         }
-    
+
         try {
             const newGallery = await addGallery(payload);
-            console.log(newGallery);
             toast.success('Gallery added successfully', { autoClose: 400 });
             setTimeout(() => {
                 navigate('/admin/viewGallery');
             }, 1000);
         } catch (error) {
-            console.error('Error adding gallery:', error);
-            toast.error('Error adding gallery');
-        }
+            if ( error.response.status === 413) {
+                toast.error('The images are too large. Please reduce the size and try again.');
+            }}
     };
-    
+
     return (
         <form onSubmit={handleSubmit}>
             <Typography variant='h5' textAlign='center'>
@@ -99,7 +89,7 @@ function AddGallery() {
             </Typography>
 
             <Grid container component={Paper} elevation={6} width='70%' mx='auto' my='2rem' spacing={2} pr={2} pt='1rem' pb='2rem'>
-                <Grid item md={2}>
+                <Grid item md={3}>
                     <FormControl size='small' fullWidth>
                         <InputLabel size='small'>Gallery Type</InputLabel>
                         <Select
@@ -109,10 +99,9 @@ function AddGallery() {
                             label="Gallery Type"
                             size="small"
                         >
-                            <MenuItem value='Image'>Image Gallery</MenuItem>
-                            <MenuItem value='Audio'>Audio Gallery</MenuItem>
-                            <MenuItem value='Video'>Video Gallery</MenuItem>
+                            <MenuItem value='Image'>Image</MenuItem>
                             <MenuItem value='Slider'>Slider</MenuItem>
+                            <MenuItem value='Video'>Video</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -128,12 +117,12 @@ function AddGallery() {
                     />
                 </Grid>
 
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <ImageUpload
                         name='thumbnailImage'
-                        label= {formData.galleryType === 'Slider' ? 'Slider Image': 'ThumbnailImage Image'}
+                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'ThumbnailImage Image'}
                         disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
-                        required={formData.galleryType === 'Image' }
+                        required={formData.galleryType === 'Image'}
                         onImageSelect={handleImageSelect}
                     />
                 </Grid>
@@ -149,37 +138,26 @@ function AddGallery() {
                         InputLabelProps={{ shrink: true }}
                     />
                 </Grid>
-                <Grid item md={6}>
-                    <TextField
-                        fullWidth
-                        size='small'
-                        name='videoUrl'
-                        value={formData.videoUrl}
-                        onChange={handleChange}
-                        label='Video URL'
-                        disabled={formData.galleryType !== 'Video'}
-                    />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField
-                        InputLabelProps={{ shrink: true }}
-                        size="small"
-                        fullWidth
-                        label="Audio File"
-                        type="file"
-                        name='audioFile'
-                        disabled={formData.galleryType !== 'Audio'}
-                        inputProps={{
-                            accept: '.mp3, .wav, .ogg'
-                        }}
-
-                        onChange={handleFileUpload}
-                    />
-                </Grid>
+                {
+                    formData.galleryType === 'Video' && (
+                        <Grid item md={8}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                name='videoUrl'
+                                value={formData.videoUrl}
+                                onChange={handleChange}
+                                label='Video URL'
+                                disabled={formData.galleryType !== 'Video'}
+                            />
+                        </Grid>
+                    )
+                }
                 {
                     formData.galleryType === 'Image' && (
                         <Grid item md={12}>
                             <FileDroppable
+                                required={true}
                                 placeholder=' upload gallery images'
                                 name='multipleImage'
                                 allowMultiple={true}
@@ -188,7 +166,7 @@ function AddGallery() {
                         </Grid>
                     )
                 }
-                <Grid item md={6}>
+                <Grid item md={4} display='flex' justifyContent='center'>
                     <FormControl>
                         <FormLabel id="status">Status</FormLabel>
                         <RadioGroup row value={formData.status} onChange={handleChange} name="status">
@@ -209,3 +187,4 @@ function AddGallery() {
 }
 
 export default AddGallery;
+

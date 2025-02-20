@@ -20,7 +20,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { getTeamById, updateTeamById } from '../teamApi';
 import { toast } from 'react-toastify';
-import RichEditor from '../../cms-project/components/RichEditor';
+import RichEditor from '../../../../../Components/RichEditor';
 import { extractDate } from '../../../../../Components/utilityFunctions';
 import FileDroppable from '../../cms-gallery/FileDroppable';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -230,8 +230,9 @@ function EditTeam() {
                                     onChange={handleChange}
                                     label='Category'
                                 >
-                                    <MenuItem value='committeMember'> Committee Member</MenuItem>
-                                    <MenuItem value='staff'>Staff</MenuItem>
+                                    <MenuItem value='Committe member'> Committee Member</MenuItem>
+                                    <MenuItem value='Teaching staff'>Teaching staff</MenuItem>
+                                    <MenuItem value='Non-teaching staff'>Non-teaching staff</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -257,12 +258,11 @@ function EditTeam() {
                                     onChange={handleChange}
                                     label='Sub-category'
                                 >
-                                    <MenuItem disabled={formData.category === 'staff'} value='chairman'>Chairman</MenuItem>
-                                    <MenuItem disabled={formData.category === 'staff'} value='member'>Member</MenuItem>
-                                    <MenuItem value='campusChief'> Campus Chief</MenuItem>
-                                    <MenuItem value='informationOfficer'>Information Officer</MenuItem>
-                                    <MenuItem value='other'>Other</MenuItem>
-
+                                    <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
+                                    <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
+                                    <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
+                                    <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
+                                    <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -351,7 +351,6 @@ function EditTeam() {
                             height="400px"
                         />
                     </Grid>
-
                     <DialogActions>
                         <Button type="submit" size="small" variant="contained">Update </Button>
                     </DialogActions>

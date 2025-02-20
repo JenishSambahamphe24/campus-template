@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import {
     Typography,
     InputLabel,
@@ -18,9 +18,9 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-import RichEditor from '../cms-project/components/RichEditor';
+import RichEditor from '../../../../Components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
-
+import DateInputField from '../../../../Components/DateInputField';
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
 import { getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
 
@@ -47,7 +47,6 @@ function EditProgram() {
             const bindedFaculty = faculty.reduce((acc, item) => {
                 const { level, facultyName, id } = item;
                 let existingLevel = acc.find(entry => entry.level === level);
-
                 if (existingLevel) {
                     existingLevel.faculties.push({ facultyName, id });
                 } else {
@@ -58,12 +57,11 @@ function EditProgram() {
                 }
                 return acc;
             }, []);
-
             setCategory(bindedFaculty);
         };
-
         fetchCategory();
     }, []);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -156,6 +154,13 @@ function EditProgram() {
         }
     };
 
+    const handleDateChange = (name, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     return (
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
@@ -237,23 +242,12 @@ function EditProgram() {
                         />
                     </Grid>
                     <Grid item sm={12} md={3}>
-                        <TextField
-                            size='small'
-                            fullWidth
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: {
-                                    '& .MuiInputLabel-asterisk': {
-                                        color: 'brown',
-                                    },
-                                },
-                            }}
-                            label='Program running From'
-                            type='date'
+                        <DateInputField
                             name="runningFrom"
+                            label="Program running From"
                             value={formData.runningFrom}
-                            onChange={handleChange}
+                            onChange={(value) => handleDateChange("runningFrom", value)}
+                            format="YYYY-MM-DD"
                         />
                     </Grid>
                     <Grid item sm={12} ml='10px ' md={4}>
@@ -323,7 +317,12 @@ function EditProgram() {
                             placeholder="Enter Program details"
                             name='programDetails'
                             value={formData.programDetails}
-                            onChange={handleChange}
+                            onChange={(content) => {
+                                setFormData((prev) => ({
+                                    ...prev,
+                                    programDetails: content
+                                }))
+                            }}
                         />
                     </Grid>
                     <Grid item sm={12} md={12}>

@@ -11,7 +11,7 @@ function AdminHomePage() {
         <div className='relative'>
           <img src={adminImage} alt="admin dashboard" className="relative w-full h-[460px] 400 object-contain" />
           <div className="absolute top-4 left-[30px]">
-            <h1 className=" text-[36px] font-bold " style={{ color: '#0368B0' }}> Hello Admin, <br></br> Welcome to the CMS of {collegeName} </h1>
+            <h1 className=" text-[36px] font-bold " style={{ color: '#1169bf' }}> Hello Admin, <br></br> Welcome to the CMS of {collegeName} </h1>
             <Link to='/admin/publications'>
               <Button size='small' variant='outlined' sx={{ textTransform: 'none', marginTop: '15px' }} >
                 Browse Contents

@@ -1,37 +1,47 @@
 import React, { useState, useEffect } from 'react'
-import { getAllFaq } from './faqApi';
+import { deleteFaq, getAllFaq } from './faqApi';
 import { Box, Typography, Grid, Stack, Button } from '@mui/material';
 import { DataGrid, GridOverlay } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import EditFaq from './EditFaq';
 import { showStatus } from '../../../../Components/utilityFunctions';
+import CommonDeleteDialog from '../cms-team/components/CommonDeleteDialog';
 
 function Faqlist() {
     const [allFaqs, setAllFaqs] = useState([])
     const [faqId, setFaqId] = useState(0)
     const [editDialogOpen, setEditDialogOpen] = useState(false)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+
+    const fetchData = async () => {
+        try {
+            const data = await getAllFaq()
+            const addedData = data.map((item, index) => ({
+                ...item,
+                sNo: index + 1
+            }))
+            setAllFaqs(addedData)
+        }
+        catch (error) {
+            console.error('Error fetching teams:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getAllFaq()
-                const addedData = data.map((item, index) => ({
-                    ...item,
-                    sNo: index + 1
-                }))
-                setAllFaqs(addedData)
-            }
-            catch (error) {
-                console.error('Error fetching teams:', error);
-            }
-        };
         fetchData()
     }, [])
-
 
     const handleEditDialogOpen = (id) => {
         setFaqId(id)
         setEditDialogOpen(true);
+    };
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false)
+        fetchData()
+    }
+    const handleDeleteDialogOpen = (id) => {
+        setFaqId(id)
+        setDeleteDialogOpen(true);
     };
     const handleEditDialogClose = async () => {
         setEditDialogOpen(false);
@@ -69,7 +79,7 @@ function Faqlist() {
                 </div>
             },
             renderCell: (params) => (
-                <Box display='flex' >
+                <Box display='flex'  justifyContent='space-around'>
                     <Typography
                         fontSize='14px'
                         color='primary'
@@ -77,6 +87,14 @@ function Faqlist() {
                         onClick={() => handleEditDialogOpen(params.row.id)}
                     >
                         Edit
+                    </Typography>
+                    <Typography
+                        fontSize='14px'
+                        color='error'
+                        mt='7px'
+                        onClick={() => handleDeleteDialogOpen(params.row.id)}
+                    >
+                        Delete
                     </Typography>
                 </Box>
             ),
@@ -88,7 +106,7 @@ function Faqlist() {
         id: item.id,
         question: item.question,
         answer: item.answer,
-        status: showStatus(item.status) ,
+        status: showStatus(item.status),
     }));
 
     return (
@@ -122,9 +140,9 @@ function Faqlist() {
                     }}
                     sx={{
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#0368b0',
+                            backgroundColor: '#1169bf',
                             color: 'white',
-                            fontWeight:'40px',
+                            fontWeight: '40px',
                             borderRight: '1px solid white',
 
                         },
@@ -158,6 +176,15 @@ function Faqlist() {
                     <EditFaq faqId={faqId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
                 </Box>
             </Stack>
+            <Box>
+                <CommonDeleteDialog
+                    id={faqId}
+                    open={deleteDialogOpen}
+                    handleClose={handleDeleteDialogClose}
+                    deleteApi={deleteFaq}
+                    content='FAQ'
+                />
+            </Box>
         </Grid>
     )
 }

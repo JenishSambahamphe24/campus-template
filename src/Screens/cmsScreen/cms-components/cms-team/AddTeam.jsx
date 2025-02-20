@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, InputLabel, Select, MenuItem } from '@mui/material'
 import { addTeam } from './teamApi'
 import { toast } from 'react-toastify'
-import RichEditor from '../cms-project/components/RichEditor'
+import RichEditor from '../../../../Components/RichEditor'
 import { useNavigate } from 'react-router-dom'
 import ImageUpload from '../../../../Components/ImageUpload'
 
@@ -171,8 +171,9 @@ function AddTeam() {
                             onChange={handleChange}
                             label='Type'
                         >
-                            <MenuItem value='committeMember'> Committee Member</MenuItem>
-                            <MenuItem value='staff'>Staff</MenuItem>
+                            <MenuItem value='Committe member'> Committee Member</MenuItem>
+                            <MenuItem value='Teaching staff'>Teaching staff</MenuItem>
+                            <MenuItem value='Non-teaching staff'>Non-teaching staff</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -193,19 +194,16 @@ function AddTeam() {
                             onChange={handleChange}
                             label='Sub-category'
                         >
-
-                            <MenuItem disabled={formData.category === 'staff'} value='Chairman'>Chairman</MenuItem>
-                            <MenuItem disabled={formData.category === 'staff'} value='Member'>Member</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='Campus Chief'> Campus Chief</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='Information Officer'>Information Officer</MenuItem>
-                            <MenuItem disabled={formData.category === 'committeMember'} value='Other'>Other</MenuItem>
+                            <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
+                            <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
+                            <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
+                            <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
+                            <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
                 <Grid item md={4}>
                     <TextField
-                        // required={formData.subCategory === 'other'}
-                        // disabled={formData.subCategory != 'other'}
                         InputLabelProps={{
                             sx: {
                                 '& .MuiInputLabel-asterisk': { color: 'brown' },
@@ -272,7 +270,9 @@ function AddTeam() {
                         placeholder="Add description"
                         name='cvDetail'
                         value={formData.cvDetail}
-                        onChange={handleChange}
+                        onChange={(content) => {
+                            setFormData(prev => ({ ...prev, cvDetail: content }));
+                        }}
                     />
                 </Grid>
                 <Grid item md={12}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {  Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import {
   Tabs,
   TabsHeader,
@@ -52,7 +52,7 @@ function ProgramListUser() {
         <Tabs value={activeTab}>
           <Grid item md={12} >
             <TabsHeader
-              style={{ background: '#0368B0', color: 'white', zIndex: '1' }}
+              style={{ background: '#1169bf', color: 'white', zIndex: '1' }}
               className='rounded'
             >
               {data.map(({ label, value }) => (
@@ -72,7 +72,7 @@ function ProgramListUser() {
             {
               activeTab === 'Bachelor' ? (
                 <TabPanel style={{ marginTop: '20px', padding: '0' }} value='Bachelor'>
-                  <Grid justifyContent='space-between' container gap='10px' >
+                  <Grid justifyContent='flex-start' container gap='10px' >
                     {
                       bachelorPrograms.map((item, index) => (
                         <Grid
@@ -83,7 +83,7 @@ function ProgramListUser() {
                           xs={5.8}
                           sm={3.8}
                           lg={1.9}
-                          className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
+                          className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
                         >
                           <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
                           <div className="relative z-10 flex flex-col items-center">
@@ -115,7 +115,7 @@ function ProgramListUser() {
                             xs={6}
                             sm={4}
                             lg={1.9}
-                            className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#0368b0]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
+                            className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1  sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
                           >
                             <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
                             <div className="relative z-10 flex flex-col items-center">

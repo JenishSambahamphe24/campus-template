@@ -2,40 +2,58 @@ import React, { useState, useEffect } from 'react';
 import { TbSpeakerphone } from "react-icons/tb";
 import { getAllpublication } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { Link } from 'react-router-dom';
+import Publication from '../Screens/userScreen/publications/Publication';
 
 function NoticeMarque() {
   const [notices, setNotices] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await getAllpublication();
-  //     setNotices(data)
-  //   };
-  //   fetchData();
-  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllpublication();
+
       const latestReports = data
-        .filter(item => item.categoryName === 'Report' || item.categoryName === 'Notice'  && item.isScrollable === true)
+        .filter(item => item.categoryName === 'Report' && item.isScrollable === true)
         .sort((a, b) => b.id - a.id)
         .slice(0, 2).map(item => ({
           ...item,
           route: "/report"
         }));
-        const latestNews = data
+
+      const latestNotices = data
+        .filter(item => item.categoryName === 'Notices' && item.isScrollable === true)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 2).map(item => ({
+          ...item,
+          route: "/notices"
+        }));
+
+        const latestPublication = data
+        .filter(item => item.categoryName === 'Publication' && item.isScrollable === true)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 2).map(item => ({
+          ...item,
+          route: "/publication"
+        }));
+
+        const latestDownloads = data
+        .filter(item => item.categoryName === 'Downloads' && item.isScrollable === true)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 2).map(item => ({
+          ...item,
+          route: "/downloads"
+        }));
+
+      const latestNews = data
         .filter(item => item.categoryName === 'News and Events')
         .sort((a, b) => b.id - a.id)
         .slice(0, 2).map(item => ({
           ...item,
           route: "/news"
         }));
-    
-      setNotices([...latestReports, ...latestNews]);
+      setNotices([...latestReports, ...latestNews, ...latestNotices, ...latestPublication,...latestDownloads]);
     };
     fetchData();
   }, []);
-
 
 
   return (
@@ -53,7 +71,7 @@ function NoticeMarque() {
             {
               notices.map((item, index) => (
                 <Link to={item.route} key={index}>
-                  <span className="mx-4 text-sm hover:text-[#0368b0]">
+                  <span className="mx-4 text-sm text-[#f36710] hover:text-[#1169bf]">
                     {item.title} published <span className='text-[#a52a2a]'> | </span>
                   </span>
                 </Link>

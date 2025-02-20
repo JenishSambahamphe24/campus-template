@@ -8,6 +8,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+
 import { AuthProvider } from './context/AuthContextProvider.jsx';
 import { ThemeProvider } from '@material-tailwind/react'
 import ContactUsPage from './Screens/userScreen/ContactUsPage.jsx';
@@ -31,7 +32,6 @@ import AddPublication from './Screens/cmsScreen/cms-components/cms-publication/A
 import PublicationCategory from './Screens/cmsScreen/cms-components/cms-publication/PublicationCategory.jsx';
 import GalleryList from './Screens/cmsScreen/cms-components/cms-gallery/Image-gallery/GalleryList.jsx';
 import 'react-toastify/dist/ReactToastify.css';
-import PubCatList from './Screens/cmsScreen/cms-components/cms-publication/PubCatList.jsx';
 import CmsFeedback from './Screens/cmsScreen/cms-components/Feedback/CmsFeedback.jsx';
 import FaqPage from './Components/FaqPage.jsx';
 import Faqlist from './Screens/cmsScreen/cms-components/cms-faq/Faqlist.jsx';
@@ -64,6 +64,14 @@ import AddLink from './Screens/cmsScreen/cms-components/cms-links/AddLink.jsx';
 import ChairmanMessage from './Components/AboutUs/ChairmanMessage.jsx';
 import CampusChiefMessage from './Components/AboutUs/CampusChiefMessage.jsx';
 import EditProgram from './Screens/cmsScreen/cms-components/cms-academics/EditProgram.jsx';
+import Introduction from './Components/AboutUs/Introduction.jsx';
+import Notices from './Screens/userScreen/publications/Notices.jsx';
+import Downloads from './Screens/userScreen/publications/Downloads.jsx';
+import Curriculum from './Screens/userScreen/publications/Curriculum.jsx';
+import CurriculumPage from './Screens/userScreen/publications/CurriculumPage.jsx';
+import ChangePassword from './Screens/cmsScreen/cms-components/ChangePassword.jsx';
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -78,25 +86,29 @@ const router = createBrowserRouter(
         <Route index={true} path='/member-details/:id' element={<TeamMemberDetails />} />
         <Route index={true} path='/team' element={<OurTeam />} />
         <Route index={true} path='/report' element={<Report />} />
+        <Route index={true} path='/downloads' element={<Downloads />} />
+        <Route index={true} path='/notices' element={<Notices />} />
         <Route index={true} path='/report-tab' element={<ReportTabs />} />
         <Route index={true} path='/publication' element={<Publication />} />
         <Route index={true} path='/publication/:id' element={<PublicationPage />} />
+
+        <Route index={true} path='/curriculum' element={<Curriculum />} />
+        <Route index={true} path='/curriculum/:id' element={<CurriculumPage />} />
+
         <Route index={true} path='/faq' element={<FaqPage />} />
         <Route index={true} path='/testimonials' element={<TestimonialsPage />} />
         <Route index={true} path='/program/:id' element={<ProgramPage />} />
         <Route index={true} path='/program-list' element={<ProgramListUser />} />
 
+        <Route index={true} path='/introduction' element={<Introduction />} />
         <Route index={true} path='/message-from-chairman' element={<ChairmanMessage />} />
         <Route index={true} path='/message-from-campus_chief' element={<CampusChiefMessage />} />
       </Route>
 
-
-      
       <Route element={<PrivateRoutes />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index={true} path='/admin' element={<AdminHomePage />} />
           <Route index={true} path='fileUpload' element={<FileUpload />} />
-         
           <Route index={true} path='viewTeam' element={<TeamList />} />
           <Route index={true} path='addTeam' element={<AddTeam />} />
           <Route index={true} path='editTeam/:teamId' element={<EditTeam />} />
@@ -107,7 +119,6 @@ const router = createBrowserRouter(
           <Route index={true} path='addGallery' element={<AddGallery />} />
           <Route index={true} path='viewGallery' element={<GalleryList />} />
           <Route index={true} path='editGallery/:id' element={<EditGallery />} />
-          <Route index={true} path='publicationCategories' element={<PubCatList />} />
           <Route index={true} path='feedback' element={<CmsFeedback />} />
           <Route index={true} path='faq' element={<Faqlist />} />
           <Route index={true} path='addFaq' element={<AddFaq />} />
@@ -125,9 +136,9 @@ const router = createBrowserRouter(
           <Route index={true} path='faculties' element={<FacultyList />} />
           <Route index={true} path='programs' element={<ProgramList />} />
           <Route index={true} path='addProgram' element={<AddProgram />} />
-        <Route index={true} path='editProgram/:id' element={< EditProgram/>} />
+          <Route index={true} path='editProgram/:id' element={< EditProgram />} />
 
-
+          <Route index={true} path='password-settings' element={< ChangePassword />} />
         </Route>
       </Route>
     </>
@@ -138,7 +149,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <RouterProvider router={router}>
         <ThemeProvider>
-          <ScrollToTop/>
+          <ScrollToTop />
           <App />
         </ThemeProvider>
       </RouterProvider>

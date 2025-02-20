@@ -109,22 +109,15 @@ function ProgramList() {
                     </Link>
                 </Box>
                 <Tabs value={activeTab} >
-                    <TabsHeader className='rounded-b-none' style={{ backgroundColor: '#0368B0', zIndex: '1' }}>
+                    <TabsHeader className='rounded-b-none' style={{ backgroundColor: '#1169bf', zIndex: '1' }}>
                         <Tab onClick={() => setActiveTab('Bachelor')} value='Bachelor' style={{ color: activeTab === 'Bachelor' ? 'black' : 'white' }}>
                             Bachelor
                         </Tab>
-                        <Tab onClick={() => setActiveTab('PGD')} value='PGD' style={{ color: activeTab === 'PGD' ? 'black' : 'white' }}>
-                            PGD
-                        </Tab>
+                      
                         <Tab onClick={() => setActiveTab('Master')} value='Master' style={{ color: activeTab === 'Master' ? 'black' : 'white' }}>
                             Masters
                         </Tab>
-                        <Tab onClick={() => setActiveTab('MPhil')} value='MPhil' style={{ color: activeTab === 'MPhil' ? 'black' : 'white' }}>
-                            MPhil
-                        </Tab>
-                        <Tab onClick={() => setActiveTab('PHD')} value='PHD' style={{ color: activeTab === 'PHD' ? 'black' : 'white' }}>
-                            PHD
-                        </Tab>
+                    
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>
                         <TabPanel key={activeTab} value={activeTab}>

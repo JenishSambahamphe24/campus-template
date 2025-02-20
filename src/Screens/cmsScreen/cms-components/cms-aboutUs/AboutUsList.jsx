@@ -6,55 +6,70 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GridOverlay } from '@mui/x-data-grid';
 import { getAllaboutUs } from './aboutsAPI';
 import { cleanDescription, showStatus } from '../../../../Components/utilityFunctions';
-
-
+import CommonDeleteDialog from '../cms-team/components/CommonDeleteDialog';
+import { deleteAboutUs } from './aboutsAPI';
 
 function AboutUsList() {
     const navigate = useNavigate()
     const [allItems, setAllItems] = useState([])
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [contentId, setContentId] = useState(0)
 
+    const fetchData = async () => {
+        try {
+            const data = await getAllaboutUs()
+            const addedData = data.map((item, index) => ({
+                ...item,
+                sNo: index + 1
+            }))
+            setAllItems(addedData)
+        }
+        catch (error) {
+            console.error('Error fetching items:', error);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getAllaboutUs()
-                const addedData = data.map((item, index) => ({
-                    ...item,
-                    sNo: index + 1
-                }))
-                setAllItems(addedData)
-            }
-            catch (error) {
-                console.error('Error fetching items:', error);
-            }
-        };
         fetchData()
     }, [])
 
-
+    const handleDeleteDialogOpen = (id) => {
+        setContentId(id)
+        setDeleteDialogOpen(true)
+    }
+    const handleClose = () => {
+        setDeleteDialogOpen(false)
+        fetchData()
+    }
 
     const columns = [
-        { field: 'sNo', headerName: 'SNo', flex: .5 },
+        { field: 'sNo', headerName: 'SNo', flex: .3 },
         {
             field: 'heading',
             headerName: 'Heading',
-            flex: 2,
+            flex: 1,
         },
         {
             field: 'status',
             headerName: 'Status',
-            flex: 1,
-
+            flex: .7,
         },
         {
             field: 'description',
             headerName: 'Description',
             flex: 3,
             renderCell: (params) => (
-                <div
-                    style={{ fontSize: '16px' }}
-                    dangerouslySetInnerHTML={{ __html: cleanDescription(params.row.description) }}
-                />
-            ),
+                <div style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: '12px'
+                    
+                }}
+                dangerouslySetInnerHTML={{ __html: cleanDescription(params.row.description) }}
+                >
+                </div>
+            )
         },
         {
             field: 'Action',
@@ -65,7 +80,7 @@ function AboutUsList() {
                 </div>
             ),
             renderCell: (params) => (
-                <Box display='flex' >
+                <Box display='flex' justifyContent='space-around'>
                     <Typography
                         fontSize='14px'
                         color='primary'
@@ -73,6 +88,14 @@ function AboutUsList() {
                         onClick={() => navigate(`/admin/editAboutUs/${params.row.id}`)}
                     >
                         Edit
+                    </Typography>
+                    <Typography
+                        fontSize='14px'
+                        color='error'
+                        mt='7px'
+                        onClick={() => handleDeleteDialogOpen(params.row.id)}
+                    >
+                        Delete
                     </Typography>
                 </Box>
             ),
@@ -117,7 +140,7 @@ function AboutUsList() {
                     }}
                     sx={{
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#0368b0',
+                            backgroundColor: '#1169bf',
                             color: 'white',
                             fontWeight: '40px',
                             borderRight: '1px solid white',
@@ -150,10 +173,16 @@ function AboutUsList() {
                 <Link to='/admin/addAboutUs'>
                     <Button variant='contained' size='small' sx={{ textTransform: 'none', flex: '12rem' }}>Add a new content</Button>
                 </Link>
-                {/* <Box>
-                    <EditAboutUs itemId={itemId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
-                </Box> */}
             </Stack>
+            <Box>
+                <CommonDeleteDialog
+                    id={contentId}
+                    open={deleteDialogOpen}
+                    handleClose={handleClose}
+                    deleteApi={deleteAboutUs}
+                    content='content'
+                />
+            </Box>
         </Grid>
     )
 }
