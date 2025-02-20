@@ -8,10 +8,8 @@ function RichEditor({ placeholder, name, value, onChange, height }) {
         () => ({
             placeholder: placeholder,
             readonly: false,
-            // defaultActionOnPaste: 'insert_as_html',
             defaultLineHeight: 1.5,
             enter: 'div',
-            // options that we defined in above step.
             buttons: options,
             buttonsMD: options,
             buttonsSM: options,
@@ -21,18 +19,17 @@ function RichEditor({ placeholder, name, value, onChange, height }) {
             sizeMD: 700,
             sizeSM: 400,
             toolbarAdaptive: false,
+            height: height
         }),
-        [],
+        [placeholder, height],
     );
-
+    
     return (
         <JoditEditor
             ref={editor}
             value={value}
             tabIndex={1}
-            // onBlur={newContent => onChange({ target: { name, value: newContent } })}
-            // onBlur={(newContent) => onChange(newContent)}
-            onChange={newContent => { }}
+            onChange={newContent => onChange(newContent)}
             config={config}
         />
     );

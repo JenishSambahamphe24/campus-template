@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('authToken')
+const getAuthToken = () => localStorage.getItem("authToken");
+
 
 //  Faculties
 export const getAllFaculties = async () => {
@@ -15,6 +16,7 @@ export const getFacultyById = async (id) => {
 };
 
 export const updateFacultyById = async (id, data) => {
+    const token = getAuthToken();
     const headers = {
         'Authorization': `Bearer ${token}`
     };
@@ -23,6 +25,7 @@ export const updateFacultyById = async (id, data) => {
 };
 
 export const addFaculty = async (data) => {
+    const token = getAuthToken();
     const headers = {
         'Authorization': `Bearer ${token}`
     };
@@ -43,6 +46,7 @@ export const getProgramById = async (id) => {
 };
 
 export const updateProgramById = async (id, data) => {
+    const token = getAuthToken();
     try {
         const headers = {
             'Authorization': `Bearer ${token}`
@@ -58,6 +62,7 @@ export const updateProgramById = async (id, data) => {
 };
 
 export const addProgram = async (data) => {
+    const token = getAuthToken();
     const headers = {
         'Authorization': `Bearer ${token}`
     };
@@ -66,6 +71,7 @@ export const addProgram = async (data) => {
 };
 
 export const deleteProgram = async (id) => {
+    const token = getAuthToken();
     const headers = {
         'Authorization': `Bearer ${token}`
     };

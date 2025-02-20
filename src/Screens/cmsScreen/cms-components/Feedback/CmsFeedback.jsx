@@ -23,23 +23,67 @@ function CmsFeedback() {
         { field: 'sNo', headerName: 'SNo', flex: .7 },
         {
             field: 'userName',
-            headerName: 'Respondant Name',
-            flex: 1.5,
+            headerName: 'Name',
+            flex: 1.3,
+            renderCell: (params) => (
+                <div style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: '12px'
+                }}>
+                    {params.value}
+                </div>
+            )
         },
         {
             field: 'email',
             headerName: 'Email',
-            flex: 1,
+            flex: 2,
+            renderCell: (params) => (
+                <div style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: '12px'
+                }}>
+                    {params.value}
+                </div>
+            )
         },
         {
             field: 'contact',
             headerName: 'Contact No',
-            flex: .8,
+            flex: 1.2,
+            renderCell: (params) => (
+                <div style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: '12px'
+                }}>
+                    {params.value}
+                </div>
+            )
         },
         {
             field: 'message',
             headerName: 'Message',
             flex: 6,
+            renderCell: (params) => (
+                <div style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontSize: '12px'
+                }}>
+                    {params.value}
+                </div>
+            )
         },
 
     ]
@@ -88,7 +132,7 @@ function CmsFeedback() {
                             minHeight: '464px',
                             maxHeight: '464px',
                             '.MuiDataGrid-columnHeader': {
-                                backgroundColor: '#0368b0',
+                                backgroundColor: '#1169bf',
                                 color: 'white',
                                 fontWeight: '40px',
                                 borderRight: '1px solid white',

@@ -34,7 +34,7 @@ function PublicationList() {
                 const itemWithSNoAndDate = {
                     ...item,
                     sNo: (acc[categoryName]?.length || 0) + 1,
-                    createdAt: extractDate(item.createdAt),
+                    publishedAt: extractDate(item.publishedAt),
                     expiredAt: extractDate(item.expiredAt),
                     displayStatus: showStatus(item.displayStatus)
                 };
@@ -51,6 +51,8 @@ function PublicationList() {
     useEffect(() => {
         fetchPublicationRows();
     }, []);
+
+    console.log(allRows)
 
     useEffect(() => {
         setRows(allRows[activeTab] || []);
@@ -79,7 +81,7 @@ function PublicationList() {
             ),
         },
         { field: 'displayStatus', headerName: 'Status', flex: 1.2 },
-        { field: 'createdAt', headerName: 'Pub date', flex: 1.5 },
+        { field: 'publishedAt', headerName: 'Pub date', flex: 1.5 },
         { field: 'expiredAt', headerName: 'Exp date', flex: 1.5 },
         {
             field: 'action',
@@ -118,18 +120,18 @@ function PublicationList() {
     }
     return (
         <Grid container className='px-20 pb-10' mx='auto'>
-            <Typography mx='auto' variant='h4' >   List of Publications</Typography>
+            <Typography mx='auto' variant='h4' >   List of contents</Typography>
             <Box width='100%'>
                 <Box display='flex' justifyContent='flex-end' marginBottom='.5rem'>
                     <Link to='/admin/addCategory'>
                         <Button sx={{ textTransform: 'none' }} size='small' variant='outlined'>  <AddIcon /> Create a new category</Button>
                     </Link>
                     <Link to='/admin/addPublication'>
-                        <Button variant='outlined' size='small' sx={{ textTransform: 'none', marginLeft: '15px' }}> <AddIcon /> Add new Publication</Button>
+                        <Button variant='outlined' size='small' sx={{ textTransform: 'none', marginLeft: '15px' }}> <AddIcon /> Add new content</Button>
                     </Link>
                 </Box>
                 <Tabs value={activeTab} >
-                    <TabsHeader className='rounded-b-none' style={{ backgroundColor: '#0368B0', zIndex: '1' }}>
+                    <TabsHeader className='rounded-b-none' style={{ backgroundColor: '#1169bf', zIndex: '1' }}>
                         <Tab onClick={() => setActiveTab('Report')} value='Report' style={{ color: activeTab === 'Report' ? 'black' : 'white' }}>
                             Reports
                         </Tab>
@@ -142,11 +144,14 @@ function PublicationList() {
                         <Tab onClick={() => setActiveTab('Notices')} value='Notices' style={{ color: activeTab === 'Notices' ? 'black' : 'white' }}>
                             Notices
                         </Tab>
-                        <Tab onClick={() => setActiveTab('Application')} value='Application' style={{ color: activeTab === 'Application' ? 'black' : 'white' }}>
-                            Application
+                        <Tab onClick={() => setActiveTab('Downloads')} value='Downloads' style={{ color: activeTab === 'Downloads' ? 'black' : 'white' }}>
+                            Downloads
                         </Tab>
                         <Tab onClick={() => setActiveTab('Other')} value='Other' style={{ color: activeTab === 'Other' ? 'black' : 'white' }}>
                             Others
+                        </Tab>
+                        <Tab onClick={() => setActiveTab('Curriculum')} value='Curriculum' style={{ color: activeTab === 'Curriculum' ? 'black' : 'white' }}>
+                            Curriculum
                         </Tab>
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>

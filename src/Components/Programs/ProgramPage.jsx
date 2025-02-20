@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react'
 import { Grid, Button, Typography, Stack, Divider, Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
-import { BsFacebook, BsTwitterX } from 'react-icons/bs'
-const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-
-
+import { FaBookReader } from 'react-icons/fa';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getProgramById } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi'
 import { extractDate } from '../utilityFunctions'
@@ -27,22 +24,14 @@ function ProgramPage() {
         fetchData();
     }, [id]);
 
-    const defaultImage = '/src/assets/course.png'
-    console.log(programDetail)
 
     return (
         <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
-            <Grid display='flex' justifyContent='space-between'  flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
+            <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
                 <div className='p-2'>
                     <h1 className='text-md font-bold'> {programDetail.programName} </h1>
-                    {/* <h1 dangerouslySetInnerHTML={{ __html: programDetail.cvDetail } || "No CV details available"}/> */}
-                    <h1 className='text-sm mt-4'>
-                        lore20
-                        To allow your mobile device to access your development server running on your PC, follow these steps:
-                        1. Find Your PC’s Local IP Address
-                        You need to determine your PC’s local IP address on the same network. Run one of the following commands:
-                        Windows (Command Prompt or PowerShell)
-                    </h1>
+                    <h1 className='' dangerouslySetInnerHTML={{ __html: programDetail.programDetails } || "No CV details available"} />
+
                 </div>
 
                 <Link to='/program-list' className='flex justify-end  lg:justify-end xl:justify-start'>
@@ -66,44 +55,69 @@ function ProgramPage() {
                 </Link>
             </Grid>
 
-            <Grid  item xs={12} sm={4.3} md={3.5} lg={3} order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
-                <div className="full group relative block overflow-hidden">
-                    <img
-                        src={programDetail.ppImage ? `${IMAGE_URL}${programDetail.ppImage}` : defaultImage}
-                        alt="Team Member"
-                        className="h-52 w-full object-cover transition duration-500 group-hover:scale-105  sm:h-52"
-                    />
-                    <div className="relative   bg-white">
-                        <h3 className="mt-1 md:text-sm lg:text-md font-bold text-gray-900">{programDetail.programName}</h3>
-                        <h3 className="text-sm font-medium text-gray-900">{`(${programDetail.shortName})`}</h3>
+            <Grid item xs={12} sm={4.3} md={3.5} lg={3} order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
+                <div className="full group relative block  rounded-3xl overflow-hidden">
+                    <Grid
+                        className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf]  px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300   sm:mx-auto sm:max-w-sm  sm:px-10"
+                    >
+                        <span className="absolute invisible group-hover:visible top-10 z-0 h-20 w-20 rounded-full bg-[#f36710] transition-all duration-300 group-hover:scale-[10]"></span>
+                        <div className="relative z-10 flex flex-col items-center">
+                            <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f36710] transition-all duration-300 group-hover:bg-[#f36710]">
+                                <FaBookReader className="h-10 w-10 text-white transition-all" />
+                            </span>
+                            <div className="pt-3 text-base font-semibold leading-7 text-center">
+                                <p className="text-white transition-all duration-300 group-hover:text-white text-md">
+                                    {programDetail.shortName}
+                                </p>
+                            </div>
+                        </div>
+                    </Grid>
+
+                    <div className='bg-[#1169bf] px-4 pb-4'>
+                        <div className="relative">
+                            <h3 className="mt md:text-sm lg:text-md font-bold text-white underline">{programDetail.programName} {`(${programDetail.shortName})`}</h3>
+                        </div>
+                        <Stack spacing='7px' mt='10px' direction='column'>
+                            <h1 className='text-sm'>
+                                <span className='font-medium text-white mr-2'>
+                                    Faculty :
+                                </span>
+                                <span className='italic text-white'>
+                                    {programDetail.facultyName}
+                                </span>
+                            </h1>
+                            <h1 className='text-sm text-white'>
+                                <span className='font-medium mr-2'>
+                                    Level :
+                                </span>
+                                <span className='italic text-white'>
+                                    {programDetail.level}
+                                </span>
+                            </h1>
+                            <h1 className='text-sm text-white'>
+                                <span className='font-medium mr-2'>
+                                    Running From:
+                                </span>
+                                <span className='italic'>
+                                    {extractDate(programDetail.runningFrom)}
+                                </span>
+                            </h1>
+                            <div className='flex justify-center'>
+                                {
+                                    programDetail.hasProgramBrochure && (
+                                        <Link
+                                            target='_blank'
+                                            className='rounded-md text-white text-sm border-[1px] border-[#F36710]  mx-auto px-3 py-1'
+                                            to={`${FILE_URL}/${programDetail.programBrochure}`}
+                                            download
+                                        >
+                                            Download Brochure
+                                        </Link>
+                                    )}
+                            </div>
+                        </Stack>
+
                     </div>
-                    <Stack spacing='7px' mt='10px' direction='column'>
-                        <h1 className='text-sm'>
-                            <span className='font-medium mr-2'>
-                                Faculty :
-                            </span>
-                            <span className='italic'>
-                                {programDetail.facultyName}
-                            </span>
-                        </h1>
-                        <h1 className='text-sm'>
-                            <span className='font-medium mr-2'>
-                                Level :
-                            </span>
-                            <span className='italic'>
-                                {programDetail.level}
-                            </span>
-                        </h1>
-                        <h1 className='text-sm'>
-                            <span className='font-medium mr-2'>
-                                Running From:
-                            </span>
-                            <span className='italic'>
-                                {extractDate(programDetail.runningFrom)}
-                            </span>
-                        </h1>
-                        <Divider sx={{ color: 'red', marginTop: '10px' }} />
-                    </Stack>
                 </div>
             </Grid>
         </Grid>

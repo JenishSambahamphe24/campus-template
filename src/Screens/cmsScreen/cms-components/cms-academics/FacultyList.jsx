@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Grid,
@@ -12,8 +12,6 @@ import {
     MenuItem
 } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { getPublicationCategory } from '../cms-publication/publicationApi'
-import EditCategoryDialog from '../cms-publication/EditCategoryDialog'
 import { getAllFaculties } from './academicsApi'
 import EditFaculty from './EditFaculty'
 
@@ -44,7 +42,6 @@ function FacultyList() {
             selectedLevel === "All" || row.level === selectedLevel
         );
     });
-
     const columns = [
         { field: 'sNo', headerName: 'S.No.', flex: 50 },
         {
@@ -110,7 +107,7 @@ function FacultyList() {
             <Stack direction='column' gap='20px' sx={{ height: 'auto', flex: '100%', padding: '0 20px' }}>
                 <Typography mx='auto' variant='h4' mb='.7rem'> List of Faculties </Typography>
                 <FormControl fullWidth sx={{ maxWidth: "30%" }} size="small">
-                    <InputLabel>Select Faculty</InputLabel>
+                    <InputLabel>Select Level</InputLabel>
                     <Select
                         size="small"
                         sx={{
@@ -148,7 +145,7 @@ function FacultyList() {
                     }}
                     sx={{
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#0368b0',
+                            backgroundColor: '#1169bf',
                             color: 'white',
                             fontWeight: '40px',
                             borderRight: '1px solid white',

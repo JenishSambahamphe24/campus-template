@@ -35,7 +35,7 @@ function AddFaculty() {
     return (
         <form onSubmit={handleSubmit}>
             <Typography mb='20px' variant='h5' textAlign='center'>
-                Add a new Faculty
+                Add new faculty
             </Typography>
             <Grid component={Paper} elevation={4} container width='70%' mx='auto' spacing={2} padding='10px'>
                 <Grid item md={6}>
@@ -48,20 +48,17 @@ function AddFaculty() {
                             name='level'
                             value={formData.level}
                             label='Level'
-                            required   InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': {
-                                    color: 'brown',
+                            required InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
                                 },
-                            },
-                        }}
+                            }}
                             onChange={handleChange}
                         >
                             <MenuItem value='Bachelor'>Bachelor</MenuItem>
-                            <MenuItem value='PGD'>PGD</MenuItem>
                             <MenuItem value='Master'>Masters</MenuItem>
-                            <MenuItem value='MPhil'>MPhil</MenuItem>
-                            <MenuItem value='PHD'>PHD</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

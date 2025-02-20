@@ -10,7 +10,7 @@ function AddFaq() {
     const [formData, setFormData] = useState({
         question: '',
         answer: '',
-        status: false
+        status: true
     })
 
     const handleChange = (e) => {
