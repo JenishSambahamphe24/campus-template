@@ -14,7 +14,7 @@ function NewsGrid() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const newsData = data.filter((item) => item.categoryName === 'News and Events' && item.displayStatus === true );
+            const newsData = data.filter((item) => item.categoryName === 'News and Events' && item.displayStatus === true);
             setAllNews(newsData);
         };
         fetchData();
@@ -39,7 +39,7 @@ function NewsGrid() {
         <div className="max-w-screen-xl mx-auto py-8 px-20 relative">
             <div>
                 <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-4">
-                    News and Events 
+                    News and Events
                 </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 mt-[10px]">
@@ -50,7 +50,7 @@ function NewsGrid() {
                             style={{
                                 minHeight: "300px",
                                 backgroundImage: latestNews.thumbnailImage
-                                    ? `url(${IMAGE_URL}${latestNews.thumbnailImage})`
+                                    ? `url(${IMAGE_URL}content/${latestNews.thumbnailImage})`
                                     : `url(${defaultImage})`
                             }}
                             title="Latest News Thumbnail"
@@ -81,7 +81,7 @@ function NewsGrid() {
                                 className="h-40 bg-cover text-center overflow-hidden"
                                 style={{
                                     backgroundImage: item.thumbnailImage
-                                        ? `url(${IMAGE_URL}${item.thumbnailImage})`
+                                        ? `url(${IMAGE_URL}content/${item.thumbnailImage})`
                                         : `url(${defaultImage})`
                                 }}
                                 title="News Thumbnail"

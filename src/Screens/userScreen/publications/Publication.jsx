@@ -41,7 +41,7 @@ function Publication() {
                                 <Link to={`/publication/${item.id}`}>
                                     <img
                                         alt=""
-                                        src={`${IMAGE_URL}${item.thumbnailImage}`}
+                                        src={`${IMAGE_URL}content/${item.thumbnailImage}`}
                                         className="h-56 w-full object-cover"
                                         onError={(e) => { e.target.src = defaultImage; }}
                                     />
@@ -58,7 +58,7 @@ function Publication() {
                                     {
                                         item.isFile && (
                                             <>
-                                                <a href={`${FILE_URL}/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                                <a href={`${FILE_URL}content/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                                                     Download
                                                     <span aria-hidden="true" className="block">
                                                         <MdOutlineFileDownload fontSize='18px' />
@@ -74,9 +74,7 @@ function Publication() {
                                         {formatDate(item.publishedAt)}
                                     </span>
                                 </div>
-
                             </article>
-
                         </Grid>
                     ))
                 }

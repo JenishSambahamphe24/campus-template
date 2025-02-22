@@ -54,7 +54,9 @@ function NoticeTabs() {
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstOtherItem = indexOfLastItem - itemsPerPage;
-    const paginatedItems = allNotices.slice(indexOfFirstOtherItem, indexOfLastItem);
+    const paginatedItems = allNotices
+        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+        .slice(indexOfFirstOtherItem, indexOfLastItem);
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -72,7 +74,7 @@ function NoticeTabs() {
                                             <p className='line-clamp-2'>
                                                 {item.title}
                                             </p>
-                                            <a href={`${FILE_URL}${item.file}`} download target="_blank" className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer">
+                                            <a href={`${FILE_URL}content/${item.file}`} download target="_blank" className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer">
                                                 <span className='text-xs mt-[1px] text-white'>
                                                     download
                                                 </span>
@@ -163,7 +165,7 @@ function NoticeTabs() {
                 <h1 className='bg-[#1169bf] text-white text-lg text-center font-bold uppercase py-2'>latest news & events</h1>
                 <div className="mt-2 col-span-4 space-y-2 p-2">
                     {
-                        news.sort((a, b) => b.id - a.id).slice(0, 4).map((item, index) => (
+                        news.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)).slice(0, 4).map((item, index) => (
                             <Link to={`/publication/${item.id}`} key={index} className="flex border-[1px] rounded-sm border-[#f36710] items-center ">
                                 <div className="inline-block mr-3">
                                     <div className="w-16 h-16">

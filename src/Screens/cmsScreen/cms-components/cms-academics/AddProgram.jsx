@@ -187,9 +187,9 @@ function AddProgram() {
                             <RadioGroup
                                 sx={{ marginTop: '-10px' }}
                                 row
-                                name="displayStatus"
+                                name="status"
                                 onChange={handleChange}
-                                value={formData.displayStatus}
+                                value={formData.status}
                             >
                                 <FormControlLabel value={true} control={<Radio size='small' />} label="Active" />
                                 <FormControlLabel value={false} control={<Radio size='small' />} label="Inactive" />

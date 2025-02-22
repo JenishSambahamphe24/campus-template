@@ -23,7 +23,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item => item.categoryName === 'Report' || item.categoryName === 'Publication');
+            const filteredData = data.filter(item => item.categoryName === 'Others' || item.categoryName === 'Downloads');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             setSubCategories(uniqueSubCategories);
 
@@ -52,7 +52,7 @@ function ReportTabs() {
             ),
             renderCell: (params) => (
                 <Box textAlign='center'>
-                    <a className='text-blue-600 ' href={`${FILE_URL}${params.row.file}`} download target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <a className='text-blue-600 ' href={`${FILE_URL}content/${params.row.file}`} download target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                         <DownloadIcon fontSize="14px" />
                     </a>
                 </Box>
@@ -63,6 +63,7 @@ function ReportTabs() {
     const getCurrentRows = () => {
         return allReports
             .filter(item => item.subCategoryName === activeTab)
+            .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
             .map((item, index) => ({
                 sNo: index + 1,
                 id: item.id,

@@ -40,7 +40,7 @@ function NewsPage() {
             <Grid position='relative' item xs={12}>
                 <div className="mx-auto">
                     <img
-                        src={newsDetail.thumbnailImage ? `${IMAGE_URL}${newsDetail.thumbnailImage}` : defaultImage}
+                        src={newsDetail.thumbnailImage ? `${IMAGE_URL}content/${newsDetail.thumbnailImage}` : defaultImage}
                         className="h-[250px] w-full object-cover"
                         alt="..." />
                 </div>
@@ -48,7 +48,7 @@ function NewsPage() {
 
             <Grid container gap='20px' className='px-8 py-4' >
                 <Grid item xs={12} sm={12} lg='2' rowGap='20px' display='flex' flexDirection={isMobile ? 'row' : 'column'} justifyContent={isMobile ? 'space-between' : 'flex-start'} >
-                    
+
                     <Stack width='100%' spacing='5px' direction='column'>
                         <Typography fontWeight='bold' variant='subtitle1'>Published Date </Typography>
                         <Typography variant='subtitle2'>
@@ -76,6 +76,7 @@ function NewsPage() {
                             </Link>
                         </Stack>
                     </Stack>
+
                 </Grid>
                 {
                     isMobile && (
@@ -105,7 +106,7 @@ function NewsPage() {
                                             <img
                                                 className="w-1/5 lg:w-2/6  bg-cover"
                                                 style={{
-                                                    backgroundImage: `url(${item.thumbnailImage ? `${IMAGE_URL}${item.thumnailImage}` : imageForSideCard})`
+                                                    backgroundImage: `url(${item.thumbnailImage ? `${IMAGE_URL}content/${item.thumbnailImage}` : imageForSideCard})`
                                                 }}
                                                 onError={(e) => { e.target.src = imageForSideCard }}
                                             />

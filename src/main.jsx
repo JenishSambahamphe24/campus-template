@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -21,6 +22,7 @@ import NewsGrid from './Screens/userScreen/News/NewsGrid.jsx';
 import OurTeam from './Screens/userScreen/about-us/OurTeam.jsx';
 import Publication from './Screens/userScreen/publications/Publication.jsx';
 import Report from './Screens/userScreen/publications/Report.jsx';
+import PopupBanner from './Components/PopupBanner.jsx';
 
 import AdminLayout from './Screens/cmsScreen/AdminLayout.jsx';
 import AdminHomePage from './Screens/cmsScreen/cms-components/AdminHomePage.jsx';
@@ -70,7 +72,6 @@ import Downloads from './Screens/userScreen/publications/Downloads.jsx';
 import Curriculum from './Screens/userScreen/publications/Curriculum.jsx';
 import CurriculumPage from './Screens/userScreen/publications/CurriculumPage.jsx';
 import ChangePassword from './Screens/cmsScreen/cms-components/ChangePassword.jsx';
-import PopupBanner from './Components/PopupBanner.jsx';
 
 
 const router = createBrowserRouter(
@@ -78,6 +79,7 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<App />}>
         <Route index={true} path='/' element={<HomeScreen />} />
+        <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />

@@ -58,7 +58,7 @@ function Curriculum() {
                                     {
                                         item.isFile && (
                                             <>
-                                                <a href={`${FILE_URL}/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                                <a href={`${FILE_URL}content/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                                                     Download
                                                     <span aria-hidden="true" className="block">
                                                         <MdOutlineFileDownload fontSize='18px' />

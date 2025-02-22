@@ -16,7 +16,6 @@ function Slider() {
 
   const fetchTeams = async () => {
     const response = await getAllTeams()
-    console.log(response)
     setChairmanInfo(response.find(item => item.subCategory === 'Chairman'))
     setChiefInfo(response.find(item => item.subCategory === 'Campus Chief'))
   }
@@ -54,7 +53,7 @@ function Slider() {
               </h1>
               <div className="flex flex-col space-y-4 px-4 py-2">
                 {allLinks.length >= 1 ? (
-                  allLinks.slice(0,4).map((item, index) => (
+                  allLinks.slice(0, 4).map((item, index) => (
                     <Link
                       target='_blank'
                       key={index}
@@ -79,7 +78,7 @@ function Slider() {
                 newSlider.map((item, index) => (
                   <Box height="100%" key={index}>
                     <img
-                      src={`${IMAGE_URL}/${item.image}`}
+                      src={`${IMAGE_URL}content/${item.image}`}
                       className="h-full w-full object-cover"
                       onError={(e) => {
                         e.target.src = defaultImage;
@@ -106,7 +105,7 @@ function Slider() {
                 <img
                   className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-contain"
                   alt="Chairman"
-                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}${chairmanInfo?.ppImage}` : defaultImage}
+                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}team/${chairmanInfo?.ppImage}` : defaultImage}
                   onError={(e) => {
                     e.target.src = defaultImage;
                   }}
@@ -122,12 +121,11 @@ function Slider() {
                 </Link>
               </div>
 
-              {/* Campus Chief Info */}
               <div className="mx-auto">
                 <img
                   className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-contain"
                   alt="Campus Chief"
-                  src={chiefInfo?.ppImage ? `${IMAGE_URL}${chiefInfo?.ppImage}` : defaultImage}
+                  src={chiefInfo?.ppImage ? `${IMAGE_URL}team/${chiefInfo?.ppImage}` : defaultImage}
                   onError={(e) => {
                     e.target.src = defaultImage;
                   }}
