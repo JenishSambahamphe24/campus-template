@@ -156,6 +156,9 @@ function EditGallery() {
                                         name: 'galleryType'
                                     }}
                                     size='small'
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     onChange={handleChange}
                                 >
                                     <option value='Image'>Image</option>
@@ -210,7 +213,7 @@ function EditGallery() {
                                 </Grid>
                             )
                         }
-                      
+
                         <Grid item sm={12} md={6}>
                             <FormControl>
                                 <div className='flex '>

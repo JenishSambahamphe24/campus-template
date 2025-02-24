@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
-    RadioGroup, FormLabel, Radio, FormControlLabel
 } from '@mui/material';
 import FileDroppable from './FileDroppable';
 import { addGallery } from './galleryApii';
@@ -18,7 +17,6 @@ function AddGallery() {
         galleryDescription: '',
         thumbnailImage: null,
         videoUrl: '',
-        status: true,
         multipleImage: null,
     });
 
@@ -33,7 +31,7 @@ function AddGallery() {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'status' ? JSON.parse(value) : value,
+            [name] : value,
         }));
     };
 
@@ -48,12 +46,10 @@ function AddGallery() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!formData.galleryName || !formData.galleryType) {
             toast.error('Please fill all required fields');
             return;
         }
-
         const payload = new FormData();
         payload.append('galleryType', formData.galleryType);
         payload.append('galleryName', formData.galleryName);
@@ -61,15 +57,11 @@ function AddGallery() {
         payload.append('thumbnailImage', formData.thumbnailImage);
         payload.append('videoUrl', formData.videoUrl);
         payload.append('audioFile', formData.audioFile);
-        payload.append('status', formData.status);
-
-        // Append multiple images only if gallery type is 'Image' and there are images
         if (formData.galleryType === 'Image' && formData.multipleImage) {
             formData.multipleImage.forEach((image) => {
                 payload.append('multipleImage', image.value);
             });
         }
-
         try {
             const newGallery = await addGallery(payload);
             toast.success('Gallery added successfully', { autoClose: 400 });
@@ -87,7 +79,6 @@ function AddGallery() {
             <Typography variant='h5' textAlign='center'>
                 Add New Gallery
             </Typography>
-
             <Grid container component={Paper} elevation={6} width='70%' mx='auto' my='2rem' spacing={2} pr={2} pt='1rem' pb='2rem'>
                 <Grid item md={3}>
                     <FormControl size='small' fullWidth>
@@ -153,7 +144,7 @@ function AddGallery() {
                         </Grid>
                     )
                 }
-                {
+                {/* {
                     formData.galleryType === 'Image' && (
                         <Grid item md={12}>
                             <FileDroppable
@@ -165,16 +156,7 @@ function AddGallery() {
                             />
                         </Grid>
                     )
-                }
-                <Grid item md={4} display='flex' justifyContent='center'>
-                    <FormControl>
-                        <FormLabel id="status">Status</FormLabel>
-                        <RadioGroup row value={formData.status} onChange={handleChange} name="status">
-                            <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
-                            <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid>
+                } */}
 
                 <Grid item md={12} textAlign='center'>
                     <Button type='submit' variant='contained'>

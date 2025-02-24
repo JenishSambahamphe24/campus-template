@@ -78,7 +78,7 @@ function Slider() {
                 newSlider.map((item, index) => (
                   <Box height="100%" key={index}>
                     <img
-                      src={`${IMAGE_URL}content/${item.image}`}
+                      src={`${IMAGE_URL}/content/${item.image}`}
                       className="h-full w-full object-cover"
                       onError={(e) => {
                         e.target.src = defaultImage;

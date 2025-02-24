@@ -20,12 +20,11 @@ function GalleryList() {
 
   const fetchData = async () => {
     const data = await getAllGallery();
-    console.log(data); // Check API response
     if (Array.isArray(data)) {
       setAllGallery(data);
     } else {
       console.error("Unexpected data format:", data);
-      setAllGallery([]); // Set to empty array if the format is incorrect
+      setAllGallery([]); 
     }
   };
   useEffect(() => {
