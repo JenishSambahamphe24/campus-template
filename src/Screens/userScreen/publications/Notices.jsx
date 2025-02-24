@@ -53,7 +53,7 @@ function Notices() {
                                     paginatedItems.map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}content/${item.file}`}
+                                                href={`${FILE_URL}/content/${item.file}`}
                                                 download
                                                 target="_blank"
                                                 rel="noopener noreferrer"

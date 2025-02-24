@@ -1,70 +1,190 @@
-<div className="sm:col-span-6 lg:col-span-4">
-  <div className="flex items-start mb-3 pb-3">
-    <a href="#" className="inline-block mr-3">
-      <div
-        className="w-20 h-20 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://media.gettyimages.com/photos/cristiano-ronaldo-of-juventus-fc-looks-dejected-during-the-uefa-of-picture-id1227967060?k=6&m=1227967060&s=612x612&w=0&h=cMSMlRyI6YAzcE_C2KgHGRLeVojHYoUhIvhwPBYv8f4=)",
-        }}
-      ></div>
-    </a>
-    <div className="text-sm">
-      <p className="text-gray-600 text-xs">Aug 18</p>
-      <a href="#" className="text-gray-900 font-medium hover:text-indigo-600 leading-none">
-        Cristiano Ronaldo of Juventus FC looks dejected during the...
-      </a>
-    </div>
-  </div>
-  <div className="flex items-start mb-3 pb-3">
-    <a href="#" className="inline-block mr-3">
-      <div
-        className="w-20 h-20 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://media.gettyimages.com/photos/lionel-messi-and-marcandre-ter-stegen-of-fc-barcelona-waits-in-the-picture-id1266763488?k=6&m=1266763488&s=612x612&w=0&h=8vxz9HfQVfrff5N7d1lBVxtLamRQGK3J3lyHkUuuIiw=)",
-        }}
-      ></div>
-    </a>
-    <div className="text-sm w-2/3">
-      <p className="text-gray-600 text-xs">Jan 18</p>
-      <a href="#" className="text-gray-900 font-medium hover:text-indigo-600 leading-none">
-        Barcelona v Bayern Munich
-      </a>
-    </div>
-  </div>
-  <div className="flex items-start mb-3 pb-3">
-    <a href="#" className="inline-block mr-3">
-      <div
-        className="w-20 h-20 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://media.gettyimages.com/photos/cristiano-ronaldo-of-juventus-fc-looks-dejected-during-the-uefa-of-picture-id1227967060?k=6&m=1227967060&s=612x612&w=0&h=cMSMlRyI6YAzcE_C2KgHGRLeVojHYoUhIvhwPBYv8f4=)",
-        }}
-      ></div>
-    </a>
-    <div className="text-sm">
-      <p className="text-gray-600 text-xs">Aug 18</p>
-      <a href="#" className="text-gray-900 font-medium hover:text-indigo-600 leading-none">
-        Cristiano Ronaldo of Juventus FC looks dejected during the...
-      </a>
-    </div>
-  </div>
-  <div className="flex items-start">
-    <a href="#" className="inline-block mr-3">
-      <div
-        className="w-20 h-20 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://media.gettyimages.com/photos/lionel-messi-of-fc-barcelona-looks-dejected-following-his-teams-in-picture-id1266341828?k=6&m=1266341828&s=612x612&w=0&h=FZi-bSrIlOEE01780h79GsbBYPqZo2l3aaCxoktWADY=)",
-        }}
-      ></div>
-    </a>
-    <div className="text-sm w-2/3">
-      <p className="text-gray-600 text-xs">July 23</p>
-      <a href="#" className="text-gray-900 font-medium hover:text-indigo-600 leading-none">
-        Barcelona v Bayern Munich - UEFA Champions League
-      </a>
-    </div>
-  </div>
-</div>
+import { useState } from 'react';
+import {
+    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
+    RadioGroup, FormLabel, Radio, FormControlLabel
+} from '@mui/material';
+import FileDroppable from './FileDroppable';
+import { addGallery } from './galleryApii';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import ImageUpload from '../../../../Components/ImageUpload';
+
+
+function AddGallery() {
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        galleryType: '',
+        galleryName: '',
+        galleryDescription: '',
+        thumbnailImage: null,
+        videoUrl: '',
+        status: true,
+        multipleImage: null,
+    });
+
+    const handleImageSelect = (file) => {
+        setFormData(prev => ({
+            ...prev,
+            thumbnailImage: file
+        }))
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: name === 'status' ? JSON.parse(value) : value,
+        }));
+    };
+
+    const handleMultipleImageUpload = (images) => {
+        const newImages = images.map((image) => ({
+            name: image.name,
+            type: image.type,
+            value: image,
+        }));
+        setFormData((prev) => ({ ...prev, multipleImage: newImages }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData.galleryName || !formData.galleryType) {
+            toast.error('Please fill all required fields');
+            return;
+        }
+
+        const payload = new FormData();
+        payload.append('galleryType', formData.galleryType);
+        payload.append('galleryName', formData.galleryName);
+        payload.append('galleryDescription', formData.galleryDescription);
+        payload.append('thumbnailImage', formData.thumbnailImage);
+        payload.append('videoUrl', formData.videoUrl);
+        payload.append('audioFile', formData.audioFile);
+        payload.append('status', formData.status);
+
+        // Append multiple images only if gallery type is 'Image' and there are images
+        if (formData.galleryType === 'Image' && formData.multipleImage) {
+            formData.multipleImage.forEach((image) => {
+                payload.append('multipleImage', image.value);
+            });
+        }
+
+        try {
+            const newGallery = await addGallery(payload);
+            toast.success('Gallery added successfully', { autoClose: 400 });
+            setTimeout(() => {
+                navigate('/admin/viewGallery');
+            }, 1000);
+        } catch (error) {
+            if ( error.response.status === 413) {
+                toast.error('The images are too large. Please reduce the size and try again.');
+            }}
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <Typography variant='h5' textAlign='center'>
+                Add New Gallery
+            </Typography>
+
+            <Grid container component={Paper} elevation={6} width='70%' mx='auto' my='2rem' spacing={2} pr={2} pt='1rem' pb='2rem'>
+                <Grid item md={3}>
+                    <FormControl size='small' fullWidth>
+                        <InputLabel size='small'>Gallery Type</InputLabel>
+                        <Select
+                            name='galleryType'
+                            value={formData.galleryType}
+                            onChange={handleChange}
+                            label="Gallery Type"
+                            size="small"
+                        >
+                            <MenuItem value='Image'>Image</MenuItem>
+                            <MenuItem value='Slider'>Slider</MenuItem>
+                            <MenuItem value='Video'>Video</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item md={6}>
+                    <TextField
+                        fullWidth
+                        size='small'
+                        label={formData.galleryType === 'Slider' ? "Slider Name" : "Gallery Name"}
+                        name='galleryName'
+                        value={formData.galleryName}
+                        onChange={handleChange}
+                    />
+                </Grid>
+
+                <Grid item md={3}>
+                    <ImageUpload
+                        name='thumbnailImage'
+                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'ThumbnailImage Image'}
+                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
+                        required={formData.galleryType === 'Image'}
+                        onImageSelect={handleImageSelect}
+                    />
+                </Grid>
+                <Grid item md={12}>
+                    <TextField
+                        fullWidth
+                        size='small'
+                        label={formData.galleryType === 'Slider' ? "Slider description" : "Gallery description"}
+                        name='galleryDescription'
+                        value={formData.galleryDescription}
+                        onChange={handleChange}
+                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
+                        InputLabelProps={{ shrink: true }}
+                    />
+                </Grid>
+                {
+                    formData.galleryType === 'Video' && (
+                        <Grid item md={8}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                name='videoUrl'
+                                value={formData.videoUrl}
+                                onChange={handleChange}
+                                label='Video URL'
+                                disabled={formData.galleryType !== 'Video'}
+                            />
+                        </Grid>
+                    )
+                }
+                {
+                    formData.galleryType === 'Image' && (
+                        <Grid item md={12}>
+                            <FileDroppable
+                                required={true}
+                                placeholder=' upload gallery images'
+                                name='multipleImage'
+                                allowMultiple={true}
+                                onImagesChange={handleMultipleImageUpload}
+                            />
+                        </Grid>
+                    )
+                }
+                <Grid item md={4} display='flex' justifyContent='center'>
+                    <FormControl>
+                        <FormLabel id="status">Status</FormLabel>
+                        <RadioGroup row value={formData.status} onChange={handleChange} name="status">
+                            <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
+                            <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
+
+                <Grid item md={12} textAlign='center'>
+                    <Button type='submit' variant='contained'>
+                        Add Gallery
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
+    );
+}
+
+export default AddGallery;
+

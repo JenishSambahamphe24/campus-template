@@ -13,27 +13,18 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
 
 function PublicationPage() {
-    const [allPubData, setAllPubData] = useState([]);
+    const theme = useTheme();
     const [publicationDetail, setPublicationDetail] = useState({});
     const { id } = useParams()
-    const theme = useTheme();
 
     const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
     useEffect(() => {
-        const fetchAllPubData = async () => {
-            const data = await getAllpublication()
-            const allData = data.filter((item) => item.categoryName === 'Publication')
-            setAllPubData(allData)
-        };
         const fetchData = async () => {
             const data = await getPublicationById(id)
             setPublicationDetail(data)
         };
         fetchData()
-        fetchAllPubData()
     }, [])
-
-
 
     return (
         <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
@@ -71,7 +62,7 @@ function PublicationPage() {
             <Grid item xs={12} sm={4.3} md={3.5} lg={3} className='border border-gray-100' order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
                 <div className="full group relative block overflow-hidden">
                     <img
-                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}content/${publicationDetail.thumbnailImage}` : defaultImage}
+                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}/content/${publicationDetail.thumbnailImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
                         className={`h-52 transition duration-500 sm:h-52 object-cover ${publicationDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"

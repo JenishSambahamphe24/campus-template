@@ -72,7 +72,7 @@ function NoticeMarque() {
               notices.map((item, index) => (
                 <Link to={item.route} key={index}>
                   <span className="mx-4 text-sm text-[#f36710] hover:text-[#1169bf]">
-                    {item.title} published <span className='text-[#a52a2a]'> | </span>
+                    {item.title}  <span className='text-[#a52a2a]'> | </span>
                   </span>
                 </Link>
 

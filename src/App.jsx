@@ -1,14 +1,12 @@
-import { useState } from 'react'
 import Navbar from './Components/Navbar'
 import './App.css'
 import Footer from './Components/Footer'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './ScrollToTop'
-
 function App() {
   return (
-    <div >
+    <div className='relative'>
       <ScrollToTop />
       <ToastContainer />
       <Navbar />

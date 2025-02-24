@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllaboutUs } from '../../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
@@ -11,7 +11,7 @@ function Introduction() {
     const defaultImage = 'https://www.blogtyrant.com/wp-content/uploads/2011/02/best-about-us-pages.png';
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -29,11 +29,9 @@ function Introduction() {
     const handleImageError = () => {
         setImgError(true);
     };
-
     const imageSource = imgError ? 
-        defaultImage : 
-        (data.aboutUsImage ? `${IMAGE_URL}${data.aboutUsImage}` : defaultImage);
-
+    defaultImage : 
+    (data.aboutUsImage ? `${IMAGE_URL}/aboutus/${data.aboutUsImage}` : defaultImage);
     return (
         <>
         <h1 className='text-center mt-8 text-2xl font-medium'>Introduction</h1>
@@ -70,10 +68,10 @@ function Introduction() {
             >
                 <div className="full group relative block overflow-hidden">
                     <img
-                        src={imageSource}
-                        alt="Team Member"
-                        className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52"
-                        onError={handleImageError}
+                       src={imageSource}
+                       alt="Team Member"
+                       className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52"
+                       onError={handleImageError}
                     />
                 </div>
             </Grid>

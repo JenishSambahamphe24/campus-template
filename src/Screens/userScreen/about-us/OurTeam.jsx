@@ -90,7 +90,7 @@ function OurTeam() {
                                     .map((item, index) => (
                                         <Grid item xs={11.8} sm={5.8} md={2.9} lg={2.9} key={index} sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <img
-                                                src={item.ppImage ? `${IMAGE_URL}team/${item.ppImage}` : defaultImage}
+                                                src={item.ppImage ? `${IMAGE_URL}/team/${item.ppImage}` : defaultImage}
                                                 alt=""
                                                 className="h-[250px] w-full object-cover transition duration-500 group-hover:scale-105"
                                             />
@@ -133,7 +133,7 @@ function OurTeam() {
                                         <Grid item xs={11.8} sm={5.8} md={2.9} lg={2.9} key={index} sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <Link to={`/member-details/${item.id}`} className="group relative block overflow-hidden">
                                                 <img
-                                                    src={item.ppImage ? `${IMAGE_URL}${item.ppImage}` : defaultImage}
+                                                    src={item.ppImage ? `${IMAGE_URL}/team/${item.ppImage}` : defaultImage}
                                                     alt=""
                                                     className="h-[250px] w-full object-cover transition duration-500 group-hover:scale-105"
                                                 />
@@ -174,7 +174,7 @@ function OurTeam() {
                                         <Grid item xs={11.8} sm={5.8} md={2.9} lg={2.9} key={index} sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <Link to={`/member-details/${item.id}`} className="group relative block overflow-hidden">
                                                 <img
-                                                    src={item.ppImage ? `${IMAGE_URL}${item.ppImage}` : defaultImage}
+                                                    src={item.ppImage ? `${IMAGE_URL}/team/${item.ppImage}` : defaultImage}
                                                     alt=""
                                                     className="h-[250px] w-full object-cover transition duration-500 group-hover:scale-105"
                                                 />

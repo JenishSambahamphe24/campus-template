@@ -33,6 +33,26 @@ export const addGallery = async (data) => {
     return response.data;
 };
 
+export const addMultipleImage = async (id,data) => {
+  const token = getAuthToken();
+  if (!token) throw new Error("Token is missing");
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const response = await axios.post(`${BASE_URL}/gallery/images/${id}`, data, {headers});
+  return response.data;
+};
+
+export const deleteImageOfGallery = async (id) => {
+  const token = getAuthToken();
+  if (!token) throw new Error("Token is missing");
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const response = await axios.delete(`${BASE_URL}/gallery/images/${id}`, {headers});
+  return response.data;
+};
+
 export const deleteGallery = async (id) => {
     const token = getAuthToken();
     if (!token) throw new Error("Token is missing");

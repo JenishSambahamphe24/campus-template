@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Carousel } from "@material-tailwind/react";
 import { Box, Button, Grid } from '@mui/material'
 import { Link } from 'react-router-dom'
@@ -42,6 +42,7 @@ function Slider() {
     fetchSliderImages()
   }, []);
 
+  console.log(newSlider)
   return (
     <Box className="py-4 px-4 sm:px-6 md:px-8">
       <Grid container spacing={2} sx={{ minHeight: { xs: 'auto', lg: '400px' } }}>
@@ -78,7 +79,7 @@ function Slider() {
                 newSlider.map((item, index) => (
                   <Box height="100%" key={index}>
                     <img
-                      src={`${IMAGE_URL}content/${item.image}`}
+                      src={`${IMAGE_URL}/thumb/${item.image}`}
                       className="h-full w-full object-cover"
                       onError={(e) => {
                         e.target.src = defaultImage;
@@ -103,9 +104,9 @@ function Slider() {
             <div className="flex flex-col gap-2 mt-3 text-sm">
               <div className="mx-auto ">
                 <img
-                  className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-contain"
+                  className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-cover"
                   alt="Chairman"
-                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}team/${chairmanInfo?.ppImage}` : defaultImage}
+                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}/team/${chairmanInfo?.ppImage}` : defaultImage}
                   onError={(e) => {
                     e.target.src = defaultImage;
                   }}
@@ -123,9 +124,9 @@ function Slider() {
 
               <div className="mx-auto">
                 <img
-                  className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-contain"
+                  className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-cover"
                   alt="Campus Chief"
-                  src={chiefInfo?.ppImage ? `${IMAGE_URL}team/${chiefInfo?.ppImage}` : defaultImage}
+                  src={chiefInfo?.ppImage ? `${IMAGE_URL}/team/${chiefInfo?.ppImage}` : defaultImage}
                   onError={(e) => {
                     e.target.src = defaultImage;
                   }}

@@ -3,12 +3,10 @@ import {
     TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
     RadioGroup, FormLabel, Radio, FormControlLabel
 } from '@mui/material';
-import FileDroppable from './FileDroppable';
 import { addGallery } from './galleryApii';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../Components/ImageUpload';
-
 
 function AddGallery() {
     const navigate = useNavigate()
@@ -19,7 +17,6 @@ function AddGallery() {
         thumbnailImage: null,
         videoUrl: '',
         status: true,
-        multipleImage: null,
     });
 
     const handleImageSelect = (file) => {
@@ -37,15 +34,6 @@ function AddGallery() {
         }));
     };
 
-    const handleMultipleImageUpload = (images) => {
-        const newImages = images.map((image) => ({
-            name: image.name,
-            type: image.type,
-            value: image,
-        }));
-        setFormData((prev) => ({ ...prev, multipleImage: newImages }));
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -60,15 +48,7 @@ function AddGallery() {
         payload.append('galleryDescription', formData.galleryDescription);
         payload.append('thumbnailImage', formData.thumbnailImage);
         payload.append('videoUrl', formData.videoUrl);
-        payload.append('audioFile', formData.audioFile);
         payload.append('status', formData.status);
-
-        // Append multiple images only if gallery type is 'Image' and there are images
-        if (formData.galleryType === 'Image' && formData.multipleImage) {
-            formData.multipleImage.forEach((image) => {
-                payload.append('multipleImage', image.value);
-            });
-        }
 
         try {
             const newGallery = await addGallery(payload);
@@ -77,9 +57,10 @@ function AddGallery() {
                 navigate('/admin/viewGallery');
             }, 1000);
         } catch (error) {
-            if ( error.response.status === 413) {
+            if (error.response.status === 413) {
                 toast.error('The images are too large. Please reduce the size and try again.');
-            }}
+            }
+        }
     };
 
     return (
@@ -120,7 +101,7 @@ function AddGallery() {
                 <Grid item md={3}>
                     <ImageUpload
                         name='thumbnailImage'
-                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'ThumbnailImage Image'}
+                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'Thumbnail Image'}
                         disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
                         required={formData.galleryType === 'Image'}
                         onImageSelect={handleImageSelect}
@@ -153,19 +134,6 @@ function AddGallery() {
                         </Grid>
                     )
                 }
-                {
-                    formData.galleryType === 'Image' && (
-                        <Grid item md={12}>
-                            <FileDroppable
-                                required={true}
-                                placeholder=' upload gallery images'
-                                name='multipleImage'
-                                allowMultiple={true}
-                                onImagesChange={handleMultipleImageUpload}
-                            />
-                        </Grid>
-                    )
-                }
                 <Grid item md={4} display='flex' justifyContent='center'>
                     <FormControl>
                         <FormLabel id="status">Status</FormLabel>
@@ -187,4 +155,3 @@ function AddGallery() {
 }
 
 export default AddGallery;
-

@@ -51,7 +51,15 @@ function GalleryPage() {
                 <Tabs className='min-w-full' value={activeTab}>
                     <Grid item sm={12} md={12} >
                         <TabsHeader
-                            style={{ background: '#1169bf', color: 'white', zIndex: '1' }}
+                            style={{
+                                background: '#1169bf',
+                                color: 'white',
+                                zIndex: '1',
+                                height: '35px',
+                                display: 'flex',
+                                justifyContent: 'flex-start',
+                                gap: '10px'
+                            }}
                             className='rounded'
                         >
                             {data.map(({ label, value }) => (
@@ -60,6 +68,13 @@ function GalleryPage() {
                                     value={value}
                                     onClick={() => setActiveTab(value)}
                                     className={`${activeTab === value ? "text-gray-900" : ""} text-sm lg:text-lg`}
+                                    style={{
+                                        padding: '0 16px',
+                                        minWidth: 'auto',
+                                        width: 'auto',
+                                        textAlign: 'center',
+                                        whiteSpace: 'nowrap'
+                                      }}
                                 >
                                     {label}
                                 </Tab>
