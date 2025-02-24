@@ -56,10 +56,10 @@ function EditTeam() {
                     const data = await getTeamById(teamId);
                     setFormData((prev) => ({
                         ...prev,
-                        ...data, // Assuming data has keys that match formData
-                        ppImage: null, // Reset local image to allow new upload
+                        ...data, 
+                        ppImage: null, 
                     }));
-                    setFetchedImage(data.ppImage);  // Save fetched ppImage
+                    setFetchedImage(data.ppImage);  
                 } catch (error) {
                     console.error('Error fetching team data:', error);
                     toast.error('Failed to fetch team data');

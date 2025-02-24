@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NativeSelect, Typography, Stack, FormControl, Grid, Button, TextField, FormLabel, Radio, RadioGroup, Paper, InputLabel, FormControlLabel, IconButton } from '@mui/material';
+import { Select,MenuItem, Typography, Stack, FormControl, Grid, Button, TextField, FormLabel, Radio, RadioGroup, Paper, InputLabel, FormControlLabel, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FileDroppable from './FileDroppable';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,58 +21,27 @@ function EditGallery() {
         status: null,
         multipleImage: null,
     })
-    const [idString, setIdString] = useState('')
     const [fetchedThumbnail, setFetchedThumbnail] = useState(null)
-    const [fetchedMultipleImage, setFetchedMultipleImage] = useState([])
     useEffect(() => {
         const fetchData = async () => {
-            if (id) {
                 try {
                     const data = await getGalleryById(id);
                     setFormData((prev) => ({
                         ...prev,
                         ...data,
-                        thumbnailImage: null,
-                        multipleImage: null
+                        thumbnailImage: data.thumbnailImage,
                     }))
                     setFetchedThumbnail(data.thumbnailImage);
-                    setFetchedMultipleImage(data.multipleImage || [])
-                    if (data.uuid) {
-                        setIdString(data.uuid)
-                    } else {
-                        setIdString(null)
-                    }
                 } catch (error) {
                     console.error('Error fetching gallery data:', error);
                     toast.error('Failed to fetch gallery data');
                 }
-            }
             const data = await getGalleryById(id)
             setFormData(data)
         };
         fetchData()
     }, [id])
-
-    const handleMultipleImageChange = (images) => {
-        const newImages = images.map((image) => ({
-            name: image.name,
-            type: image.type,
-            value: image,
-        }));
-        setFormData((prev) => ({
-            ...prev,
-            multipleImage: [...prev.multipleImage, ...newImages],
-        }));
-    };
-
-    const handleRemoveMultipleImage = (index) => {
-        setFetchedMultipleImage(prev => prev.filter((_, i) => i !== index));
-
-        setFormData(prev => ({
-            ...prev,
-            multipleImage: prev.multipleImage.filter((_, i) => i !== index)
-        }));
-    };
+   
 
     const handleImageChange = (updatedFile, type) => {
         setFormData((prev) => ({
@@ -107,9 +76,7 @@ function EditGallery() {
         } else if (fetchedThumbnail) {
             updatedData.append('thumbnailImage', fetchedThumbnail);
         }
-        if (idString) {
-            // updatedData.append('uuid', idString);
-        }
+     
         updatedData.append('galleryType', formData.galleryType || '');
         updatedData.append('galleryName', formData.galleryName || '');
         updatedData.append('galleryDescription', formData.galleryDescription || '');
@@ -117,15 +84,6 @@ function EditGallery() {
         updatedData.append('status', formData.status || '');
         updatedData.append('sliderImage', formData.sliderImage || null);
 
-        if (formData.multipleImage) {
-            formData.multipleImage.forEach((image) => {
-                if (typeof image === 'string') {
-                    updatedData.append('multipleImage[]', image);
-                } else {
-                    updatedData.append('multipleImage[]', image.value);
-                }
-            });
-        }
         try {
             await updateGalleryById(id, updatedData);
             toast.success('Gallery  updated successfully');
@@ -144,24 +102,29 @@ function EditGallery() {
                 <form onSubmit={handleSubmit}>
                     <Grid container mx='auto' spacing='10px' padding='10px 23px 10px 5px' >
                         <Grid item sm={12} md={3}>
-                            <FormControl fullWidth>
-                                <InputLabel variant="standard" >
-                                    Gallery Type
-                                </InputLabel>
-                                <NativeSelect
-                                    defaultValue={formData.galleryType}
-                                    name='galleryType'
-                                    value={formData.galleryType}
-                                    inputProps={{
-                                        name: 'galleryType'
-                                    }}
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
                                     size='small'
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Gallery Type</InputLabel>
+                                <Select
+                                    size='small'
+                                    required
+                                    variant='standard'
+                                    name="category"
+                                    value={formData.category}
                                     onChange={handleChange}
+                                    label='Category'
                                 >
-                                    <option value='Image'>Image</option>
-                                    <option value='Video'>Video</option>
-                                    <option value='Slider'>Slider</option>
-                                </NativeSelect>
+                                    <MenuItem value='Committe member'> Committee Member</MenuItem>
+                                    <MenuItem value='Teaching staff'>Teaching staff</MenuItem>
+                                    <MenuItem value='Non-teaching staff'>Non-teaching staff</MenuItem>
+                                </Select>
                             </FormControl>
                         </Grid>
 
@@ -210,7 +173,7 @@ function EditGallery() {
                                 </Grid>
                             )
                         }
-                      
+
                         <Grid item sm={12} md={6}>
                             <FormControl>
                                 <div className='flex '>
@@ -240,7 +203,7 @@ function EditGallery() {
                             />
                             {fetchedThumbnail && (
                                 <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
-                                    <img src={`${IMAGE_URL}/${fetchedThumbnail}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
+                                    <img src={`${IMAGE_URL}/thumb/${fetchedThumbnail}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
                                     <IconButton
                                         size="small"
                                         onClick={handleRemoveFetchedImage}
@@ -256,41 +219,7 @@ function EditGallery() {
                                 </div>
                             )}
                         </Grid>
-                        {
-                            formData.galleryType === 'Image' && (
-                                <Grid item sm={12} md={8}>
-                                    <Typography>Gallery Images</Typography>
-                                    <FileDroppable
-                                        name='multipleImage'
-                                        placeholder='Gallery images'
-                                        allowMultiple={true}
-                                        onImagesChange={(updatedFiles) => handleMultipleImageChange(updatedFiles, 'multipleImage')}
-                                    />
-                                    {fetchedMultipleImage.length > 0 && (
-                                        <Grid container spacing='5px' className='flex  mt-1' >
-                                            {fetchedMultipleImage.map((item, index) => (
-                                                <Grid xs={2} item key={index} className='w-full h-[70px] relative wrap'>
-                                                    <img src={`${IMAGE_URL}/${idString}/${item}`} style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
-                                                    <IconButton
-                                                        size="small"
-                                                        onClick={() => handleRemoveMultipleImage(index)}
-                                                        style={{
-                                                            position: 'absolute',
-                                                            top: '-2px',
-                                                            right: '-4px',
-                                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                                        }}
-                                                    >
-                                                        <CloseIcon sx={{ fontSize: '13px', color: 'black' }} />
-                                                    </IconButton>
-                                                </Grid>
-                                            ))
-                                            }
-                                        </Grid>
-                                    )}
-                                </Grid>
-                            )
-                        }
+                      
                         <Grid item sm={12} md={12}>
                             <Button
                                 size='small'

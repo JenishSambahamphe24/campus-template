@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Grid, Button, Typography, Stack, Divider, Box } from '@mui/material'
+import { Grid, Button,Stack, } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { FaBookReader } from 'react-icons/fa';
-import DownloadIcon from '@mui/icons-material/Download';
 import { getProgramById } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi'
 import { extractDate } from '../utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
@@ -91,7 +90,7 @@ function ProgramPage() {
                                 </span>
                                 <span className='italic text-white'>
                                     {programDetail.level}
-                                </span>
+                            </span>
                             </h1>
                             <h1 className='text-sm text-white'>
                                 <span className='font-medium mr-2'>
@@ -106,8 +105,8 @@ function ProgramPage() {
                                     programDetail.hasProgramBrochure && (
                                         <Link
                                             target='_blank'
-                                            className='rounded-md text-white text-sm border-[1px] border-[#F36710]  mx-auto px-3 py-1'
-                                            to={`${FILE_URL}program/${programDetail.programBrochureFile}`}
+                                            className='rounded-md text-white text-sm  border-[#F36710] bg-[#f36710]  mx-auto px-3 py-1'
+                                            to={`${FILE_URL}/program/${programDetail.programBrochureFile}`}
                                             download
                                         >
                                             Download Brochure

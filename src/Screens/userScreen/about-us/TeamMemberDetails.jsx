@@ -54,13 +54,13 @@ function TeamMemberDetails() {
             <Grid  item xs={12} sm={4.3}  md={3.5} lg={3}   order={{xs:1, sm:1 , md:1, lg:1}}>
                 <div  className="full group relative block overflow-hidden">
                     <img
-                        src={teamDetail.ppImage ? `${IMAGE_URL}team/${teamDetail.ppImage}` : defaultImage}
+                        src={teamDetail.ppImage ? `${IMAGE_URL}/team/${teamDetail.ppImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
-                        className={`h-52 transition duration-500 sm:h-52 object-cover ${teamDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"
+                        className={`h-52 w-full transition duration-500 sm:h-52 object-cover ${teamDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"
                         }`}
                     />
-                    <div className="relative border border-gray-100 bg-white">
+                    <div className="relative  bg-white">
                         <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"}</h3>
                         <h3 className="text-sm font-medium text-gray-900">{teamDetail.position || "Unknown Position"}</h3>
                     </div>

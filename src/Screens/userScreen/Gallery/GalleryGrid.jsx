@@ -23,23 +23,15 @@ function GalleryGrid() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getGalleryById(id);
-      setUidString(data.uuid);
       setGalleryData(data);
-
-      if (data?.multipleImage) {
-        try {
-          const parsedImages = data.multipleImage;
-          setImagesArray(parsedImages);
-        } catch (error) {
-          console.error('Error parsing multipleImage:', error);
-        }
+      if (data?.images) {
+        setImagesArray(data.images);
       }
     };
     fetchData();
   }, [id]);
 
-  console.log(galleryData)
-  
+
   const handleImageClick = (index) => {
     if (mainSwiper) {
       mainSwiper.slideToLoop(index);
@@ -49,7 +41,6 @@ function GalleryGrid() {
   useEffect(() => {
     if (imagesArray.length === 0) return;
 
-    // Only initialize thumbs swiper if not on small screen
     let swiperThumbs = null;
     if (!isSmallScreen) {
       swiperThumbs = new Swiper('.nav-for-slider', {
@@ -100,7 +91,7 @@ function GalleryGrid() {
       mainSwiper.slidePrev();
     }
   };
-
+  console.log(imagesArray[0])
   return (
     <section className="relative px-4 sm:px-6 md:px-20 py-5">
       <div className="mx-auto max-w-8xl">
@@ -121,7 +112,7 @@ function GalleryGrid() {
                     <div key={index} className="swiper-slide">
                       <div className="block bg-gray-700 w-auto mx-auto h-auto rounded-3xl">
                         <img
-                          src={`${IMAGE_URL}${uidString}/${item}`}
+                          src={`${IMAGE_URL}/images/${item.image}`}
                           alt={`Gallery image ${index + 1}`}
                           className="gallery-image w-full h-[320px] md:h-[427px] mx-auto object-contain rounded-3xl"
                         />
@@ -139,7 +130,7 @@ function GalleryGrid() {
 
           {!isSmallScreen && (
             isTablet ? (
-              <Grid item xs={12}  className="mt-4">
+              <Grid item xs={12} className="mt-4">
                 <div className="w-full  overflow-x-auto">
                   <div className="nav-for-slider  swiper-container">
                     <div className="swiper-wrapper flex  flex-row">
@@ -150,7 +141,7 @@ function GalleryGrid() {
                           onClick={() => handleImageClick(index)}
                         >
                           <img
-                            src={`${IMAGE_URL}${uidString}/${item}`}
+                            src={`${IMAGE_URL}/images/${item.image}`}
                             alt={`Thumbnail image ${index + 1}`}
                             className="gallery-image w-full cursor-pointer h-full rounded-2xl border-2 border-gray-200 transition-all duration-500 hover:border-indigo-600"
                           />
@@ -172,7 +163,7 @@ function GalleryGrid() {
                           onClick={() => handleImageClick(index)}
                         >
                           <img
-                            src={`${IMAGE_URL}${uidString}/${item}`}
+                            src={`${IMAGE_URL}/images/${item.image}`}
                             alt={`Thumbnail image ${index + 1}`}
                             className="gallery-image w-full cursor-pointer h-full rounded-2xl border-2 border-gray-200 transition-all duration-500 hover:border-indigo-600"
                           />

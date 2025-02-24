@@ -53,7 +53,7 @@ function Downloads() {
                                     paginatedItems.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt)).map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}content/${item.file}`}
+                                                href={`${FILE_URL}/content/${item.file}`}
                                                 download
                                                 target="_blank"
                                                 rel="noopener noreferrer"

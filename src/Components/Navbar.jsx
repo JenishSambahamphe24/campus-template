@@ -203,7 +203,7 @@ function Navbar() {
                                     >
                                         Curriculum
                                     </Link>
-                                  
+
                                 </div>
                             </details>
                         </div>
