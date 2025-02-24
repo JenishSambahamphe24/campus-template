@@ -49,7 +49,7 @@ export const deleteImageOfGallery = async (id) => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const response = await axios.post(`${BASE_URL}/gallery/images/${id}`, data, {headers});
+  const response = await axios.delete(`${BASE_URL}/gallery/images/${id}`, {headers});
   return response.data;
 };
 

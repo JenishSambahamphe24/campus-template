@@ -56,10 +56,10 @@ function EditTeam() {
                     const data = await getTeamById(teamId);
                     setFormData((prev) => ({
                         ...prev,
-                        ...data, 
-                        ppImage: null, 
+                        ...data,
+                        ppImage: null,
                     }));
-                    setFetchedImage(data.ppImage);  
+                    setFetchedImage(data.ppImage);
                 } catch (error) {
                     console.error('Error fetching team data:', error);
                     toast.error('Failed to fetch team data');
@@ -351,9 +351,9 @@ function EditTeam() {
                             height="400px"
                         />
                     </Grid>
-                    <DialogActions>
-                        <Button type="submit" size="small" variant="contained">Update </Button>
-                    </DialogActions>
+                    <div className='flex justify-end mt-2'>
+                    <Button type="submit" size="small" variant="contained">Update </Button>
+                    </div>
                 </form>
             </Stack>
         </Grid>
