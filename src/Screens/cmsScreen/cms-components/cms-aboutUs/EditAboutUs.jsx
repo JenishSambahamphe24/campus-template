@@ -6,9 +6,9 @@ import {
 } from '@mui/material';
 
 import { toast } from 'react-toastify';
-import RichEditor from '../../../../Components/RichEditor';
 import { updateAboutUsById, getAboutUsById } from './aboutsAPI';
 import { useNavigate, useParams } from 'react-router-dom';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 
 
 function EditAboutUs() {
@@ -144,7 +144,7 @@ function EditAboutUs() {
                     {/* Description */}
                     <Grid container mt='8px'>
                         <Grid item xs={12}>
-                            <RichEditor
+                            <TipTapEditor
                                 placeholder=""
                                 name="description"
                                 value={formData.description}

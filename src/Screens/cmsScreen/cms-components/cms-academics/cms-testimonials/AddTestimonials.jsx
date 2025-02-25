@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Grid, FormControl, Paper, Typography, Button, RadioGroup, FormControlLabel, Radio, FormLabel } from '@mui/material';
-import RichEditor from '../../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../../Components/ImageUpload';
 import { addTestimonial } from './testimonialsApi';
-import FileUpload from '../../../../FileUpload';
 import { getAllPrograms } from '../academicsApi';
+import TipTapEditor from '../../../../../Components/Tiptap/TipTapEditor';
 
 function AddTestimonials() {
   const [programs, setPrograms] = useState([])
@@ -164,7 +163,7 @@ function AddTestimonials() {
                 </Grid>
             
                 <Grid item sm={12} md={12}>
-                    <RichEditor
+                    <TipTapEditor
                         height='400px'
                         placeholder="Add estimonial"
                         name='testimonials'
