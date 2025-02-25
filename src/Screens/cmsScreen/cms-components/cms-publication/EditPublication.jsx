@@ -264,7 +264,7 @@ function EditPublication() {
                                 <InputLabel>Category</InputLabel>
                                 <Select
                                     variant='standard'
-                                    disabled
+                                    // disabled
                                     label='Category'
                                     name='categoryName'
                                     value={formData.categoryName}
@@ -283,7 +283,6 @@ function EditPublication() {
                                 <InputLabel>Sub-category</InputLabel>
                                 <Select
                                     variant='standard'
-                                    disabled
                                     label='Sub-category'
                                     name='categoryId'
                                     value={formData.categoryId}
@@ -341,7 +340,7 @@ function EditPublication() {
                         </Grid>
                         <Grid item xs={3}>
                             <FormControl>
-                                <FormLabel>Display Status</FormLabel>
+                                <FormLabel>Active Status</FormLabel>
                                 <RadioGroup
                                     row
                                     value={formData.displayStatus}

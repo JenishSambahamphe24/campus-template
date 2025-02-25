@@ -83,7 +83,7 @@ function NoticeTabs() {
                                         </span>
                                         <p className="flex text-xs mt-[-2px] italic">
                                             <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
-                                            20/09/1990
+                                            { extractDate(item.publishedAt)}
                                         </p>
                                     </div>
                                 </li>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
+    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, FormLabel, Radio, RadioGroup, FormControlLabel
 } from '@mui/material';
 import { addGallery } from './galleryApii';
 import { toast } from 'react-toastify';
@@ -79,6 +79,7 @@ function AddGallery() {
                             <MenuItem value='Image'>Image</MenuItem>
                             <MenuItem value='Slider'>Slider</MenuItem>
                             <MenuItem value='Video'>Video</MenuItem>
+                            <MenuItem value='Logo'>Logo</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -86,6 +87,7 @@ function AddGallery() {
                 <Grid item md={6}>
                     <TextField
                         fullWidth
+                        required
                         size='small'
                         label={formData.galleryType === 'Slider' ? "Slider Name" : "Gallery Name"}
                         name='galleryName'
@@ -98,7 +100,7 @@ function AddGallery() {
                     <ImageUpload
                         name='thumbnailImage'
                         label={formData.galleryType === 'Slider' ? 'Slider Image' : 'Thumbnail Image'}
-                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
+                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider' &&  formData.galleryType !== 'Logo'} 
                         required={formData.galleryType === 'Image'}
                         onImageSelect={handleImageSelect}
                     />
