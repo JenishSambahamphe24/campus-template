@@ -2,9 +2,9 @@ import { useState, useRef } from 'react'
 import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, InputLabel, Select, MenuItem } from '@mui/material'
 import { addTeam } from './teamApi'
 import { toast } from 'react-toastify'
-import RichEditor from '../../../../Components/RichEditor'
 import { useNavigate } from 'react-router-dom'
 import ImageUpload from '../../../../Components/ImageUpload'
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor'
 
 function AddTeam() {
     const [loading, setLoading] = useState(false);
@@ -264,7 +264,7 @@ function AddTeam() {
                     </FormControl>
                 </Grid>
                 <Grid item md={12}>
-                    <RichEditor
+                    <TipTapEditor
                         ref={editorRef}
                         height='400px'
                         placeholder="Add description"

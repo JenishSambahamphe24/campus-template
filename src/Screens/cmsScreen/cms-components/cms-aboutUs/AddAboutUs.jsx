@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Paper, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, InputLabel, MenuItem, Select } from '@mui/material';
-import RichEditor from '../../../../Components/RichEditor';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addAboutUs } from './aboutsAPI';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 
 function AddAboutUs() {
     const navigate = useNavigate();
@@ -145,7 +145,7 @@ function AddAboutUs() {
                 </Grid>
 
                 <Grid item md={12}>
-                    <RichEditor
+                    <TipTapEditor
                         height="320px"
                         placeholder="Enter introduction"
                         name="description"

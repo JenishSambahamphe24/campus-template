@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { addPublication, getPublicationCategory } from './publicationApi';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../Components/ImageUpload';
 import FileUpload from '../../../../Components/FileUpload';
 import DateInputField from '../../../../Components/DateInputField';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 
 function AddPublication() {
     const navigate = useNavigate();
@@ -318,7 +318,7 @@ function AddPublication() {
                     </Grid>
 
                     <Grid item sm={12} md={12}>
-                        <RichEditor
+                        <TipTapEditor
                             placeholder="Enter Publication details"
                             name='description'
                             value={formData.description}

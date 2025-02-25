@@ -18,11 +18,11 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-import RichEditor from '../../../../Components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
 import DateInputField from '../../../../Components/DateInputField';
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
 import { getProgramById, getAllFaculties, updateProgramById } from './academicsApi';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 
 
 function EditProgram() {
@@ -314,7 +314,7 @@ function EditProgram() {
                     </Grid>
 
                     <Grid item sm={12} md={12}>
-                        <RichEditor
+                        <TipTapEditor
                             placeholder="Enter Program details"
                             name='programDetails'
                             value={formData.programDetails}

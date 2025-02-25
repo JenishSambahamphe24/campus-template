@@ -18,10 +18,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-import RichEditor from '../../../../../Components/RichEditor';
 import { getTestimonialById, updateTestimonialById } from './testimonialsApi';
 import { extractDate } from '../../../../../Components/utilityFunctions';
 import FileDroppable from '../../cms-gallery/FileDroppable';
+import TipTapEditor from '../../../../../Components/Tiptap/TipTapEditor';
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
@@ -251,7 +251,7 @@ function EditTestimonial() {
                         </Grid>
                     </Grid>
                     <Grid md={12} mt='.5rem'>
-                        <RichEditor
+                        <TipTapEditor
                             placeholder=""
                             name='testimonials'
                             value={formData.testimonials}

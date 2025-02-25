@@ -20,11 +20,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import FileDroppable from '../cms-gallery/FileDroppable';
-import RichEditor from '../../../../Components/RichEditor';
 import { extractDate } from '../../../../Components/utilityFunctions';
 import { getPublicationById, updatePublicationById, getPublicationCategory } from './publicationApi';
 import FileDroppableForFile from '../cms-gallery/FiledroppableForFile';
 import DateInputField from '../../../../Components/DateInputField';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
 
@@ -411,7 +411,7 @@ function EditPublication() {
                     </Grid>
 
                     <Grid item xs={12} mt={2}>
-                        <RichEditor
+                        <TipTapEditor
                             placeholder="Enter description..."
                             name="description"
                             value={formData.description}

@@ -23,7 +23,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item => item.categoryName === 'Others' || item.categoryName === 'Downloads');
+            const filteredData = data.filter(item => item.categoryName === 'Report');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             setSubCategories(uniqueSubCategories);
 

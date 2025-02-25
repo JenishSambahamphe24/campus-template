@@ -20,10 +20,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { getTeamById, updateTeamById } from '../teamApi';
 import { toast } from 'react-toastify';
-import RichEditor from '../../../../../Components/RichEditor';
 import { extractDate } from '../../../../../Components/utilityFunctions';
 import FileDroppable from '../../cms-gallery/FileDroppable';
 import { useParams, useNavigate } from 'react-router-dom';
+import TipTapEditor from '../../../../../Components/Tiptap/TipTapEditor';
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
@@ -343,7 +343,7 @@ function EditTeam() {
 
                     {/* Rich Text Editor for CV */}
                     <Grid width="100%" mt="1rem">
-                        <RichEditor
+                        <TipTapEditor
                             placeholder="Enter CV details"
                             name="cvDetail"
                             value={formData.cvDetail}
