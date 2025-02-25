@@ -30,8 +30,8 @@ function Navbar() {
                         <div className="ml-2 mt-4  md:mt-1 lg:ml-4 flex flex-col justify-center">
                             <h1 className="text-xs text-center lg:text-sm text-white  font-bold tracking-wide"> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
                             <p className="text-xs text-white text-center lg:text-xs"> Affiliated to Tribhuwan University </p>
-                            <h1 className='text-md lg:text-2xl font-bold text-white text-center mt-1'>{collegeNameNepali}</h1>
-                            <h1 className='text-xs lg:text-sm font-bold text-white uppercase text-center'>{collegeName}</h1>
+                            <h1 className='text-md lg:text-xl font-bold text-white text-center mt-1'>{collegeNameNepali}</h1>
+                            <h1 className='text-xs lg:text-lg font-bold text-white uppercase text-center'>{collegeName}</h1>
                             <h1 className='text-sm font-bold text-white uppercase text-center'>{addressNepali}</h1>
                             <h1 className='text-xs font-bold text-white  text-center'>{address}</h1>
                         </div>
@@ -90,7 +90,6 @@ function Navbar() {
                                     </div>
                                 </MenuItems>
                             </Menu>
-
                             <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/program-list">Programs</Link>
                             <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/downloads">Downloads</Link>
                             <Link to="/news" className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white font-bold" >News and Events</Link>
@@ -204,7 +203,7 @@ function Navbar() {
                                     >
                                         Curriculum
                                     </Link>
-                                  
+
                                 </div>
                             </details>
                         </div>

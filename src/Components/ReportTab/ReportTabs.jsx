@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {
     Tabs,
     TabsHeader,
@@ -52,7 +52,7 @@ function ReportTabs() {
             ),
             renderCell: (params) => (
                 <Box textAlign='center'>
-                    <a className='text-blue-600 ' href={`${FILE_URL}content/${params.row.file}`} download target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`} download target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                         <DownloadIcon fontSize="14px" />
                     </a>
                 </Box>
@@ -172,7 +172,6 @@ function ReportTabs() {
                         </Tabs>
                     )
                 }
-
             </Grid>
             <div className='w-full flex justify-center'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">

@@ -9,12 +9,14 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import { showStatus } from '../../../../../Components/utilityFunctions';
 import CommonDeleteDialog from '../../cms-team/components/CommonDeleteDialog';
+import MultipleImageDialog from '../MultipleImageDialog';
 
 
 function GalleryList() {
   const [allGallery, setAllGallery] = useState([]);
   const [galleryId, setGalleryId] = useState(0)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [addImgDialog, setImgDialog] = useState(false)
 
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ function GalleryList() {
       setAllGallery(data);
     } else {
       console.error("Unexpected data format:", data);
-      setAllGallery([]); 
+      setAllGallery([]);
     }
   };
   useEffect(() => {
@@ -41,20 +43,29 @@ function GalleryList() {
     fetchData()
   }
 
+  const handleAddImgDialogOpen = (id) => {
+    setImgDialog(true);
+    setGalleryId(id)
+  };
+
+  const handleImgDialogClose = () => {
+    setImgDialog(false)
+    fetchData()
+  }
   const galleryColumns = [
     { field: 'sNo', headerName: 'S.No.', flex: 0.5 },
     { field: 'type', headerName: 'Gallery Type', flex: 1 },
-    { field: 'fileName', headerName: 'Gallery Name', flex: 5 },
+    { field: 'fileName', headerName: 'Gallery Name', flex: 2 },
     { field: 'status', headerName: 'Status', flex: 1 },
     {
       field: 'action',
       headerName: 'Action',
-      flex: 1.5,
+      flex: 2,
       renderHeader: () => (
         <div style={{ textAlign: 'center', fontWeight: '600' }}>Action</div>
       ),
       renderCell: (params) => (
-        <Box display='flex' justifyContent='space-around'>
+        <Box display='flex' justifyContent='flex-start' gap='20px'>
           <Link onClick={() => navigate(`/admin/editGallery/${params.row.id}`)} sx={{ textDecoration: 'none' }} component={Typography}>
             Edit
           </Link>
@@ -66,6 +77,16 @@ function GalleryList() {
           >
             Delete
           </Button>
+          {params.row.type.toLowerCase() === 'image' && (
+            <Button
+              size='small'
+              color='info'
+              sx={{ textTransform: 'none' }}
+              onClick={() => handleAddImgDialogOpen(params.row.id)}
+            >
+              Add more images
+            </Button>
+          )}
         </Box>
       ),
     },
@@ -81,7 +102,6 @@ function GalleryList() {
     }))
     : [];
 
-  console.log(allGallery)
 
   return (
     <Grid container className='px-20 pb-10' mx='auto'>
@@ -146,6 +166,7 @@ function GalleryList() {
       </Box>
       <Box>
         <CommonDeleteDialog id={galleryId} open={deleteDialogOpen} handleClose={handleClose} deleteApi={deleteGallery} content='Gallery' />
+        <MultipleImageDialog id={galleryId} open={addImgDialog} handleClose={handleImgDialogClose} />
       </Box>
     </Grid>
   );

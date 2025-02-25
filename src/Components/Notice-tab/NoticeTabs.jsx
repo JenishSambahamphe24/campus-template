@@ -171,7 +171,7 @@ function NoticeTabs() {
                                     <div className="w-16 h-16">
                                         <img
                                             className="w-full h-full object-cover"
-                                            src={item.thumbnailImage ? `${IMAGE_URL}${item.thumbnailImage}` : defaultImage}
+                                            src={item.thumbnailImage ? `${IMAGE_URL}/content/${item.thumbnailImage}` : defaultImage}
                                             onError={(e) => { e.target.src = defaultImage; }}
                                             alt=""
                                         />
@@ -192,7 +192,7 @@ function NoticeTabs() {
                 </div>
                 <Link className='w-full flex justify-end mb-1 absolute bottom-0 right-1' to='/news'>
                     <Button sx={{ textTransform: 'none', }} size='small' className="flex  items-center gap-1">
-                        View All programs
+                        View All News & Events
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

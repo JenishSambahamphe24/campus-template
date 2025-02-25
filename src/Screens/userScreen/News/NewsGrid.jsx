@@ -44,13 +44,13 @@ function NewsGrid() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 mt-[10px]">
                 {latestNews && (
-                    <Link to={`/news/${latestNews.id}`} className="sm:col-span-5">
+                    <Link to={`/publication/${latestNews.id}`} className="sm:col-span-5">
                         <div
                             className="bg-cover text-center overflow-hidden"
                             style={{
                                 minHeight: "300px",
                                 backgroundImage: latestNews.thumbnailImage
-                                    ? `url(${IMAGE_URL}content/${latestNews.thumbnailImage})`
+                                    ? `url(${IMAGE_URL}/content/${latestNews.thumbnailImage})`
                                     : `url(${defaultImage})`
                             }}
                             title="Latest News Thumbnail"
@@ -76,12 +76,12 @@ function NewsGrid() {
 
                 <div className="sm:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-5 ">
                     {paginatedNews.sort((a, b) => b.id - a.id).map((item) => (
-                        <Link to={`/news/${item.id}`} key={item.id}>
+                        <Link to={`/publication/${item.id}`} key={item.id}>
                             <div
                                 className="h-40 bg-cover text-center overflow-hidden"
                                 style={{
                                     backgroundImage: item.thumbnailImage
-                                        ? `url(${IMAGE_URL}content/${item.thumbnailImage})`
+                                        ? `url(${IMAGE_URL}/content/${item.thumbnailImage})`
                                         : `url(${defaultImage})`
                                 }}
                                 title="News Thumbnail"

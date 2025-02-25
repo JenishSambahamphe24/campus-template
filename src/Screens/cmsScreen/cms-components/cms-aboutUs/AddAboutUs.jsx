@@ -12,24 +12,8 @@ function AddAboutUs() {
         aboutUsImage: null,
         heading: '',
         description: '',
-        workingAreaImage: '',
         status: true
     });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'status') {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value === 'true'
-            }));
-        } else {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value,
-            }));
-        }
-    };
 
     const handleFileUpload = (e) => {
         const { name, files } = e.target;
@@ -52,6 +36,22 @@ function AddAboutUs() {
             }));
         }
     };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'status') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value === 'true'
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,28 +102,32 @@ function AddAboutUs() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item md={6}>
-                    <TextField
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                            sx: {
-                                '& .MuiInputLabel-asterisk': {
-                                    color: 'brown',
-                                },
-                            },
-                        }}
-                        fullWidth
-                        size="small"
-                        label="Upload a content image"
-                        name="aboutUsImage"
-                        type="file"
-                        accept=".png, .jpg, .jpeg"
-                        onChange={handleFileUpload}
-                        error={!!errors.aboutUsImage}
-                        helperText={errors.aboutUsImage}
-                    />
-                </Grid>
+                {
+                    formData.heading === 'Introduction' && (
+                        <Grid item md={6}>
+                            <TextField
+                                required
+                                InputLabelProps={{
+                                    shrink: true,
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': {
+                                            color: 'brown',
+                                        },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                label="Upload a content image"
+                                name="aboutUsImage"
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                onChange={handleFileUpload}
+                                error={!!errors.aboutUsImage}
+                                helperText={errors.aboutUsImage}
+                            />
+                        </Grid>
+                    )
+                }
 
                 <Grid display='flex' item md={12}>
                     <FormControl>

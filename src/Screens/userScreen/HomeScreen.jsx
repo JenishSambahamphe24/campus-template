@@ -7,7 +7,7 @@ import NoticeTabs from '../../Components/Notice-tab/NoticeTabs';
 
 function HomeScreen() {
     return (
-        <Box>
+        <Box >
             <NoticeMarque />
             <Box mb={4}>
                 <Slider />

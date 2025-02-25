@@ -33,10 +33,7 @@ function ProgramListUser() {
       label: "Bachelor",
       value: "Bachelor",
     },
-    {
-      label: "PGD",
-      value: "PGD",
-    },
+   
     {
       label: "Master",
       value: "Master",
@@ -52,7 +49,15 @@ function ProgramListUser() {
         <Tabs value={activeTab}>
           <Grid item md={12} >
             <TabsHeader
-              style={{ background: '#1169bf', color: 'white', zIndex: '1' }}
+                style={{
+                  background: '#1169bf',
+                  color: 'white',
+                  zIndex: '1',
+                  height: '35px',
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  gap: '10px'
+              }}
               className='rounded'
             >
               {data.map(({ label, value }) => (
@@ -61,6 +66,13 @@ function ProgramListUser() {
                   value={value}
                   onClick={() => setActiveTab(value)}
                   className={activeTab === value ? "text-gray-900" : ""}
+                  style={{
+                    padding: '0 16px',
+                    minWidth: 'auto',
+                    width: 'auto',
+                    textAlign: 'center',
+                    whiteSpace: 'nowrap'
+                  }}
                 >
                   {label}
                 </Tab>

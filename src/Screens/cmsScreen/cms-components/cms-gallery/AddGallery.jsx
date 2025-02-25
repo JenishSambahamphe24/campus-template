@@ -2,12 +2,10 @@ import { useState } from 'react';
 import {
     TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
 } from '@mui/material';
-import FileDroppable from './FileDroppable';
 import { addGallery } from './galleryApii';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../../../../Components/ImageUpload';
-
 
 function AddGallery() {
     const navigate = useNavigate()
@@ -17,7 +15,7 @@ function AddGallery() {
         galleryDescription: '',
         thumbnailImage: null,
         videoUrl: '',
-        multipleImage: null,
+        status: true,
     });
 
     const handleImageSelect = (file) => {
@@ -35,15 +33,6 @@ function AddGallery() {
         }));
     };
 
-    const handleMultipleImageUpload = (images) => {
-        const newImages = images.map((image) => ({
-            name: image.name,
-            type: image.type,
-            value: image,
-        }));
-        setFormData((prev) => ({ ...prev, multipleImage: newImages }));
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.galleryName || !formData.galleryType) {
@@ -56,12 +45,8 @@ function AddGallery() {
         payload.append('galleryDescription', formData.galleryDescription);
         payload.append('thumbnailImage', formData.thumbnailImage);
         payload.append('videoUrl', formData.videoUrl);
-        payload.append('audioFile', formData.audioFile);
-        if (formData.galleryType === 'Image' && formData.multipleImage) {
-            formData.multipleImage.forEach((image) => {
-                payload.append('multipleImage', image.value);
-            });
-        }
+        payload.append('status', formData.status);
+
         try {
             const newGallery = await addGallery(payload);
             toast.success('Gallery added successfully', { autoClose: 400 });
@@ -69,9 +54,10 @@ function AddGallery() {
                 navigate('/admin/viewGallery');
             }, 1000);
         } catch (error) {
-            if ( error.response.status === 413) {
+            if (error.response.status === 413) {
                 toast.error('The images are too large. Please reduce the size and try again.');
-            }}
+            }
+        }
     };
 
     return (
@@ -111,7 +97,7 @@ function AddGallery() {
                 <Grid item md={3}>
                     <ImageUpload
                         name='thumbnailImage'
-                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'ThumbnailImage Image'}
+                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'Thumbnail Image'}
                         disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
                         required={formData.galleryType === 'Image'}
                         onImageSelect={handleImageSelect}
@@ -144,19 +130,15 @@ function AddGallery() {
                         </Grid>
                     )
                 }
-                {/* {
-                    formData.galleryType === 'Image' && (
-                        <Grid item md={12}>
-                            <FileDroppable
-                                required={true}
-                                placeholder=' upload gallery images'
-                                name='multipleImage'
-                                allowMultiple={true}
-                                onImagesChange={handleMultipleImageUpload}
-                            />
-                        </Grid>
-                    )
-                } */}
+                <Grid item md={4} display='flex' justifyContent='center'>
+                    <FormControl>
+                        <FormLabel id="status">Status</FormLabel>
+                        <RadioGroup row value={formData.status} onChange={handleChange} name="status">
+                            <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
+                            <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
 
                 <Grid item md={12} textAlign='center'>
                     <Button type='submit' variant='contained'>
@@ -169,4 +151,3 @@ function AddGallery() {
 }
 
 export default AddGallery;
-
