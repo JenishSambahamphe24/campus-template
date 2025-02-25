@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
+import { getAllGallery } from '../Screens/cmsScreen/cms-components/cms-gallery/galleryApii';
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
@@ -14,6 +15,17 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
+
+    const [logo, setLogo] = useState('')
+    const fetchLogo = async () => {
+        const response = await getAllGallery()
+        setLogo(response.find(item => item.galleryType === 'Logo').thumbnailImage)
+    } 
+    
+    useEffect(() => {
+     fetchLogo()
+    }, [])
+    
 
     return (
         <nav className="relative bg-white shadow ">

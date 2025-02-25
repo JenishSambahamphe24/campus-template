@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
-    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
-    RadioGroup, FormLabel, Radio, FormControlLabel
+    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, FormLabel, Radio, RadioGroup, FormControlLabel
 } from '@mui/material';
 import { addGallery } from './galleryApii';
 import { toast } from 'react-toastify';
@@ -30,18 +29,16 @@ function AddGallery() {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'status' ? JSON.parse(value) : value,
+            [name] : value,
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!formData.galleryName || !formData.galleryType) {
             toast.error('Please fill all required fields');
             return;
         }
-
         const payload = new FormData();
         payload.append('galleryType', formData.galleryType);
         payload.append('galleryName', formData.galleryName);
@@ -68,7 +65,6 @@ function AddGallery() {
             <Typography variant='h5' textAlign='center'>
                 Add New Gallery
             </Typography>
-
             <Grid container component={Paper} elevation={6} width='70%' mx='auto' my='2rem' spacing={2} pr={2} pt='1rem' pb='2rem'>
                 <Grid item md={3}>
                     <FormControl size='small' fullWidth>
@@ -83,6 +79,7 @@ function AddGallery() {
                             <MenuItem value='Image'>Image</MenuItem>
                             <MenuItem value='Slider'>Slider</MenuItem>
                             <MenuItem value='Video'>Video</MenuItem>
+                            <MenuItem value='Logo'>Logo</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -90,6 +87,7 @@ function AddGallery() {
                 <Grid item md={6}>
                     <TextField
                         fullWidth
+                        required
                         size='small'
                         label={formData.galleryType === 'Slider' ? "Slider Name" : "Gallery Name"}
                         name='galleryName'
@@ -102,7 +100,7 @@ function AddGallery() {
                     <ImageUpload
                         name='thumbnailImage'
                         label={formData.galleryType === 'Slider' ? 'Slider Image' : 'Thumbnail Image'}
-                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
+                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider' &&  formData.galleryType !== 'Logo'} 
                         required={formData.galleryType === 'Image'}
                         onImageSelect={handleImageSelect}
                     />
