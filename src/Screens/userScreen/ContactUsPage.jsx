@@ -47,7 +47,7 @@ function ContactUsPage() {
       <section className=" text-gray-600 body-font relative">
         <div className="container px-5 py-4 lg:py-16 mx-auto flex sm:flex-nowrap flex-wrap">
           <div
-            className="w-full min-h-52 lg:w-2/3 md:w-2/3 bg-red-900 rounded-lg overflow-hidden sm:mr-10 p-6 flex items-end justify-start relative"
+            className="w-full min-h-52 lg:w-2/3 md:w-2/3  rounded-lg overflow-hidden sm:mr-10 p-6 flex items-end justify-start relative"
           >
             <iframe
               width="100%"

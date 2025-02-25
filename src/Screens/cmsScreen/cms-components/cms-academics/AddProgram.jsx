@@ -1,11 +1,11 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import RichEditor from '../../../../Components/RichEditor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getAllFaculties, addProgram } from './academicsApi';
 import DateInputField from '../../../../Components/DateInputField';
 import FileUpload from '../../../../Components/FileUpload';
+import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
 function AddProgram() {
     const navigate = useNavigate();
     const [level, setLevel] = useState([])
@@ -225,15 +225,17 @@ function AddProgram() {
                     </Grid>
 
                     <Grid item sm={12} md={12}>
-                        <RichEditor
+                        <TipTapEditor
                             placeholder="Enter Program details"
                             name='programDetails'
                             value={formData.programDetails}
                             onChange={(content) => {
                                 setFormData(prev => ({
-                                    ...prev, programDetails: content
-                                }))
+                                    ...prev,
+                                    programDetails: content
+                                }));
                             }}
+                            height={300} 
                         />
                     </Grid>
                     <Grid item sm={12} md={12}>
