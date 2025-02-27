@@ -11,7 +11,7 @@ const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
 const logoURL = import.meta.env.VITE_LOGO_URL
 const textColor = import.meta.env.VITE_NAV_TEXT
-cons[t bgColor=] import.meta.env.VITE_NAV_BG
+const bgColor= import.meta.env.VITE_NAV_BG
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);

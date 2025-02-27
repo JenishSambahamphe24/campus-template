@@ -128,3 +128,18 @@
   .tiptap-editor-content [style*="text-align:right"] {
     text-align: right;
   }
+
+
+.tiptap-editor:focus-within {
+  outline: 2px solid #4d90fe;
+  box-shadow: 0 0 0 1px #4d90fe;
+}
+
+.tiptap-editor .ProseMirror:focus {
+  outline: none;
+}
+
+.tiptap-editor .ProseMirror {
+  min-height: inherit;
+  height: 100%;
+}
