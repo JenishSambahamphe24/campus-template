@@ -164,7 +164,7 @@ function AddTestimonials() {
             
                 <Grid item sm={12} md={12}>
                     <TipTapEditor
-                        height='400px'
+                        height='320px'
                         placeholder="Add estimonial"
                         name='testimonials'
                         value={formData.testimonials}

@@ -256,7 +256,7 @@ function EditTestimonial() {
                             name='testimonials'
                             value={formData.testimonials}
                             onChange={handleChange}
-                            height='400px'
+                            height='320px'
                         />
                     </Grid>
                     <Button sx={{ marginTop: '10px' }} type='submit' size='small' variant='contained' >
