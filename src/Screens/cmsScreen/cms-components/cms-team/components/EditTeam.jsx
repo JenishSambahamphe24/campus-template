@@ -348,7 +348,7 @@ function EditTeam() {
                             name="cvDetail"
                             value={formData.cvDetail}
                             onChange={(value) => setFormData((prev) => ({ ...prev, cvDetail: value }))}
-                            height="400px"
+                            height="320px"
                         />
                     </Grid>
                     <div className='flex justify-end mt-2'>

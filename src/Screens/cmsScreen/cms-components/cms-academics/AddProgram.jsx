@@ -235,7 +235,7 @@ function AddProgram() {
                                     programDetails: content
                                 }));
                             }}
-                            height={300} 
+                            height={320} 
                         />
                     </Grid>
                     <Grid item sm={12} md={12}>
