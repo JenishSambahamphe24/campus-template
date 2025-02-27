@@ -25,13 +25,21 @@ function ReportTabs() {
             const data = await getAllpublication();
             const filteredData = data.filter(item => item.categoryName === 'Report');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
-            setSubCategories(uniqueSubCategories);
+            if (uniqueSubCategories) {
+                setSubCategories(uniqueSubCategories);
+            } else {
+                setSubCategories('')
+            }
 
             const dataWithSno = filteredData.map((item, index) => ({
                 ...item,
                 sNo: index + 1
             }));
-            setAllReports(dataWithSno);
+            if (dataWithSno) {
+                setAllReports(dataWithSno)
+            } else {
+                setAllReports([])
+            }
             setActiveTab(uniqueSubCategories[0]);
         };
         fetchData();
@@ -80,93 +88,102 @@ function ReportTabs() {
                 Reports
             </h1>
             <Grid item mx='auto' xs={12}>
-                <Tabs value={activeTab}>
-                    <TabsHeader
-                        style={{
-                            background: '#1169bf',
-                            color: 'white',
-                            zIndex: '1',
-                            height: '35px',
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            gap: '10px',
-                        }}
-                        className="rounded-b-none"
-                    >
-                        {subCategories.map((subCategory, index) => (
-                            <Tab
-                                key={index}
+                {
+                    allReports.length > 0 ? (
+                        <Tabs value={activeTab}>
+                            <TabsHeader
                                 style={{
-                                    color: activeTab === subCategory ? 'black' : 'white',
-                                    padding: '0 16px',
-                                    minWidth: 'auto',
-                                    width: 'auto',
-                                    textAlign: 'center',
-                                    whiteSpace: 'nowrap',
+                                    background: '#1169bf',
+                                    color: 'white',
+                                    zIndex: '1',
+                                    height: '35px',
+                                    display: 'flex',
+                                    justifyContent: 'flex-start',
+                                    gap: '10px',
                                 }}
-                                value={subCategory}
-                                onClick={() => setActiveTab(subCategory)}
+                                className="rounded-b-none"
                             >
-                                <h1 className='xs:text-xs'>
-                                    {subCategory}
-                                </h1>
-                            </Tab>
-                        ))}
-                    </TabsHeader>
+                                {subCategories.map((subCategory, index) => (
+                                    <Tab
+                                        key={index}
+                                        style={{
+                                            color: activeTab === subCategory ? 'black' : 'white',
+                                            padding: '0 16px',
+                                            minWidth: 'auto',
+                                            width: 'auto',
+                                            textAlign: 'center',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                        value={subCategory}
+                                        onClick={() => setActiveTab(subCategory)}
+                                    >
+                                        <h1 className='xs:text-xs'>
+                                            {subCategory}
+                                        </h1>
+                                    </Tab>
+                                ))}
+                            </TabsHeader>
 
-                    <TabsBody className="bg-gray-100">
-                        <TabPanel key={activeTab} value={activeTab}>
-                            <DataGrid
-                                rows={getCurrentRows()}
-                                columns={reportColumns}
-                                hideFooterPagination
-                                hideFooter
-                                density='compact'
-                                disableColumnFilter={true}
-                                disableAutosize={true}
-                                disableColumnMenu={true}
-                                disableColumnSelector={true}
-                                disableColumnSorting={true}
-                                disableDensitySelector={true}
-                                autosizeOnMount={true}
-                                columnHeaderHeight={40}
-                                rowHeight={30}
-                                showCellVerticalBorder={true}
-                                pagination
-                                initialState={{
-                                    pagination: { paginationModel: { pageSize: 10 } },
-                                }}
-                                sx={{
-                                    '.MuiDataGrid-columnSeparator': {
-                                        display: 'none',
-                                    },
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    },
-                                    '& .MuiDataGrid-cell:focus-within': {
-                                        outline: 'none'
-                                    },
-                                    '& .grid-header .MuiDataGrid-colCellTitle': {
-                                        fontWeight: 'bold'
-                                    },
-                                    '& .MuiDataGrid-columnHeaderTitle ': {
-                                        fontWeight: '600',
-                                        fontSize: '14px'
-                                    },
-                                    '& .MuiDataGrid-selectedRowCount': {
-                                        visibility: 'hidden'
-                                    },
-                                    '.MuiDataGrid-columnHeader': {
-                                        border: '1px solid #e0e0e0',
-                                    },
-                                    width: '100%',
-                                    maxHeight: '158px',
-                                    minHeight: '158px'
-                                }}
-                            />
-                        </TabPanel>
-                    </TabsBody>
-                </Tabs>
+                            <TabsBody className="bg-gray-100">
+                                <TabPanel key={activeTab} value={activeTab}>
+                                    <DataGrid
+                                        rows={getCurrentRows()}
+                                        columns={reportColumns}
+                                        hideFooterPagination
+                                        hideFooter
+                                        density='compact'
+                                        disableColumnFilter={true}
+                                        disableAutosize={true}
+                                        disableColumnMenu={true}
+                                        disableColumnSelector={true}
+                                        disableColumnSorting={true}
+                                        disableDensitySelector={true}
+                                        autosizeOnMount={true}
+                                        columnHeaderHeight={40}
+                                        rowHeight={30}
+                                        showCellVerticalBorder={true}
+                                        pagination
+                                        initialState={{
+                                            pagination: { paginationModel: { pageSize: 10 } },
+                                        }}
+                                        sx={{
+                                            '.MuiDataGrid-columnSeparator': {
+                                                display: 'none',
+                                            },
+                                            '& .MuiDataGrid-row:hover': {
+                                                cursor: 'pointer'
+                                            },
+                                            '& .MuiDataGrid-cell:focus-within': {
+                                                outline: 'none'
+                                            },
+                                            '& .grid-header .MuiDataGrid-colCellTitle': {
+                                                fontWeight: 'bold'
+                                            },
+                                            '& .MuiDataGrid-columnHeaderTitle ': {
+                                                fontWeight: '600',
+                                                fontSize: '14px'
+                                            },
+                                            '& .MuiDataGrid-selectedRowCount': {
+                                                visibility: 'hidden'
+                                            },
+                                            '.MuiDataGrid-columnHeader': {
+                                                border: '1px solid #e0e0e0',
+                                            },
+                                            width: '100%',
+                                            maxHeight: '158px',
+                                            minHeight: '158px'
+                                        }}
+                                    />
+                                </TabPanel>
+                            </TabsBody>
+                        </Tabs>
+                    )
+                        : (
+                            <div className='min-h-[150px] text-red-600'>
+                                <h1 className='text-md text-center'>No Reports Uploaded yet!</h1>
+                            </div>
+                        )
+                }
             </Grid>
             <div className='w-full flex justify-center'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">

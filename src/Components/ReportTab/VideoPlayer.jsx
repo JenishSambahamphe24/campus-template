@@ -59,7 +59,9 @@ function VideoPlayer() {
                         )
                         :
                         (
-                            <h1 className='w-full text-center'>No image gallery uploaded yet. Please login to the CMS and add images gallery</h1>
+                            <Grid xs={12} className='content-center min-h-[150px]  text-red-600'>
+                                <h1 className='text-md text-center'>No Gallery Uploaded yet!</h1>
+                            </Grid>
                         )
                 }
             </Grid>
@@ -87,7 +89,9 @@ function VideoPlayer() {
 
                         :
                         (
-                            <h1 className='w-full text-center'>No videos uploaded yet. Please login to the CMS and add Video gallery</h1>
+                            <Grid xs={12} className='min-h-[150px] content-center  text-red-600'>
+                                <h1 className='text-md text-center'>No Videos Uploaded yet!</h1>
+                            </Grid>
                         )
                 }
 

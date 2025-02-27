@@ -33,7 +33,7 @@ function Navbar() {
         <nav className="relative bg-white shadow ">
             <div className="pb-0 mx-auto">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <div className={`px-4 lg:px-20 bg-${bgColor} py-4  md:py-0  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
+                    <div className={`px-4 lg:px-20 bg-[${bgColor}] py-4  md:py-0  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
                         <Link className="flex items-center" to="/">
                             <img
                                 className="w-[120px] h-auto"
@@ -55,7 +55,7 @@ function Navbar() {
                     </div>
                 </div>
                 {/* main navigation */}
-                <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 py-3 mt-[2px] overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
+                <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 py-3  overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
                     <div className="hidden md:flex w-full">
                         <div className="flex">
                             <Link className="mx-4 font-bold text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform  text-white" to="/">Home</Link>
