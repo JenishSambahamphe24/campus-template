@@ -11,7 +11,7 @@ import { FaFacebook } from "react-icons/fa6";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
-const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png';
+const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png';
 const email = import.meta.env.VITE_EMAIL
 const phone = import.meta.env.VITE_PHONE
 
