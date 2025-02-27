@@ -11,7 +11,7 @@ const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
 const logoURL = import.meta.env.VITE_LOGO_URL
 const textColor = import.meta.env.VITE_NAV_TEXT
-const bgColor= import.meta.env.VITE_NAV_BG
+cons[t bgColor=] import.meta.env.VITE_NAV_BG
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +33,7 @@ function Navbar() {
         <nav className="relative bg-white shadow ">
             <div className="pb-0 mx-auto">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <div className={`px-4 lg:px-20 bg-${bgColor} py-4  md:py-0  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
+                    <div className={`px-4 lg:px-20 bg-[${bgColor}] py-4  md:py-0  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
                         <Link className="flex items-center" to="/">
                             <img
                                 className="w-[120px] h-auto"
