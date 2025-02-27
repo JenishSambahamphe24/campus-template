@@ -7,9 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+*.zip
 .env
 index.html
 node_modules
+src/assets/Logo.png
 dist
 dist-ssr
 *.local
