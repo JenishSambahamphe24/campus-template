@@ -317,6 +317,7 @@ function EditProgram() {
                         <TipTapEditor
                             placeholder="Enter Program details"
                             name='programDetails'
+                            height='320px'
                             value={formData.programDetails}
                             onChange={(content) => {
                                 setFormData((prev) => ({

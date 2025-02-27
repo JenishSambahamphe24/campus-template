@@ -266,7 +266,7 @@ function AddTeam() {
                 <Grid item md={12}>
                     <TipTapEditor
                         ref={editorRef}
-                        height='800px'
+                        height='320px'
                         placeholder="Add description"
                         name='cvDetail'
                         value={formData.cvDetail}

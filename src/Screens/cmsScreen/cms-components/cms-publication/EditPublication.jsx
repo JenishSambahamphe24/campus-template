@@ -415,7 +415,7 @@ function EditPublication() {
                             name="description"
                             value={formData.description}
                             onChange={(value) => setFormData(prev => ({ ...prev, description: value }))}
-                            height="400px"
+                            height="320px"
                         />
                     </Grid>
 

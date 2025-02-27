@@ -320,6 +320,7 @@ function AddPublication() {
                     <Grid item sm={12} md={12}>
                         <TipTapEditor
                             placeholder="Enter Publication details"
+                            height='320px'
                             name='description'
                             value={formData.description}
                             onChange={(content) => setFormData((prev) => ({
