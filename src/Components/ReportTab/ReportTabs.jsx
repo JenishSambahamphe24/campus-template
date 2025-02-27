@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Tabs,
     TabsHeader,
@@ -25,13 +25,21 @@ function ReportTabs() {
             const data = await getAllpublication();
             const filteredData = data.filter(item => item.categoryName === 'Report');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
-            setSubCategories(uniqueSubCategories);
+            if (uniqueSubCategories) {
+                setSubCategories(uniqueSubCategories);
+            } else {
+                setSubCategories('')
+            }
 
             const dataWithSno = filteredData.map((item, index) => ({
                 ...item,
                 sNo: index + 1
             }));
-            setAllReports(dataWithSno);
+            if (dataWithSno) {
+                setAllReports(dataWithSno)
+            } else {
+                setAllReports([])
+            }
             setActiveTab(uniqueSubCategories[0]);
         };
         fetchData();
@@ -69,7 +77,7 @@ function ReportTabs() {
                 id: item.id,
                 fileName: item.title,
                 file: item.file,
-                publishedDate: formatDate(item.createdAt),
+                publishedDate: formatDate(item.publishedAt),
             }));
     };
 
@@ -77,11 +85,11 @@ function ReportTabs() {
         <Grid container rowGap='20px'>
             <Divider style={{ width: '100%', backgroundColor: '#c2c2c2' }} />
             <h1 className='text-2xl'>
-                Downloads
+                Reports
             </h1>
             <Grid item mx='auto' xs={12}>
                 {
-                    allReports.length > 0 && (
+                    allReports.length > 0 ? (
                         <Tabs value={activeTab}>
                             <TabsHeader
                                 style={{
@@ -116,7 +124,6 @@ function ReportTabs() {
                                 ))}
                             </TabsHeader>
 
-                            {/* Tabs Body */}
                             <TabsBody className="bg-gray-100">
                                 <TabPanel key={activeTab} value={activeTab}>
                                     <DataGrid
@@ -171,6 +178,11 @@ function ReportTabs() {
                             </TabsBody>
                         </Tabs>
                     )
+                        : (
+                            <div className='min-h-[150px] text-red-600'>
+                                <h1 className='text-md text-center'>No Reports Uploaded yet!</h1>
+                            </div>
+                        )
                 }
             </Grid>
             <div className='w-full flex justify-center'>
