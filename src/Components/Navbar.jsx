@@ -55,7 +55,7 @@ function Navbar() {
                     </div>
                 </div>
                 {/* main navigation */}
-                <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 py-3 mt-[2px] overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
+                <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 py-3  overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
                     <div className="hidden md:flex w-full">
                         <div className="flex">
                             <Link className="mx-4 font-bold text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform  text-white" to="/">Home</Link>
