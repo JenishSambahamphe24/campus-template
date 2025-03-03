@@ -13,8 +13,8 @@ import YouTube from 'react-youtube';
 import { getAllGallery } from '../../cmsScreen/cms-components/cms-gallery/galleryApii';
 import { videoIdParser } from '../../../Components/utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
-const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNQFWmSUrapQhK9X9UyXp5mhc1rmSaumLIkw&s'
 
 function GalleryPage() {
     const { tab } = useParams();

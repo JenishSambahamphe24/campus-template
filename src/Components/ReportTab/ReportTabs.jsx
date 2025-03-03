@@ -189,7 +189,7 @@ function ReportTabs() {
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
                     <Link to='/report'>
                         <Typography >
-                            All publications
+                            All reports
                         </Typography>
                     </Link>
                     <svg

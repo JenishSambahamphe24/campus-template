@@ -9,8 +9,9 @@ const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 import { videoIdParser } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
-const defaultImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNQFWmSUrapQhK9X9UyXp5mhc1rmSaumLIkw&s'
+
 
 function VideoPlayer() {
     const [images, setImages] = useState([])

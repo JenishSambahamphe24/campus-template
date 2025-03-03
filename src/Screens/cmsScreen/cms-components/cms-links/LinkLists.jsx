@@ -40,11 +40,17 @@ function LinkLists() {
         fetchData()
     };
     const columns = [
-        { field: 'sNo', headerName: 'S.No.', flex: 50 },
+        { field: 'sNo', headerName: 'S.No.', flex: 40 },
         {
             field: 'name',
             headerName: 'Link Name',
-            flex: 150,
+            flex: 200,
+            editable: true,
+        },
+        {
+            field: 'index',
+            headerName: 'Index',
+            flex: 70,
             editable: true,
         },
         {
@@ -56,7 +62,7 @@ function LinkLists() {
         {
             field: 'url',
             headerName: 'URL',
-            flex: 110,
+            flex: 150,
             editable: true,
         },
 
@@ -96,7 +102,8 @@ function LinkLists() {
         sNo: index + 1,
         name: item.name,
         url: item.url,
-        type: item.type
+        type: item.type,
+        index: item.index
     }));
 
 

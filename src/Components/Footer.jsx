@@ -11,7 +11,7 @@ import { FaFacebook } from "react-icons/fa6";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
-const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png';
+const defaultImage = import.meta.env.VITE_LOGO_URL
 const email = import.meta.env.VITE_EMAIL
 const phone = import.meta.env.VITE_PHONE
 
@@ -52,7 +52,7 @@ function Footer() {
                                 <>
                                     <img
                                         className='w-[70%] h-32 object-cover'
-                                        src={officeInfo.ppImage ? `${IMAGE_URL}${officeInfo.ppImage}` : defaultImage}
+                                        src={officeInfo.ppImage ? `${IMAGE_URL}/team/${officeInfo.ppImage}` : defaultImage}
                                         onError={(e) => { e.target.src = defaultImage; }}
                                         alt=""
                                     />

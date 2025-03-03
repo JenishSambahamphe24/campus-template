@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getAllaboutUs } from '../../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI';
 import { Grid } from '@mui/material';
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
 function Introduction() {
     const [data, setData] = useState({});
     const [imgError, setImgError] = useState(false);
-    const defaultImage = 'https://www.blogtyrant.com/wp-content/uploads/2011/02/best-about-us-pages.png';
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +30,6 @@ function Introduction() {
     (data.aboutUsImage ? `${IMAGE_URL}/aboutus/${data.aboutUsImage}` : defaultImage);
     return (
         <>
-        <h1 className='text-center mt-8 text-2xl font-medium'>Introduction</h1>
         <Grid container className='px-10 sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
             <Grid 
                 display='flex' 

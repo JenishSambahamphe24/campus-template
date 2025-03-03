@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, InputLabel, Select, MenuItem } from '@mui/material'
+import { TextField, Button, Grid, Typography, Paper, FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, InputLabel, Select, MenuItem, Tooltip } from '@mui/material'
 import { addTeam } from './teamApi'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
@@ -218,22 +218,25 @@ function AddTeam() {
                     />
                 </Grid>
                 <Grid item md={4}>
-                    <TextField
-                        fullWidth
-                        size='small'
-                        label='Employee Index'
-                        name='index'
-                        value={formData.index}
-                        type='number'
-                        required
-                        InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': { color: 'brown' },
-                            },
-                        }}
-                        inputProps={{ min: 0 }}
-                        onChange={handleChange}
-                    />
+                    <Tooltip title='Index should be managed according to Type . Meaning that start from 1,2,3... for committe member & same will be applied for Teaching and non-teaching'>
+                        <TextField
+                            fullWidth
+                            size='small'
+                            label='Employee Index'
+                            name='index'
+                            value={formData.index}
+                            type='number'
+                            required
+                            InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                },
+                            }}
+                            inputProps={{ min: 0 }}
+                            onChange={handleChange}
+                        />
+                    </Tooltip>
+
                 </Grid>
                 <Grid item md={6}>
                     <ImageUpload
@@ -244,7 +247,7 @@ function AddTeam() {
                         onImageSelect={handleImageSelect}
                     />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={6}>
                     <TextField
                         fullWidth
                         size='small'

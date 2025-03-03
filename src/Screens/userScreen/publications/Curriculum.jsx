@@ -7,10 +7,11 @@ import ReusablePagination from '../ReusablePagination'
 import { cleanDescription, formatDate } from '../../../Components/utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
 function Curriculum() {
     const [allCurriculum, setAllCurriculum] = useState([])
-    const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png'
+    
     useEffect(() => {
         const fetchdata = async () => {
             const data = await getAllpublication()

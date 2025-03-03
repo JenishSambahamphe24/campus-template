@@ -28,7 +28,7 @@ function AdminNavbar() {
     return (
         <div>
             <nav className="relative bg-white shadow ">
-                <div className="py-1 pb-0 mx-auto">
+                <div className="pb-0 mx-auto">
                 <div className={`px-4 lg:px-20 bg-[${bgColor}] py-4  md:py-1  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
                         <Link className="flex items-center" to="/">
                             <img

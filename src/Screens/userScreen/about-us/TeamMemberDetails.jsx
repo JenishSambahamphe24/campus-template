@@ -5,6 +5,7 @@ import { BsFacebook, BsTwitterX } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import { getTeamById } from '../../cmsScreen/cms-components/cms-team/teamApi'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
 function TeamMemberDetails() {
     const { id } = useParams();
@@ -17,7 +18,7 @@ function TeamMemberDetails() {
         };
         fetchData()
     }, [id])
-    const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png'
+    
     return (
         <Grid  container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center'  gap='10px'>
             <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4}  md={8.3} lg={8.8}  order={{xs:2, sm:2 , md:2, lg:1}}>

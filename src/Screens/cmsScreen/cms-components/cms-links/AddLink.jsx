@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TextField, FormControl, Button, Grid, Typography, Paper, InputLabel, Select, MenuItem } from '@mui/material'
 import { toast } from 'react-toastify';
 import { addLink } from './linkApi';
@@ -11,6 +11,7 @@ function AddLink() {
         name: '',
         type: '',
         url: '',
+        index:0
     })
 
     const handleChange = (e) => {
@@ -38,7 +39,7 @@ function AddLink() {
                 Add a new Link
             </Typography>
             <Grid component={Paper} container width='70%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
-                <Grid item sm={12} md={6}>
+                <Grid item sm={12} md={4}>
                     <FormControl size='small' fullWidth>
                         <InputLabel>Link Type</InputLabel>
                         <Select
@@ -61,7 +62,7 @@ function AddLink() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     {
                         formData.type === 'socials' ?
                             (
@@ -104,7 +105,22 @@ function AddLink() {
                     }
 
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <TextField
+                        fullWidth
+                        size='small'
+                        variant='standard'
+                        label='Index'
+                        type='number'
+                        inputProps={{
+                            min: 0
+                        }}
+                        name='index'
+                        value={formData.index}
+                        onChange={handleChange}
+                    />
+                </Grid>
+                <Grid item xs={12}>
                     <TextField
                         fullWidth
                         size='small'
@@ -125,7 +141,6 @@ function AddLink() {
                         Add a new Link
                     </Button>
                 </Grid>
-
             </Grid>
         </form>
     )
