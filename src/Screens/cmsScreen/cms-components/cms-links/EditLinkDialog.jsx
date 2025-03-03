@@ -21,7 +21,8 @@ function EditLinkDialog({ handleClose, open, linkId }) {
     const [formData, setFormData] = useState({
         type: '',
         name: '',
-        url: ''
+        url: '',
+        index: 0
     })
 
     useEffect(() => {
@@ -88,7 +89,7 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                 <Stack direction='column' rowGap='10px'>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing='1rem'>
-                            <Grid item sm={12}>
+                            <Grid item sm={3}>
                                 <FormControl size='small' fullWidth>
                                     <InputLabel>Link Type</InputLabel>
                                     <Select
@@ -155,13 +156,27 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                 }
 
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={2}>
                                 <TextField
+                                    variant='standard'
+                                    name="index"
+                                    label='Index'
+                                    value={formData.index}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
                                     variant='standard'
                                     name="url"
                                     label='URL'
                                     value={formData.url}
                                     onChange={handleChange}
+                                    type='number'
+                                    inputProps={{
+                                        min:0
+                                    }}
                                 />
                             </Grid>
                         </Grid>
