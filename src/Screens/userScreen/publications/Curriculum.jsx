@@ -10,7 +10,7 @@ const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
 function Curriculum() {
     const [allCurriculum, setAllCurriculum] = useState([])
-    const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png'
+    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
     useEffect(() => {
         const fetchdata = async () => {
             const data = await getAllpublication()

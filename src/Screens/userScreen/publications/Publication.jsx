@@ -28,7 +28,7 @@ function Publication() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png'
+    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
 
     return (
         <Grid container sm={12} className='p-4 lg:px-20 lg:py-6'>

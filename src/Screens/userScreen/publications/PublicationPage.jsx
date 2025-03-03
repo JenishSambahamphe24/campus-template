@@ -17,7 +17,7 @@ function PublicationPage() {
     const [publicationDetail, setPublicationDetail] = useState({});
     const { id } = useParams()
 
-    const defaultImage = 'https://nishibhuji.edu.np/assets/Logo.png'
+    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
     useEffect(() => {
         const fetchData = async () => {
             const data = await getPublicationById(id)
