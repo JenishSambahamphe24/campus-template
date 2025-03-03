@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
 import { cleanDescription, formatDateShort } from '../../../Components/utilityFunctions';
-
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-const defaultImage = 'https://media.istockphoto.com/id/1389157460/photo/newspaper-and-digital-tablet-on-wooden-table.jpg?s=612x612&w=0&k=20&c=CNKIHIEE4HnEnqDpUCyvnEfbf8nn90jRfX6TmhbGBxc=';
+const defaultImage = import.meta.env.VITE_LOGO_URL
+
 
 function NewsGrid() {
     const [allNewsEvents, setAllNews] = useState([]);

@@ -28,27 +28,25 @@ function AdminNavbar() {
     return (
         <div>
             <nav className="relative bg-white shadow ">
-                <div className="py-1 pb-0 mx-auto">
-                    <div className="flex  flex-col md:flex-row md:justify-between md:items-center">
-                        <div className={`px-4 lg:px-20 bg-[${bgColor}] h-full items-center mx-auto flex justify-between w-full`}>
-                            <Link className="flex items-center" to="/">
-                                <img
-                                    className="w-[120px] h-auto"
-                                    src={logoURL}
-                                    alt="Logo"
-                                />
-                            </Link>
-                            <div className={`ml-2 py-1 lg:ml-4 flex text-[${textColor}]  flex-col justify-center`}>
-                            <h1 className={`text-xs text-center lg:text-sm text-[${textColor}]  font-bold tracking-wide`}> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
+                <div className="pb-0 mx-auto">
+                <div className={`px-4 lg:px-20 bg-[${bgColor}] py-4  md:py-1  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
+                        <Link className="flex items-center" to="/">
+                            <img
+                                className="w-[120px] h-auto"
+                                src={logoURL}
+                                alt="Logo"
+                            />
+                        </Link>
+                        <div className={`ml-2 mt-4 text-[${textColor}] md:mt-1 lg:ml-4 flex flex-col justify-center`}>
+                            <h1 className={`text-xs text-center lg:text-xs text-[${textColor}]  font-medium tracking-wide`}> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
                             <p className={`text-xs text-${textColor} text-center lg:text-xs`}> Affiliated to Tribhuwan University </p>
-                            <h1 className={`text-md lg:text-xl font-bold text-[${textColor}] text-center mt-1`}>{collegeNameNepali}</h1>
+                            <h1 className={`text-md lg:text-xl font-bold text-[${textColor}] text-center`}>{collegeNameNepali}</h1>
                             <h1 className={`text-xs lg:text-lg font-bold text-[${textColor}] uppercase text-center`}>{collegeName}</h1>
-                            <h1 className={`text-sm font-bold text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>
-                            <h1 className={`text-xs font-bold text-[${textColor}]  text-center`}>{address}</h1>
-                            </div>
-                            <div>
-                                <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="" />
-                            </div>
+                            <h1 className={`text-xs font-medium text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>
+                            <h1 className={`text-xs font-medium text-[${textColor}]  text-center`}>{address}</h1>
+                        </div>
+                        <div className='hidden lg:block'>
+                            <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="" />
                         </div>
                     </div>
                     {/* main navigation */}

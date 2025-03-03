@@ -7,6 +7,7 @@ import ReusablePagination from '../ReusablePagination'
 import { cleanDescription, formatDate } from '../../../Components/utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
+const defaultImage = import.meta.env.VITE_LOGO_URL
 
 function Publication() {
     const [allPublication, setAllPublication] = useState([])
@@ -28,7 +29,6 @@ function Publication() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
 
     return (
         <Grid container sm={12} className='p-4 lg:px-20 lg:py-6'>

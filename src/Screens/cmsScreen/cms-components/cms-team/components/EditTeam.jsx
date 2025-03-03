@@ -311,7 +311,7 @@ function EditTeam() {
                             />
                             {fetchedImage && (
                                 <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
-                                    <img src={`${IMAGE_URL}/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+                                    <img src={`${IMAGE_URL}/team/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
 
                                     <IconButton
                                         size="small"

@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Box, Typography, Button, Stack, Divider } from '@mui/material'
-import { BsTwitterX } from "react-icons/bs";
-import { BsFacebook } from "react-icons/bs";
-import { FaLink } from "react-icons/fa";
+import { Grid, Typography, Button} from '@mui/material'
 import { Link, useParams } from 'react-router-dom';
-import { extractDate, formatDateShort } from '../../../Components/utilityFunctions';
-import { getAllpublication, getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
-import DownloadIcon from '@mui/icons-material/Download';
+import { extractDate } from '../../../Components/utilityFunctions';
+import {  getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { useTheme } from '@mui/material';  
 
+const defaultImage = import.meta.env.VITE_LOGO_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material';
 
 function PublicationPage() {
     const theme = useTheme();
     const [publicationDetail, setPublicationDetail] = useState({});
     const { id } = useParams()
 
-    const defaultImage = 'https://gyanodayampc.edu.np/assets/Logo.png'
     useEffect(() => {
         const fetchData = async () => {
             const data = await getPublicationById(id)
