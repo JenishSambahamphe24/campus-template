@@ -104,4 +104,19 @@ export const updatePublicationCategoryById = async (id, data) => {
     }
 };
 
+export const deletePublicationCategoryById = async (id) => {
+    try {
+        const token = getAuthToken();
+        if (!token) throw new Error("Token is missing");
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        const response = await axios.delete(`${BASE_URL}/publicationCategories/${id}`, { headers });
+        return response.data;
+    } catch (error) {
+        console.error("Error while deleting Publication category:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
 

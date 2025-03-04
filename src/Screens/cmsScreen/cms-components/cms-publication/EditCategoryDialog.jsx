@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField, } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
-import { getPublicationCategoryById, updatePublicationCategoryById } from './publicationApi';
+import { getPublicationCategory, getPublicationCategoryById, updatePublicationCategoryById } from './publicationApi';
 import { extractDate } from '../../../../Components/utilityFunctions';
-
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     height: 'auto',
@@ -17,41 +16,45 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-function EditCategoryDialog({handleClose, open, categoryId}) {
+function EditCategoryDialog({ handleClose, open, categoryId }) {
+    const [allCatName, setAllCatName] = useState([]);
 
     const [formData, setFormData] = useState({
         categoryName: '',
         subCategoryName: ''
-    })
-console.log(formData)
+    });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getPublicationCategoryById(categoryId)
-                setFormData(data)
+                const data = await getPublicationCategoryById(categoryId);
+                const catResponse = await getPublicationCategory();
+                setAllCatName(catResponse.map(item => item.categoryName));
+                setFormData(data);
             } catch (error) {
-                console.error('Error fetching team data:', error);
+                console.error('Error fetching data:', error);
             }
         };
-        fetchData()
-    }, [categoryId])
+        fetchData();
+    }, [categoryId]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
-        }))
-    }
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formattedData = {
             ...formData,
             updatedAt: extractDate(formData.updatedAt)
-        }
+        };
         try {
             await updatePublicationCategoryById(categoryId, formattedData);
-            toast.success('Category  updated successfully');
+            toast.success('Category updated successfully');
             handleClose();
         } catch (error) {
             console.error('Error updating category:', error);
@@ -64,9 +67,8 @@ console.log(formData)
             onClose={handleClose}
             aria-labelledby="customized-dialog-title"
             open={open}
-        
         >
-            <DialogTitle sx={{ m: 'auto auto', p: 1 }} >
+            <DialogTitle sx={{ m: 'auto auto', p: 1 }}>
                 Edit Category Information
             </DialogTitle>
             <IconButton
@@ -81,27 +83,43 @@ console.log(formData)
             >
                 <CloseIcon />
             </IconButton>
-            <DialogContent >
+            <DialogContent>
                 <Stack direction='column' rowGap='10px'>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing='1rem'>
                             <Grid item xs={6}>
-                                <TextField
-                                    fullWidth
-                                    size='small'
-                                    variant='standard'
-                                    label='CategoryName'
-                                    name='categoryName'
-                                    value={formData.categoryName}
-                                    onChange={handleChange}
-
-                                />
+                                <FormControl size='small' fullWidth>
+                                    <InputLabel>Category Name</InputLabel>
+                                    <Select
+                                        required
+                                        InputLabelProps={{
+                                            sx: {
+                                                '& .MuiInputLabel-asterisk': {
+                                                    color: 'brown',
+                                                },
+                                            },
+                                        }}
+                                        variant='standard'
+                                        name="categoryName"
+                                        value={formData.categoryName}
+                                        onChange={handleChange}
+                                        label='Category Name'
+                                    >
+                                        {
+                                            allCatName.length > 0 && (
+                                                allCatName.map((item, index) => (
+                                                    <MenuItem key={index} value={item}>{item}</MenuItem>
+                                                ))
+                                            )
+                                        }
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
                                     variant='standard'
                                     name="subCategoryName"
-                                    label='sub category'
+                                    label='Sub Category'
                                     value={formData.subCategoryName}
                                     onChange={handleChange}
                                 />
@@ -109,7 +127,7 @@ console.log(formData)
                         </Grid>
 
                         <DialogActions>
-                            <Button type='submit' size='small' variant='contained' >
+                            <Button type='submit' size='small' variant='contained'>
                                 Edit
                             </Button>
                         </DialogActions>
@@ -117,7 +135,7 @@ console.log(formData)
                 </Stack>
             </DialogContent>
         </BootstrapDialog>
-    )
+    );
 }
 
-export default EditCategoryDialog
+export default EditCategoryDialog;

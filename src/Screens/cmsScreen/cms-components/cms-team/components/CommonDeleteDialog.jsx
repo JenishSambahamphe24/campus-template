@@ -1,4 +1,3 @@
-import React from 'react'
 
 import { Typography, Box, Dialog, DialogContent, Button, } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -17,15 +16,19 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function CommonDeleteDialog({ handleClose, open, id, deleteApi, content }) {
     const handleDelete = async () => {
         try {
-            await deleteApi(id);
+            const response = await deleteApi(id);
             toast.success(`${content} deleted successfully!`);
             setTimeout(() => {
                 handleClose();
-            }, 900)
+            }, 900);
         } catch (error) {
-            toast.error(`Failed to delete ${content}. Please try again.`);
+            console.log(error)
+            if (error.status === 409) {
+                toast.info(`Other contents are linked to this ${content}. Delete them first !!!`);
+            }
         }
     };
+
     return (
         <BootstrapDialog
             onClose={handleClose}

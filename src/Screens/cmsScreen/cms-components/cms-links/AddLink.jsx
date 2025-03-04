@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { TextField, FormControl, Button, Grid, Typography, Paper, InputLabel, Select, MenuItem } from '@mui/material'
 import { toast } from 'react-toastify';
 import { addLink } from './linkApi';
@@ -11,7 +11,7 @@ function AddLink() {
         name: '',
         type: '',
         url: '',
-        index:0
+        index: 0
     })
 
     const handleChange = (e) => {

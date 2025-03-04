@@ -79,7 +79,6 @@ function AddGallery() {
                             <MenuItem value='Image'>Image</MenuItem>
                             <MenuItem value='Slider'>Slider</MenuItem>
                             <MenuItem value='Video'>Video</MenuItem>
-                            <MenuItem value='Logo'>Logo</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
