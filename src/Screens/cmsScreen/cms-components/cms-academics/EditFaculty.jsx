@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField, } from '@mui/material';
+import { useState, useEffect } from 'react'
+import { Stack, Dialog, DialogContent, DialogActions, DialogTitle, Grid, Button, IconButton, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 // import { getPublicationCategoryById, updatePublicationCategoryById } from './publicationApi';
 import { extractDate } from '../../../../Components/utilityFunctions';
-import { getFacultyById, updateFacultyById } from './academicsApi';
+import { getAllFaculties, getFacultyById, updateFacultyById } from './academicsApi';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -18,17 +18,18 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-function EditFaculty({handleClose, open, categoryId}) {
-
+function EditFaculty({ handleClose, open, categoryId }) {
+    const [allLevel, setAllLevel] = useState([])
     const [formData, setFormData] = useState({
         level: '',
         facultyName: ''
     })
-console.log(formData)
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getFacultyById(categoryId)
+                const facultyResponse = await getAllFaculties()
+                setAllLevel(facultyResponse.map(item => item.level));
                 setFormData(data)
             } catch (error) {
                 console.error('Error fetching team data:', error);
@@ -66,10 +67,10 @@ console.log(formData)
             onClose={handleClose}
             aria-labelledby="customized-dialog-title"
             open={open}
-        
+
         >
             <DialogTitle sx={{ m: 'auto auto', p: 1 }} >
-                Edit Category Information
+                Edit Faculty
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -88,7 +89,7 @@ console.log(formData)
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing='1rem'>
                             <Grid item xs={6}>
-                                <TextField
+                                {/* <TextField
                                     fullWidth
                                     size='small'
                                     variant='standard'
@@ -97,7 +98,33 @@ console.log(formData)
                                     value={formData.level}
                                     onChange={handleChange}
 
-                                />
+                                /> */}
+                                <FormControl size='small' fullWidth>
+                                    <InputLabel>Level</InputLabel>
+                                    <Select
+                                        required
+                                        InputLabelProps={{
+                                            sx: {
+                                                '& .MuiInputLabel-asterisk': {
+                                                    color: 'brown',
+                                                },
+                                            },
+                                        }}
+                                        variant='standard'
+                                        name="level"
+                                        value={formData.level}
+                                        onChange={handleChange}
+                                        label='Level'
+                                    >
+                                        {
+                                            allLevel.length > 0 && (
+                                                allLevel.map((item, index) => (
+                                                    <MenuItem key={index} value={item}>{item}</MenuItem>
+                                                ))
+                                            )
+                                        }
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField

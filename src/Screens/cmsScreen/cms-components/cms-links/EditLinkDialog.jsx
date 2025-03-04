@@ -154,15 +154,18 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                             </>
                                         )
                                 }
-
                             </Grid>
                             <Grid item xs={2}>
                                 <TextField
+                                    size='small'
                                     variant='standard'
                                     name="index"
                                     label='Index'
                                     value={formData.index}
                                     onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -175,7 +178,7 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                     onChange={handleChange}
                                     type='number'
                                     inputProps={{
-                                        min:0
+                                        min: 0
                                     }}
                                 />
                             </Grid>

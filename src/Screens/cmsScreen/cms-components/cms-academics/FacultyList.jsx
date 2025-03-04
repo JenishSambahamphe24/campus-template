@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Grid,
@@ -12,8 +12,9 @@ import {
     MenuItem
 } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { getAllFaculties } from './academicsApi'
+import { getAllFaculties, deleteFacultyById } from './academicsApi'
 import EditFaculty from './EditFaculty'
+import CommonDeleteDialog from '../cms-team/components/CommonDeleteDialog'
 
 function FacultyList() {
     const [selectedLevel, setSelectedLevel] = useState("All");
@@ -22,18 +23,19 @@ function FacultyList() {
     const [uniquelevel, setUniqueLevel] = useState([])
 
     const [editDialogOpen, setEditDialogOpen] = useState(false)
-    
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+
+    const fetchData = async () => {
+        try {
+            const data = await getAllFaculties()
+            setCategory(data)
+            const unuqueLevel = [...new Set(data.map(item => item.level))];
+            setUniqueLevel(unuqueLevel)
+        } catch (error) {
+            console.log('Error fetching category Data')
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getAllFaculties()
-                setCategory(data)
-                const unuqueLevel = [...new Set(data.map(item => item.level))];
-                setUniqueLevel(unuqueLevel)
-            } catch (error) {
-                console.log('Error fetching category Data')
-            }
-        };
         fetchData()
     }, [])
 
@@ -67,7 +69,7 @@ function FacultyList() {
                 </div>
             },
             renderCell: (params) => (
-                <Box display='flex' >
+                <Box display='flex' justifyContent='space-around'>
                     <Typography
                         fontSize='14px'
                         color='primary'
@@ -75,6 +77,14 @@ function FacultyList() {
                         onClick={() => handleEditDialogOpen(params.row.id)}
                     >
                         Edit
+                    </Typography>
+                    <Typography
+                        fontSize='14px'
+                        color='error'
+                        mt='7px'
+                        onClick={() => handleDeleteDialogOpen(params.row.id)}
+                    >
+                        Delete
                     </Typography>
                 </Box>
             ),
@@ -101,6 +111,15 @@ function FacultyList() {
             console.error('Error fetching teams:', error);
         }
     };
+
+    const handleDeleteDialogOpen = (id) => {
+        setCategoryId(id)
+        setDeleteDialogOpen(true)
+    }
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false)
+        fetchData()
+    }
 
     return (
         <Grid container mx='auto' md={11}>
@@ -180,6 +199,13 @@ function FacultyList() {
                 </Link>
                 <Box>
                     <EditFaculty categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
+                    <CommonDeleteDialog
+                        id={categoryId}
+                        open={deleteDialogOpen}
+                        handleClose={handleDeleteDialogClose}
+                        deleteApi={deleteFacultyById}
+                        content='Faculty'
+                    />
                 </Box>
             </Stack>
         </Grid>

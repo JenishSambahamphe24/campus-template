@@ -18,17 +18,6 @@ function Navbar() {
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
 
-    const [logo, setLogo] = useState('')
-    const fetchLogo = async () => {
-        const response = await getAllGallery()
-        setLogo(response.find(item => item.galleryType === 'Logo').thumbnailImage)
-    }
-
-    useEffect(() => {
-        fetchLogo()
-    }, [])
-
-
     return (
         <nav className="relative bg-white shadow ">
             <div className="pb-0 mx-auto">

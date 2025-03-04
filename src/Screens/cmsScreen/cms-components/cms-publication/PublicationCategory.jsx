@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { TextField, Button, Grid, Typography, Paper, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
-import { addPublicationCategory, getPublicationCategory } from './publicationApi';
+import { addPublicationCategory, deletePublicationCategoryById, getPublicationCategory } from './publicationApi';
 import { toast } from 'react-toastify';
 import { DataGrid } from '@mui/x-data-grid';
 import EditCategoryDialog from './EditCategoryDialog';
+import CommonDeleteDialog from '../cms-team/components/CommonDeleteDialog';
 
 function PublicationCategory() {
     const [category, setCategory] = useState([])
     const [categoryId, setCategoryId] = useState(0)
     const [editDialogOpen, setEditDialogOpen] = useState(false)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
     const [formData, setFormData] = useState({
         categoryName: '',
@@ -34,6 +36,44 @@ function PublicationCategory() {
         fetchData()
     }, [])
 
+ 
+    const handleEditDialogOpen = (id) => {
+        setCategoryId(id)
+        setEditDialogOpen(true);
+    };
+
+
+    const handleEditDialogClose = async () => {
+        setEditDialogOpen(false);
+        try {
+            const updateCategory = await getPublicationCategory();
+            setCategory(updateCategory);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
+    const handleDeleteDialogOpen = (id) => {
+        setCategoryId(id)
+        setDeleteDialogOpen(true)
+    }
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false);
+        fetchData()
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const newCategory = await addPublicationCategory(formData);
+            toast.success('Publication category added successfully');
+            await fetchData();
+            setFormData({ categoryName: '', subCategoryName: '' });
+
+        } catch (error) {
+            console.error('Error adding publication category:', error);
+            toast.error('Failed to add category');
+        }
+    };
     const columns = [
         { field: 'sNo', headerName: 'S.No.', flex: 50 },
         {
@@ -59,7 +99,7 @@ function PublicationCategory() {
                 </div>
             },
             renderCell: (params) => (
-                <Box display='flex' >
+                <Box display='flex' justifyContent='space-around' >
                     <Typography
                         fontSize='14px'
                         color='primary'
@@ -67,6 +107,14 @@ function PublicationCategory() {
                         onClick={() => handleEditDialogOpen(params.row.id)}
                     >
                         Edit
+                    </Typography>
+                    <Typography
+                        fontSize='14px'
+                        color='error'
+                        mt='7px'
+                        onClick={() => handleDeleteDialogOpen(params.row.id)}
+                    >
+                        Delete
                     </Typography>
                 </Box>
             ),
@@ -78,34 +126,6 @@ function PublicationCategory() {
         categoryName: item.categoryName,
         subCategoryName: item.subCategoryName
     }));
-    const handleEditDialogOpen = (id) => {
-        setCategoryId(id)
-        setEditDialogOpen(true);
-    };
-    const handleEditDialogClose = async () => {
-        setEditDialogOpen(false);
-        try {
-            const updateCategory = await getPublicationCategory();
-            setCategory(updateCategory);
-        } catch (error) {
-            console.error('Error fetching teams:', error);
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const newCategory = await addPublicationCategory(formData);
-            toast.success('Publication category added successfully');
-            await fetchData(); 
-            setFormData({ categoryName: '', subCategoryName: '' });
-
-        } catch (error) {
-            console.error('Error adding publication category:', error);
-            toast.error('Failed to add category');
-        }
-    };
-
     return (
         <Grid container justifyContent='center' className='pb-8'>
             <Grid item sm={10}>
@@ -240,6 +260,13 @@ function PublicationCategory() {
 
                 <Box>
                     <EditCategoryDialog categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
+                    <CommonDeleteDialog
+                        id={categoryId}
+                        open={deleteDialogOpen}
+                        handleClose={handleDeleteDialogClose}
+                        deleteApi={deletePublicationCategoryById}
+                        content='Publication Category'
+                    />
                 </Box>
             </Grid>
         </Grid>

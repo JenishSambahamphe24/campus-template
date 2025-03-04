@@ -32,6 +32,14 @@ export const addFaculty = async (data) => {
     const response = await axios.post(`${BASE_URL}/faculty`, data, { headers });
     return response.data;
 };
+export const deleteFacultyById = async (id) => {
+    const token = getAuthToken();
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    };
+    const response = await axios.delete(`${BASE_URL}/faculty/${id}`, { headers });
+    return response.data;
+};
 
 
 // Programs
