@@ -24,15 +24,25 @@ function Footer() {
 
     const fetchInfoOfficer = async () => {
         const response = await getAllTeams()
-        setOfficerInfo(response.find(item => item.subCategory === 'Information Officer'))
+        if(response){
+            setOfficerInfo(response.find(item => item.subCategory === 'Information Officer'))
+        }else{
+            setOfficerInfo({})
+        }
     }
 
     const fetchLinks = async () => {
         const response = await getAllLink()
-        const otherLinks = response.filter((item) => item.type === 'otherLink')
-        setLinks(otherLinks)
-        setFbLink(response.find(item => item.name === 'facebook'))
-        setYTLink(response.find(item => item.name === 'youtube'))
+        if(response){
+            const otherLinks = response.filter((item) => item.type === 'otherLink')
+            setLinks(otherLinks)
+            setFbLink(response.find(item => item.name === 'facebook'))
+            setYTLink(response.find(item => item.name === 'youtube'))
+        } else {
+            setLinks([])
+            setFbLink({})
+            setYTLink({})
+        }
     }
 
     useEffect(() => {
