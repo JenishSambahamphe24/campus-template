@@ -78,12 +78,39 @@ function AddProgram() {
         }));
     };
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const formDataToSend = new FormData();
+    //     Object.keys(formData).forEach((key) => {
+    //         formDataToSend.append(key, formData[key]);
+    //     });
+    //     try {
+    //         const newProgram = await addProgram(formDataToSend);
+    //         toast.success('Program added successfully');
+    //         setTimeout(() => {
+    //             navigate('/admin/programs');
+    //         }, 700)
+    //     } catch (error) {
+    //         console.error('Error adding Program:', error);
+    //         toast.error('Error adding Program');
+    //     }
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formDataToSend = new FormData();
+        
+        // Process each form field before adding to FormData
         Object.keys(formData).forEach((key) => {
-            formDataToSend.append(key, formData[key]);
+            // Skip null or empty values for date fields
+            if (key === 'runningFrom') {
+                if (formData[key] !== null && formData[key] !== '') {
+                    formDataToSend.append(key, formData[key]);
+                }
+            } else {
+                formDataToSend.append(key, formData[key]);
+            }
         });
+        
         try {
             const newProgram = await addProgram(formDataToSend);
             toast.success('Program added successfully');
@@ -92,10 +119,9 @@ function AddProgram() {
             }, 700)
         } catch (error) {
             console.error('Error adding Program:', error);
-            toast.error('Error adding Program');
+            toast.error('Error adding Program: ' + (error.message || 'Unknown error'));
         }
     };
-
     return (
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
@@ -244,7 +270,7 @@ function AddProgram() {
                             variant='contained'
                             type='submit'
                         >
-                            Add Content
+                            Add Program
                         </Button>
                     </Grid>
                 </Grid>
