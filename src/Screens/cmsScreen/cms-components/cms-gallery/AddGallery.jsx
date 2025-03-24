@@ -44,7 +44,7 @@ function AddGallery() {
         payload.append('galleryName', formData.galleryName);
         payload.append('galleryDescription', formData.galleryDescription);
         payload.append('thumbnailImage', formData.thumbnailImage);
-        payload.append('videoUrl', formData.videoUrl);
+        payload.append('videoUrl', formData.videoUrl );
         payload.append('status', formData.status);
 
         try {
