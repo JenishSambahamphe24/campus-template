@@ -1,7 +1,6 @@
-import React from 'react'
 import { Grid, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
-import adminImage from '../../../assets/admin1.png'
+import adminImage from '../../../../public/admin1.png'
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 
 function AdminHomePage() {
@@ -17,7 +16,6 @@ function AdminHomePage() {
                 Browse Contents
               </Button>
             </Link>
-
           </div>
         </div>
       </div>
