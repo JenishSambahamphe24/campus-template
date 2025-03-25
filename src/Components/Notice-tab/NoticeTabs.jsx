@@ -171,7 +171,7 @@ function NoticeTabs() {
                                     <div className="w-16 h-16">
                                         <img
                                             className="w-full h-full object-cover"
-                                            src={item.thumbnailImage ? `${IMAGE_URL}/content/${item.thumbnailImage}` : defaultImage}
+                                            src={item.thumbnailImage ? `${IMAGE_URL}/thumb/${item.thumbnailImage}` : defaultImage}
                                             onError={(e) => { e.target.src = defaultImage; }}
                                             alt=""
                                         />

@@ -189,33 +189,33 @@ function EditPublication() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!formData.categoryName || !formData.categoryId) {
             toast.error('Please select both category and subcategory');
             return;
         }
-    
+
         const updatedData = new FormData();
-    
+
         // Handle image and file uploads
         if (formData.thumbnailImage) {
             updatedData.append('thumbnailImage', formData.thumbnailImage);
         } else if (fetchedImage) {
             updatedData.append('thumbnailImage', fetchedImage);
         }
-    
+
         if (formData.file) {
             updatedData.append('file', formData.file);
         } else if (fetchedFile) {
             updatedData.append('file', fetchedFile);
         }
-    
+
         Object.keys(formData).forEach(key => {
             if (!['thumbnailImage', 'file', 'publishedAt', 'expiredAt', 'updatedAt'].includes(key)) {
                 updatedData.append(key, formData[key] || '');
             }
         });
-    
+
         if (formData.publishedAt) {
             updatedData.append('publishedAt', extractDate(formData.publishedAt));
         }
@@ -223,7 +223,7 @@ function EditPublication() {
             updatedData.append('expiredAt', extractDate(formData.expiredAt));
         }
         updatedData.append('updatedAt', extractDate(new Date()));
-    
+
         try {
             await updatePublicationById(pubId, updatedData);
             toast.success('Publication updated successfully');
@@ -235,7 +235,7 @@ function EditPublication() {
             toast.error('Failed to update publication');
         }
     };
-    
+
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -364,20 +364,19 @@ function EditPublication() {
                                 onImagesChange={(updatedFiles) => handleImageChange(updatedFiles, 'thumbnailImage')}
                             />
                             {fetchedImage && (
-                                <div className="relative mt-2 w-16 h-16">
-                                    <img
-                                        src={`${IMAGE_URL}/${fetchedImage}`}
-                                        alt="Thumbnail"
-                                        className="w-full h-full object-cover rounded-lg"
-                                    />
+                                <div style={{ position: 'relative', marginTop: '5px', width: '100px', height: '80px' }}>
+                                    <img src={`${IMAGE_URL}/thumb/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
                                     <IconButton
                                         size="small"
                                         onClick={handleRemoveFetchedImage}
-                                        className="absolute -top-2 -right-2 bg-white/80 hover:bg-white"
+                                        style={{
+                                            position: 'absolute',
+                                            top: '-2px',
+                                            right: '-2px',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                        }}
                                     >
-                                        <h1 className="h-4 w-4">
-                                        X
-                                        </h1>
+                                        <CloseIcon fontSize="small" />
                                     </IconButton>
                                 </div>
                             )}

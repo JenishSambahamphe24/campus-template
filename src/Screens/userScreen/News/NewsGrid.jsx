@@ -50,7 +50,7 @@ function NewsGrid() {
                             style={{
                                 minHeight: "300px",
                                 backgroundImage: latestNews.thumbnailImage
-                                    ? `url(${IMAGE_URL}/content/${latestNews.thumbnailImage})`
+                                    ? `url(${IMAGE_URL}/thumb/${latestNews.thumbnailImage})`
                                     : `url(${defaultImage})`
                             }}
                             title="Latest News Thumbnail"
@@ -81,7 +81,7 @@ function NewsGrid() {
                                 className="h-40 bg-cover text-center overflow-hidden"
                                 style={{
                                     backgroundImage: item.thumbnailImage
-                                        ? `url(${IMAGE_URL}/content/${item.thumbnailImage})`
+                                        ? `url(${IMAGE_URL}/thumb/${item.thumbnailImage})`
                                         : `url(${defaultImage})`
                                 }}
                                 title="News Thumbnail"

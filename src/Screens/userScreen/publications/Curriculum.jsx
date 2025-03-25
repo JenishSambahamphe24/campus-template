@@ -41,7 +41,7 @@ function Curriculum() {
                                 <Link to={`/curriculum/${item.id}`}>
                                     <img
                                         alt=""
-                                        src={`${IMAGE_URL}/content/${item.thumbnailImage}`}
+                                        src={`${IMAGE_URL}/thumb/${item.thumbnailImage}`}
                                         onError={(e) => { e.target.src = defaultImage; }}
                                         className="h-56 w-4/5 mx-auto object-cover"
                                     />

@@ -85,48 +85,19 @@ function EditGallery() {
         }));
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const updatedData = new FormData();
-    //     if (formData.thumbnailImage) {
-    //         updatedData.append('thumbnailImage', formData.thumbnailImage);
-    //     } else if (fetchedThumbnail) {
-    //         updatedData.append('thumbnailImage', fetchedThumbnail);
-    //     }
-    //     updatedData.append('galleryType', formData.galleryType || '');
-    //     updatedData.append('galleryName', formData.galleryName || '');
-    //     updatedData.append('galleryDescription', formData.galleryDescription || '');
-    //     updatedData.append('videoUrl', formData.videoUrl || '');
-    //     updatedData.append('sliderImage', formData.sliderImage || null);
-    //     try {
-    //         await updateGalleryById(id, updatedData);
-    //         toast.success('Gallery updated successfully');
-    //         setTimeout(() => {
-    //             navigate('/admin/viewGallery');
-    //         }, 900);
-    //     } catch (error) {
-    //         console.error('Error updating gallery:', error);
-    //         toast.error('Failed to update gallery');
-    //     }
-    // };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedData = new FormData();
-    
         if (formData.thumbnailImage) {
             updatedData.append('thumbnailImage', formData.thumbnailImage);
         } else if (fetchedThumbnail) {
             updatedData.append('thumbnailImage', fetchedThumbnail);
         }
-    
         updatedData.append('galleryType', formData.galleryType || '');
         updatedData.append('galleryName', formData.galleryName || '');
         updatedData.append('galleryDescription', formData.galleryDescription || '');
-    
-        if (formData.videoUrl) {
-            updatedData.append('videoUrl', formData.videoUrl);
-        }
+        updatedData.append('videoUrl', formData.videoUrl || '');
+        updatedData.append('sliderImage', formData.sliderImage || null);
         try {
             await updateGalleryById(id, updatedData);
             toast.success('Gallery updated successfully');
@@ -138,6 +109,8 @@ function EditGallery() {
             toast.error('Failed to update gallery');
         }
     };
+
+   
     return (
         <Grid container className='lg:px-[15rem] pb-10'>
             <h1 className='text-center pb-3 text-2xl  mx-auto'> Edit Gallery </h1>
@@ -211,7 +184,7 @@ function EditGallery() {
                                 <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
                                     <img src={`${IMAGE_URL}/thumb/${fetchedThumbnail}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
                                     <IconButton
-                                        size="small"
+                                        size="small" 
                                         onClick={handleRemoveFetchedImage}
                                         style={{
                                             position: 'absolute',

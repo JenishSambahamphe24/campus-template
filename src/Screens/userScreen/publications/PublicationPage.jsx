@@ -57,7 +57,7 @@ function PublicationPage() {
             <Grid item xs={12} sm={4.3} md={3.5} lg={3} className='border border-gray-100' order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
                 <div className="full group relative block overflow-hidden">
                     <img
-                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}/content/${publicationDetail.thumbnailImage}` : defaultImage}
+                        src={publicationDetail.thumbnailImage ? `${IMAGE_URL}/thumb/${publicationDetail.thumbnailImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
                         className={`h-52 transition duration-500 sm:h-52 object-cover ${publicationDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"

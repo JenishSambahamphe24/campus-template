@@ -97,10 +97,10 @@ function GalleryGrid() {
         <div className="mx-auto max-w-8xl">
           <div className="mb-3">
             <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
-             {galleryData?.gallery?.galleryName ? galleryData.gallery.galleryName : 'Gallery Name Not Available'}
+             {galleryData?.gallery?.galleryName ? galleryData.gallery.galleryName : ''}
             </h2>
             <p className="w-full text-center text-md text-gray-600 font-normal leading-2">
-            {galleryData?.gallery?.galleryDescription ? galleryData.gallery.galleryDescription : 'No description'}
+            {galleryData?.gallery?.galleryDescription ? galleryData.gallery.galleryDescription : ''}
             </p>
           </div>
           <Grid container spacing={2} justifyContent="center">
