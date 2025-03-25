@@ -71,7 +71,7 @@ import Downloads from './Screens/userScreen/publications/Downloads.jsx';
 import Curriculum from './Screens/userScreen/publications/Curriculum.jsx';
 import CurriculumPage from './Screens/userScreen/publications/CurriculumPage.jsx';
 import ChangePassword from './Screens/cmsScreen/cms-components/ChangePassword.jsx';
-
+import RegisterUser from './Screens/userScreen/RegisterUser.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -80,6 +80,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/' element={<HomeScreen />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
+        <Route index={true} path='/register' element={<RegisterUser />} />
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />

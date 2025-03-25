@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Select, MenuItem, Typography, Stack, FormControl, Grid, TextField, Paper, InputLabel, IconButton, FormLabel, RadioGroup, Radio, FormControlLabel, Button } from '@mui/material';
+import { Select, MenuItem, Typography, Stack, FormControl, Grid, TextField, Paper, InputLabel, IconButton, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FileDroppable from './FileDroppable';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,7 +21,6 @@ function EditGallery() {
         thumbnailImage: null,
         videoUrl: '',
         sliderImage: null,
-        status: null,
         multipleImage: null,
     })
     const [fetchedThumbnail, setFetchedThumbnail] = useState(null)
@@ -39,7 +38,6 @@ function EditGallery() {
                     galleryDescription: gallery.galleryDescription,
                     thumbnailImage: gallery.thumbnailImage,
                     videoUrl: gallery.videoUrl || '',
-                    status: gallery.status,
                 }));
                 const { images } = response;
                 setImages(images)
@@ -99,7 +97,6 @@ function EditGallery() {
         updatedData.append('galleryName', formData.galleryName || '');
         updatedData.append('galleryDescription', formData.galleryDescription || '');
         updatedData.append('videoUrl', formData.videoUrl || '');
-        updatedData.append('status', formData.status || '');
         updatedData.append('sliderImage', formData.sliderImage || null);
         try {
             await updateGalleryById(id, updatedData);
@@ -113,6 +110,7 @@ function EditGallery() {
         }
     };
 
+   
     return (
         <Grid container className='lg:px-[15rem] pb-10'>
             <h1 className='text-center pb-3 text-2xl  mx-auto'> Edit Gallery </h1>
@@ -156,24 +154,7 @@ function EditGallery() {
                             />
                         </Grid>
 
-                        <Grid item sm={6} md={3}>
-                            <FormControl >
-                                <div className='flex '>
-                                    <FormControl size='small'>
-                                        <FormLabel size='small' id="demo-row-radio-buttons-group-label">Activation status ?</FormLabel>
-                                        <RadioGroup
-                                            row
-                                            name="status"
-                                            value={formData.status === 'false' ? false : true}
-                                            onChange={handleChange}
-                                        >
-                                            <FormControlLabel value={true} control={<Radio size='small' />} label="Active" />
-                                            <FormControlLabel value={false} control={<Radio size='small' />} label="Inactive" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </div>
-                            </FormControl>
-                        </Grid>
+                      
 
                         <Grid item sm={12} md={9}>
                             <TextField
@@ -203,7 +184,7 @@ function EditGallery() {
                                 <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
                                     <img src={`${IMAGE_URL}/thumb/${fetchedThumbnail}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
                                     <IconButton
-                                        size="small"
+                                        size="small" 
                                         onClick={handleRemoveFetchedImage}
                                         style={{
                                             position: 'absolute',
