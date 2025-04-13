@@ -24,7 +24,7 @@ function ImageUpload({ name, label, disabled, required, onImageSelect }) {
                     return 100;
                 }
             });
-        }, 200);
+        }, 100);
     };
 
     return (

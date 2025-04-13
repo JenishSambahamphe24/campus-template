@@ -123,7 +123,6 @@ function AddTeam() {
                 </Grid>
                 <Grid item md={4}>
                     <TextField
-                        required
                         InputLabelProps={{
                             sx: {
                                 '& .MuiInputLabel-asterisk': { color: 'brown' },
@@ -139,7 +138,6 @@ function AddTeam() {
                 </Grid>
                 <Grid item md={4}>
                     <TextField
-                        required
                         InputLabelProps={{
                             sx: {
                                 '& .MuiInputLabel-asterisk': { color: 'brown' },
@@ -243,7 +241,6 @@ function AddTeam() {
                         name='ppImage'
                         label='Member Image'
                         disabled={false}
-                        required={true}
                         onImageSelect={handleImageSelect}
                     />
                 </Grid>

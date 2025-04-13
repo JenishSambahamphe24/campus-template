@@ -63,7 +63,6 @@ function Footer() {
                                     <img
                                         className='w-[70%] h-32 object-cover'
                                         src={officeInfo.ppImage ? `${IMAGE_URL}/team/${officeInfo.ppImage}` : defaultImage}
-                                        onError={(e) => { e.target.src = defaultImage; }}
                                         alt=""
                                     />
                                     <div className=" mt-2 text-white gap-y-[2px] text-sm flex flex-col">
@@ -76,7 +75,6 @@ function Footer() {
                                         </div>
                                     </div>
                                 </>
-
                             ) : (
                                 <p className="text-white">No data uploaded</p>
                             )}
