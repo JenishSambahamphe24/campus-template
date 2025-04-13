@@ -176,7 +176,6 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                     label='URL'
                                     value={formData.url}
                                     onChange={handleChange}
-                                    type='number'
                                     inputProps={{
                                         min: 0
                                     }}
