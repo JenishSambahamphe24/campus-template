@@ -6,7 +6,8 @@ import { getAllGallery } from '../Screens/cmsScreen/cms-components/cms-gallery/g
 import { getAllLink } from '../Screens/cmsScreen/cms-components/cms-links/linkApi';
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80';
+const defaultImage = 'https://wallpapers.com/images/hd/college-graduation-pictures-bkjadfrg7up3uydl.jpg';
+const defaultImageForPerson = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDmDK8ge-b5AHErZqPLw1gwN3_MtLI4hSkHA&s'
 
 function Slider() {
   const [newSlider, setNewSlider] = useState([]);
@@ -106,9 +107,9 @@ function Slider() {
                 <img
                   className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-cover"
                   alt="Chairman"
-                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}/team/${chairmanInfo?.ppImage}` : defaultImage}
+                  src={chairmanInfo?.ppImage ? `${IMAGE_URL}/team/${chairmanInfo?.ppImage}` : defaultImageForPerson}
                   onError={(e) => {
-                    e.target.src = defaultImage;
+                    e.target.src = defaultImageForPerson;
                   }}
                 />
                 <p className="text-sm text-center text-white tracking-tighter">
@@ -126,9 +127,9 @@ function Slider() {
                 <img
                   className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-cover"
                   alt="Campus Chief"
-                  src={chiefInfo?.ppImage ? `${IMAGE_URL}/team/${chiefInfo?.ppImage}` : defaultImage}
+                  src={chiefInfo?.ppImage ? `${IMAGE_URL}/team/${chiefInfo?.ppImage}` : defaultImageForPerson}
                   onError={(e) => {
-                    e.target.src = defaultImage;
+                    e.target.src = defaultImageForPerson;
                   }}
                 />
                 <p className="text-sm text-center text-white tracking-tighter">
