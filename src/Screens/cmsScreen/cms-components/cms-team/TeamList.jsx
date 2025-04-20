@@ -61,6 +61,7 @@ function TeamList() {
         fetchData()
     }, [])
 
+
     const columns = [
         { field: 'sNo', headerName: 'SNo', flex: .6 },
         {
@@ -68,7 +69,7 @@ function TeamList() {
             headerName: 'Full Name',
             flex: 2.5,
         },
-       
+        { field: 'index', headerName: 'Index', flex: .8 },
         {
             field: 'subCategory',
             headerName: 'Position',
