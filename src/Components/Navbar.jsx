@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
-import { getAllGallery } from '../Screens/cmsScreen/cms-components/cms-gallery/galleryApii';
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;

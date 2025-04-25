@@ -113,9 +113,8 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={6}>
-
                                 {
-                                    formData.type === 'socials' ?
+                                    formData.type === 'socials' ? 
                                         (
                                             <>
                                                 <FormControl size='small' fullWidth>
@@ -176,7 +175,6 @@ function EditLinkDialog({ handleClose, open, linkId }) {
                                     label='URL'
                                     value={formData.url}
                                     onChange={handleChange}
-                                    type='number'
                                     inputProps={{
                                         min: 0
                                     }}
