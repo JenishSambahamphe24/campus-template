@@ -12,10 +12,10 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { formatDate } from '../utilityFunctions';
 import { Link } from 'react-router-dom';
+
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
-
-export default function ReportTabs() {
+function ReportTabs() {
     const [allReports, setAllReports] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [activeTab, setActiveTab] = useState('');
@@ -25,21 +25,28 @@ export default function ReportTabs() {
             const data = await getAllpublication();
             const filteredData = data.filter(item => item.categoryName === 'Report');
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
-            setSubCategories(uniqueSubCategories.length ? uniqueSubCategories : []);
-            setActiveTab(uniqueSubCategories[0] || '');
+            if (uniqueSubCategories) {
+                setSubCategories(uniqueSubCategories);
+            } else {
+                setSubCategories('')
+            }
+
             const dataWithSno = filteredData.map((item, index) => ({
                 ...item,
                 sNo: index + 1
             }));
-
-            setAllReports(dataWithSno.length ? dataWithSno : []);
+            if (dataWithSno) {
+                setAllReports(dataWithSno)
+            } else {
+                setAllReports([])
+            }
+            setActiveTab(uniqueSubCategories[0]);
         };
-
         fetchData();
     }, []);
 
     const reportColumns = [
-        { field: 'sNo', headerName: 'S.No.', flex: 0.4 },
+        { field: 'sNo', headerName: 'S.No.', flex: .4 },
         { field: 'fileName', headerName: 'File Name', flex: 4 },
         { field: 'publishedDate', headerName: 'Published Date', flex: 2.5 },
         {
@@ -52,15 +59,8 @@ export default function ReportTabs() {
                 </div>
             ),
             renderCell: (params) => (
-                <Box textAlign="center">
-                    <a
-                        className="text-blue-600"
-                        href={`${FILE_URL}/content/${params.row.file}`}
-                        download
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: 'none' }}
-                    >
+                <Box textAlign='center'>
+                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`}   target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                         <DownloadIcon fontSize="14px" />
                     </a>
                 </Box>
@@ -69,7 +69,7 @@ export default function ReportTabs() {
     ];
 
     const getCurrentRows = () => {
-        const filteredRows = allReports
+        return allReports
             .filter(item => item.subCategoryName === activeTab)
             .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
             .map((item, index) => ({
@@ -79,107 +79,118 @@ export default function ReportTabs() {
                 file: item.file,
                 publishedDate: formatDate(item.publishedAt),
             }));
-
-        return filteredRows || [];
     };
 
     return (
-        <Grid container rowGap="20px">
+        <Grid container rowGap='20px'>
             <Divider style={{ width: '100%', backgroundColor: '#c2c2c2' }} />
-            <h1 className="text-2xl">Reports</h1>
-
-            <Grid item mx="auto" xs={12}>
-                <Tabs value={activeTab}>
-                    <TabsHeader
-                        style={{
-                            background: '#1169bf',
-                            color: 'white',
-                            zIndex: '1',
-                            height: '35px',
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            gap: '10px',
-                        }}
-                        className="rounded-b-none"
-                    >
-                        {subCategories.map((subCategory, index) => (
-                            <Tab
-                                key={index}
+            <h1 className='text-2xl'>
+                Reports
+            </h1>
+            <Grid item mx='auto' xs={12}>
+                {
+                    allReports.length > 0 ? (
+                        <Tabs value={activeTab}>
+                            <TabsHeader
                                 style={{
-                                    color: activeTab === subCategory ? 'black' : 'white',
-                                    padding: '0 16px',
-                                    minWidth: 'auto',
-                                    width: 'auto',
-                                    textAlign: 'center',
-                                    whiteSpace: 'nowrap',
+                                    background: '#1169bf',
+                                    color: 'white',
+                                    zIndex: '1',
+                                    height: '35px',
+                                    display: 'flex',
+                                    justifyContent: 'flex-start',
+                                    gap: '10px',
                                 }}
-                                value={subCategory}
-                                onClick={() => setActiveTab(subCategory)}
+                                className="rounded-b-none"
                             >
-                                <h1 className="xs:text-xs">{subCategory}</h1>
-                            </Tab>
-                        ))}
-                    </TabsHeader>
+                                {subCategories.map((subCategory, index) => (
+                                    <Tab
+                                        key={index}
+                                        style={{
+                                            color: activeTab === subCategory ? 'black' : 'white',
+                                            padding: '0 16px',
+                                            minWidth: 'auto',
+                                            width: 'auto',
+                                            textAlign: 'center',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                        value={subCategory}
+                                        onClick={() => setActiveTab(subCategory)}
+                                    >
+                                        <h1 className='xs:text-xs'>
+                                            {subCategory}
+                                        </h1>
+                                    </Tab>
+                                ))}
+                            </TabsHeader>
 
-                    <TabsBody className="bg-gray-100">
-                        <TabPanel key={activeTab} value={activeTab}>
-                            <DataGrid
-                                rows={getCurrentRows()}
-                                columns={reportColumns}
-                                hideFooterPagination
-                                hideFooter
-                                density="compact"
-                                disableColumnFilter
-                                disableAutosize
-                                disableColumnMenu
-                                disableColumnSelector
-                                disableColumnSorting
-                                disableDensitySelector
-                                autosizeOnMount
-                                columnHeaderHeight={40}
-                                rowHeight={30}
-                                showCellVerticalBorder
-                                pagination
-                                localeText={{
-                                    noRowsLabel: 'No Reports uploaded yet',
-                                }}
-                                initialState={{
-                                    pagination: { paginationModel: { pageSize: 10 } },
-                                }}
-                                sx={{
-                                    '.MuiDataGrid-columnSeparator': {
-                                        display: 'none',
-                                    },
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer',
-                                    },
-                                    '& .MuiDataGrid-cell:focus-within': {
-                                        outline: 'none',
-                                    },
-                                    '& .MuiDataGrid-columnHeaderTitle': {
-                                        fontWeight: '600',
-                                        fontSize: '14px',
-                                    },
-                                    '& .MuiDataGrid-selectedRowCount': {
-                                        visibility: 'hidden',
-                                    },
-                                    '.MuiDataGrid-columnHeader': {
-                                        border: '1px solid #e0e0e0',
-                                    },
-                                    width: '100%',
-                                    maxHeight: '158px',
-                                    minHeight: '158px',
-                                }}
-                            />
-                        </TabPanel>
-                    </TabsBody>
-                </Tabs>
+                            <TabsBody className="bg-gray-100">
+                                <TabPanel key={activeTab} value={activeTab}>
+                                    <DataGrid
+                                        rows={getCurrentRows()}
+                                        columns={reportColumns}
+                                        hideFooterPagination
+                                        hideFooter
+                                        density='compact'
+                                        disableColumnFilter={true}
+                                        disableAutosize={true}
+                                        disableColumnMenu={true}
+                                        disableColumnSelector={true}
+                                        disableColumnSorting={true}
+                                        disableDensitySelector={true}
+                                        autosizeOnMount={true}
+                                        columnHeaderHeight={40}
+                                        rowHeight={30}
+                                        showCellVerticalBorder={true}
+                                        pagination
+                                        initialState={{
+                                            pagination: { paginationModel: { pageSize: 10 } },
+                                        }}
+                                        sx={{
+                                            '.MuiDataGrid-columnSeparator': {
+                                                display: 'none',
+                                            },
+                                            '& .MuiDataGrid-row:hover': {
+                                                cursor: 'pointer'
+                                            },
+                                            '& .MuiDataGrid-cell:focus-within': {
+                                                outline: 'none'
+                                            },
+                                            '& .grid-header .MuiDataGrid-colCellTitle': {
+                                                fontWeight: 'bold'
+                                            },
+                                            '& .MuiDataGrid-columnHeaderTitle ': {
+                                                fontWeight: '600',
+                                                fontSize: '14px'
+                                            },
+                                            '& .MuiDataGrid-selectedRowCount': {
+                                                visibility: 'hidden'
+                                            },
+                                            '.MuiDataGrid-columnHeader': {
+                                                border: '1px solid #e0e0e0',
+                                            },
+                                            width: '100%',
+                                            maxHeight: '158px',
+                                            minHeight: '158px'
+                                        }}
+                                    />
+                                </TabPanel>
+                            </TabsBody>
+                        </Tabs>
+                    )
+                        : (
+                            <div className='min-h-[150px] text-red-600'>
+                                <h1 className='text-md text-center'>No Reports Uploaded yet!</h1>
+                            </div>
+                        )
+                }
             </Grid>
-
-            <div className="w-full flex justify-center">
+            <div className='w-full flex justify-center'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
-                    <Link to="/report">
-                        <Typography>All reports</Typography>
+                    <Link to='/report'>
+                        <Typography >
+                            All reports
+                        </Typography>
                     </Link>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -196,8 +207,10 @@ export default function ReportTabs() {
                         />
                     </svg>
                 </Button>
+
             </div>
         </Grid>
     );
 }
 
+export default ReportTabs;
