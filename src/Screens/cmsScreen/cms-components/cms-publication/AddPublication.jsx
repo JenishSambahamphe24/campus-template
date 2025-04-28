@@ -253,6 +253,7 @@ function AddPublication() {
                         <DateInputField
                             label="Published Date (B.S)"
                             name="publishedAt"
+                            required
                             value={formData.publishedAt}
                             onChange={(newValue) => handleDateChange("publishedAt", newValue)}
                         />
