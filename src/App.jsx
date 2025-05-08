@@ -4,9 +4,11 @@ import Footer from './Components/Footer'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ScrollToTop from './ScrollToTop'
+
 function App() {
   return (
     <div className='relative'>
+      {/* <PopupBanner/> */}
       <ScrollToTop />
       <ToastContainer />
       <Navbar />

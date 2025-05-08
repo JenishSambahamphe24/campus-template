@@ -62,3 +62,17 @@ export function showStatus(status) {
     }
 }
 
+
+export const renderSafeHTML = (content) => {
+    if (!content) return '';
+    
+    try {
+        // Simple sanitization - remove potentially dangerous code blocks
+        return content
+            .replace(/<pre><code[^>]*>/g, '')
+            .replace(/<\/code><\/pre>/g, '');
+    } catch (e) {
+        console.error("Error processing HTML content:", e);
+        return 'Content unavailable';
+    }
+};
