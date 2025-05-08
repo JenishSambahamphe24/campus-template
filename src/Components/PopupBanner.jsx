@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Grid } from '@mui/material';
 import { IoIosCloseCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
@@ -9,8 +9,7 @@ function PopupBanner() {
     const handleClose = () => {
         setIsVisible(false);
     };
-
-    if (!isVisible) return null; // Don't render if it's hidden
+    if (!isVisible) return null;
 
     return (
         <Grid container className="bg-cover py-8 w-full flex justify-center items-center">
