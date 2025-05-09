@@ -79,13 +79,7 @@ function Navbar() {
                                             <Link to="/publication" className="block px-4 py-1 text-sm text-white">Publication</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link to="/report" className="block px-4 py-1 text-sm text-white">Reports</Link>
-                                        </MenuItem>
-                                        <MenuItem>
                                             <Link to="/notices" className="block px-4 py-1 text-sm text-white">Notices</Link>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <Link to="/curriculum" className="block px-4 py-1 text-sm text-white">Curriculum</Link>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
