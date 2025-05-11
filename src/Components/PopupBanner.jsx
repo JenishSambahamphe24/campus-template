@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Grid } from '@mui/material';
 import { IoIosCloseCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
@@ -9,12 +9,11 @@ function PopupBanner() {
     const handleClose = () => {
         setIsVisible(false);
     };
-
-    if (!isVisible) return null; // Don't render if it's hidden
+    if (!isVisible) return null;
 
     return (
         <Grid container className="bg-cover py-8 w-full flex justify-center items-center">
-            <Grid item position='relative' className="w-[320px] h-[300px] bg-white p-5 rounded-xl bg-opacity-60 backdrop-filter backdrop-blur-lg"
+            <Grid item position='relative' className="w-[620px] h-[540px] bg-white p-5 rounded-xl bg-opacity-60 backdrop-filter backdrop-blur-lg"
                 style={{ backgroundImage: "url('https://i.pinimg.com/550x/97/11/05/9711053cff05acb6c9b53036de278f4a.jpg')" }}
             >
                 <div className='absolute top-0 rounded-md right-0 cursor-pointer' onClick={handleClose}>

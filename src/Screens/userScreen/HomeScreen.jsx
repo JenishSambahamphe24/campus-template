@@ -4,6 +4,8 @@ import { Stack, Box } from '@mui/material';
 import ReportTabs from '../../Components/ReportTab/ReportTabs';
 import NoticeMarque from '../../Components/NoticeMarque';
 import NoticeTabs from '../../Components/Notice-tab/NoticeTabs';
+import MessageSection from '../../Components/MessageSection';
+
 
 function HomeScreen() {
     return (
@@ -19,6 +21,7 @@ function HomeScreen() {
                     mb: 4
                 }}
             >
+                <MessageSection/>
                 <NoticeTabs />
                 <ReportTabs />
                 <VideoPlayer />
