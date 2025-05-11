@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllaboutUs } from '../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI';
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 const defaultImage = import.meta.env.VITE_LOGO_URL
+
 
 function MessageSection() {
     const [isHovered, setIsHovered] = useState(false);
