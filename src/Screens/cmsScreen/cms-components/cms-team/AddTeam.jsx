@@ -195,6 +195,11 @@ function AddTeam() {
                             <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
                             <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
                             <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
+                             <MenuItem disabled={formData.category !== 'Teaching staff'} value='Professor'> Professor</MenuItem>
+                              <MenuItem disabled={formData.category !== 'Teaching staff'} value='Reader'>Reader</MenuItem>
+                               <MenuItem disabled={formData.category !== 'Teaching staff'} value='Lecturer'> Lecturer</MenuItem>
+                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Asst Teaching'>Asst. Lecturer/ Teaching Assistant</MenuItem>
+                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Instructor'>Instructor</MenuItem>
                             <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
                             <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
                         </Select>
