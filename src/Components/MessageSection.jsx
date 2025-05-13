@@ -153,7 +153,7 @@ const renderSafeHTML = (content) => {
                         </div>
 
                         {/* Content container */}
-                        <div className="w-full md:w-3/5 px-4 pt-4">
+                        <div className="w-full md:w-3/5 px-4 pt-2">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
                                 About Us
                             </h2>
