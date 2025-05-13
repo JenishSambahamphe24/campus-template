@@ -89,6 +89,8 @@ function MessageSection() {
         fetchTeamInfo();
     }, []);
 
+    console.log(teamInfo)
+
 const renderSafeHTML = (content) => {
   if (!content) return '';
 
@@ -169,7 +171,7 @@ const renderSafeHTML = (content) => {
                     </div>
                 </Link>
                 <Link to='/message-from-chairman' className="w-full lg:w-2/6 flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
-                    <div className="flex flex-col px-4 pt-4 mb-2 space-y-2">
+                    <div className="flex flex-1 flex-col px-4 pt-4 mb-2 space-y-2">
                         <svg
                             width="16"
                             height="12"
@@ -183,11 +185,11 @@ const renderSafeHTML = (content) => {
                                 fill="currentColor"
                             ></path>
                         </svg>
-                        {chiefMessage?.description ? (
+                        {chairmanMessage?.description ? (
                             <p
                                 className="text-sm line-clamp-4"
                                 dangerouslySetInnerHTML={{
-                                    __html: renderSafeHTML(chiefMessage.description)
+                                    __html: renderSafeHTML(chairmanMessage.description)
                                 }}
                             />
                         ) : (
@@ -204,7 +206,7 @@ const renderSafeHTML = (content) => {
                     </div>
                 </Link>
                 <Link to='/message-from-campus_chief' className="w-full lg:w-2/6 flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
-                    <div className="flex flex-col px-4 pt-4 mb-2 space-y-2">
+                    <div className="flex flex-1 flex-col px-4 pt-4 mb-2 space-y-2">
                         <svg
                             width="16"
                             height="12"
@@ -218,11 +220,11 @@ const renderSafeHTML = (content) => {
                                 fill="currentColor"
                             ></path>
                         </svg>
-                        {chairmanMessage?.description ? (
+                        {chiefMessage?.description ? (
                             <p
                                 className="text-sm line-clamp-4"
                                 dangerouslySetInnerHTML={{
-                                    __html: renderSafeHTML(chairmanMessage.description)
+                                    __html: renderSafeHTML(chiefMessage.description)
                                 }}
                             />
                         ) : (
