@@ -4,14 +4,19 @@ import { Stack, Box } from '@mui/material';
 import ReportTabs from '../../Components/ReportTab/ReportTabs';
 import NoticeMarque from '../../Components/NoticeMarque';
 import NoticeTabs from '../../Components/Notice-tab/NoticeTabs';
+import MessageSection from '../../Components/MessageSection';
+import PopupBanner from '../../Components/PopupBanner';
 
 function HomeScreen() {
     return (
-        <Box >
+        <Box>
+            <PopupBanner />
             <NoticeMarque />
+            
             <Box mb={4}>
                 <Slider />
             </Box>
+            
             <Stack
                 spacing={3}
                 sx={{
@@ -19,6 +24,7 @@ function HomeScreen() {
                     mb: 4
                 }}
             >
+                <MessageSection />
                 <NoticeTabs />
                 <ReportTabs />
                 <VideoPlayer />

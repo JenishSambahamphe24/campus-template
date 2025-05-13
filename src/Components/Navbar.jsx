@@ -79,20 +79,16 @@ function Navbar() {
                                             <Link to="/publication" className="block px-4 py-1 text-sm text-white">Publication</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link to="/report" className="block px-4 py-1 text-sm text-white">Reports</Link>
-                                        </MenuItem>
-                                        <MenuItem>
                                             <Link to="/notices" className="block px-4 py-1 text-sm text-white">Notices</Link>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <Link to="/curriculum" className="block px-4 py-1 text-sm text-white">Curriculum</Link>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
                             </Menu>
                             <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/program-list">Programs</Link>
-                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/downloads">Downloads</Link>
+                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/report" >Reports</Link>
                             <Link to="/news" className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white font-bold" >News and Events</Link>
+                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/downloads">Downloads</Link>
+                            <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/curriculum">Curriculum</Link>
                             <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/gallery">Gallery</Link>
                             <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/contact">Contact Us</Link>
                         </div>

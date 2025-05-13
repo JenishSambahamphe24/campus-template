@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Typography,
     InputLabel,
@@ -36,28 +36,34 @@ function EditProgram() {
         facultyName: '',
         status: false,
         shortName: '',
-        runningFrom: '',
+        runningFrom: null,
         hasProgramBrochure: false,
         programBrochureFile: null
     });
     const [fetchedFile, setFetchedFile] = useState(null)
+    
     useEffect(() => {
         const fetchCategory = async () => {
-            const faculty = await getAllFaculties();
-            const bindedFaculty = faculty.reduce((acc, item) => {
-                const { level, facultyName, id } = item;
-                let existingLevel = acc.find(entry => entry.level === level);
-                if (existingLevel) {
-                    existingLevel.faculties.push({ facultyName, id });
-                } else {
-                    acc.push({
-                        level,
-                        faculties: [{ facultyName, id }]
-                    });
-                }
-                return acc;
-            }, []);
-            setCategory(bindedFaculty);
+            try {
+                const faculty = await getAllFaculties();
+                const bindedFaculty = faculty.reduce((acc, item) => {
+                    const { level, facultyName, id } = item;
+                    let existingLevel = acc.find(entry => entry.level === level);
+                    if (existingLevel) {
+                        existingLevel.faculties.push({ facultyName, id });
+                    } else {
+                        acc.push({
+                            level,
+                            faculties: [{ facultyName, id }]
+                        });
+                    }
+                    return acc;
+                }, []);
+                setCategory(bindedFaculty);
+            } catch (error) {
+                console.error('Error fetching faculties:', error);
+                toast.error('Failed to load faculty data');
+            }
         };
         fetchCategory();
     }, []);
@@ -68,10 +74,14 @@ function EditProgram() {
             try {
                 const data = await getProgramById(id);
                 const formattedDate = data.runningFrom ?
-                    new Date(data.runningFrom).toISOString().split('T')[0] : '';
-                const selectedCategory = category.find(cat => cat.level === data.level);
-                if (selectedCategory) {
-                    setFacultyName(selectedCategory.faculties);
+                    new Date(data.runningFrom).toISOString().split('T')[0] : null;
+                    
+                // Update faculty list based on level if it exists
+                if (data.level && category.length > 0) {
+                    const selectedCategory = category.find(cat => cat.level === data.level);
+                    if (selectedCategory) {
+                        setFacultyName(selectedCategory.faculties);
+                    }
                 }
 
                 setFormData((prev) => ({
@@ -82,9 +92,13 @@ function EditProgram() {
                     facultyId: data.facultyId,
                     programBrochureFile: null,
                 }));
-                setFetchedFile(data.programBrochureFile);
+                
+                if (data.programBrochureFile) {
+                    setFetchedFile(data.programBrochureFile);
+                }
             } catch (error) {
                 console.error('Error fetching program data:', error);
+                toast.error('Failed to load program data');
             }
         };
         // Only fetch data if category is loaded
@@ -126,31 +140,44 @@ function EditProgram() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedData = new FormData();
-        if (formData.programBrochureFile) {
-            updatedData.append('programBrochureFile', formData.programBrochureFile)
-        } else if (fetchedFile) {
-            updatedData.append('programBrochureFile', fetchedFile)
-        }
-        updatedData.append('hasProgramBrochure', formData.hasProgramBrochure || '')
-        updatedData.append('facultyId', formData.facultyId || '')
-        updatedData.append('shortName', formData.shortName || '');
-        updatedData.append('runningFrom', formData.runningFrom || '');
-        updatedData.append('level', formData.level || '')
-        updatedData.append('programName', formData.programName || '');
-        updatedData.append('programDetails', formData.programDetails || '');
-        updatedData.append('facultyName', formData.facultyName || '');
-        updatedData.append('status', formData.status || false);
-        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
         try {
+            const updatedData = new FormData();
+            
+            // Handle file upload
+            if (formData.programBrochureFile) {
+                updatedData.append('programBrochureFile', formData.programBrochureFile);
+            } else if (fetchedFile) {
+                updatedData.append('programBrochureFile', fetchedFile);
+            }
+            
+            // Handle date - Convert null/empty to a valid value or don't append at all
+            if (formData.runningFrom) {
+                updatedData.append('runningFrom', formData.runningFrom);
+            } else {
+                // Either use null (if your backend can handle it) or a default date
+                // updatedData.append('runningFrom', null); // Not recommended with FormData
+                // Or don't append it at all if the backend can handle missing fields
+            }
+            
+            // Append all other form fields
+            updatedData.append('hasProgramBrochure', formData.hasProgramBrochure ? 'true' : 'false');
+            updatedData.append('facultyId', formData.facultyId || '');
+            updatedData.append('shortName', formData.shortName || '');
+            updatedData.append('level', formData.level || '');
+            updatedData.append('programName', formData.programName || '');
+            updatedData.append('programDetails', formData.programDetails || '');
+            updatedData.append('facultyName', formData.facultyName || '');
+            updatedData.append('status', formData.status ? 'true' : 'false');
+            updatedData.append('updatedAt', extractDate(new Date()));
+            
             await updateProgramById(id, updatedData);
             toast.success('Program updated successfully');
             setTimeout(() => {
-                navigate('/admin/programs')
-            }, 700)
+                navigate('/admin/programs');
+            }, 700);
         } catch (error) {
             console.error('Error updating Program:', error);
-            toast.error('Failed to update Program');
+            toast.error('Failed to update Program: ' + (error.message || 'Unknown error'));
         }
     };
 
@@ -165,7 +192,7 @@ function EditProgram() {
         <div className='pb-10'>
             <form onSubmit={handleSubmit}>
                 <Typography mb='20px' variant='h5' textAlign='center'>
-                    Edit  Program
+                    Edit Program
                 </Typography>
                 <Grid component={Paper} elevation={4} container width='90%' mx='auto' spacing='10px' paddingRight='10px' paddingBottom='10px'>
                     <Grid item sm={12} md={2}>
@@ -227,8 +254,9 @@ function EditProgram() {
                             size='small'
                             label='Program Title'
                             name='programName'
-                            value={formData.programName}
+                            value={formData.programName || ''}
                             onChange={handleChange}
+                            required
                         />
                     </Grid>
 
@@ -238,7 +266,7 @@ function EditProgram() {
                             size='small'
                             label='Short Name (Abbreviation)'
                             name='shortName'
-                            value={formData.shortName}
+                            value={formData.shortName || ''}
                             onChange={handleChange}
                         />
                     </Grid>
@@ -246,7 +274,7 @@ function EditProgram() {
                         <DateInputField
                             name="runningFrom"
                             label="Program running From"
-                            value={formData.runningFrom}
+                            value={formData.runningFrom || ''}
                             onChange={(value) => handleDateChange("runningFrom", value)}
                             format="YYYY-MM-DD"
                         />
@@ -269,10 +297,10 @@ function EditProgram() {
 
                     <Grid item sm={12} md={4}>
                         <FormControl size='small' fullWidth>
-                            <InputLabel size='small'> Do you want to upload Program Broucher?</InputLabel>
+                            <InputLabel size='small'>Do you want to upload Program Brochure?</InputLabel>
                             <Select
                                 size='small'
-                                label='Do you want to upload Program Broucher?'
+                                label='Do you want to upload Program Brochure?'
                                 name='hasProgramBrochure'
                                 onChange={handleChange}
                                 value={formData.hasProgramBrochure}
@@ -284,41 +312,43 @@ function EditProgram() {
                         </FormControl>
                     </Grid>
 
-                    <Grid item sm={12} md={4}>
-                        <FileDroppableForFile
-                            name="file"
-                            allowMultiple={false}
-                            onFilesChange={(uploadedFile) => handleFileChange(uploadedFile, 'programBrochureFile')}
-                        />
-                        {fetchedFile && (
-                            <div
-                                className="relative mt-1 bg-gray-200 p-2 rounded-md inline-flex items-center"
-                                style={{ paddingRight: '50px' }}
-                            >
-                                <p className="text-sm">{fetchedFile}</p>
-
-                                <IconButton
-                                    size="small"
-                                    onClick={handleRemoveFetchedFile}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '3px',
-                                        right: '3px',
-                                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                    }}
+                    {formData.hasProgramBrochure && (
+                        <Grid item sm={12} md={4}>
+                            <FileDroppableForFile
+                                name="file"
+                                allowMultiple={false}
+                                onFilesChange={(uploadedFile) => handleFileChange(uploadedFile, 'programBrochureFile')}
+                            />
+                            {fetchedFile && (
+                                <div
+                                    className="relative mt-1 bg-gray-200 p-2 rounded-md inline-flex items-center"
+                                    style={{ paddingRight: '50px' }}
                                 >
-                                    <CloseIcon fontSize="small" />
-                                </IconButton>
-                            </div>
-                        )}
-                    </Grid>
+                                    <p className="text-sm">{fetchedFile}</p>
+
+                                    <IconButton
+                                        size="small"
+                                        onClick={handleRemoveFetchedFile}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '3px',
+                                            right: '3px',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                        }}
+                                    >
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                </div>
+                            )}
+                        </Grid>
+                    )}
 
                     <Grid item sm={12} md={12}>
                         <TipTapEditor
                             placeholder="Enter Program details"
                             name='programDetails'
                             height='320px'
-                            value={formData.programDetails}
+                            value={formData.programDetails || ''}
                             onChange={(content) => {
                                 setFormData((prev) => ({
                                     ...prev,
@@ -333,7 +363,15 @@ function EditProgram() {
                             variant='contained'
                             type='submit'
                         >
-                            Edit Program
+                            Update Program
+                        </Button>
+                        <Button
+                            size='small'
+                            variant='outlined'
+                            onClick={() => navigate('/admin/programs')}
+                            sx={{ ml: 2 }}
+                        >
+                            Cancel
                         </Button>
                     </Grid>
                 </Grid>
