@@ -9,7 +9,6 @@ lerna-debug.log*
 
 *.zip
 .env
-index.html
 node_modules
 Logo.png
 dist
