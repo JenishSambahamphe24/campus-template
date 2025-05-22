@@ -41,6 +41,7 @@ function AboutUsList() {
         fetchData()
     }
 
+
     const columns = [
         { field: 'sNo', headerName: 'SNo', flex: .3 },
         {
