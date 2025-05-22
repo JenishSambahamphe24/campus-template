@@ -38,6 +38,13 @@ function AddTeam() {
                 ...prev,
                 [name]: value === 'true'
             }));
+        } else if (name === 'category') {
+            // Reset subCategory when category changes
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
+                subCategory: ''
+            }));
         } else {
             setFormData(prev => ({
                 ...prev,
@@ -45,12 +52,45 @@ function AddTeam() {
             }));
         }
     };
+
     const handleImageSelect = (file) => {
         setFormData(prev => ({
             ...prev,
             ppImage: file
         }))
     }
+
+    // Function to get subcategory options based on selected category
+    const getSubCategoryOptions = () => {
+        switch (formData.category) {
+            case 'Committe member':
+                return [
+                    { value: 'Chairman', label: 'Chairman' },
+                    { value: 'Member', label: 'Member' }
+                ];
+            case 'Teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Campus Chief', label: 'Campus Chief' },
+                    { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
+                    { value: 'Professor', label: 'Professor' },
+                    { value: 'Assistant professor', label: 'Assistant professor' }
+                ];
+            case 'Non-teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Accountant', label: 'Accountant' },
+                    { value: 'Assistant accountant', label: 'Assistant accountant' },
+                    { value: 'Peon', label: 'Peon' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative or A/c Officer' },
+                    { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Other', label: 'Other' }
+                ];
+            default:
+                return [];
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -72,8 +112,8 @@ function AddTeam() {
             setLoading(false);
         }
     };
-    return (
 
+    return (
         <form onSubmit={handleSubmit} className='pb-12'>
             <Typography mb='20px' variant='h5' textAlign='center'>
                 Add a new member
@@ -191,17 +231,13 @@ function AddTeam() {
                             value={formData.subCategory}
                             onChange={handleChange}
                             label='Sub-category'
+                            disabled={!formData.category}
                         >
-                            <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
-                            <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
-                            <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
-                             <MenuItem disabled={formData.category !== 'Teaching staff'} value='Professor'> Professor</MenuItem>
-                              <MenuItem disabled={formData.category !== 'Teaching staff'} value='Reader'>Reader</MenuItem>
-                               <MenuItem disabled={formData.category !== 'Teaching staff'} value='Lecturer'> Lecturer</MenuItem>
-                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Asst Teaching'>Asst. Lecturer/ Teaching Assistant</MenuItem>
-                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Instructor'>Instructor</MenuItem>
-                            <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
-                            <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
+                            {getSubCategoryOptions().map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -281,8 +317,8 @@ function AddTeam() {
                     />
                 </Grid>
                 <Grid item md={12}>
-                    <Button type='submit' size='small' variant='contained'>
-                        Add member
+                    <Button type='submit' size='small' variant='contained' disabled={loading}>
+                        {loading ? 'Adding...' : 'Add member'}
                     </Button>
                 </Grid>
             </Grid>
