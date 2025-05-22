@@ -1,5 +1,6 @@
+
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
@@ -16,6 +17,19 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const activeStyle = "text-[#f58d4c] font-medium";
+    const inactiveStyle = "text-white  hover:text-[#f36710] transition-colors duration-300 transform";
+
+    const isActive = (path) => currentPath === path;
+
+    const isAnyActive = (paths) => paths.some(path => currentPath.startsWith(path));
+
+    const aboutPaths = ['/introduction', '/team', '/faq'];
+
+    const contentPaths = ['/publication', '/notices'];
 
     return (
         <nav className="relative bg-white shadow ">
@@ -44,11 +58,21 @@ function Navbar() {
                 <div style={{ backgroundColor: '#1169bf' }} className="flex justify-between px-20 py-3  overflow-y-auto whitespace-nowrap scroll-hidden md:flex-row md:items-start md:justify-start">
                     <div className="hidden md:flex w-full">
                         <div className="flex">
-                            <Link className="mx-4 font-bold text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform  text-white" to="/">Home</Link>
+                            <Link
+                                className={`mx-4   leading-5 ${isActive('/') ? activeStyle : inactiveStyle}`}
+                                to="/"
+                            >
+                                Home
+                            </Link>
                             <Menu as="div" className="inline-block text-left">
-                                <MenuButton className="mx-4 flex font-bold leading-2 text-sm text-white">
+                                <MenuButton
+                                    className={`mx-4 flex leading-3  items-center  ${isAnyActive(aboutPaths) ? activeStyle : inactiveStyle}`}
+                                >
                                     About us
-                                    <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-white" />
+                                    <ChevronDownIcon
+                                        aria-hidden="true"
+                                        className={`-mr-1 h-5 w-5 ${isAnyActive(aboutPaths) ? 'text-[#f36710]' : 'text-white'}`}
+                                    />
                                 </MenuButton>
                                 <MenuItems
                                     style={{ backgroundColor: '#1169bf' }}
@@ -57,44 +81,109 @@ function Navbar() {
                                 >
                                     <div className="py-1">
                                         <MenuItem>
-                                            <Link to="/introduction" className="block px-4 py-1 text-sm text-white ">Introduction</Link>
+                                            <Link
+                                                to="/introduction"
+                                                className={`block px-4 py-1  ${isActive('/introduction') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                Introduction
+                                            </Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link to="/team" className="block px-4 py-1 text-sm text-white">Our Team</Link>
+                                            <Link
+                                                to="/team"
+                                                className={`block px-4 py-1  ${isActive('/team') ? 'text-[#f36710]' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                Our Team
+                                            </Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link to="/faq" className="block px-4 py-1 text-sm text-white">FAQ</Link>
+                                            <Link
+                                                to="/faq"
+                                                className={`block px-4 py-1 text-sm ${isActive('/faq') ? 'text-[#f36710] bg-blue-900' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                FAQ
+                                            </Link>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
                             </Menu>
                             <Menu as="div" className="inline-block text-left">
-                                <MenuButton className="mx-4 font-bold flex leading-2 text-sm text-white">
+                                <MenuButton
+                                    className={`mx-4 flex items-center  leading-3 ${isAnyActive(contentPaths) ? activeStyle : inactiveStyle}`}
+                                >
                                     Contents
-                                    <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-white" />
+                                    <ChevronDownIcon
+                                        aria-hidden="true"
+                                        className={`-mr-1 h-5 w-5 ${isAnyActive(contentPaths) ? 'text-[#f36710]' : 'text-white'}`}
+                                    />
                                 </MenuButton>
                                 <MenuItems style={{ backgroundColor: '#1169bf' }} className="absolute left-45% z-10 mt-2 w-48">
                                     <div className="py-1">
                                         <MenuItem>
-                                            <Link to="/publication" className="block px-4 py-1 text-sm text-white">Publication</Link>
+                                            <Link
+                                                to="/publication"
+                                                className={`block px-4 py-1  ${isActive('/publication') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                Publication
+                                            </Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link to="/notices" className="block px-4 py-1 text-sm text-white">Notices</Link>
+                                            <Link
+                                                to="/notices"
+                                                className={`block px-4 py-1  ${isActive('/notices') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                Notices
+                                            </Link>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
                             </Menu>
-                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/program-list">Programs</Link>
-                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/report" >Reports</Link>
-                            <Link to="/news" className="mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white font-bold" >News and Events</Link>
-                            <Link className="mx-4 text-sm font-bold leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/downloads">Downloads</Link>
-                            <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/curriculum">Curriculum</Link>
-                            <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/gallery">Gallery</Link>
-                            <Link className="mx-4 text-sm leading-5 font-bold hover:text-gray-900 transition-colors duration-300 transform text-white" to="/contact">Contact Us</Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/program-list') ? activeStyle : inactiveStyle}`}
+                                to="/program-list"
+                            >
+                                Programs
+                            </Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/report') ? activeStyle : inactiveStyle}`}
+                                to="/report"
+                            >
+                                Reports
+                            </Link>
+                            <Link
+                                to="/news"
+                                className={`mx-4  leading-5 ${isActive('/news') ? activeStyle : inactiveStyle}`}
+                            >
+                                News and Events
+                            </Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/downloads') ? activeStyle : inactiveStyle}`}
+                                to="/downloads"
+                            >
+                                Downloads
+                            </Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/curriculum') ? activeStyle : inactiveStyle}`}
+                                to="/curriculum"
+                            >
+                                Curriculum
+                            </Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/gallery') ? activeStyle : inactiveStyle}`}
+                                to="/gallery"
+                            >
+                                Gallery
+                            </Link>
+                            <Link
+                                className={`mx-4  leading-5 ${isActive('/contact') ? activeStyle : inactiveStyle}`}
+                                to="/contact"
+                            >
+                                Contact Us
+                            </Link>
                         </div>
 
                         <div className="hidden lg:flex ml-auto">
-                            <Link target='_blank' className="font-bold mx-4 text-sm leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
+                            <Link target='_blank' className="font-medium mx-4  leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
                                 <PersonIcon sx={{ marginTop: '-3px', fontSize: '18px', marginRight: '5px' }} />
                                 Login
                             </Link>
@@ -125,35 +214,49 @@ function Navbar() {
                         }`}
                 >
                     <div className="flex  mt-[-14px] flex-col md:hidden">
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform  hover:text-[#f36710] text-md" to="/">Home</Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform text-md ${isActive('/') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/"
+                        >
+                            Home
+                        </Link>
 
                         <div className="divide-y divide-gray-100">
-                            <details className="group" open={mobileAboutOpen} onToggle={(e) => setMobileAboutOpen(e.target.open)}>
-                                <summary className='flex my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md' style={{ listStyle: 'none' }}>
+                            <details className="group" open={mobileAboutOpen || isAnyActive(aboutPaths)} onToggle={(e) => setMobileAboutOpen(e.target.open)}>
+                                <summary
+                                    className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive(aboutPaths) ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                                    style={{ listStyle: 'none' }}
+                                >
                                     About
                                     <div className="flex items-center">
-                                        {mobileAboutOpen ? (
-                                            <ChevronUpIcon aria-hidden="true" className="h-5 w-5 text-white" />
+                                        {mobileAboutOpen || isAnyActive(aboutPaths) ? (
+                                            <ChevronUpIcon
+                                                aria-hidden="true"
+                                                className={`h-5 w-5 ${isAnyActive(aboutPaths) ? 'text-[#f36710]' : 'text-white'}`}
+                                            />
                                         ) : (
-                                            <ChevronDownIcon aria-hidden="true" className="h-5 w-5 text-white" />
+                                            <ChevronDownIcon
+                                                aria-hidden="true"
+                                                className={`h-5 w-5 ${isAnyActive(aboutPaths) ? 'text-[#f36710]' : 'text-white'}`}
+                                            />
                                         )}
                                     </div>
                                 </summary>
                                 <div className='flex flex-col space-y-1'>
                                     <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
+                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/introduction') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                         to="/introduction"
                                     >
                                         Introduction
                                     </Link>
                                     <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
+                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/team') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                         to="/team"
                                     >
                                         Our Team
                                     </Link>
                                     <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
+                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/faq') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                         to="/faq"
                                     >
                                         Faq
@@ -163,51 +266,85 @@ function Navbar() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            <details className="group" open={mobilePubOpen} onToggle={(e) => setMobilePubOpen(e.target.open)}>
-                                <summary className='flex my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md' style={{ listStyle: 'none' }}>
+                            <details className="group" open={mobilePubOpen || isAnyActive([...contentPaths, '/report', '/curriculum'])} onToggle={(e) => setMobilePubOpen(e.target.open)}>
+                                <summary
+                                    className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                                    style={{ listStyle: 'none' }}
+                                >
                                     Publications
                                     <div className="flex items-center">
-                                        {mobilePubOpen ? (
-                                            <ChevronUpIcon aria-hidden="true" className="h-5 w-5 text-white" />
+                                        {mobilePubOpen || isAnyActive([...contentPaths, '/report', '/curriculum']) ? (
+                                            <ChevronUpIcon
+                                                aria-hidden="true"
+                                                className={`h-5 w-5 ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white'}`}
+                                            />
                                         ) : (
-                                            <ChevronDownIcon aria-hidden="true" className="h-5 w-5 text-white" />
+                                            <ChevronDownIcon
+                                                aria-hidden="true"
+                                                className={`h-5 w-5 ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white'}`}
+                                            />
                                         )}
                                     </div>
                                 </summary>
                                 <div className='flex flex-col space-y-1'>
                                     <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
+                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/publication') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                         to="/publication"
                                     >
                                         Publication
                                     </Link>
                                     <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
-                                        to="/report"
-                                    >
-                                        Reports
-                                    </Link>
-                                    <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
+                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/notices') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                         to="/notices"
                                     >
                                         Notices
-                                    </Link>
-                                    <Link
-                                        className="relative  ml-2 leading-2 text-white transition-colors duration-300 transform  text-sm hover:text-[#f36710] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5"
-                                        to="/curriculum"
-                                    >
-                                        Curriculum
                                     </Link>
 
                                 </div>
                             </details>
                         </div>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/program-list">Programs</Link>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/downloads">Downloads</Link>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/news">News & events</Link>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/gallery">Gallery</Link>
-                        <Link className="my-1 leading-2  text-white transition-colors duration-300 transform cursor-pointer hover:text-[#f36710] text-md" to="/contact">Contact Us</Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/program-list') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/report"
+                        >
+                            Reports
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/program-list') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/curriculum"
+                        >
+                            Curriculum
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/program-list') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/program-list"
+                        >
+                            Programs
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/downloads') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/downloads"
+                        >
+                            Downloads
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/news') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/news"
+                        >
+                            News & events
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/gallery') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/gallery"
+                        >
+                            Gallery
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/contact') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/contact"
+                        >
+                            Contact Us
+                        </Link>
                         <div className="">
                             <Link target='_blank' className=" border-[1px] border-[#f36710] py-1 pl-1 pr-2 rounded-md text-sm leading-5 hover:text-[#f36710]  transition-colors duration-300 transform text-white" to="/signIn" >
                                 <PersonIcon sx={{ marginTop: '-3px', fontSize: '18px', marginRight: '2px' }} />

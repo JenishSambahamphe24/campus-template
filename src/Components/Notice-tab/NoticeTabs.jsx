@@ -50,7 +50,7 @@ function NoticeTabs() {
         fetchData()
     }, [])
     const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 6;
+    const itemsPerPage = 4;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstOtherItem = indexOfLastItem - itemsPerPage;
