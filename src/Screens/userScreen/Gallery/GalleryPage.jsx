@@ -26,7 +26,7 @@ function GalleryPage() {
             const data = await getAllGallery()
             const videoGallery = data.filter(item => item.galleryType === 'Video')
             setVideos(videoGallery)
-            const images = data.filter(item => item.galleryType === 'Image' && item.status === 'true' || item.status === true)
+            const images = data.filter(item => item.galleryType === 'Image')
             setImageGallery(images)
         };
         fetchData()
@@ -74,7 +74,7 @@ function GalleryPage() {
                                         width: 'auto',
                                         textAlign: 'center',
                                         whiteSpace: 'nowrap'
-                                      }}
+                                    }}
                                 >
                                     {label}
                                 </Tab>
@@ -86,13 +86,13 @@ function GalleryPage() {
                                     <TabPanel style={{ padding: '0px', marginTop: '20px' }} value='image'>
                                         <Box sx={{ width: '100%' }}>
                                             <Grid container spacing='2rem'>
-                                                {
+                                                {imageGallery.length > 0 ? (
                                                     imageGallery.sort((a, b) => b.id - a.id).map((item, index) => (
                                                         <Grid key={index} item xs={12} sm={6} md={3}>
                                                             <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-72 w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
                                                                 <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200  transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 ">
                                                                     <img
-                                                                        src={item.thumbnailImage ? `${IMAGE_URL}${item.thumbnailImage}` : defaultImage}
+                                                                        src={item.thumbnailImage ? `${IMAGE_URL}thumb/${item.thumbnailImage}` : defaultImage}
                                                                         className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
                                                                         alt="Azores"
                                                                     />
@@ -103,6 +103,12 @@ function GalleryPage() {
                                                             </Link>
                                                         </Grid>
                                                     ))
+                                                ) :
+                                                    (
+                                                        <Grid item xs={12} textAlign='center' alignContent='center' sm={12} minHeight='200px'   >
+                                                        <p className='text-xl text-red-700'>No Image Uploaded yet !</p>
+                                                    </Grid>
+                                                    )
                                                 }
                                             </Grid>
                                         </Box>
@@ -128,8 +134,8 @@ function GalleryPage() {
                                                         );
                                                     })
                                                 ) : (
-                                                    <Grid item xs={12} sm={12}>
-                                                        <p>No media available</p>
+                                                    <Grid item xs={12} textAlign='center' alignContent='center' sm={12} minHeight='200px'   >
+                                                        <p className='text-xl text-red-700'>No Video Uploaded yet !</p>
                                                     </Grid>
                                                 )}
                                             </Grid>

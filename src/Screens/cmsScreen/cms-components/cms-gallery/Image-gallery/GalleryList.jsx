@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid, GridOverlay } from '@mui/x-data-grid';
 import { Grid, Button, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import EditGallery from '../EditGallery';
 import { deleteGallery } from '../galleryApii';
 import { getAllGallery } from '../galleryApii';
 import AddIcon from '@mui/icons-material/Add';
@@ -56,7 +55,6 @@ function GalleryList() {
     { field: 'sNo', headerName: 'S.No.', flex: 0.5 },
     { field: 'type', headerName: 'Gallery Type', flex: 1 },
     { field: 'fileName', headerName: 'Gallery Name', flex: 2 },
-    { field: 'status', headerName: 'Status', flex: 1 },
     {
       field: 'action',
       headerName: 'Action',
@@ -91,14 +89,14 @@ function GalleryList() {
       ),
     },
   ];
-
+ 
+  console.log(allGallery)
   const galleryRows = allGallery.length > 0 && Array.isArray(allGallery)
     ? allGallery.sort((a, b) => b.id - a.id).map((item, index) => ({
       id: item.id,
       sNo: index + 1,
       fileName: item.galleryName,
       type: item.galleryType,
-      status: showStatus(item.status),
     }))
     : [];
 

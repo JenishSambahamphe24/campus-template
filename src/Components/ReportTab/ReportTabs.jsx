@@ -60,7 +60,7 @@ function ReportTabs() {
             ),
             renderCell: (params) => (
                 <Box textAlign='center'>
-                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`} download target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                         <DownloadIcon fontSize="14px" />
                     </a>
                 </Box>
@@ -179,9 +179,54 @@ function ReportTabs() {
                         </Tabs>
                     )
                         : (
-                            <div className='min-h-[150px] text-red-600'>
-                                <h1 className='text-md text-center'>No Reports Uploaded yet!</h1>
-                            </div>
+                            <DataGrid
+                                rows={[]}
+                                columns={reportColumns}
+                                hideFooterPagination
+                                hideFooter
+                                density='compact'
+                                disableColumnFilter={true}
+                                disableAutosize={true}
+                                disableColumnMenu={true}
+                                disableColumnSelector={true}
+                                disableColumnSorting={true}
+                                disableDensitySelector={true}
+                                autosizeOnMount={true}
+                                columnHeaderHeight={40}
+                                rowHeight={30}
+                                showCellVerticalBorder={true}
+                                pagination
+                                initialState={{
+                                    pagination: { paginationModel: { pageSize: 10 } },
+                                }}
+                                sx={{
+                                    '.MuiDataGrid-columnSeparator': {
+                                        display: 'none',
+                                    },
+                                    '& .MuiDataGrid-row:hover': {
+                                        cursor: 'pointer'
+                                    },
+                                    '& .MuiDataGrid-cell:focus-within': {
+                                        outline: 'none'
+                                    },
+                                    '& .grid-header .MuiDataGrid-colCellTitle': {
+                                        fontWeight: 'bold'
+                                    },
+                                    '& .MuiDataGrid-columnHeaderTitle ': {
+                                        fontWeight: '600',
+                                        fontSize: '14px'
+                                    },
+                                    '& .MuiDataGrid-selectedRowCount': {
+                                        visibility: 'hidden'
+                                    },
+                                    '.MuiDataGrid-columnHeader': {
+                                        border: '1px solid #e0e0e0',
+                                    },
+                                    width: '100%',
+                                    maxHeight: '158px',
+                                    minHeight: '158px'
+                                }}
+                            />
                         )
                 }
             </Grid>

@@ -71,6 +71,10 @@ import Downloads from './Screens/userScreen/publications/Downloads.jsx';
 import Curriculum from './Screens/userScreen/publications/Curriculum.jsx';
 import CurriculumPage from './Screens/userScreen/publications/CurriculumPage.jsx';
 import ChangePassword from './Screens/cmsScreen/cms-components/ChangePassword.jsx';
+import RegisterUser from './Screens/userScreen/RegisterUser.jsx';
+import "../src/index.css";
+// import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
 
 const router = createBrowserRouter(
@@ -80,6 +84,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/' element={<HomeScreen />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
+        <Route index={true} path='/register' element={<RegisterUser />} />
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
@@ -151,8 +156,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <RouterProvider router={router}>
         <ThemeProvider>
-          <ScrollToTop />
-          <App />
+          <MantineProvider>
+            <ScrollToTop />
+            <App />
+          </MantineProvider>
         </ThemeProvider>
       </RouterProvider>
     </AuthProvider>
