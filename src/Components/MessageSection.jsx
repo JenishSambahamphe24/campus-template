@@ -153,7 +153,7 @@ const renderSafeHTML = (content) => {
                         </div>
 
                         {/* Content container */}
-                        <div className="w-full md:w-3/5 px-4 pt-2 pb-3 ">
+                        <div className="w-full md:w-3/5 px-4 pt-2 pb-3">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
                                 About Us
                             </h2>
@@ -187,7 +187,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chairmanMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chairmanMessage.description)
                                 }}
@@ -222,7 +222,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chiefMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chiefMessage.description)
                                 }}

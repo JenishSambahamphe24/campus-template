@@ -84,7 +84,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/' element={<HomeScreen />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
-        <Route index={true} path='/register' element={<RegisterUser />} />
+
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
@@ -117,6 +117,7 @@ const router = createBrowserRouter(
           <Route index={true} path='/admin' element={<AdminHomePage />} />
           <Route index={true} path='fileUpload' element={<FileUpload />} />
           <Route index={true} path='viewTeam' element={<TeamList />} />
+          <Route index={true} path='register' element={<RegisterUser />} />
           <Route index={true} path='addTeam' element={<AddTeam />} />
           <Route index={true} path='editTeam/:teamId' element={<EditTeam />} />
           <Route index={true} path='publications' element={<PublicationList />} />
