@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.13.0",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@mantine/core": "^7.14.2",
     "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.6",
