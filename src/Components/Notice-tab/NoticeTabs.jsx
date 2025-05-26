@@ -28,6 +28,7 @@ function NoticeTabs() {
         const newsResponse = noticeResponse.filter(item => item.categoryName === "News and Events")
         const sortedData = newsResponse.sort((a, b) => b.id - a.id)
         const top4Data = sortedData.slice(0, 5)
+        console.log(noticeResponse)
         setNews(top4Data)
         if (noticeResponse) {
             setAllNotices(noticeResponse.filter(item => item.categoryName === 'Notices'))
@@ -50,7 +51,7 @@ function NoticeTabs() {
         fetchData()
     }, [])
     const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 6;
+    const itemsPerPage = 4;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstOtherItem = indexOfLastItem - itemsPerPage;
@@ -65,7 +66,7 @@ function NoticeTabs() {
             <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative rounded-l-lg border-2 border-[#1169bf] h-[27rem]'>
                 <h1 className='bg-[#1169bf]  text-white text-lg text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
-                    <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
+                    <ul className="flex-grow list-disc pl-5 pt-1 space-y-4 overflow-auto">
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>

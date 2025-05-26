@@ -173,7 +173,7 @@ const renderSafeHTML = (content) => {
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                   className="text-sm line-clamp-5"
+                                   className="text-sm line-clamp-4"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}
@@ -201,7 +201,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chairmanMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chairmanMessage.description)
                                 }}
@@ -236,7 +236,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chiefMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chiefMessage.description)
                                 }}
