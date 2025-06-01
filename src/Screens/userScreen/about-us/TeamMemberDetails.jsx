@@ -1,7 +1,7 @@
-import  { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Grid, Button, Typography, Stack, Divider } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { BsFacebook, BsTwitterX } from 'react-icons/bs'
+import { BsFacebook } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import { getTeamById } from '../../cmsScreen/cms-components/cms-team/teamApi'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
@@ -18,10 +18,10 @@ function TeamMemberDetails() {
         };
         fetchData()
     }, [id])
-    
+
     return (
-        <Grid  container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center'  gap='10px'>
-            <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4}  md={8.3} lg={8.8}  order={{xs:2, sm:2 , md:2, lg:1}}>
+        <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
+            <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
                 <div>
                     <Typography fontFamily='fantasy'>
                         <div
@@ -52,24 +52,27 @@ function TeamMemberDetails() {
                 </Link>
             </Grid>
 
-            <Grid  item xs={12} sm={4.3}  md={3.5} lg={3}   order={{xs:1, sm:1 , md:1, lg:1}}>
-                <div  className="full group relative block overflow-hidden">
+            <Grid item xs={12} sm={4.3} md={3.5} lg={3} order={{ xs: 1, sm: 1, md: 1, lg: 1 }}>
+                <div className="full group relative block overflow-hidden">
                     <img
                         src={teamDetail.ppImage ? `${IMAGE_URL}/team/${teamDetail.ppImage}` : defaultImage}
                         alt="Team Member"
                         onError={(e) => { e.target.src = defaultImage; }}
                         className={`h-52 w-full transition duration-500 sm:h-52 object-cover ${teamDetail.thumbnailImage ? "w-full group-hover:scale-105" : "w-2/3 mx-auto"
-                        }`}
+                            }`}
                     />
                     <div className="relative  bg-white">
                         <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"}</h3>
-                        <h3 className="text-sm font-medium text-gray-900">{teamDetail.position || "Unknown Position"}</h3>
+                        <h3 className="text-sm font-medium text-gray-900">{teamDetail.subCategory || "Unknown Position"}</h3>
+                        <h3 className="text-sm italic text-gray-900">{teamDetail.email || "email not found"}</h3>
+                        <h3 className="text-sm italic text-gray-900">{teamDetail.phoneNo || "Phone No. not found"}</h3>
                     </div>
-                    <Stack mt='20px' spacing='10px' direction='column'>
-                        <Typography fontWeight='bold' variant='subtitle1'>social media</Typography>
+                    <Stack mt='5px' spacing='10px' direction='column'>
+                        <h3 fontWeight='bold' >social media</h3>
                         <Stack mt='5px' direction='row' spacing='10px'>
-                            <BsFacebook className='text-gray-700' style={{ fontSize: '18px' }} />
-                            <BsTwitterX className='text-gray-700' style={{ fontSize: '18px' }} />
+                            <Link target='_blank' to={teamDetail.fbUrl}>
+                                <BsFacebook className='text-gray-700' style={{ fontSize: '18px' }} />
+                            </Link>
                         </Stack>
                         <Divider sx={{ color: 'red', marginTop: '10px' }} />
                     </Stack>
