@@ -90,20 +90,18 @@ function MessageSection() {
 
     console.log(teamInfo)
 
-    const renderSafeHTML = (content) => {
-        if (!content) return '';
+const renderSafeHTML = (content) => {
+  if (!content) return '';
 
-        try {
-            return content
-                .replace(/<pre><code[^>]*>/g, '')
-                .replace(/<\/code><\/pre>/g, '')
-                .replace(/ style="[^"]*"/g, '');
-        } catch (e) {
-            console.error("Error processing HTML content:", e);
-            return 'Content unavailable';
-        }
-    };
-
+  try {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = content;
+    return tempElement.textContent || tempElement.innerText || '';
+  } catch (e) {
+    console.error("Error processing HTML content:", e);
+    return 'Content unavailable';
+  }
+};
 
     if (loading) {
         return (

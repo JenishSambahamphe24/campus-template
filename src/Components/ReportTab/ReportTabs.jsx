@@ -60,7 +60,7 @@ function ReportTabs() {
             ),
             renderCell: (params) => (
                 <Box textAlign='center'>
-                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <a className='text-blue-600 ' href={`${FILE_URL}content/${params.row.file}`} download  style={{ textDecoration: 'none' }}>
                         <DownloadIcon fontSize="14px" />
                     </a>
                 </Box>

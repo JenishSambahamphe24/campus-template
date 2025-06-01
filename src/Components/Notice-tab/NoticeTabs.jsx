@@ -28,6 +28,7 @@ function NoticeTabs() {
         const newsResponse = noticeResponse.filter(item => item.categoryName === "News and Events")
         const sortedData = newsResponse.sort((a, b) => b.id - a.id)
         const top4Data = sortedData.slice(0, 5)
+        console.log(noticeResponse)
         setNews(top4Data)
         if (noticeResponse) {
             setAllNotices(noticeResponse.filter(item => item.categoryName === 'Notices'))
