@@ -230,7 +230,7 @@ function ReportTabs() {
                         )
                 }
             </Grid>
-            <div className='w-full flex justify-center'>
+            <div className='w-full flex justify-end'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
                     <Link to='/report'>
                         <Typography >
