@@ -7,7 +7,7 @@ import { SlCalender } from "react-icons/sl";
 import { getAllPrograms } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi';
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 import PaginationForReports from '../../Screens/userScreen/publications/component/PaginationForReports';
-import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
+import { downloadPublicationFile, getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
@@ -22,12 +22,14 @@ function NoticeTabs() {
     const [news, setNews] = useState([])
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+     
 
     const fetchData = async () => {
         const noticeResponse = await getAllpublication()
         const newsResponse = noticeResponse.filter(item => item.categoryName === "News and Events")
         const sortedData = newsResponse.sort((a, b) => b.id - a.id)
         const top4Data = sortedData.slice(0, 5)
+        console.log(noticeResponse)
         setNews(top4Data)
         if (noticeResponse) {
             setAllNotices(noticeResponse.filter(item => item.categoryName === 'Notices'))
@@ -49,6 +51,8 @@ function NoticeTabs() {
     useEffect(() => {
         fetchData()
     }, [])
+
+
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
@@ -74,12 +78,12 @@ function NoticeTabs() {
                                             <p className='line-clamp-2'>
                                                 {item.title}
                                             </p>
-                                            <a href={`${FILE_URL}content/${item.file}`} download target="_blank" className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer">
+                                            <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
                                                 <span className='text-xs mt-[1px] text-white'>
                                                     download
                                                 </span>
                                                 <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
-                                            </a>
+                                            </button>
                                         </span>
                                         <p className="flex text-xs mt-[-2px] italic">
                                             <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />

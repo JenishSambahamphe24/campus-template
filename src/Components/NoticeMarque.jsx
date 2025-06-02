@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TbSpeakerphone } from "react-icons/tb";
 import { getAllpublication } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { Link } from 'react-router-dom';
-import Publication from '../Screens/userScreen/publications/Publication';
 
 function NoticeMarque() {
   const [notices, setNotices] = useState([]);
@@ -10,7 +9,6 @@ function NoticeMarque() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllpublication();
-
       const latestReports = data
         .filter(item => item.categoryName === 'Report' && item.isScrollable === true)
         .sort((a, b) => b.id - a.id)
@@ -27,7 +25,7 @@ function NoticeMarque() {
           route: "/notices"
         }));
 
-        const latestPublication = data
+      const latestPublication = data
         .filter(item => item.categoryName === 'Publication' && item.isScrollable === true)
         .sort((a, b) => b.id - a.id)
         .slice(0, 2).map(item => ({
@@ -35,7 +33,7 @@ function NoticeMarque() {
           route: "/publication"
         }));
 
-        const latestDownloads = data
+      const latestDownloads = data
         .filter(item => item.categoryName === 'Downloads' && item.isScrollable === true)
         .sort((a, b) => b.id - a.id)
         .slice(0, 2).map(item => ({
@@ -50,7 +48,7 @@ function NoticeMarque() {
           ...item,
           route: "/news"
         }));
-      setNotices([...latestReports, ...latestNews, ...latestNotices, ...latestPublication,...latestDownloads]);
+      setNotices([...latestReports, ...latestNews, ...latestNotices, ...latestPublication, ...latestDownloads]);
     };
     fetchData();
   }, []);

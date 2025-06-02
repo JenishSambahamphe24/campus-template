@@ -1,10 +1,9 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllaboutUs } from '../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI';
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 const defaultImage = import.meta.env.VITE_LOGO_URL
-
 
 function MessageSection() {
     const [isHovered, setIsHovered] = useState(false);
@@ -47,7 +46,7 @@ function MessageSection() {
 
             } catch (error) {
                 console.error("Failed to fetch About Us data:", error);
-                setError("Failed to load content. Please try again later.");
+                setError("Failed to load . Please login as an Admin and upload content.");
             } finally {
                 setLoading(false);
             }
@@ -95,16 +94,14 @@ const renderSafeHTML = (content) => {
   if (!content) return '';
 
   try {
-    return content
-      .replace(/<pre><code[^>]*>/g, '')
-      .replace(/<\/code><\/pre>/g, '')
-      .replace(/ style="[^"]*"/g, ''); 
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = content;
+    return tempElement.textContent || tempElement.innerText || '';
   } catch (e) {
     console.error("Error processing HTML content:", e);
     return 'Content unavailable';
   }
 };
-
 
     if (loading) {
         return (
@@ -119,17 +116,18 @@ const renderSafeHTML = (content) => {
 
     if (error) {
         return (
-            <div className="w-full px-4 py-8 flex items-center justify-center">
+            <div className="w-full px-4 py-8 border  border-[#1169BF] rounded-md flex items-center justify-center">
                 <div className="text-center py-12 max-w-md mx-auto">
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md">
+                    <div className="text-red-700 px-4 pt-3  pb-4 rounded-md">
                         <p className="font-bold">Error</p>
                         <p>{error}</p>
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="mt-3 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
+                        <Link
+                            to='/signIn'
+                            target='_blank'
+                            className="mt-3 bg-red-600 hover:bg-red-700 text-white  px-2 py-1 rounded text-sm"
                         >
-                            Retry
-                        </button>
+                            Login
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -146,7 +144,7 @@ const renderSafeHTML = (content) => {
                     >
                         <div className="w-full md:w-2/5 overflow-hidden h-full">
                             <img
-                              src={introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage}
+                                src={introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage}
                                 // src={`${IMAGE_URL}/aboutus/${introduction.aboutUsImage}`}
                                 className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
                             />
@@ -159,7 +157,7 @@ const renderSafeHTML = (content) => {
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                   className="text-sm line-clamp-4"
+                                    className="text-sm line-clamp-4"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}
