@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, Button } from '@mui/material'
+import ReusablePagination from '../ReusablePagination'
 import { Link } from 'react-router-dom'
 import { getAllTeams } from '../../cmsScreen/cms-components/cms-team/teamApi'
 import {
@@ -40,7 +41,6 @@ function OurTeam() {
         },
     ];
 
-    console.log(allTeamMember)
     return (
         <Grid container className='px-2 md:px-6 lg:px-9 py-8'>
             <Grid item xs={12}>
@@ -90,7 +90,7 @@ function OurTeam() {
                                     .map((item, index) => (
                                         <Grid item xs={11.8} sm={5.8} md={2.9} lg={2.9} key={index} sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <img
-                                                src={item.ppImage ? `${IMAGE_URL}/team/${item.ppImage}` : defaultImage}
+                                                 src={item.ppImage ? `${IMAGE_URL}/team/${item.ppImage}` : defaultImage}
                                                 alt=""
                                                 className="h-[250px] w-full object-cover transition duration-500 group-hover:scale-105"
                                             />
@@ -118,6 +118,12 @@ function OurTeam() {
                                                     </Button>
                                                 </Link>
                                             </div>
+                                              <ReusablePagination
+                                                            currentPage={currentPage}
+                                                            totalPages={totalPages}
+                                                            onPageChange={handlePageChange}
+                                                            itemsPerPage={itemsPerPage}
+                                                        />
                                         </Grid>
                                     ))
                                 }

@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from 'react';
 import { Carousel } from "@material-tailwind/react";
 import { Box, Button, Grid } from '@mui/material'
@@ -16,14 +18,37 @@ function Slider({ onLoad }) {
   const [chairmanInfo, setChairmanInfo] = useState({});
   const [chiefInfo, setChiefInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(false); // New state for image loading
 
   // Helper function to construct image URLs properly
   const getImageUrl = (imagePath, folder = 'thumb') => {
     if (!imagePath || !IMAGE_URL) return null;
-    
-    // Ensure proper URL construction
     const baseUrl = IMAGE_URL.endsWith('/') ? IMAGE_URL : `${IMAGE_URL}/`;
     return `${baseUrl}${folder}/${imagePath}`;
+  };
+
+  // Function to preload images
+  const preloadImages = (imageUrls) => {
+    return new Promise((resolve) => {
+      let loadedCount = 0;
+      const totalImages = imageUrls.length;
+
+      if (totalImages === 0) {
+        resolve();
+        return;
+      }
+
+      imageUrls.forEach((url) => {
+        const img = new Image();
+        img.onload = img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            resolve();
+          }
+        };
+        img.src = url;
+      });
+    });
   };
 
   const fetchTeams = async () => {
@@ -31,7 +56,7 @@ function Slider({ onLoad }) {
       const response = await getAllTeams();
       const chairman = response.find(item => item.subCategory === 'Chairman') || {};
       const chief = response.find(item => item.subCategory === 'Campus Chief') || {};
-      
+
       setChairmanInfo(chairman);
       setChiefInfo(chief);
     } catch (error) {
@@ -50,7 +75,7 @@ function Slider({ onLoad }) {
       setAllLinks([]);
     }
   };
-
+  
   const fetchSliderImages = async () => {
     try {
       const data = await getAllGallery();
@@ -62,90 +87,72 @@ function Slider({ onLoad }) {
         description: item.galleryDescription
       }));
 
-      // Preload images to ensure they load properly
-      const preloadPromises = latestThreeSlider.map(item => {
-        return new Promise((resolve) => {
-          if (!item.image) {
-            resolve();
-            return;
-          }
-          
-          const img = new Image();
-          const imageUrl = getImageUrl(item.image);
-          
-          img.onload = () => {
-            console.log('✅ Image loaded successfully:', imageUrl);
-            resolve();
-          };
-          
-          img.onerror = () => {
-            console.log('❌ Image failed to load:', imageUrl);
-            resolve(); 
-          };
-          
-          img.src = imageUrl;
-        });
-      });
+      // Preload all slider images
+      const imageUrls = latestThreeSlider
+        .map(item => getImageUrl(item.image))
+        .filter(url => url !== null);
 
-      // Wait for all images to attempt loading
-      await Promise.all(preloadPromises);
+      // Add default image to preload list
+      imageUrls.push(defaultImage);
+
+      console.log('Starting image preload for:', imageUrls);
+      
+      // Wait for all images to load
+      await preloadImages(imageUrls);
+      console.log('All images preloaded successfully');
       
       setNewSlider(latestThreeSlider);
-      console.log('Slider images set:', latestThreeSlider);
-      
+      setImagesLoaded(true);
     } catch (error) {
       console.error('Error fetching slider images:', error);
       setNewSlider([]);
+      setImagesLoaded(true); // Set to true even on error to prevent infinite loading
     }
   };
 
   useEffect(() => {
     const loadAllData = async () => {
       setIsLoading(true);
-      
+      setImagesLoaded(false);
+
       try {
-        // Load all data
         await Promise.all([
           fetchTeams(),
           fetchLinks(),
-          fetchSliderImages()
+          fetchSliderImages() // This now includes image preloading
         ]);
-        
+
+        // Small delay to ensure smooth transition
         setTimeout(() => {
           setIsLoading(false);
-          onLoad?.(); 
-        }, 500);
-        
+          onLoad?.();
+        }, 300);
+
       } catch (error) {
         console.error('Error loading slider data:', error);
         setIsLoading(false);
-        onLoad?.(); 
+        setImagesLoaded(true);
+        onLoad?.();
       }
     };
 
     loadAllData();
   }, [onLoad]);
 
-  useEffect(() => {
-    console.log('IMAGE_URL:', IMAGE_URL);
-    console.log('Slider data:', newSlider);
-    if (newSlider.length > 0) {
-      newSlider.forEach((item, index) => {
-        console.log(`Slider ${index + 1} URL:`, getImageUrl(item.image));
-      });
-    }
-  }, [newSlider]);
-
   const handleImageError = (e, fallbackUrl) => {
     console.log('Image error occurred, using fallback');
     e.target.src = fallbackUrl;
   };
 
-  if (isLoading) {
+  // Show loading until both data and images are ready
+  if (isLoading || !imagesLoaded) {
     return (
       <Box className="py-4 px-4 sm:px-6 md:px-8">
         <div className="flex justify-center items-center h-64">
-          <div className="text-lg">Loading...</div>
+          <div className="flex flex-col items-center gap-2">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1169bf]"></div>
+            <div className="text-lg">Loading images...</div>
+          </div>
         </div>
       </Box>
     );
@@ -153,8 +160,8 @@ function Slider({ onLoad }) {
 
   return (
     <Box className="py-4 px-4 sm:px-6 md:px-8">
-      <Grid container spacing={2} sx={{ minHeight: { xs: 'auto'} }}>
-        <Grid  item xs={12} sm={6} md={6} lg={2.5} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
+      <Grid container spacing={2} sx={{ minHeight: { xs: 'auto' } }}>
+        <Grid item xs={12} sm={6} md={6} lg={2.5} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
           <fieldset className="flex flex-col border-2 border-[#1169bf] h-full justify-between text-xl rounded-lg">
             <div className="flex flex-col gap-1 text-sm">
               <h1 className="bg-[#1169bf] text-sm font-semibold text-white py-2 text-center border-b-2">
@@ -180,38 +187,52 @@ function Slider({ onLoad }) {
           </fieldset>
         </Grid>
 
-        <Grid  sx={{ height: { xs: '250px', sm: '300px', md: '350px', lg: '490px' } }} item  xs={12} sm={12} md={12} lg={7} order={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
-            <Carousel  autoplay={true} autoplayDelay={4000} loop={true}>
-              {newSlider.length > 0 ? (
-                newSlider.map((item, index) => {
-                  const imageUrl = getImageUrl(item.image);
-                  return (
-                    <Box bgcolor='red' height="100%" key={index}>
-                      <img
-                        src={imageUrl || defaultImage}
-                        className="h-full w-full object-cover"
-                        onError={(e) => handleImageError(e, defaultImage)}
-                        alt={item.name || `Slide ${index + 1}`}
-                        loading="eager" 
-                      />
-                      {item.name && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
-                          <h3 className="text-lg font-semibold">{item.name}</h3>
-                        </div>
-                      )}
-                    </Box>
-                  );
-                })
-              ) : (
-                <Box height="100%">
-                  <img
-                    src={defaultImage}
-                    alt="Default slide"
-                    className="h-full w-full object-cover"
-                  />
-                </Box>
-              )}
-            </Carousel>
+        <Grid sx={{ height: { xs: '250px', sm: '300px', md: '350px', lg: '490px' } }} item xs={12} sm={12} md={12} lg={7} order={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
+          <Carousel autoplay={true} autoplayDelay={4000} loop={true}>
+            {newSlider.length > 0 ? (
+              newSlider.map((item, index) => {
+                const imageUrl = getImageUrl(item.image);
+                const hasCaption = item.name && item.name.trim() !== '';
+
+                return (
+                  <Box height="100%" key={index} sx={{ position: 'relative' }}>
+                    <img
+                      src={imageUrl || defaultImage}
+                      className="h-full w-full object-cover"
+                      onError={(e) => handleImageError(e, defaultImage)}
+                      alt={item.name || `Slide ${index + 1}`}
+                      loading="eager"
+                      style={{ opacity: 1 }} // Ensure opacity is set to 1
+                    />
+
+                    {hasCaption && (
+                      <div
+                        className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4"
+                        style={{ zIndex: 10 }}
+                      >
+                        <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+                        {item.description && (
+                          <p className="text-sm opacity-90">{item.description}</p>
+                        )}
+                      </div>
+                    )}
+                  </Box>
+                );
+              })
+            ) : (
+              <Box height="100%" sx={{ position: 'relative' }}>
+                <img
+                  src={defaultImage}
+                  alt="Default slide"
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
+                  <h3 className="text-lg font-semibold">Welcome</h3>
+                </div>
+              </Box>
+            )}
+          </Carousel>
         </Grid>
 
         {/* Right Panel - Team Info */}
@@ -227,7 +248,7 @@ function Slider({ onLoad }) {
                   crossOrigin="anonymous"
                   onError={(e) => handleImageError(e, defaultImageForPerson)}
                 />
-                <p className="text-sm text-center text-white tracking-tighter mt-2">
+                <p className="text-sm text-center  bg-stone-200 tracking-tighter mt-2">
                   {`${chairmanInfo?.firstName || ""} ${chairmanInfo?.middleName || ""} ${chairmanInfo?.lastName || ""}`.trim() || "Chairman"}
                 </p>
                 <h1 className="text-sm text-white font-semibold text-center">Chairman</h1>
@@ -241,7 +262,7 @@ function Slider({ onLoad }) {
               {/* Campus Chief Section */}
               <div className="mx-auto">
                 <img
-                  className="w-[110px] h-[100px] bg-red-900 rounded-[50%] mx-auto object-cover"
+                  className="w-[110px] h-[100px] bg-stone-200 rounded-[50%] mx-auto object-cover"
                   alt="Campus Chief"
                   src={chiefInfo?.ppImage ? getImageUrl(chiefInfo.ppImage, 'team') : defaultImageForPerson}
                   onError={(e) => handleImageError(e, defaultImageForPerson)}
@@ -260,12 +281,12 @@ function Slider({ onLoad }) {
 
             {/* Team Link */}
             <Link
-              style={{ 
-                width: "100%", 
-                display: "flex", 
-                textDecoration: "none", 
-                justifyContent: "center", 
-                marginBottom: "5px" 
+              style={{
+                width: "100%",
+                display: "flex",
+                textDecoration: "none",
+                justifyContent: "center",
+                marginBottom: "5px"
               }}
               to="/team"
             >
