@@ -106,7 +106,7 @@ function Slider({ onLoad }) {
     } catch (error) {
       console.error('Error fetching slider images:', error);
       setNewSlider([]);
-      setImagesLoaded(true); // Set to true even on error to prevent infinite loading
+      setImagesLoaded(true); 
     }
   };
 
