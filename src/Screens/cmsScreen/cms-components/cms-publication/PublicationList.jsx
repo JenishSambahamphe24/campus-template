@@ -211,6 +211,7 @@ function PublicationList() {
                                         pagination: { paginationModel: { pageSize: 10 } },
                                     }}
                                     sx={{
+                                        minHeight:'465px',
                                         '.MuiDataGrid-footerContainer': {
                                             minHeight: '20px'
                                         },

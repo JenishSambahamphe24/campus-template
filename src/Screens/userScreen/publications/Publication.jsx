@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Typography, Button } from '@mui/material'
+import { Grid} from '@mui/material'
 import { MdOutlineFileDownload } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
@@ -41,7 +41,7 @@ function Publication() {
                                 <Link to={`/publication/${item.id}`}>
                                     <img
                                         alt=""
-                                        src={`${IMAGE_URL}content/${item.thumbnailImage}`}
+                                        src={`${IMAGE_URL}/content/${item.thumbnailImage}`}
                                         className="h-56 w-full object-cover"
                                         onError={(e) => { e.target.src = defaultImage; }}
                                     />

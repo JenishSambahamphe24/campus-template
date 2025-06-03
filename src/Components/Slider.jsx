@@ -187,7 +187,7 @@ function Slider({ onLoad }) {
           </fieldset>
         </Grid>
 
-        <Grid sx={{ height: { xs: '250px', sm: '300px', md: '350px', lg: '490px' } }} item xs={12} sm={12} md={12} lg={7} order={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
+        <Grid sx={{ height: { xs: '250px', sm: '300px', md: '350px', lg: '460px' } }} item xs={12} sm={12} md={12} lg={7} order={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
           <Carousel autoplay={true} autoplayDelay={4000} loop={true}>
             {newSlider.length > 0 ? (
               newSlider.map((item, index) => {

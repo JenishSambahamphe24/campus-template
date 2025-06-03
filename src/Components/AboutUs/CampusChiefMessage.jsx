@@ -28,7 +28,7 @@ function CampusChiefMessage() {
     console.log(data)
     return (
         <Grid container justifyContent='center' my={2}>
-            <h1 className='text-2xl  text-center mt-4'> Message From Campus Chief</h1>
+            <h1 className='text-2xl text-center mt-4'> Message From Campus Chief</h1>
 
             {
                 data ? (
@@ -40,7 +40,7 @@ function CampusChiefMessage() {
                                 className="z-10 mt-4 w-[220px]  h-[220px] object-cover rounded-[50%]"
                                 alt="..." />
                         </div>
-                        <Grid item md={8} className='px-20  py-10 text-center'  >
+                        <Grid item md={8} className='px-20  py-10 text-left'  >
                             <h1
                                 className='text-lg'
                                 dangerouslySetInnerHTML={{ __html: data.description }}

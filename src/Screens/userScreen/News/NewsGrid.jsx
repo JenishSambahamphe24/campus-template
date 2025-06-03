@@ -38,7 +38,7 @@ function NewsGrid() {
         <div className="max-w-screen-xl mx-auto py-8 px-20 relative">
             <div>
                 <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-4">
-                    News and Events
+                    News and Events 
                 </h2>
             </div>
             {allNewsEvents.length > 0 ? (
