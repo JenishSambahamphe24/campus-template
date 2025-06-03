@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { TextField, Box, LinearProgress, Typography } from '@mui/material';
 
 function ImageUpload({ name, label, disabled, required, onImageSelect }) {
@@ -8,7 +8,6 @@ function ImageUpload({ name, label, disabled, required, onImageSelect }) {
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (!file) return;
-        
         onImageSelect(file);
         setUploading(true);
         const formData = new FormData();

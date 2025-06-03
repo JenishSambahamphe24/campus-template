@@ -5,6 +5,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import ImageUpload from '../../../../Components/ImageUpload'
 import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor'
+import DateInputField from '../../../../Components/DateInputField'
+const salutation = ['Mr.', 'Mrs.', 'Miss.', 'Professor', 'Professor Dr.', 'Associate Prof Dr.']
 
 function AddTeam() {
     const [loading, setLoading] = useState(false);
@@ -12,7 +14,10 @@ function AddTeam() {
     const editorRef = useRef(null)
     const [formData, setFormData] = useState({
         firstName: '',
+        salutation: '',
         middleName: '',
+        appointedDate: '',
+        department: '',
         lastName: '',
         email: '',
         phoneNo: '',
@@ -38,6 +43,13 @@ function AddTeam() {
                 ...prev,
                 [name]: value === 'true'
             }));
+        } else if (name === 'category') {
+            // Reset subCategory when category changes
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
+                subCategory: ''
+            }));
         } else {
             setFormData(prev => ({
                 ...prev,
@@ -45,12 +57,56 @@ function AddTeam() {
             }));
         }
     };
+
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: newValue
+        }));
+    };
+
     const handleImageSelect = (file) => {
         setFormData(prev => ({
             ...prev,
             ppImage: file
         }))
     }
+
+    const getSubCategoryOptions = () => {
+        switch (formData.category) {
+            case 'Committe member':
+                return [
+                    { value: 'Chairman', label: 'Chairman' },
+                    { value: 'Vice-Chairman', label: 'Vice-Chairman' },
+                    { value: 'Secretary', label: 'Secretary' },
+                    { value: 'Treasurer', label: 'Treasurer' },
+                    { value: 'Member', label: 'Member' },
+
+                ];
+            case 'Teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Campus Chief', label: 'Campus Chief' },
+                    { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
+                    { value: 'Professor', label: 'Professor' },
+                    { value: 'Assistant professor', label: 'Assistant professor' },
+                    { value: 'Lecturer', label: 'Lecturer' },
+                ];
+            case 'Non-teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Accountant', label: 'Accountant' },
+                    { value: 'Assistant accountant', label: 'Assistant accountant' },
+                    { value: 'Peon', label: 'Peon' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative or A/c Officer' },
+                    { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Other', label: 'Other' }
+                ];
+            default:
+                return [];
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -72,14 +128,41 @@ function AddTeam() {
             setLoading(false);
         }
     };
-    return (
 
+    return (
         <form onSubmit={handleSubmit} className='pb-12'>
             <Typography mb='20px' variant='h5' textAlign='center'>
                 Add a new member
             </Typography>
             <Grid component={Paper} elevation={3} container width='70%' mx='auto' py='20px' px='20px' pr='25px' spacing='10px'>
-                <Grid item md={4}>
+                <Grid item sm={12} md={2}>
+                    <FormControl required size='small' fullWidth>
+                        <InputLabel
+                            InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
+                                },
+                            }}>Salutation</InputLabel>
+
+                        <Select
+                            required
+                            name="salutation"
+                            value={formData.salutation}
+                            onChange={handleChange}
+                            label='Salutation'
+                        >
+                            {
+                                salutation.map((item, index) => (
+                                    <MenuItem key={index} value={item}> {item}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item md={3.3}>
                     <TextField
                         required
                         InputLabelProps={{
@@ -95,7 +178,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3.4}>
                     <TextField
                         fullWidth
                         size='small'
@@ -105,7 +188,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3.3}>
                     <TextField
                         required
                         InputLabelProps={{
@@ -121,7 +204,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <TextField
                         InputLabelProps={{
                             sx: {
@@ -136,7 +219,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <TextField
                         InputLabelProps={{
                             sx: {
@@ -152,7 +235,7 @@ function AddTeam() {
                         inputProps={{ pattern: "[0-9]*", inputMode: 'numeric' }}
                     />
                 </Grid>
-                <Grid item sm={12} md={4}>
+                <Grid item sm={12} md={3}>
                     <FormControl required size='small' fullWidth>
                         <InputLabel
                             InputLabelProps={{
@@ -175,7 +258,7 @@ function AddTeam() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item sm={12} md={4}>
+                <Grid item sm={12} md={3}>
                     <FormControl required size='small' fullWidth>
                         <InputLabel
                             InputLabelProps={{
@@ -191,36 +274,17 @@ function AddTeam() {
                             value={formData.subCategory}
                             onChange={handleChange}
                             label='Sub-category'
+                            disabled={!formData.category}
                         >
-                            <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
-                            <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
-                            <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
-                             <MenuItem disabled={formData.category !== 'Teaching staff'} value='Professor'> Professor</MenuItem>
-                              <MenuItem disabled={formData.category !== 'Teaching staff'} value='Reader'>Reader</MenuItem>
-                               <MenuItem disabled={formData.category !== 'Teaching staff'} value='Lecturer'> Lecturer</MenuItem>
-                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Asst Teaching'>Asst. Lecturer/ Teaching Assistant</MenuItem>
-                                <MenuItem disabled={formData.category !== 'Teaching staff'} value='Instructor'>Instructor</MenuItem>
-                            <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
-                            <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
+                            {getSubCategoryOptions().map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item md={4}>
-                    <TextField
-                        InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': { color: 'brown' },
-                            },
-                        }}
-                        fullWidth
-                        size='small'
-                        label='Position in the Team'
-                        name='position'
-                        value={formData.position}
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Tooltip title='Index should be managed according to Type . Meaning that start from 1,2,3... for committe member & same will be applied for Teaching and non-teaching'>
                         <TextField
                             fullWidth
@@ -240,6 +304,39 @@ function AddTeam() {
                         />
                     </Tooltip>
 
+                </Grid>
+                <Grid item sm={12} md={3}>
+                    <TextField
+                        size='small'
+                        label="Department"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleChange}
+                    />
+                </Grid>
+                <Grid item sm={12} md={3}>
+                    <DateInputField
+                        label="Appointed date"
+                        required
+                        name="appointedDate"
+                        value={formData.appointedDate}
+                        onChange={(newValue) => handleDateChange("appointedDate", newValue)}
+                    />
+                </Grid>
+                <Grid item md={3}>
+                    <TextField
+                        InputLabelProps={{
+                            sx: {
+                                '& .MuiInputLabel-asterisk': { color: 'brown' },
+                            },
+                        }}
+                        fullWidth
+                        size='small'
+                        label='Position in the Team'
+                        name='position'
+                        value={formData.position}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid item md={6}>
                     <ImageUpload
@@ -281,8 +378,8 @@ function AddTeam() {
                     />
                 </Grid>
                 <Grid item md={12}>
-                    <Button type='submit' size='small' variant='contained'>
-                        Add member
+                    <Button type='submit' size='small' variant='contained' disabled={loading}>
+                        {loading ? 'Adding...' : 'Add member'}
                     </Button>
                 </Grid>
             </Grid>

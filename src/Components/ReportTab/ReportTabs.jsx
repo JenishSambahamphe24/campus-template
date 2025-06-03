@@ -12,8 +12,9 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { formatDate } from '../utilityFunctions';
 import { Link } from 'react-router-dom';
+import { downloadPublicationFile } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 
-const FILE_URL = import.meta.env.VITE_FILE_URL;
+// const FILE_URL = import.meta.env.VITE_FILE_URL;
 
 function ReportTabs() {
     const [allReports, setAllReports] = useState([]);
@@ -60,9 +61,12 @@ function ReportTabs() {
             ),
             renderCell: (params) => (
                 <Box textAlign='center'>
-                    <a className='text-blue-600 ' href={`${FILE_URL}/content/${params.row.file}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <button
+                        style={{ textDecoration: 'none' }}
+                        onClick={() => downloadPublicationFile(params.row.file)}
+                    >
                         <DownloadIcon fontSize="14px" />
-                    </a>
+                    </button>
                 </Box>
             ),
         },
@@ -230,7 +234,7 @@ function ReportTabs() {
                         )
                 }
             </Grid>
-            <div className='w-full flex justify-center'>
+            <div className='w-full flex justify-end'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
                     <Link to='/report'>
                         <Typography >
@@ -252,7 +256,6 @@ function ReportTabs() {
                         />
                     </svg>
                 </Button>
-
             </div>
         </Grid>
     );

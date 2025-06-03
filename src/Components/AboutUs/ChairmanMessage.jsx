@@ -39,7 +39,7 @@ function ChairmanMessage() {
                                 className="z-10 mt-4 w-[220px]  h-[220px] object-cover rounded-[50%]"
                                 alt="..." />
                         </div>
-                        <Grid item md={8} className='px-20  py-10 text-center'  >
+                        <Grid item md={8} className='px-20  py-10 text-left'  >
                             <h1
                                 className='text-lg'
                                 dangerouslySetInnerHTML={{ __html: data.description }}

@@ -111,7 +111,7 @@ function GalleryGrid() {
                     <div className="swiper-slide">
                       <div className="block bg-gray-700 w-auto mx-auto h-auto rounded-3xl">
                         <img
-                          src={galleryData?.gallery?.thumbnailImage ? `${IMAGE_URL}thumb/${galleryData.gallery.thumbnailImage}` : 'path/to/placeholder/image.jpg'}
+                          src={galleryData?.gallery?.thumbnailImage ? `${IMAGE_URL}/thumb/${galleryData.gallery.thumbnailImage}` : 'path/to/placeholder/image.jpg'}
                           className="gallery-image w-full h-[320px] md:h-[427px] mx-auto object-contain rounded-3xl"
                         />
                       </div>

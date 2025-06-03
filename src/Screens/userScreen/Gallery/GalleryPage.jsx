@@ -92,7 +92,7 @@ function GalleryPage() {
                                                             <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-72 w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
                                                                 <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200  transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 ">
                                                                     <img
-                                                                        src={item.thumbnailImage ? `${IMAGE_URL}thumb/${item.thumbnailImage}` : defaultImage}
+                                                                        src={item.thumbnailImage ? `${IMAGE_URL}/thumb/${item.thumbnailImage}` : defaultImage}
                                                                         className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
                                                                         alt="Azores"
                                                                     />

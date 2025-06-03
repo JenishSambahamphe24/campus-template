@@ -59,10 +59,12 @@ function PublicationList() {
     }, [activeTab, allRows]);
 
     const columns = [
-
         { field: 'sNo', headerName: 'S.No.', flex: .8 },
         {
-            field: 'subCategoryName', headerName: 'Sub-category', flex: 2, renderCell: (params) => (
+            field: 'subCategoryName', 
+            headerName: 'Sub-category', 
+            flex: 2, 
+            renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
                 </div>
@@ -86,20 +88,35 @@ function PublicationList() {
             )
         },
         {
-            field: 'displayStatus', headerName: 'Status', flex: 1.2, renderCell: (params) => (
+            field: 'displayStatus', 
+            headerName: 'Status', 
+            flex: 1.2, 
+            renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
                 </div>
             )
         },
         {
-            field: 'publishedAt', headerName: 'Pub date', flex: 1.5, renderCell: (params) => (
+            field: 'publishedAt', 
+            headerName: 'Pub date', 
+            flex: 1.5, 
+            renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
                 </div>
             )
         },
-        { field: 'expiredAt', headerName: 'Exp date', flex: 1.5 },
+        { 
+            field: 'expiredAt', 
+            headerName: 'Exp date', 
+            flex: 1.5,
+            renderCell: (params) => (
+                <div className='flex h-full items-center'>
+                    <h1 className='text-sm'>{params.value}</h1>
+                </div>
+            )
+        },
         {
             field: 'action',
             headerName: 'Action',
@@ -137,7 +154,7 @@ function PublicationList() {
     }
     return (
         <Grid container className='px-20 pb-10' mx='auto'>
-            <Typography mx='auto' variant='h4' >   List of contents</Typography>
+            <Typography mx='auto' variant='h4' >   List of contents </Typography>
             <Box width='100%'>
                 <Box display='flex' justifyContent='flex-end' marginBottom='.5rem'>
                     <Link to='/admin/addCategory'>
@@ -173,52 +190,69 @@ function PublicationList() {
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>
                         <TabPanel key={activeTab} value={activeTab}>
-                            <DataGrid
-                                rows={rows}
-                                columns={columns}
-                                density='compact'
-                                disableColumnFilter={true}
-                                disableAutosize={true}
-                                disableColumnMenu={true}
-                                disableColumnSelector={true}
-                                disableColumnSorting={true}
-                                disableDensitySelector={true}
-                                autosizeOnMount={true}
-                                columnHeaderHeight={70}
-                                showCellVerticalBorder={true}
-                                pagination
-                                initialState={{
-                                    pagination: { paginationModel: { pageSize: 10 } },
-                                }}
-                                sx={{
-                                    minHeight: '300px',
-                                    maxHeight: '464px',
-                                    '.MuiDataGrid-footerContainer': {
-                                        minHeight: '45px'
-                                    },
-                                    '.MuiDataGrid-columnSeparator': {
-                                        display: 'none',
-                                    },
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    },
-                                    '& .MuiDataGrid-cell:focus-within': {
-                                        outline: 'none'
-                                    },
-                                    '.MuiDataGrid-columnHeader': {
-                                        border: '1px solid #e0e0e0',
-                                    },
-                                    '& .grid-header .MuiDataGrid-colCellTitle': {
-                                        fontWeight: 'bold'
-                                    },
-                                    '& .MuiDataGrid-columnHeaderTitle': {
-                                        fontWeight: '600',
-                                        fontSize: '14px'
-                                    },
-                                    width: '100%',
-                                    marginTop: '0'
-                                }}
-                            />
+                            <div style={{ minWidth: '800px', overflowX: 'auto' }}>
+                                <DataGrid
+                                    rows={rows}
+                                    columns={columns}
+                                    density='compact'
+                                    disableColumnFilter={true}
+                                    disableAutosize={true}
+                                    disableColumnMenu={true}
+                                    disableColumnSelector={true}
+                                    disableColumnSorting={true}
+                                    disableDensitySelector={true}
+                                    autoHeight={true}
+                                    rowHeight="auto"
+                                    getRowHeight={() => 'auto'}
+                                    columnHeaderHeight={70}
+                                    showCellVerticalBorder={true}
+                                    pagination
+                                    initialState={{
+                                        pagination: { paginationModel: { pageSize: 10 } },
+                                    }}
+                                    sx={{
+                                        minHeight:'465px',
+                                        '.MuiDataGrid-footerContainer': {
+                                            minHeight: '20px'
+                                        },
+                                        '.MuiDataGrid-columnSeparator': {
+                                            display: 'none',
+                                        },
+                                        '& .MuiDataGrid-row:hover': {
+                                            cursor: 'pointer'
+                                        },
+                                        '& .MuiDataGrid-row': {
+                                            maxHeight: 'none !important',
+                                            height: 'auto'
+                                        },
+                                        '& .MuiDataGrid-cell:focus-within': {
+                                            outline: 'none'
+                                        },
+                                        '& .grid-header .MuiDataGrid-colCellTitle': {
+                                            fontWeight: 'bold'
+                                        },
+                                        '& .MuiDataGrid-columnHeaderTitle ': {
+                                            fontWeight: '600',
+                                            fontSize: '14px'
+                                        },
+                                        '& .MuiDataGrid-selectedRowCount': {
+                                            visibility: 'hidden'
+                                        },
+                                        '.MuiDataGrid-columnHeader': {
+                                            border: '1px solid #e0e0e0',
+                                        },
+                                        '& .MuiDataGrid-cell': {
+                                            whiteSpace: 'normal',
+                                            overflow: 'visible',
+                                            height: 'auto',
+                                            padding: '8px',
+                                            alignItems: 'flex-start'
+                                        },
+                                        width: '100%',
+                                        marginTop: '0'
+                                    }}
+                                />
+                            </div>
                         </TabPanel>
                     </TabsBody>
                 </Tabs>

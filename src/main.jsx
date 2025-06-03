@@ -87,7 +87,6 @@ const router = createBrowserRouter(
 
         <Route index={true} path='/contact' element={<ContactUsPage />} />
         <Route index={true} path='/news' element={<NewsGrid />} />
-        <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/gallery' element={<GalleryPage />} />
         <Route index={true} path='/galleryGrid/:id' element={<GalleryGrid />} />
         <Route index={true} path='/member-details/:id' element={<TeamMemberDetails />} />

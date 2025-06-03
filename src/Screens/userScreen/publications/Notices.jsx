@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import PaginationForReports from './component/PaginationForReports';
-import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../../../Components/utilityFunctions';
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
@@ -53,10 +53,7 @@ function Notices() {
                                     paginatedItems.map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}/content/${item.file}`}
-                                                download
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                            onClick={() => downloadPublicationFile(item.file)}
                                                 className="flex text-sm"
                                             >
                                                 {item.title}

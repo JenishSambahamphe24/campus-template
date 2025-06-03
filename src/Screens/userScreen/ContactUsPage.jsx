@@ -68,7 +68,7 @@ function ContactUsPage() {
               </div>
               <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
                 <h2 className="title-font font-bold text-[#1169bf]  text-sm">EMAIL</h2>
-                <a href="rerl@aepc.gov.np" className="text-blue-900 leading-relaxed"> {email} </a>
+                <a className="text-blue-900 leading-relaxed"> {email} </a>
                 <h2 className="title-font font-bold text-[#1169bf]  text-sm">PHONE</h2>
                 <p className="leading-relaxed">{phone}</p>
               </div>
