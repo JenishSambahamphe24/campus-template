@@ -143,17 +143,16 @@ function MessageSection() {
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">
-                <Link to='/introduction' className="w-full lg:w-2/6 flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <Link to='/introduction' className="w-full lg:w-2/6 h-[150px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
                     <div className="flex flex-col md:flex-row h-full"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
-                        <div className="w-full md:w-2/5 overflow-hidden h-full">
+                        <div className="w-full md:w-2/5 h-4/5 overflow-hidden flex my-auto">
                             <img
-                                  src={imageSource}
-                                // src={`${IMAGE_URL}/aboutus/${introduction.aboutUsImage}`}
-                                className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
-                                 onError={handleImageError}
+                                src={imageSource}
+                                className={`w-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                onError={handleImageError}
                             />
                         </div>
 
