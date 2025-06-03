@@ -89,7 +89,6 @@ function MessageSection() {
         fetchTeamInfo();
     }, []);
 
-    console.log(teamInfo)
 
 const renderSafeHTML = (content) => {
   if (!content) return '';
@@ -153,13 +152,13 @@ const renderSafeHTML = (content) => {
                         </div>
 
                         {/* Content container */}
-                        <div className="w-full md:w-3/5 px-4 pt-2">
+                        <div className="w-full md:w-3/5 px-2 pt-1 ">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
                                 About Us
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                   className="text-sm line-clamp-6"
+                                   className="mt-2 text-sm line-clamp-5"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}
