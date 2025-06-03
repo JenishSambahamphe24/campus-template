@@ -9,6 +9,7 @@ function MessageSection() {
     const [isHovered, setIsHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [imgError, setImgError] = useState(false);
     const [introduction, setIntroduction] = useState({
         heading: '',
         description: ''
@@ -31,9 +32,11 @@ function MessageSection() {
             setLoading(true);
             try {
                 const response = await getAllaboutUs();
+
                 if (!response || !Array.isArray(response)) {
                     throw new Error("Invalid response format from API");
                 }
+
                 const intro = response.find(item => item?.heading === 'Introduction');
                 const chief = response.find(item => item?.heading === 'Message-campus-chief');
                 const chairman = response.find(item => item?.heading === 'Message-chairman');
@@ -49,6 +52,7 @@ function MessageSection() {
                 setLoading(false);
             }
         };
+
         fetchAboutUs();
     }, []);
 
@@ -85,20 +89,19 @@ function MessageSection() {
         fetchTeamInfo();
     }, []);
 
-    console.log(teamInfo)
 
-const renderSafeHTML = (content) => {
-  if (!content) return '';
+    const renderSafeHTML = (content) => {
+        if (!content) return '';
 
-  try {
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = content;
-    return tempElement.textContent || tempElement.innerText || '';
-  } catch (e) {
-    console.error("Error processing HTML content:", e);
-    return 'Content unavailable';
-  }
-};
+        try {
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = content;
+            return tempElement.textContent || tempElement.innerText || '';
+        } catch (e) {
+            console.error("Error processing HTML content:", e);
+            return 'Content unavailable';
+        }
+    };
 
     if (loading) {
         return (
@@ -130,31 +133,37 @@ const renderSafeHTML = (content) => {
             </div>
         );
     }
+    const handleImageError = () => {
+        setImgError(true);
+    };
+    const imageSource = imgError ?
+        defaultImage :
+        (introduction.aboutUsImage ? `${IMAGE_URL}/aboutus/${introduction.aboutUsImage}` : defaultImage);
 
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">
-                <Link to='/introduction' className="w-full lg:w-2/6 flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <Link to='/introduction' className="w-full lg:w-2/6 h-[150px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
                     <div className="flex flex-col md:flex-row h-full"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
-                        <div className="w-full md:w-2/5 overflow-hidden h-full">
+                        <div className="w-full md:w-2/5 h-4/5 overflow-hidden flex my-auto">
                             <img
-                                src={introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage}
-                                // src={`${IMAGE_URL}/aboutus/${introduction.aboutUsImage}`}
-                                className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                src={imageSource}
+                                className={`w-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                onError={handleImageError}
                             />
                         </div>
 
                         {/* Content container */}
-                        <div className="w-full md:w-3/5 px-4 pt-2 pb-3">
+                        <div className="w-full md:w-3/5 px-4 pt-2 pb-2">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
                                 About Us
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                    className="text-sm line-clamp-4"
+                                    className="text-sm line-clamp-5"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}
