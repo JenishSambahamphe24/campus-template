@@ -143,15 +143,15 @@ function MessageSection() {
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">
-                <Link to='/introduction' className="w-full lg:w-2/6 h-[150px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <Link to='/introduction' className="w-full lg:w-2/6  min-h-[163px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
                     <div className="flex flex-col md:flex-row h-full"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
-                        <div className="w-full md:w-2/5 h-4/5 overflow-hidden flex my-auto">
+                        <div className="w-full md:w-2/5 h-full overflow-hidden">
                             <img
                                 src={imageSource}
-                                className={`w-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                className={`w-full h-full object-contain transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
                                 onError={handleImageError}
                             />
                         </div>
@@ -159,11 +159,11 @@ function MessageSection() {
                         {/* Content container */}
                         <div className="w-full md:w-3/5 px-4 pt-2 pb-2">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
-                                About Us
+                                About Us 
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                    className="text-sm line-clamp-5"
+                                    className="text-sm pt-2 line-clamp-5"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}

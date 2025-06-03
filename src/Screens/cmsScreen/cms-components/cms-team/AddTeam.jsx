@@ -5,6 +5,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import ImageUpload from '../../../../Components/ImageUpload'
 import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor'
+import DateInputField from '../../../../Components/DateInputField'
+const salutation = ['Mr.', 'Mrs.', 'Miss.', 'Professor', 'Professor Dr.', 'Associate Prof Dr.']
 
 function AddTeam() {
     const [loading, setLoading] = useState(false);
@@ -12,7 +14,10 @@ function AddTeam() {
     const editorRef = useRef(null)
     const [formData, setFormData] = useState({
         firstName: '',
+        salutation: '',
         middleName: '',
+        appointedDate: '',
+        department: '',
         lastName: '',
         email: '',
         phoneNo: '',
@@ -53,6 +58,13 @@ function AddTeam() {
         }
     };
 
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: newValue
+        }));
+    };
+
     const handleImageSelect = (file) => {
         setFormData(prev => ({
             ...prev,
@@ -60,13 +72,16 @@ function AddTeam() {
         }))
     }
 
-    // Function to get subcategory options based on selected category
     const getSubCategoryOptions = () => {
         switch (formData.category) {
             case 'Committe member':
                 return [
                     { value: 'Chairman', label: 'Chairman' },
-                    { value: 'Member', label: 'Member' }
+                    { value: 'Vice-Chairman', label: 'Vice-Chairman' },
+                    { value: 'Secretary', label: 'Secretary' },
+                    { value: 'Treasurer', label: 'Treasurer' },
+                    { value: 'Member', label: 'Member' },
+
                 ];
             case 'Teaching staff':
                 return [
@@ -74,7 +89,8 @@ function AddTeam() {
                     { value: 'Campus Chief', label: 'Campus Chief' },
                     { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
                     { value: 'Professor', label: 'Professor' },
-                    { value: 'Assistant professor', label: 'Assistant professor' }
+                    { value: 'Assistant professor', label: 'Assistant professor' },
+                    { value: 'Lecturer', label: 'Lecturer' },
                 ];
             case 'Non-teaching staff':
                 return [
@@ -119,7 +135,34 @@ function AddTeam() {
                 Add a new member
             </Typography>
             <Grid component={Paper} elevation={3} container width='70%' mx='auto' py='20px' px='20px' pr='25px' spacing='10px'>
-                <Grid item md={4}>
+                <Grid item sm={12} md={2}>
+                    <FormControl required size='small' fullWidth>
+                        <InputLabel
+                            InputLabelProps={{
+                                sx: {
+                                    '& .MuiInputLabel-asterisk': {
+                                        color: 'brown',
+                                    },
+                                },
+                            }}>Salutation</InputLabel>
+
+                        <Select
+                            required
+                            name="salutation"
+                            value={formData.salutation}
+                            onChange={handleChange}
+                            label='Salutation'
+                        >
+                            {
+                                salutation.map((item, index) => (
+                                    <MenuItem key={index} value={item}> {item}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item md={3.3}>
                     <TextField
                         required
                         InputLabelProps={{
@@ -135,7 +178,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3.4}>
                     <TextField
                         fullWidth
                         size='small'
@@ -145,7 +188,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3.3}>
                     <TextField
                         required
                         InputLabelProps={{
@@ -161,7 +204,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <TextField
                         InputLabelProps={{
                             sx: {
@@ -176,7 +219,7 @@ function AddTeam() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <TextField
                         InputLabelProps={{
                             sx: {
@@ -192,7 +235,7 @@ function AddTeam() {
                         inputProps={{ pattern: "[0-9]*", inputMode: 'numeric' }}
                     />
                 </Grid>
-                <Grid item sm={12} md={4}>
+                <Grid item sm={12} md={3}>
                     <FormControl required size='small' fullWidth>
                         <InputLabel
                             InputLabelProps={{
@@ -215,7 +258,7 @@ function AddTeam() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item sm={12} md={4}>
+                <Grid item sm={12} md={3}>
                     <FormControl required size='small' fullWidth>
                         <InputLabel
                             InputLabelProps={{
@@ -241,22 +284,7 @@ function AddTeam() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item md={4}>
-                    <TextField
-                        InputLabelProps={{
-                            sx: {
-                                '& .MuiInputLabel-asterisk': { color: 'brown' },
-                            },
-                        }}
-                        fullWidth
-                        size='small'
-                        label='Position in the Team'
-                        name='position'
-                        value={formData.position}
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Tooltip title='Index should be managed according to Type . Meaning that start from 1,2,3... for committe member & same will be applied for Teaching and non-teaching'>
                         <TextField
                             fullWidth
@@ -276,6 +304,39 @@ function AddTeam() {
                         />
                     </Tooltip>
 
+                </Grid>
+                <Grid item sm={12} md={3}>
+                    <TextField
+                        size='small'
+                        label="Department"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleChange}
+                    />
+                </Grid>
+                <Grid item sm={12} md={3}>
+                    <DateInputField
+                        label="Appointed date"
+                        required
+                        name="appointedDate"
+                        value={formData.appointedDate}
+                        onChange={(newValue) => handleDateChange("appointedDate", newValue)}
+                    />
+                </Grid>
+                <Grid item md={3}>
+                    <TextField
+                        InputLabelProps={{
+                            sx: {
+                                '& .MuiInputLabel-asterisk': { color: 'brown' },
+                            },
+                        }}
+                        fullWidth
+                        size='small'
+                        label='Position in the Team'
+                        name='position'
+                        value={formData.position}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid item md={6}>
                     <ImageUpload

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { BsFacebook } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import { getTeamById } from '../../cmsScreen/cms-components/cms-team/teamApi'
+import { extractDate } from '../../../Components/utilityFunctions'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const defaultImage = import.meta.env.VITE_LOGO_URL
 
@@ -22,14 +23,10 @@ function TeamMemberDetails() {
     return (
         <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
             <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
-                <div>
-                    <Typography fontFamily='fantasy'>
                         <div
                             style={{ fontSize: '16px' }}
                             dangerouslySetInnerHTML={{ __html: teamDetail.cvDetail } || "No CV details available"}
                         />
-                    </Typography>
-                </div>
 
                 <Link to='/team'>
                     <Button sx={{ textTransform: 'none', mt: '30px' }} size="small" variant="outlined" className="flex items-center gap-3 bg-red-900">
@@ -62,10 +59,11 @@ function TeamMemberDetails() {
                             }`}
                     />
                     <div className="relative  bg-white">
-                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"}</h3>
-                        <h3 className="text-sm font-medium text-gray-900">{teamDetail.subCategory || "Unknown Position"}</h3>
-                        <h3 className="text-sm italic text-gray-900">{teamDetail.email || "email not found"}</h3>
-                        <h3 className="text-sm italic text-gray-900">{teamDetail.phoneNo || "Phone No. not found"}</h3>
+                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"}, {teamDetail.subCategory || " "} </h3>
+                        <h3 className="text-sm font-medium text-gray-900"> {teamDetail.department || " "}</h3>
+                        <h3 className="text-sm italic text-gray-900"> <span className="text-sm font-medium text-gray-900">Contact:  </span>{teamDetail.email || "email not found"}, {teamDetail.phoneNo}</h3>
+                        <h3 className="text-sm italic text-gray-900">{ }</h3>
+                          <h3 className="text-sm italic text-gray-900"><span className="text-sm font-medium text-gray-900">Appointd Date: </span> {extractDate(teamDetail.appointedDate) || "Phone No. not found"}</h3>
                     </div>
                     <Stack mt='5px' spacing='10px' direction='column'>
                         <h3 fontWeight='bold' >social media</h3>

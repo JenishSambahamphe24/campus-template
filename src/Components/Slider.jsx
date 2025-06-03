@@ -211,9 +211,7 @@ function Slider({ onLoad }) {
                         style={{ zIndex: 10 }}
                       >
                         <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
-                        {item.description && (
-                          <p className="text-sm opacity-90">{item.description}</p>
-                        )}
+                       
                       </div>
                     )}
                   </Box>

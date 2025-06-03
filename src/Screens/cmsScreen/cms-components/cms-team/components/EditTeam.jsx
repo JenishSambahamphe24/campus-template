@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 import {
     Typography,
     Stack,
-    DialogActions,
     Grid,
     Button,
     IconButton,
@@ -24,13 +24,16 @@ import { extractDate } from '../../../../../Components/utilityFunctions';
 import FileDroppable from '../../cms-gallery/FileDroppable';
 import { useParams, useNavigate } from 'react-router-dom';
 import TipTapEditor from '../../../../../Components/Tiptap/TipTapEditor';
+import DateInputField from '../../../../../Components/DateInputField';
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+const salutation = ['Mr.', 'Mrs.', 'Miss.', 'Professor', 'Professor Dr.', 'Associate Prof Dr.'];
 
 function EditTeam() {
     const { teamId } = useParams()
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
+        salutation: '',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -39,6 +42,8 @@ function EditTeam() {
         position: '',
         category: '',
         subCategory: '',
+        department: '',
+        appointedDate: '',
         fbUrl: '',
         twitterUrl: '',
         cvDetail: '',
@@ -69,23 +74,38 @@ function EditTeam() {
         fetchData();
     }, [teamId]);
 
-
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'phoneNo' && !/^\d*$/.test(value)) {
+            return;
+        }
 
         if (name === 'status') {
             setFormData((prev) => ({
                 ...prev,
                 [name]: value === 'true',
             }));
-        } else if (name === 'phoneNo' && !/^\d*$/.test(value)) {
-            return;
+        } else if (name === 'category') {
+            // Reset subCategory when category changes
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+                subCategory: ''
+            }));
         } else {
             setFormData((prev) => ({
                 ...prev,
                 [name]: value,
             }));
         }
+    };
+
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: newValue
+        }));
     };
 
     const handleImageChange = (updatedFile, type) => {
@@ -100,8 +120,43 @@ function EditTeam() {
         setFetchedImage(null);
         setFormData((prev) => ({
             ...prev,
-            ppImage: null, // Ensure formData is cleared for that image
+            ppImage: null,
         }));
+    };
+
+    const getSubCategoryOptions = () => {
+        switch (formData.category) {
+            case 'Committe member':
+                return [
+                    { value: 'Chairman', label: 'Chairman' },
+                    { value: 'Vice-Chairman', label: 'Vice-Chairman' },
+                    { value: 'Secretary', label: 'Secretary' },
+                    { value: 'Treasurer', label: 'Treasurer' },
+                    { value: 'Member', label: 'Member' },
+                ];
+            case 'Teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Campus Chief', label: 'Campus Chief' },
+                    { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
+                    { value: 'Professor', label: 'Professor' },
+                    { value: 'Assistant professor', label: 'Assistant professor' },
+                    { value: 'Lecturer', label: 'Lecturer' },
+                ];
+            case 'Non-teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Accountant', label: 'Accountant' },
+                    { value: 'Assistant accountant', label: 'Assistant accountant' },
+                    { value: 'Peon', label: 'Peon' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative or A/c Officer' },
+                    { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Other', label: 'Other' }
+                ];
+            default:
+                return [];
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -114,12 +169,15 @@ function EditTeam() {
             updatedData.append('ppImage', fetchedImage);
         }
 
+        updatedData.append('salutation', formData.salutation);
         updatedData.append('firstName', formData.firstName);
         updatedData.append('middleName', formData.middleName);
         updatedData.append('lastName', formData.lastName);
         updatedData.append('email', formData.email);
         updatedData.append('phoneNo', formData.phoneNo);
         updatedData.append('position', formData.position);
+        updatedData.append('department', formData.department);
+        updatedData.append('appointedDate', formData.appointedDate);
         updatedData.append('fbUrl', formData.fbUrl);
         updatedData.append('twitterUrl', formData.twitterUrl);
         updatedData.append('cvDetail', formData.cvDetail);
@@ -143,16 +201,47 @@ function EditTeam() {
         }
     };
 
-    console.log(formData)
-
     return (
         <Grid container mx='auto' md={10} className='px-20 pb-10' >
-            <h1 className='text-center pb-3 text-2xl  mx-auto'>  Edit Member </h1>
+            <Typography mb='20px' variant='h5' textAlign='center' width='100%'>
+                Edit Member
+            </Typography>
             <Stack component={Paper} width='100%' elevation='5' padding='20px' direction="column" >
                 <form onSubmit={handleSubmit}>
+                    {/* First Row: Salutation, First Name, Middle Name, Last Name */}
                     <Grid container width="100%" spacing={2}>
-                        <Grid item xs={4}>
+                        <Grid item xs={2}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Salutation</InputLabel>
+                                <Select
+                                    required
+                                    variant="standard"
+                                    name="salutation"
+                                    value={formData.salutation}
+                                    onChange={handleChange}
+                                    label='Salutation'
+                                >
+                                    {salutation.map((item, index) => (
+                                        <MenuItem key={index} value={item}>{item}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={3.3}>
                             <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
                                 fullWidth
                                 size="small"
                                 variant="standard"
@@ -162,7 +251,7 @@ function EditTeam() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={3.4}>
                             <TextField
                                 fullWidth
                                 size="small"
@@ -173,8 +262,14 @@ function EditTeam() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={3.3}>
                             <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
                                 fullWidth
                                 size="small"
                                 variant="standard"
@@ -186,9 +281,15 @@ function EditTeam() {
                         </Grid>
                     </Grid>
 
+                    {/* Second Row: Email, Phone, Category, Sub-category */}
                     <Grid container mt='2px' width="100%" spacing={2}>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
                                 fullWidth
                                 size="small"
                                 variant="standard"
@@ -198,48 +299,48 @@ function EditTeam() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
                                 fullWidth
                                 size="small"
                                 variant="standard"
-                                label="Contact Number"
+                                label="Phone Number"
                                 name="phoneNo"
                                 value={formData.phoneNo}
                                 onChange={handleChange}
                                 inputProps={{ pattern: "[0-9]*", inputMode: "numeric" }}
                             />
                         </Grid>
-                        <Grid item sm={12} md={4}>
+                        <Grid item xs={3}>
                             <FormControl required size='small' fullWidth>
                                 <InputLabel
-                                    size='small'
                                     InputLabelProps={{
                                         sx: {
                                             '& .MuiInputLabel-asterisk': {
                                                 color: 'brown',
                                             },
                                         },
-                                    }}>Category</InputLabel>
+                                    }}>Type</InputLabel>
                                 <Select
-                                    size='small'
                                     required
-                                    variant='standard'
+                                    variant="standard"
                                     name="category"
                                     value={formData.category}
                                     onChange={handleChange}
-                                    label='Category'
+                                    label='Type'
                                 >
-                                    <MenuItem value='Committe member'> Committee Member</MenuItem>
+                                    <MenuItem value='Committe member'>Committee Member</MenuItem>
                                     <MenuItem value='Teaching staff'>Teaching staff</MenuItem>
                                     <MenuItem value='Non-teaching staff'>Non-teaching staff</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
-
-                    </Grid>
-                    <Grid mt='2px' container width="100%" spacing={2}>
-                        <Grid item sm={12} md={4}>
+                        <Grid item xs={3}>
                             <FormControl required size='small' fullWidth>
                                 <InputLabel
                                     InputLabelProps={{
@@ -250,61 +351,112 @@ function EditTeam() {
                                         },
                                     }}>Sub-category</InputLabel>
                                 <Select
-                                    size='small'
-                                    variant='standard'
                                     required
+                                    variant="standard"
                                     name="subCategory"
                                     value={formData.subCategory}
                                     onChange={handleChange}
                                     label='Sub-category'
+                                    disabled={!formData.category}
                                 >
-                                    <MenuItem disabled={formData.category !== 'Committe member'} value='Chairman'>Chairman</MenuItem>
-                                    <MenuItem disabled={formData.category !== 'Committe member'} value='Member'>Member</MenuItem>
-                                    <MenuItem disabled={formData.category !== 'Teaching staff'} value='Campus Chief'> Campus Chief</MenuItem>
-                                    <MenuItem disabled={formData.category === 'Committe member'} value='Information Officer'>Information Officer</MenuItem>
-                                    <MenuItem disabled={formData.category === 'Committe member'} value='Other'>Other</MenuItem>
+                                    {getSubCategoryOptions().map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={4}>
+                    </Grid>
+
+                    {/* Third Row: Employee Index, Department, Appointed Date, Position */}
+                    <Grid mt='2px' container width="100%" spacing={2}>
+                        <Grid item xs={3}>
                             <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                    shrink: true,
+                                }}
                                 fullWidth
                                 size="small"
                                 type='number'
                                 variant="standard"
                                 label="Employee Index"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
                                 name="index"
                                 value={formData.index}
                                 onChange={handleChange}
-                                inputProps={{
-                                    min: 1,
-                                }}
+                                inputProps={{ min: 0 }}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Department"
+                                name="department"
+                                value={formData.department}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <DateInputField
+                                variant='standard'
+                                label="Appointed date"
+                                required
+                                name="appointedDate"
+                                value={formData.appointedDate}
+                                onChange={(newValue) => handleDateChange("appointedDate", newValue)}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                    shrink: true,
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Position in the Team"
+                                name="position"
+                                value={formData.position}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {/* Fourth Row: Facebook URL */}
+                    <Grid mt='2px' container width="100%" spacing={2}>
+                        <Grid item xs={6}>
                             <TextField
                                 fullWidth
                                 size="small"
                                 variant="standard"
-                                label="Position"
-                                name="position"
-                                value={formData.position}
+                                label="Facebook URL"
+                                name="fbUrl"
+                                value={formData.fbUrl}
                                 onChange={handleChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
                             />
                         </Grid>
                     </Grid>
-                    {/* Profile Picture Upload */}
+
+                    {/* Profile Picture Upload and Status */}
                     <Grid border='1px solid #c2c2c2' borderRadius='8px' container width="100%" mt='10px' padding='10px'>
                         <Grid px='5px' item xs={6}>
-                            <Typography>PP Image</Typography>
+                            <Typography>Member Image</Typography>
                             <FileDroppable
-                                placeholder='New pp image'
+                                placeholder='New member image'
                                 name="ppImage"
                                 allowMultiple={false}
                                 onImagesChange={(updatedFiles) => handleImageChange(updatedFiles, 'ppImage')}
@@ -312,7 +464,6 @@ function EditTeam() {
                             {fetchedImage && (
                                 <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
                                     <img src={`${IMAGE_URL}/team/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
-
                                     <IconButton
                                         size="small"
                                         onClick={handleRemoveFetchedImage}
@@ -344,7 +495,7 @@ function EditTeam() {
                     {/* Rich Text Editor for CV */}
                     <Grid width="100%" mt="1rem">
                         <TipTapEditor
-                            placeholder="Enter CV details"
+                            placeholder="Add description"
                             name="cvDetail"
                             value={formData.cvDetail}
                             onChange={(value) => setFormData((prev) => ({ ...prev, cvDetail: value }))}
@@ -352,7 +503,7 @@ function EditTeam() {
                         />
                     </Grid>
                     <div className='flex justify-end mt-2'>
-                    <Button type="submit" size="small" variant="contained">Update </Button>
+                        <Button type="submit" size="small" variant="contained">Update Member</Button>
                     </div>
                 </form>
             </Stack>

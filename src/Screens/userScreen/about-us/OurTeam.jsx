@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Grid, Button } from '@mui/material'
 import ReusablePagination from '../ReusablePagination'
 import { Link } from 'react-router-dom'
@@ -16,14 +16,14 @@ const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 function OurTeam() {
     const [allTeamMember, setAllTeamMeber] = useState([])
     const [activeTab, setActiveTab] = useState("Committe member");
-    
+
     // Separate pagination state for each category
     const [paginationState, setPaginationState] = useState({
         "Committe member": { currentPage: 1 },
         "Teaching staff": { currentPage: 1 },
         "Non-teaching staff": { currentPage: 1 }
     });
-    
+
     const defaultImage = 'https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg='
 
     useEffect(() => {
@@ -97,18 +97,19 @@ function OurTeam() {
                 />
                 <div className="relative border border-gray-100 bg-white p-1">
                     <h3 className="mt-1 text-sm font-medium text-gray-900 line-clamp-1">
-                        {`${item.firstName} ${item.middleName} ${item.lastName}`}
+                        {`${item.salutation ? item.salutation : ''} ${item.firstName} ${item.middleName} ${item.lastName}`}
                     </h3>
                     <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
                         {item.subCategory}
+                        {item.department ? `, ${item.department}` : ''}
                     </h3>
-                    
+
                     {!showLinkWrapper && (
                         <Link to={`/member-details/${item.id}`} className="group relative block overflow-hidden">
-                            <Button 
-                                sx={{ textTransform: 'none', mt: '10px' }} 
-                                size="small" 
-                                variant="outlined" 
+                            <Button
+                                sx={{ textTransform: 'none', mt: '10px' }}
+                                size="small"
+                                variant="outlined"
                                 className="flex items-center gap-3 bg-red-900"
                             >
                                 Learn More
@@ -129,12 +130,12 @@ function OurTeam() {
                             </Button>
                         </Link>
                     )}
-                    
+
                     {showLinkWrapper && (
-                        <Button 
-                            sx={{ textTransform: 'none', mt: '10px' }} 
-                            size="small" 
-                            variant="outlined" 
+                        <Button
+                            sx={{ textTransform: 'none', mt: '10px' }}
+                            size="small"
+                            variant="outlined"
                             className="flex items-center gap-3 bg-red-900"
                         >
                             Learn More
@@ -159,13 +160,13 @@ function OurTeam() {
         );
 
         return (
-            <Grid 
-                item 
-                xs={11.8} 
-                sm={5.8} 
-                md={2.9} 
-                lg={2.9} 
-                key={index} 
+            <Grid
+                item
+                xs={11.8}
+                sm={5.8}
+                md={2.9}
+                lg={2.9}
+                key={index}
                 sx={{ display: 'flex', flexDirection: 'column' }}
             >
                 {showLinkWrapper ? (
@@ -225,11 +226,11 @@ function OurTeam() {
                         {/* Committee Members Tab */}
                         <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Committe member">
                             <Grid minHeight='250px' gap='10px' container mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Committe member").map((item, index) => 
+                                {getPaginatedData("Committe member").map((item, index) =>
                                     renderTeamMemberCard(item, index, false)
                                 )}
                             </Grid>
-                            
+
                             {getTotalPages("Committe member") > 1 && (
                                 <div className="flex justify-center mt-6">
                                     <ReusablePagination
@@ -244,11 +245,11 @@ function OurTeam() {
                         {/* Teaching Staff Tab */}
                         <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Teaching staff">
                             <Grid container minHeight='250px' spacing={2} mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Teaching staff").map((item, index) => 
+                                {getPaginatedData("Teaching staff").map((item, index) =>
                                     renderTeamMemberCard(item, index, true)
                                 )}
                             </Grid>
-                            
+
                             {getTotalPages("Teaching staff") > 1 && (
                                 <div className="flex justify-center mt-6">
                                     <ReusablePagination
@@ -263,11 +264,11 @@ function OurTeam() {
                         {/* Non-Teaching Staff Tab */}
                         <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Non-teaching staff">
                             <Grid container minHeight='250px' spacing={2} mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Non-teaching staff").map((item, index) => 
+                                {getPaginatedData("Non-teaching staff").map((item, index) =>
                                     renderTeamMemberCard(item, index, true)
                                 )}
                             </Grid>
-                            
+
                             {getTotalPages("Non-teaching staff") > 1 && (
                                 <div className="flex justify-center mt-6">
                                     <ReusablePagination
