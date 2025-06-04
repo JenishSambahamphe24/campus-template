@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Grid, Typography, Button } from '@mui/material'
+import  { useState, useEffect } from 'react'
+import { Grid, Button } from '@mui/material'
 import { Link, useParams } from 'react-router-dom';
 import { extractDate } from '../../../Components/utilityFunctions';
 import { getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
-import { useTheme } from '@mui/material';
 
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
 function PublicationPage() {
@@ -17,37 +16,27 @@ function PublicationPage() {
         const fetchData = async () => {
             const data = await getPublicationById(id)
             setPublicationDetail(data)
-            // Reset image error state when new data is loaded
             setImgError(false);
         };
         fetchData()
     }, [id])
 
-    console.log(publicationDetail)
-
     const handleImageError = () => {
         setImgError(true);
     };
-
-    // Improved image source logic
     const getImageSource = () => {
-        // If there's an image error, always use default
         if (imgError) {
             return defaultImage;
         }
-        
-        // If thumbnailImage exists and is not null/empty, use it
-        if (publicationDetail.thumbnailImage && publicationDetail.thumbnailImage.trim() !== '') {
+        if (publicationDetail.thumbnailImage && publicationDetail.thumbnailImage.trim() !== null) {
             return `${IMAGE_URL}/thumb/${publicationDetail.thumbnailImage}`;
         }
-        
-        // Otherwise, use default image
         return defaultImage;
     };
 
     const imageSource = getImageSource();
     const isDefaultImage = imageSource === defaultImage;
-
+    console.log(imageSource)
     return (
         <Grid container className='px-10 sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
             <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>

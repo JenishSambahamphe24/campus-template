@@ -202,7 +202,7 @@ function EditTeam() {
     };
 
     return (
-        <Grid container mx='auto' md={10} className='px-20 pb-10' >
+        <Grid container mx='auto' md={12} className='px-20 pb-10' >
             <Typography mb='20px' variant='h5' textAlign='center' width='100%'>
                 Edit Member
             </Typography>

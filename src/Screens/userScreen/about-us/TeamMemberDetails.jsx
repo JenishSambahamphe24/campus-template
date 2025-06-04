@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { getTeamById } from '../../cmsScreen/cms-components/cms-team/teamApi'
 import { extractDate } from '../../../Components/utilityFunctions'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function TeamMemberDetails() {
     const { id } = useParams();
@@ -63,7 +63,7 @@ function TeamMemberDetails() {
                         <h3 className="text-sm font-medium text-gray-900"> {teamDetail.department || " "}</h3>
                         <h3 className="text-sm italic text-gray-900"> <span className="text-sm font-medium text-gray-900">Contact:  </span>{teamDetail.email || "email not found"}, {teamDetail.phoneNo}</h3>
                         <h3 className="text-sm italic text-gray-900">{ }</h3>
-                          <h3 className="text-sm italic text-gray-900"><span className="text-sm font-medium text-gray-900">Appointd Date: </span> {extractDate(teamDetail.appointedDate) || "Phone No. not found"}</h3>
+                          <h3 className="text-sm italic text-gray-900"><span className="text-sm font-medium text-gray-900">Appointd Date: </span> {extractDate(teamDetail.appointedDate) || " "}</h3>
                     </div>
                     <Stack mt='5px' spacing='10px' direction='column'>
                         <h3 fontWeight='bold' >social media</h3>

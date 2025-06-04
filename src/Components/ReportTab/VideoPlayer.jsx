@@ -8,7 +8,7 @@ const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 import { videoIdParser } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 
 

@@ -11,7 +11,7 @@ import { FaFacebook } from "react-icons/fa6";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const map_iframe = import.meta.env.VITE_MAP_IFRAME
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 const email = import.meta.env.VITE_EMAIL
 const phone = import.meta.env.VITE_PHONE
 

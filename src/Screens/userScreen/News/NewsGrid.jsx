@@ -4,7 +4,7 @@ import { getAllpublication } from '../../cmsScreen/cms-components/cms-publicatio
 import { cleanDescription, formatDateShort } from '../../../Components/utilityFunctions';
 import { Grid } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-const defaultImage = import.meta.env.VITE_LOGO_URL;
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG;
 
 function NewsGrid() {
     const [allNewsEvents, setAllNews] = useState([]);

@@ -3,7 +3,7 @@ import { getAllaboutUs } from '../../Screens/cmsScreen/cms-components/cms-aboutU
 import { Grid } from '@mui/material';
 import { renderSafeHTML } from '../utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function Introduction() {
     const [data, setData] = useState({});
@@ -28,7 +28,7 @@ function Introduction() {
     };
     const imageSource = imgError ?
         defaultImage :
-        (data.aboutUsImage ? `${IMAGE_URL}/aboutus/${data.aboutUsImage}` : defaultImage);
+        (data.aboutUsImage ? `${IMAGE_URL}/aboutUs/${data.aboutUsImage}` : defaultImage);
     return (
         <>
             <Grid container className='px-10 sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
@@ -66,7 +66,7 @@ function Introduction() {
                     <div className="full group relative block overflow-hidden">
                         <img
                             src={imageSource}
-                            alt="Team Member"
+                            alt="Campus Logo"
                             className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52"
                             onError={handleImageError}
                         />

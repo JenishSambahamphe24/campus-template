@@ -13,7 +13,7 @@ import YouTube from 'react-youtube';
 import { getAllGallery } from '../../cmsScreen/cms-components/cms-gallery/galleryApii';
 import { videoIdParser } from '../../../Components/utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 
 function GalleryPage() {
