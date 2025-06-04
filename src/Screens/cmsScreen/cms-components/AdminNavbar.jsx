@@ -6,13 +6,12 @@ import { useAuth } from '../../../context/AuthContextProvider';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
 
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL = import.meta.env.VITE_LOGO_URL || 'https://kanchancampus.edu.np/assets/Logo.png'
+const logoURL = import.meta.env.VITE_DEFAULT_IMG
 const textColor = import.meta.env.VITE_NAV_TEXT
 const bgColor = import.meta.env.VITE_NAV_BG
 

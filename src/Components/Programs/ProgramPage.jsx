@@ -98,9 +98,7 @@ function ProgramPage() {
                                     {extractDate(programDetail.runningFrom)}
                                 </span>
                             </h1>
-                          
                         </Stack>
-
                     </div>
                 </div>
             </Grid>

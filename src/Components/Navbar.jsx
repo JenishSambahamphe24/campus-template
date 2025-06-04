@@ -5,11 +5,12 @@ import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
+
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL =  import.meta.env.VITE_LOGO_URL
+const logoURL =  import.meta.env.VITE_DEFAULT_IMG
 const textColor = import.meta.env.VITE_NAV_TEXT
 const bgColor = import.meta.env.VITE_NAV_BG
 
@@ -30,6 +31,7 @@ function Navbar() {
     const aboutPaths = ['/introduction', '/team', '/faq'];
 
     const contentPaths = ['/publication', '/notices'];
+
 
     return (
         <nav className="relative bg-white shadow ">

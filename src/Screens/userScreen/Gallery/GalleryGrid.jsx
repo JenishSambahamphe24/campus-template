@@ -91,6 +91,8 @@ function GalleryGrid() {
     }
   };
 
+  console.log(imagesArray)
+
   return (
     <section className="relative px-4 sm:px-6 md:px-20 py-5">
       <div className="mx-auto max-w-8xl">
