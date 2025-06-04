@@ -98,19 +98,7 @@ function ProgramPage() {
                                     {extractDate(programDetail.runningFrom)}
                                 </span>
                             </h1>
-                            <div className='flex justify-center'>
-                                {
-                                    programDetail.hasProgramBrochure && (
-                                        <Link
-                                            target='_blank'
-                                            className='rounded-md text-white text-sm  border-[#F36710] bg-[#f36710]  mx-auto px-3 py-1'
-                                            to={`${FILE_URL}/program/${programDetail.programBrochureFile}`}
-                                            download
-                                        >
-                                            Download Brochure
-                                        </Link>
-                                    )}
-                            </div>
+                          
                         </Stack>
 
                     </div>
