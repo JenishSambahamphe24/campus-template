@@ -246,7 +246,7 @@ function Slider({ onLoad }) {
                   crossOrigin="anonymous"
                   onError={(e) => handleImageError(e, defaultImageForPerson)}
                 />
-                <p className="text-sm text-center  bg-stone-200 tracking-tighter mt-2">
+                <p className="text-sm text-center  text-white tracking-tighter mt-2">
                   {`${chairmanInfo?.firstName || ""} ${chairmanInfo?.middleName || ""} ${chairmanInfo?.lastName || ""}`.trim() || "Chairman"}
                 </p>
                 <h1 className="text-sm text-white font-semibold text-center">Chairman</h1>

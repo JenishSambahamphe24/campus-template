@@ -10,8 +10,6 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
 const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
-
-
 function VideoPlayer() {
     const [images, setImages] = useState([])
     const [videos, setVideos] = useState([])
@@ -27,7 +25,7 @@ function VideoPlayer() {
         };
         fetchData()
     }, [])
-
+//  console.log(images)
     return (
         <Grid container direction='row' rowGap='10px' columnGap='15px'>
             <Grid container gap='10px'
