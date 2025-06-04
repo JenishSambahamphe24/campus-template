@@ -9,7 +9,6 @@ const FILE_URL = import.meta.env.VITE_FILE_URL
 
 function ProgramPage() {
     const { id } = useParams();
-
     const [programDetail, setProgramDetail] = useState({})
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +21,6 @@ function ProgramPage() {
         };
         fetchData();
     }, [id]);
-
     return (
         <Grid container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>
             <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4} md={8.3} lg={8.8} order={{ xs: 2, sm: 2, md: 2, lg: 1 }}>
@@ -100,19 +98,7 @@ function ProgramPage() {
                                     {extractDate(programDetail.runningFrom)}
                                 </span>
                             </h1>
-                            <div className='flex justify-center'>
-                                {
-                                    programDetail.hasProgramBrochure && (
-                                        <Link
-                                            target='_blank'
-                                            className='rounded-md text-white text-sm  border-[#F36710] bg-[#f36710]  mx-auto px-3 py-1'
-                                            to={`${FILE_URL}/program/${programDetail.programBrochureFile}`}
-                                            download
-                                        >
-                                            Download Brochure
-                                        </Link>
-                                    )}
-                            </div>
+                          
                         </Stack>
 
                     </div>

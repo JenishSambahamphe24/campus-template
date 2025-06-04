@@ -7,7 +7,7 @@ import ReusablePagination from '../ReusablePagination'
 import { cleanDescription, downloadFile, formatDate } from '../../../Components/utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function Curriculum() {
     const [allCurriculum, setAllCurriculum] = useState([])

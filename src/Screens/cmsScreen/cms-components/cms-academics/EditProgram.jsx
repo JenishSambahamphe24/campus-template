@@ -295,7 +295,7 @@ function EditProgram() {
                         </FormControl>
                     </Grid>
 
-                    <Grid item sm={12} md={4}>
+                    {/* <Grid item sm={12} md={4}>
                         <FormControl size='small' fullWidth>
                             <InputLabel size='small'>Do you want to upload Program Brochure?</InputLabel>
                             <Select
@@ -341,7 +341,7 @@ function EditProgram() {
                                 </div>
                             )}
                         </Grid>
-                    )}
+                    )} */}
 
                     <Grid item sm={12} md={12}>
                         <TipTapEditor

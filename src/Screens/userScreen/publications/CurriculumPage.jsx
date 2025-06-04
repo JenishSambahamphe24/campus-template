@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
 import { extractDate } from '../../../Components/utilityFunctions'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function CurriculumPage() {
     const { id } = useParams();

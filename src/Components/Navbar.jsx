@@ -9,7 +9,7 @@ const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL = import.meta.env.VITE_LOGO_URL
+const logoURL =  import.meta.env.VITE_LOGO_URL
 const textColor = import.meta.env.VITE_NAV_TEXT
 const bgColor = import.meta.env.VITE_NAV_BG
 

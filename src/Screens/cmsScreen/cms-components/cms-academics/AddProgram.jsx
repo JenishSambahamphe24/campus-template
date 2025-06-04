@@ -78,7 +78,6 @@ function AddProgram() {
         }));
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formDataToSend = new FormData();
@@ -203,33 +202,6 @@ function AddProgram() {
                                 <FormControlLabel value={false} control={<Radio size='small' />} label="Inactive" />
                             </RadioGroup>
                         </FormControl>
-                    </Grid>
-
-                    <Grid item sm={12} md={6}>
-                        <FormControl size='small' fullWidth>
-                            <InputLabel size='small'> Do you want to upload Program Broucher?</InputLabel>
-                            <Select
-                                size='small'
-                                label='Do you want to upload Program Broucher?'
-                                name='hasProgramBrochure'
-                                onChange={handleChange}
-                                required
-                            >
-                                <MenuItem value={true}>Yes</MenuItem>
-                                <MenuItem value={false}>No</MenuItem>
-
-                            </Select>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item sm={12} md={6}>
-                        <FileUpload
-                            required={formData.hasProgramBrochure}
-                            disabled={!formData.hasProgramBrochure}
-                            name='programBrochureFile'
-                            label='upload a program Broucher'
-                            onFileSelect={handleFileChange}
-                        />
                     </Grid>
 
                     <Grid item sm={12} md={12}>
