@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { TextField, Button, Grid, Typography, Paper, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import  { useEffect, useState } from 'react';
+import { TextField, Button, Grid, Typography,  FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { addPublicationCategory, deletePublicationCategoryById, getPublicationCategory } from './publicationApi';
 import { toast } from 'react-toastify';
 import { DataGrid } from '@mui/x-data-grid';
@@ -36,13 +36,10 @@ function PublicationCategory() {
         fetchData()
     }, [])
 
- 
     const handleEditDialogOpen = (id) => {
         setCategoryId(id)
         setEditDialogOpen(true);
     };
-
-
     const handleEditDialogClose = async () => {
         setEditDialogOpen(false);
         try {
@@ -158,6 +155,7 @@ function PublicationCategory() {
                                     <MenuItem value='Notices'>Notices</MenuItem>
                                     <MenuItem value='Downloads'>Downloads</MenuItem>
                                     <MenuItem value='Curriculum'>Curriculum</MenuItem>
+                                    <MenuItem value='Thesis'>Thesis</MenuItem>
                                     <MenuItem value='Other'>Others</MenuItem>
                                 </Select>
                             </FormControl>

@@ -1,35 +1,58 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
+import { getPublicationCategory } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL =  import.meta.env.VITE_DEFAULT_IMG
+const logoURL = import.meta.env.VITE_DEFAULT_IMG
 const textColor = import.meta.env.VITE_NAV_TEXT
 const bgColor = import.meta.env.VITE_NAV_BG
 
+
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [dropdownCategories, setDropdownCategories] = useState([])
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
     const location = useLocation();
     const currentPath = location.pathname;
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const response = await getPublicationCategory();
+            const excludedCategories = ['Report', 'News and Events', 'Downloads', 'Curriculum'];
+            const filteredResponse = response.filter(
+                (item) => !excludedCategories.includes(item.categoryName)
+            );
+            const uniqueCategories = [];
+            const seenCategories = new Set();
+            filteredResponse.forEach((item) => {
+                if (!seenCategories.has(item.categoryName)) {
+                    seenCategories.add(item.categoryName);
+                    const categoryWithRoute = {
+                        category: item.categoryName,
+                        route: item.categoryName === 'Publication' ? '/publication' : `/other/${item.categoryName}`
+                    };
+                    uniqueCategories.push(categoryWithRoute);
+                }
+            });
+            setDropdownCategories(uniqueCategories);
+        };
+        fetchCategories();
+    }, []);
+
     const activeStyle = "text-[#f58d4c] font-medium";
     const inactiveStyle = "text-white  hover:text-[#f36710] transition-colors duration-300 transform";
-
     const isActive = (path) => currentPath === path;
-
     const isAnyActive = (paths) => paths.some(path => currentPath.startsWith(path));
-
     const aboutPaths = ['/introduction', '/team', '/faq'];
-
     const contentPaths = ['/publication', '/notices'];
 
 
@@ -79,7 +102,7 @@ function Navbar() {
                                 <MenuItems
                                     style={{ backgroundColor: '#1169bf' }}
                                     transition
-                                    className="absolute left-45% z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                    className="absolute left-45% z-10 mt-2 w-36 origin-top-right rounded-md bg-white shadow-lg transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                 >
                                     <div className="py-1">
                                         <MenuItem>
@@ -119,24 +142,24 @@ function Navbar() {
                                         className={`-mr-1 h-5 w-5 ${isAnyActive(contentPaths) ? 'text-[#f36710]' : 'text-white'}`}
                                     />
                                 </MenuButton>
-                                <MenuItems style={{ backgroundColor: '#1169bf' }} className="absolute left-45% z-10 mt-2 w-48">
+                                <MenuItems style={{ backgroundColor: '#1169bf' }} className="absolute left-45% z-10 mt-2 w-34">
                                     <div className="py-1">
-                                        <MenuItem>
-                                            <Link
-                                                to="/publication"
-                                                className={`block px-4 py-1  ${isActive('/publication') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
-                                            >
-                                                Publication
-                                            </Link>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <Link
-                                                to="/notices"
-                                                className={`block px-4 py-1  ${isActive('/notices') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
-                                            >
-                                                Notices
-                                            </Link>
-                                        </MenuItem>
+                                        {
+                                            dropdownCategories.map((item, index) => (
+                                                (
+                                                    <>
+                                                        <MenuItem key={index}>
+                                                            <Link
+                                                                to={item.route}
+                                                                className={`block px-4 py-1 text-white hover:bg-blue-900'`}
+                                                            >
+                                                                {item.category}
+                                                            </Link>
+                                                        </MenuItem>
+                                                    </>
+                                                )
+                                            ))
+                                        }
                                     </div>
                                 </MenuItems>
                             </Menu>
@@ -289,19 +312,21 @@ function Navbar() {
                                     </div>
                                 </summary>
                                 <div className='flex flex-col space-y-1'>
-                                    <Link
-                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/publication') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
-                                        to="/publication"
-                                    >
-                                        Publication
-                                    </Link>
-                                    <Link
-                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/notices') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
-                                        to="/notices"
-                                    >
-                                        Notices
-                                    </Link>
+                                    {
+                                        dropdownCategories.map((item, index) => (
+                                            (
+                                                <>
+                                                    <Link
+                                                        key={index}
+                                                        to={item.route}
+                                                        className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5  text-white`}
 
+                                                    >
+                                                        {item.category}
+                                                    </Link>
+                                                </>
+                                            )))
+                                    }
                                 </div>
                             </details>
                         </div>

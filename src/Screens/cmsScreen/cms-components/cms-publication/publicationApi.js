@@ -128,6 +128,8 @@ export const downloadPublicationFile = async (filename) => {
     }
 };
 
+// Updated publicationApi.js - downloadPublicationFile function
+
 export const deletePublicationCategoryById = async (filename) => {
     try {
 
