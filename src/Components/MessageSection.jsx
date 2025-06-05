@@ -140,7 +140,6 @@ function MessageSection() {
         defaultImage :
         (introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage);
 
-        console.log(imageSource)
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">

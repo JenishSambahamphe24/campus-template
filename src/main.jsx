@@ -93,7 +93,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/team' element={<OurTeam />} />
         <Route index={true} path='/report' element={<Report />} />
         <Route index={true} path='/downloads' element={<Downloads />} />
-        <Route index={true} path='/notices' element={<Notices />} />
+        <Route index={true} path='/other/:category' element={<Notices />} />
         <Route index={true} path='/report-tab' element={<ReportTabs />} />
         <Route index={true} path='/publication' element={<Publication />} />
         <Route index={true} path='/publication/:id' element={<PublicationPage />} />

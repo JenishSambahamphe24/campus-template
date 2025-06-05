@@ -87,17 +87,12 @@ function Slider({ onLoad }) {
         description: item.galleryDescription
       }));
 
-      // Preload all slider images
       const imageUrls = latestThreeSlider
         .map(item => getImageUrl(item.image))
         .filter(url => url !== null);
 
-      // Add default image to preload list
       imageUrls.push(defaultImage);
 
-      console.log('Starting image preload for:', imageUrls);
-      
-      // Wait for all images to load
       await preloadImages(imageUrls);
       console.log('All images preloaded successfully');
       
