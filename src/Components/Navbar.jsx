@@ -143,22 +143,35 @@ function Navbar() {
                                     />
                                 </MenuButton>
                                 <MenuItems style={{ backgroundColor: '#1169bf' }} className="absolute left-45% z-10 mt-2 w-34">
-                                    <div className="py-1">
+                                <div className="py-1">
                                         {
-                                            dropdownCategories.map((item, index) => (
+                                            dropdownCategories.length > 0 ?
                                                 (
+                                                    dropdownCategories.map((item, index) => (
+                                                        (
+                                                            <MenuItem key={index}>
+                                                                <Link
+                                                                    to={item.route}
+                                                                    className={`block px-4 py-1 text-white hover:bg-blue-900'`}
+                                                                >
+                                                                    {item.category}
+                                                                </Link>
+                                                            </MenuItem>
+                                                        )
+                                                    ))
+                                                ) : (
                                                     <>
-                                                        <MenuItem key={index}>
+                                                        <MenuItem className='h-8'>
                                                             <Link
-                                                                to={item.route}
-                                                                className={`block px-4 py-1 text-white hover:bg-blue-900'`}
+                                                                to="/introduction"
+                                                                className={`block px-4 py-1  ${isActive('/introduction') ? 'text-[#f36710] ' : 'text-white hover:bg-blue-900'}`}
                                                             >
-                                                                {item.category}
+
                                                             </Link>
                                                         </MenuItem>
+
                                                     </>
                                                 )
-                                            ))
                                         }
                                     </div>
                                 </MenuItems>
