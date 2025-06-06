@@ -7,10 +7,11 @@ import ImageUpload from '../../../../Components/ImageUpload';
 import FileUpload from '../../../../Components/FileUpload';
 import DateInputField from '../../../../Components/DateInputField';
 import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor';
-
+import {Backdrop, CircularProgress} from '@mui/material';
 function AddPublication() {
     const navigate = useNavigate();
     const [category, setCategory] = useState([])
+    const [loading, setLoading] = useState(false);
     const [subcategories, setSubcategories] = useState([]);
     const [formData, setFormData] = useState({
         categoryId: '',
@@ -64,7 +65,6 @@ function AddPublication() {
             }, []);
             setCategory(bindedCategory);
         };
-
         fetchCategory();
     }, []);
 
@@ -89,6 +89,7 @@ function AddPublication() {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         const formDataToSend = new FormData();
 
@@ -124,6 +125,8 @@ function AddPublication() {
         } catch (error) {
             console.error('Error adding publication:', error);
             toast.error('Error adding publication');
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -136,6 +139,12 @@ function AddPublication() {
 
     return (
         <div className='pb-10'>
+              <Backdrop
+                sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <form onSubmit={handleSubmit}>
                 <h1 className='text-center mb-6 text-2xl'>
                     Add new content
@@ -253,6 +262,7 @@ function AddPublication() {
                         <DateInputField
                             label="Published Date (B.S)"
                             name="publishedAt"
+                            required
                             value={formData.publishedAt}
                             onChange={(newValue) => handleDateChange("publishedAt", newValue)}
                         />

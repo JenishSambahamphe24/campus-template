@@ -60,36 +60,53 @@ function PublicationList() {
 
     const columns = [
 
-        { field: 'sNo', headerName: 'S.No.', flex: 1 },
-        { field: 'subCategoryName', headerName: 'Sub-category', flex: 2 },
+        { field: 'sNo', headerName: 'S.No.', flex: .8 },
+        {
+            field: 'subCategoryName', headerName: 'Sub-category', flex: 2, renderCell: (params) => (
+                <div className='flex h-full items-center'>
+                    <h1 className='text-sm'>{params.value}</h1>
+                </div>
+            )
+        },
         {
             field: 'title',
             headerName: 'Publication Title',
             flex: 6,
             renderCell: (params) => (
-                <Box
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        display: 'block',
-                    }}
-                >
-                    <Tooltip arrow title={params.value}>
-                        <Typography fontSize='14px' noWrap>{params.value}</Typography>
-                    </Tooltip>
-                </Box>
-            ),
+                <div style={{
+                    whiteSpace: 'normal',
+                    lineHeight: 'normal',
+                    wordBreak: 'break-word',
+                    width: '100%',
+                    paddingTop: '8px',
+                    paddingBottom: '8px'
+                }}>
+                    {params.value}
+                </div>
+            )
         },
-        { field: 'displayStatus', headerName: 'Status', flex: 1.2 },
-        { field: 'publishedAt', headerName: 'Pub date', flex: 1.5 },
+        {
+            field: 'displayStatus', headerName: 'Status', flex: 1.2, renderCell: (params) => (
+                <div className='flex h-full items-center'>
+                    <h1 className='text-sm'>{params.value}</h1>
+                </div>
+            )
+        },
+        {
+            field: 'publishedAt', headerName: 'Pub date', flex: 1.5, renderCell: (params) => (
+                <div className='flex h-full items-center'>
+                    <h1 className='text-sm'>{params.value}</h1>
+                </div>
+            )
+        },
         { field: 'expiredAt', headerName: 'Exp date', flex: 1.5 },
         {
             field: 'action',
             headerName: 'Action',
             flex: 1.5,
             renderCell: (params) => (
-                <Box display='flex' justifyContent='space-around' >
-                    <Typography
+                <div className='flex h-full items-center justify-between'>
+                     <Typography
                         fontSize='14px'
                         color='primary'
                         mt='7px'
@@ -105,14 +122,14 @@ function PublicationList() {
                     >
                         Delete
                     </Typography>
-                </Box>
-            ),
+                </div>
+            )
         },
     ];
 
     const handleDeleteDialogOpen = (id) => {
-     setContentId(id)
-     setDeleteDialogOpen(true)
+        setContentId(id)
+        setDeleteDialogOpen(true)
     }
     const handleClose = () => {
         setDeleteDialogOpen(false)

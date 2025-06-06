@@ -3,7 +3,6 @@ import { Grid } from '@mui/material';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import PaginationForReports from './component/PaginationForReports';
 import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
-
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
 function Downloads() {
@@ -13,7 +12,7 @@ function Downloads() {
 
     const fetchData = async () => {
         const response = await getAllpublication();
-        const noticesData = response.filter(item => item.categoryName === 'Downloads' || item.categoryName === 'Others' );
+        const noticesData = response.filter(item => item.categoryName === 'Downloads' || item.categoryName === 'Others');
 
         const groupedNotices = noticesData.reduce((acc, item) => {
             if (!acc[item.subCategoryName]) {
@@ -50,7 +49,7 @@ function Downloads() {
                         <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                             <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                                 {paginatedItems.length > 0 ? (
-                                    paginatedItems.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt)).map((item, index) => (
+                                    paginatedItems.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)).map((item, index) => (
                                         <li key={index}>
                                             <a
                                                 href={`${FILE_URL}/content/${item.file}`}
