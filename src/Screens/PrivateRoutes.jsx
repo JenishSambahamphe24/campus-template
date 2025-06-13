@@ -6,6 +6,5 @@ export default function PrivateRoutes() {
     if (loading) {
         return <div>Loading...</div>;
     }
-
     return token ? <Outlet /> : <Navigate to='/signIn' />;
 }

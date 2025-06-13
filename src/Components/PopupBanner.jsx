@@ -3,30 +3,46 @@
 import { useState, useEffect } from 'react';
 import { IoIosCloseCircle } from "react-icons/io";
 import { getAllpublication } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
+import NepaliDate from 'nepali-datetime';
+import { extractDate } from './utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-
 
 function PopupBanner() {
     const [isVisible, setIsVisible] = useState(false);
     const [data, setData] = useState([]);
     const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
 
+    const nepaliDate = new NepaliDate()
+    const nepaliDateToday = `${nepaliDate.year}-${nepaliDate.month}-${nepaliDate.day}`
+
+    const isExpired = (expiredAt) => {
+        if (!expiredAt) return true;
+
+        const today = nepaliDateToday;
+        return expiredAt <= today;
+    };
+
     useEffect(() => {
         const fetchAllPopups = async () => {
             try {
                 const response = await getAllpublication();
-                const popups = response.filter(item => item.isPopUp === true).map(item => ({
-                    title: item.title,
-                    image: item.thumbnailImage,
-                    publishedAt: item.publishedAt
-                }));
+                const popups = response
+                    .filter(item => item.isPopUp === true)
+                    .map(item => ({
+                        title: item.title,
+                        image: item.thumbnailImage,
+                        publishedAt: item.publishedAt,
+                        expiredAt: extractDate(item.expiredAt)
+                    }))
+                    .filter(item => !isExpired(item.expiredAt));
+
                 setData(popups);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchAllPopups();
-    }, []);
+    }, [nepaliDateToday]);
 
     useEffect(() => {
         const popupTimer = setTimeout(() => {
@@ -47,9 +63,7 @@ function PopupBanner() {
     if (!isVisible || data.length === 0 || currentPopupIndex >= data.length) {
         return null;
     }
-
     const currentPopup = data[currentPopupIndex];
-
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div
@@ -59,7 +73,7 @@ function PopupBanner() {
 
             <div className="relative w-[620px] h-[540px] bg-white rounded-xl shadow-2xl overflow-hidden z-10 animate-fadeIn">
                 <div
-                    className="absolute inset-0 bg-cover bg-center opacity-80"
+                    className="absolute inset-0 bg-none bg-center bg-cover bg-no-repeat opacity-80"
                     style={{ backgroundImage: `url(${IMAGE_URL}/thumb/${currentPopup.image})` }}
                 />
 
@@ -73,9 +87,6 @@ function PopupBanner() {
                         <IoIosCloseCircle className="text-3xl" />
                     </button>
 
-                    <div className="flex flex-col space-y-4 text-white">
-                        <h2 className="text-xl mt-8">{currentPopup.title}</h2>
-                    </div>
                 </div>
             </div>
         </div>

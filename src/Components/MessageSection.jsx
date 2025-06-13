@@ -143,7 +143,7 @@ function MessageSection() {
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">
-                <Link to='/introduction' className="w-full lg:w-2/6  min-h-[163px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <Link to='/introduction' className="w-full lg:w-2/6  h-[163px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
                     <div className="flex flex-col md:flex-row h-full"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}

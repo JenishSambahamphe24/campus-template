@@ -61,9 +61,9 @@ function PublicationList() {
     const columns = [
         { field: 'sNo', headerName: 'S.No.', flex: .8 },
         {
-            field: 'subCategoryName', 
-            headerName: 'Sub-category', 
-            flex: 2, 
+            field: 'subCategoryName',
+            headerName: 'Sub-category',
+            flex: 2,
             renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
@@ -88,9 +88,9 @@ function PublicationList() {
             )
         },
         {
-            field: 'displayStatus', 
-            headerName: 'Status', 
-            flex: 1.2, 
+            field: 'displayStatus',
+            headerName: 'Status',
+            flex: 1.2,
             renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
@@ -98,18 +98,18 @@ function PublicationList() {
             )
         },
         {
-            field: 'publishedAt', 
-            headerName: 'Pub date', 
-            flex: 1.5, 
+            field: 'publishedAt',
+            headerName: 'Pub date',
+            flex: 1.5,
             renderCell: (params) => (
                 <div className='flex h-full items-center'>
                     <h1 className='text-sm'>{params.value}</h1>
                 </div>
             )
         },
-        { 
-            field: 'expiredAt', 
-            headerName: 'Exp date', 
+        {
+            field: 'expiredAt',
+            headerName: 'Exp date',
             flex: 1.5,
             renderCell: (params) => (
                 <div className='flex h-full items-center'>
@@ -123,7 +123,7 @@ function PublicationList() {
             flex: 1.5,
             renderCell: (params) => (
                 <div className='flex h-full items-center justify-between'>
-                     <Typography
+                    <Typography
                         fontSize='14px'
                         color='primary'
                         mt='7px'
@@ -190,7 +190,7 @@ function PublicationList() {
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>
                         <TabPanel key={activeTab} value={activeTab}>
-                            <div style={{ minWidth: '800px', overflowX: 'auto' }}>
+                            <div style={{ minWidth: '800px', minHeight:'460px', overflowX: 'auto' }}>
                                 <DataGrid
                                     rows={rows}
                                     columns={columns}
@@ -211,7 +211,7 @@ function PublicationList() {
                                         pagination: { paginationModel: { pageSize: 10 } },
                                     }}
                                     sx={{
-                                        minHeight:'465px',
+                                      
                                         '.MuiDataGrid-footerContainer': {
                                             minHeight: '20px'
                                         },

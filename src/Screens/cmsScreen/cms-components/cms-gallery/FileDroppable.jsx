@@ -5,12 +5,12 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { CircularProgress } from '@mui/material';
 
-const FileDroppable = ({ 
-  allowMultiple = true, 
-  onImagesChange, 
-  name, 
-  placeholder, 
-  required = false 
+const FileDroppable = ({
+  allowMultiple = true,
+  onImagesChange,
+  name,
+  placeholder,
+  required = false
 }) => {
   const [uploading, setUploading] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -40,7 +40,7 @@ const FileDroppable = ({
     const newImages = allowMultiple
       ? [...images, ...selectedImages]
       : selectedImages.slice(0, 1);
-    
+
     setImages(newImages);
     if (onImagesChange) onImagesChange(newImages);
     setUploading(false);
@@ -70,9 +70,8 @@ const FileDroppable = ({
           onDragOver={(event) => event.preventDefault()}
           onClick={handleClick}
           onBlur={handleBlur}
-          className={`relative border-2 border-dashed p-4 text-center cursor-pointer mb-3 ${
-            showError ? 'border-red-500' : 'border-gray-300'
-          }`}
+          className={`relative border-2 border-dashed p-4 text-center cursor-pointer mb-3 ${showError ? 'border-red-500' : 'border-gray-300'
+            }`}
         >
           {placeholder}
           {required && (
@@ -100,7 +99,7 @@ const FileDroppable = ({
 
       <div className="flex flex-wrap gap-2">
         {images.map((image, index) => (
-          <div key={index} className="relative w-16 h-16">
+          <div key={index} className="relative w-24 h-16">
             <img
               src={URL.createObjectURL(image)}
               alt={`preview ${index}`}
@@ -109,13 +108,18 @@ const FileDroppable = ({
             <IconButton
               size="small"
               onClick={() => handleRemoveImage(index)}
-              className="absolute -top-2 -right-2 bg-white/80 hover:bg-white"
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              }}
             >
               <CloseIcon fontSize="small" />
             </IconButton>
           </div>
         ))}
-        
+
         {uploading && (
           <div className="flex items-center justify-center p-4">
             <CircularProgress size={24} />

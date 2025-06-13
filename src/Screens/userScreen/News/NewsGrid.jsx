@@ -38,7 +38,7 @@ function NewsGrid() {
         <div className="max-w-screen-xl mx-auto py-8 px-20 relative">
             <div>
                 <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-4">
-                    News and Events 
+                    News and Events  
                 </h2>
             </div>
             {allNewsEvents.length > 0 ? (
@@ -91,7 +91,7 @@ function NewsGrid() {
                                         {`${formatDateShort(item.createdAt || '2024-01-01')} , ${item.subCategoryName}`}
                                     </h5>
                                     <div className="text-gray-900 px-1 inline-block font-semibold text-[14px] my-1 line-clamp-2 hover:text-indigo-600 transition duration-500 ease-in-out">
-                                        {item.title}
+                                        {item.title} 
                                     </div>
                                 </Link>
                             ))}

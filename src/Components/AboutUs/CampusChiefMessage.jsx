@@ -25,7 +25,6 @@ function CampusChiefMessage() {
         };
         fetchData()
     }, [])
-    console.log(data)
     return (
         <Grid container justifyContent='center' my={2}>
             <h1 className='text-2xl text-center mt-4'> Message From Campus Chief</h1>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function AddFaculties() {
     const navigate = useNavigate()
+    
     const [formData, setFormData] = useState({
         categoryName: '',
         subCategoryName: '',

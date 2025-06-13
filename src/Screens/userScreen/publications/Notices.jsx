@@ -5,7 +5,7 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import PaginationForReports from './component/PaginationForReports';
 import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../../../Components/utilityFunctions';
-
+import { Link } from 'react-router-dom';
 function Notices() {
     const { category } = useParams();
     const [notices, setNotices] = useState({});
@@ -52,20 +52,24 @@ function Notices() {
                                 {paginatedItems.length > 0 ? (
                                     paginatedItems.map((item, index) => (
                                         <li key={index}>
-                                            <a
-                                            onClick={() => downloadPublicationFile(item.file)}
-                                                className="flex text-sm"
-                                            >
-                                                {item.title}
-                                                {`
-                                                    (${extractDate(item.publishedAt)})`
-                                                }
-                                                <MdOutlineFileDownload
-                                                    fontSize="17px"
-                                                    style={{ marginTop: '2px', marginLeft: '5px', color: '#1169bf' }}
-                                                />
+                                            <Link to={`/notices/${item.id}`}>
+                                                <span className="flex justify-between text-md  overflow-hidden">
+                                                    <p className='line-clamp-2'>
+                                                        {item.title}
+                                                    </p>
+                                                    {
+                                                        item.isFile === true && (
+                                                            <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
+                                                                <span className='text-xs mt-[1px] text-white'>
+                                                                    download
+                                                                </span>
+                                                                <MdOutlineFileDownload fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
+                                                            </button>
+                                                        )
+                                                    }
+                                                </span>
 
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))
                                 ) : (

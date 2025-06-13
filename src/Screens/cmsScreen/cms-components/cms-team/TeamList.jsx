@@ -1,5 +1,5 @@
-import  { useState, useEffect } from 'react'
-import { Typography,  Box } from '@mui/material';
+import { useState, useEffect } from 'react'
+import { Typography, Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Grid, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -30,7 +30,7 @@ function TeamList() {
         fetchData()
     };
 
-    
+
     const fetchData = async () => {
         try {
             const data = await getAllTeams()
@@ -85,8 +85,6 @@ function TeamList() {
             headerName: 'Contact Number',
             flex: 1.3,
         },
-
-
         {
             field: 'status',
             headerName: 'Status',
@@ -122,7 +120,7 @@ function TeamList() {
                                     >
                                         Delete
                                     </Typography>
-                                   
+
                                 </>
                             )
                         }
