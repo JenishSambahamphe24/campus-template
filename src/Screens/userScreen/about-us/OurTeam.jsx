@@ -103,6 +103,9 @@ function OurTeam() {
                         {item.subCategory}
                         {item.department ? `, ${item.department}` : ''}
                     </h3>
+                    <h3 className="text-sm  font-medium text-gray-900 line-clamp-1">
+                        {item.highestAcademicDeg ? `${item.highestAcademicDeg}` : ''}
+                    </h3>
 
                     {!showLinkWrapper && (
                         <Link to={`/member-details/${item.id}`} className="group relative block overflow-hidden">

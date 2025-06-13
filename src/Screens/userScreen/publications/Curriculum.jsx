@@ -81,12 +81,7 @@ function Curriculum() {
                 }
 
             </Grid>
-            <ReusablePagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                itemsPerPage={itemsPerPage}
-            />
+           
         </Grid>
     )
 }

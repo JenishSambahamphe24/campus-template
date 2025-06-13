@@ -5,16 +5,14 @@ import { Link } from 'react-router-dom';
 import { FaBookReader } from 'react-icons/fa';
 import { SlCalender } from "react-icons/sl";
 import { getAllPrograms } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi';
-const FILE_URL = import.meta.env.VITE_FILE_URL;
 import PaginationForReports from '../../Screens/userScreen/publications/component/PaginationForReports';
 import { downloadPublicationFile, getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
+
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-
-
-const defaultImage = 'https://www.shutterstock.com/image-illustration/news-events-crosswords-part-business-260nw-214848502.jpg'
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function NoticeTabs() {
     const [allNotices, setAllNotices] = useState([])
@@ -22,7 +20,6 @@ function NoticeTabs() {
     const [news, setNews] = useState([])
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-     
 
     const fetchData = async () => {
         const noticeResponse = await getAllpublication()
@@ -51,7 +48,6 @@ function NoticeTabs() {
         fetchData()
     }, [])
 
-
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
@@ -72,29 +68,34 @@ function NoticeTabs() {
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
-                                    <div className='line-clamp-1'>
-                                        <span className="flex justify-between text-md  overflow-hidden">
-                                            <p className='line-clamp-2'>
-                                                {item.title}
+                                    <Link to={`notices/${item.id}`}>
+                                        <div className='line-clamp-1'>
+                                            <span className="flex justify-between text-md  overflow-hidden">
+                                                <p className='line-clamp-2'>
+                                                    {item.title}
+                                                </p>
+                                                {
+                                                    item.isFile === true && (
+                                                        <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
+                                                            <span className='text-xs mt-[1px] text-white'>
+                                                                download
+                                                            </span>
+                                                            <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
+                                                        </button>
+                                                    )
+                                                }
+                                            </span>
+                                            <p className="flex text-xs mt-[-2px] italic">
+                                                <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
+                                                {extractDate(item.publishedAt)}
                                             </p>
-                                            <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
-                                                <span className='text-xs mt-[1px] text-white'>
-                                                    download
-                                                </span>
-                                                <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
-                                            </button>
-                                        </span>
-                                        <p className="flex text-xs mt-[-2px] italic">
-                                            <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
-                                            { extractDate(item.publishedAt)}
-                                        </p>
-                                    </div>
+                                        </div>
+                                    </Link>
                                 </li>
                             ))
                         ) : (
                             <h1 className="text-center text-sm">No any items !!</h1>
                         )}
-
                     </ul>
                     <div className="absolute bottom-2 right-1 mt-3">
                         <PaginationForReports

@@ -30,6 +30,7 @@ function AddTeam() {
         index: 0,
         status: true,
         ppImage: null,
+        highestAcademicDeg:''
     })
 
     const handleChange = (e) => {
@@ -45,7 +46,6 @@ function AddTeam() {
                 [name]: value === 'true'
             }));
         } else if (name === 'category') {
-            // Reset subCategory when category changes
             setFormData(prev => ({
                 ...prev,
                 [name]: value,
@@ -85,22 +85,25 @@ function AddTeam() {
                 ];
             case 'Teaching staff':
                 return [
-                    { value: 'Information Officer', label: 'Information Officer' },
                     { value: 'Campus Chief', label: 'Campus Chief' },
                     { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
                     { value: 'Professor', label: 'Professor' },
-                    { value: 'Assistant professor', label: 'Assistant professor' },
+                    { value: 'Asst. professor', label: 'Asst. professor' },
                     { value: 'Lecturer', label: 'Lecturer' },
+                    { value: 'Asst. Lecturer/Teaching Assistant', label: 'Asst. Lecturer/Teaching Assistant' },
+                    { value: 'Instructor', label: 'Instructor' },
+                    { value: 'Information Officer', label: 'Information Officer' },
+
                 ];
             case 'Non-teaching staff':
                 return [
                     { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative and/or Account Officer' },
                     { value: 'Accountant', label: 'Accountant' },
-                    { value: 'Assistant accountant', label: 'Assistant accountant' },
-                    { value: 'Peon', label: 'Peon' },
-                    { value: 'Librarian', label: 'Librarian' },
-                    { value: 'Administrative or A/c Officer', label: 'Administrative or A/c Officer' },
                     { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Office Assistant', label: 'Office Assistant' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Peon', label: 'Peon' },
                     { value: 'Other', label: 'Other' }
                 ];
             default:
@@ -318,7 +321,17 @@ function AddTeam() {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={4}>
+                                 <TextField
+                                    fullWidth
+                                    size='small'
+                                    label="Highest academic degree acquired"
+                                    name="highestAcademicDeg"
+                                    value={formData.highestAcademicDeg}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                             <Grid item xs={12} md={4}>
                                 <ImageUpload
                                     name='ppImage'
                                     label='Member Image'
@@ -326,7 +339,7 @@ function AddTeam() {
                                     onImageSelect={handleImageSelect}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={4}>
                                 <TextField
                                     fullWidth
                                     size='small'

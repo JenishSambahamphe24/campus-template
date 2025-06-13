@@ -75,6 +75,7 @@ import RegisterUser from './Screens/userScreen/RegisterUser.jsx';
 import "../src/index.css";
 // import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
+import NoticePage from './Screens/userScreen/publications/NoticePage.jsx';
 
 
 const router = createBrowserRouter(
@@ -97,6 +98,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/report-tab' element={<ReportTabs />} />
         <Route index={true} path='/publication' element={<Publication />} />
         <Route index={true} path='/publication/:id' element={<PublicationPage />} />
+        <Route index={true} path='/notices/:id' element={<NoticePage />} />
 
         <Route index={true} path='/curriculum' element={<Curriculum />} />
         <Route index={true} path='/curriculum/:id' element={<CurriculumPage />} />
@@ -138,7 +140,6 @@ const router = createBrowserRouter(
           <Route index={true} path='links' element={<LinkLists />} />
           <Route index={true} path='addLink' element={<AddLink />} />
           <Route index={true} path='editTestimonial/testimonialId' element={<EditTestimonial />} />
-
           <Route index={true} path='addFaculty' element={<AddFaculty />} />
           <Route index={true} path='faculties' element={<FacultyList />} />
           <Route index={true} path='programs' element={<ProgramList />} />

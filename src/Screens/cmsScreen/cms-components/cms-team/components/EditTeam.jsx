@@ -50,6 +50,7 @@ function EditTeam() {
         index: null,
         ppImage: null,
         status: false,
+        highestAcademicDeg: ''
     });
 
     const [fetchedImage, setFetchedImage] = useState(null);
@@ -136,22 +137,24 @@ function EditTeam() {
                 ];
             case 'Teaching staff':
                 return [
-                    { value: 'Information Officer', label: 'Information Officer' },
                     { value: 'Campus Chief', label: 'Campus Chief' },
                     { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
                     { value: 'Professor', label: 'Professor' },
-                    { value: 'Assistant professor', label: 'Assistant professor' },
+                    { value: 'Asst. professor', label: 'Asst. professor' },
                     { value: 'Lecturer', label: 'Lecturer' },
+                    { value: 'Asst. Lecturer/Teaching Assistant', label: 'Asst. Lecturer/Teaching Assistant' },
+                    { value: 'Instructor', label: 'Instructor' },
+                    { value: 'Information Officer', label: 'Information Officer' },
                 ];
             case 'Non-teaching staff':
                 return [
                     { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative and/or Account Officer' },
                     { value: 'Accountant', label: 'Accountant' },
-                    { value: 'Assistant accountant', label: 'Assistant accountant' },
-                    { value: 'Peon', label: 'Peon' },
-                    { value: 'Librarian', label: 'Librarian' },
-                    { value: 'Administrative or A/c Officer', label: 'Administrative or A/c Officer' },
                     { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Office Assistant', label: 'Office Assistant' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Peon', label: 'Peon' },
                     { value: 'Other', label: 'Other' }
                 ];
             default:
@@ -185,6 +188,7 @@ function EditTeam() {
         updatedData.append('category', formData.category);
         updatedData.append('subCategory', formData.subCategory);
         updatedData.append('index', formData.index);
+        updatedData.append('highestAcademicDeg', formData.highestAcademicDeg);
 
         updatedData.append('createdAt', extractDate(formData.createdAt));
         updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
@@ -438,7 +442,18 @@ function EditTeam() {
 
                     {/* Fourth Row: Facebook URL */}
                     <Grid mt='2px' container width="100%" spacing={2}>
-                        <Grid item xs={6}>
+                         <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Highest academic degree acquired"
+                                name="highestAcademicDeg"
+                                value={formData.highestAcademicDeg}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 size="small"
