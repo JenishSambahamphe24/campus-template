@@ -68,29 +68,29 @@ function NoticeTabs() {
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
-                                    <Link to={`notices/${item.id}`}>
-                                        <div className='line-clamp-1'>
-                                            <span className="flex justify-between text-md  overflow-hidden">
+                                    <div className='line-clamp-1'>
+                                        <span className="flex justify-between text-md  overflow-hidden">
+                                            <Link to={`notices/${item.id}`}>
                                                 <p className='line-clamp-2'>
                                                     {item.title}
                                                 </p>
-                                                {
-                                                    item.isFile === true && (
-                                                        <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
-                                                            <span className='text-xs mt-[1px] text-white'>
-                                                                download
-                                                            </span>
-                                                            <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
-                                                        </button>
-                                                    )
-                                                }
-                                            </span>
-                                            <p className="flex text-xs mt-[-2px] italic">
-                                                <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
-                                                {extractDate(item.publishedAt)}
-                                            </p>
-                                        </div>
-                                    </Link>
+                                            </Link>
+                                            {
+                                                item.isFile === true && (
+                                                    <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
+                                                        <span className='text-xs mt-[1px] text-white'>
+                                                            download
+                                                        </span>
+                                                        <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
+                                                    </button>
+                                                )
+                                            }
+                                        </span>
+                                        <p className="flex text-xs mt-[-2px] italic">
+                                            <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />
+                                            {extractDate(item.publishedAt)}
+                                        </p>
+                                    </div>
                                 </li>
                             ))
                         ) : (
