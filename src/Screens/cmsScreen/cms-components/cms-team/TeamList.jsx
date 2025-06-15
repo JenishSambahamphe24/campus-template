@@ -46,7 +46,7 @@ function TeamList() {
     };
 
     useEffect(() => {
-        fetchData(allTeams)
+        fetchData()
     }, [])
 
     useEffect(() => {
