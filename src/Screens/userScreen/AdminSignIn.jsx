@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const BASE_URL = import.meta.env.VITE_API_URL;
 import { useAuth } from '../../context/AuthContextProvider';
 
-
 function AdminSignIn() {
     const { login } = useAuth()
     const navigate = useNavigate()
@@ -25,7 +24,6 @@ function AdminSignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Sending POST request to the backend
             const response = await axios.post(`${BASE_URL}/admin/signin`, {
                 email: formData.email,
                 password: formData.password,
@@ -51,7 +49,6 @@ function AdminSignIn() {
             <div className="w-full mx-auto max-w-xl flex flex-col justify-center py-20 relative p-8">
                 <h1 className='text-lg text-center mb-4'>  Admin Login</h1>
                 <div >
-                    {/* Starts component */}
                     <form onSubmit={handleSubmit} className="w-full divide-neutral-200 rounded-3xl bg-white shadow-2xl border p-8 lg:p-8" >
                         <div className="py-1 space-y-2">
                             <label htmlFor="login_email" className="block text-md text-gray-700">Email</label>
