@@ -29,6 +29,7 @@ function Introduction() {
     const imageSource = imgError ?
         defaultImage :
         (data.aboutUsImage ? `${IMAGE_URL}/aboutUs/${data.aboutUsImage}` : defaultImage);
+        console.log(data.aboutUsImage)
     return (
         <>
             <Grid container className='px-10 sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center' gap='10px'>

@@ -52,9 +52,7 @@ function EditTeam() {
         status: false,
         highestAcademicDeg: ''
     });
-
     const [fetchedImage, setFetchedImage] = useState(null);
-
     useEffect(() => {
         const fetchData = async () => {
             if (teamId) {
@@ -77,18 +75,15 @@ function EditTeam() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         if (name === 'phoneNo' && !/^\d*$/.test(value)) {
             return;
         }
-
         if (name === 'status') {
             setFormData((prev) => ({
                 ...prev,
                 [name]: value === 'true',
             }));
         } else if (name === 'category') {
-            // Reset subCategory when category changes
             setFormData((prev) => ({
                 ...prev,
                 [name]: value,
@@ -171,7 +166,6 @@ function EditTeam() {
         } else if (fetchedImage) {
             updatedData.append('ppImage', fetchedImage);
         }
-
         updatedData.append('salutation', formData.salutation);
         updatedData.append('firstName', formData.firstName);
         updatedData.append('middleName', formData.middleName);
@@ -189,10 +183,8 @@ function EditTeam() {
         updatedData.append('subCategory', formData.subCategory);
         updatedData.append('index', formData.index);
         updatedData.append('highestAcademicDeg', formData.highestAcademicDeg);
-
         updatedData.append('createdAt', extractDate(formData.createdAt));
         updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
-
         try {
             await updateTeamById(teamId, updatedData);
             toast.success('Team updated successfully');
