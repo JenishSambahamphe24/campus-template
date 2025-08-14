@@ -76,3 +76,75 @@ export const renderSafeHTML = (content) => {
         return 'Content unavailable';
     }
 };
+
+export const downloadFile = async (filename, fileUrl) => {
+    try {
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = filename;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        console.log('Download initiated successfully');
+        
+    } catch (error) {
+        console.error('Download failed:', error);
+        // Fallback: open in new tab
+        window.open(fileUrl, '_blank');
+    }
+};
+export const downloadFileWithProgress = async (filename, fileUrl) => {
+    try {
+        console.log('Starting download with progress tracking...');
+        
+        const response = await fetch(fileUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const contentLength = response.headers.get('content-length');
+        const total = parseInt(contentLength, 10);
+        
+        const reader = response.body.getReader();
+        const chunks = [];
+        let loaded = 0;
+        
+        while (true) {
+            const { done, value } = await reader.read();
+            
+            if (done) break;
+            
+            chunks.push(value);
+            loaded += value.length;
+            
+            if (total) {
+                const progress = (loaded / total) * 100;
+                console.log(`Download progress: ${progress.toFixed(2)}%`);
+            }
+        }
+        
+        const blob = new Blob(chunks);
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        window.URL.revokeObjectURL(url);
+        
+        console.log('Download completed successfully');
+        
+    } catch (error) {
+        console.error('Download with progress failed:', error);
+        // Fallback to direct download
+        downloadFile(filename, fileUrl);
+    }
+};

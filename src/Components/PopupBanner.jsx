@@ -74,7 +74,7 @@ function PopupBanner() {
                     </button>
 
                     <div className="flex flex-col space-y-4 text-white">
-                        <h2 className="text-xl mt-8"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque repudiandae quod nisi perspiciatis. Voluptatum doloremque rerum dolore enim rem esse.{currentPopup.title}</h2>
+                        <h2 className="text-xl mt-8">{currentPopup.title}</h2>
                     </div>
                 </div>
             </div>

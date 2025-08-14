@@ -7,7 +7,7 @@ import { SlCalender } from "react-icons/sl";
 import { getAllPrograms } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi';
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 import PaginationForReports from '../../Screens/userScreen/publications/component/PaginationForReports';
-import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
+import { downloadPublicationFile, getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
@@ -22,6 +22,7 @@ function NoticeTabs() {
     const [news, setNews] = useState([])
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+     
 
     const fetchData = async () => {
         const noticeResponse = await getAllpublication()
@@ -49,8 +50,10 @@ function NoticeTabs() {
     useEffect(() => {
         fetchData()
     }, [])
+
+
     const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 6;
+    const itemsPerPage = 4;
     const totalPages = Math.ceil(allNotices.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstOtherItem = indexOfLastItem - itemsPerPage;
@@ -65,7 +68,7 @@ function NoticeTabs() {
             <Grid item xs={12} sm={5.8} md={5.8} lg={3} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} className='relative rounded-l-lg border-2 border-[#1169bf] h-[27rem]'>
                 <h1 className='bg-[#1169bf]  text-white text-lg text-center font-bold uppercase py-2'>Latest Notices</h1>
                 <div className="flex flex-col h-full p-2">
-                    <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
+                    <ul className="flex-grow list-disc pl-5 pt-1 space-y-4 overflow-auto">
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <li key={index}>
@@ -74,12 +77,12 @@ function NoticeTabs() {
                                             <p className='line-clamp-2'>
                                                 {item.title}
                                             </p>
-                                            <a href={`${FILE_URL}content/${item.file}`} download target="_blank" className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg' rel="noopener noreferrer">
+                                            <button onClick={() => downloadPublicationFile(item.file)} className='flex h-5 mt-1 ml-1 px-1 bg-[#F36710] rounded-lg'>
                                                 <span className='text-xs mt-[1px] text-white'>
                                                     download
                                                 </span>
                                                 <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
-                                            </a>
+                                            </button>
                                         </span>
                                         <p className="flex text-xs mt-[-2px] italic">
                                             <SlCalender fontSize="12px" style={{ color: '#1169bf', marginRight: '3px', marginTop: '2px' }} />

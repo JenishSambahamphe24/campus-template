@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getAllaboutUs } from '../../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI'
 import { getAllTeams } from '../../Screens/cmsScreen/cms-components/cms-team/teamApi'
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 
 function ChairmanMessage() {
@@ -39,7 +39,7 @@ function ChairmanMessage() {
                                 className="z-10 mt-4 w-[220px]  h-[220px] object-cover rounded-[50%]"
                                 alt="..." />
                         </div>
-                        <Grid item md={8} className='px-20  py-10 text-center'  >
+                        <Grid item md={8} className='px-20  py-10 text-left'  >
                             <h1
                                 className='text-lg'
                                 dangerouslySetInnerHTML={{ __html: data.description }}

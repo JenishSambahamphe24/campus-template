@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { IoCaretForward, IoCaretBack   } from "react-icons/io5";
+import { IoCaretForward, IoCaretBack } from "react-icons/io5";
 
 function PaginationForReports({ currentPage, totalPages, onPageChange, itemsPerPage }) {
     return (
@@ -12,7 +12,7 @@ function PaginationForReports({ currentPage, totalPages, onPageChange, itemsPerP
                     className="rounded-md   text-center text-sm transition-all shadow-sm  text-slate-600 hover:text-white:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button"
                 >
-                  <IoCaretBack className='text-md'/>
+                    <IoCaretBack className='text-md' />
                 </button>
 
                 <p className="text-slate-600 text-sm">
@@ -22,10 +22,10 @@ function PaginationForReports({ currentPage, totalPages, onPageChange, itemsPerP
                 <button
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                   className="rounded-md   text-center text-sm transition-all shadow-sm  text-slate-600 hover:text-white:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    className="rounded-md   text-center text-sm transition-all shadow-sm  text-slate-600 hover:text-white:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button"
                 >
-                    <IoCaretForward/>
+                    <IoCaretForward />
                 </button>
             </div>
         </Grid>

@@ -1,15 +1,15 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllaboutUs } from '../Screens/cmsScreen/cms-components/cms-aboutUs/aboutsAPI';
 import { getAllTeams } from '../Screens/cmsScreen/cms-components/cms-team/teamApi';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-const defaultImage = import.meta.env.VITE_LOGO_URL
-
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function MessageSection() {
     const [isHovered, setIsHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [imgError, setImgError] = useState(false);
     const [introduction, setIntroduction] = useState({
         heading: '',
         description: ''
@@ -47,7 +47,7 @@ function MessageSection() {
 
             } catch (error) {
                 console.error("Failed to fetch About Us data:", error);
-                setError("Failed to load content. Please try again later.");
+                setError("Failed to load . Please login as an Admin and upload content.");
             } finally {
                 setLoading(false);
             }
@@ -89,22 +89,19 @@ function MessageSection() {
         fetchTeamInfo();
     }, []);
 
-    console.log(teamInfo)
 
-const renderSafeHTML = (content) => {
-  if (!content) return '';
+    const renderSafeHTML = (content) => {
+        if (!content) return '';
 
-  try {
-    return content
-      .replace(/<pre><code[^>]*>/g, '')
-      .replace(/<\/code><\/pre>/g, '')
-      .replace(/ style="[^"]*"/g, ''); 
-  } catch (e) {
-    console.error("Error processing HTML content:", e);
-    return 'Content unavailable';
-  }
-};
-
+        try {
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = content;
+            return tempElement.textContent || tempElement.innerText || '';
+        } catch (e) {
+            console.error("Error processing HTML content:", e);
+            return 'Content unavailable';
+        }
+    };
 
     if (loading) {
         return (
@@ -119,47 +116,54 @@ const renderSafeHTML = (content) => {
 
     if (error) {
         return (
-            <div className="w-full px-4 py-8 flex items-center justify-center">
+            <div className="w-full px-4 py-8 border  border-[#1169BF] rounded-md flex items-center justify-center">
                 <div className="text-center py-12 max-w-md mx-auto">
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md">
+                    <div className="text-red-700 px-4 pt-3  pb-4 rounded-md">
                         <p className="font-bold">Error</p>
                         <p>{error}</p>
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="mt-3 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
+                        <Link
+                            to='/signIn'
+                            target='_blank'
+                            className="mt-3 bg-red-600 hover:bg-red-700 text-white  px-2 py-1 rounded text-sm"
                         >
-                            Retry
-                        </button>
+                            Login
+                        </Link>
                     </div>
                 </div>
             </div>
         );
     }
+    const handleImageError = () => {
+        setImgError(true);
+    };
+    const imageSource = imgError ?
+        defaultImage :
+        (introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage);
 
     return (
         <div className="w-full  py-8">
             <div className="flex flex-col lg:flex-row gap-6">
-                <Link to='/introduction' className="w-full lg:w-2/6 flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <Link to='/introduction' className="w-full lg:w-2/6  h-[163px] flex flex-col bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
                     <div className="flex flex-col md:flex-row h-full"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
-                        <div className="w-full md:w-2/5 overflow-hidden h-full">
+                        <div className="w-full md:w-2/5 h-full overflow-hidden">
                             <img
-                              src={introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage}
-                                // src={`${IMAGE_URL}/aboutus/${introduction.aboutUsImage}`}
-                                className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                src={imageSource}
+                                className={`w-full h-full object-contain transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                                onError={handleImageError}
                             />
                         </div>
 
                         {/* Content container */}
-                        <div className="w-full md:w-3/5 px-4 pt-2">
+                        <div className="w-full md:w-3/5 px-4 pt-2 pb-2">
                             <h2 className="text-lg text-[#1169bf] font-bold  ">
-                                About Us
+                                About Us 
                             </h2>
                             {introduction?.description ? (
                                 <p
-                                   className="text-sm line-clamp-6"
+                                    className="text-sm pt-2 line-clamp-5"
                                     dangerouslySetInnerHTML={{
                                         __html: renderSafeHTML(introduction.description)
                                     }}
@@ -187,7 +191,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chairmanMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chairmanMessage.description)
                                 }}
@@ -222,7 +226,7 @@ const renderSafeHTML = (content) => {
                         </svg>
                         {chiefMessage?.description ? (
                             <p
-                                className="text-sm line-clamp-4"
+                                className="text-sm line-clamp-3"
                                 dangerouslySetInnerHTML={{
                                     __html: renderSafeHTML(chiefMessage.description)
                                 }}

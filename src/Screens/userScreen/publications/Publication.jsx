@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { Grid, Typography, Button } from '@mui/material'
+import  { useState, useEffect } from 'react'
+import { Grid } from '@mui/material'
 import { MdOutlineFileDownload } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
+import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
 import ReusablePagination from '../ReusablePagination'
 import { cleanDescription, formatDate } from '../../../Components/utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function Publication() {
     const [allPublication, setAllPublication] = useState([])
@@ -29,7 +29,6 @@ function Publication() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-
     return (
         <Grid container sm={12} className='p-4 lg:px-20 lg:py-6'>
             <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">Our Publication </h2>
@@ -41,7 +40,7 @@ function Publication() {
                                 <Link to={`/publication/${item.id}`}>
                                     <img
                                         alt=""
-                                        src={`${IMAGE_URL}content/${item.thumbnailImage}`}
+                                        src={`${IMAGE_URL}/thumb/${item.thumbnailImage}`}
                                         className="h-56 w-full object-cover"
                                         onError={(e) => { e.target.src = defaultImage; }}
                                     />
@@ -58,7 +57,7 @@ function Publication() {
                                     {
                                         item.isFile && (
                                             <>
-                                                <a href={`${FILE_URL}content/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                                <a onClick={() => downloadPublicationFile(item.file)} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                                                     Download
                                                     <span aria-hidden="true" className="block">
                                                         <MdOutlineFileDownload fontSize='18px' />

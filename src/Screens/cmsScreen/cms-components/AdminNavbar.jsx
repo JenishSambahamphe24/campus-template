@@ -11,26 +11,20 @@ const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL = import.meta.env.VITE_LOGO_URL
+const logoURL = import.meta.env.VITE_DEFAULT_IMG
 const textColor = import.meta.env.VITE_NAV_TEXT
 const bgColor = import.meta.env.VITE_NAV_BG
 
-
-
-
+console.log(logoURL)
 function AdminNavbar() {
-
     const navigate = useNavigate();
     const { email } = useAuth();
     const location = useLocation();
     const currentPath = location.pathname;
-
     const activeStyle = "text-[#f58d4c] font-medium";
     const inactiveStyle = "text-white hover:text-[#f36710] transition-colors duration-300 transform";
-
     const isActive = (path) => currentPath === path;
     const isAnyActive = (paths) => paths.some(path => currentPath.startsWith(path));
-
     const academicPaths = ['/admin/faculties', '/admin/addFaculty', '/admin/programs', '/admin/addProgram', '/admin/editProgram'];
     const contentPaths = ['/admin/publications', '/admin/addPublication', '/admin/editPublication', '/admin/addCategory', '/admin/aboutUs', '/admin/addAboutUs', '/admin/editAboutUs'];
 

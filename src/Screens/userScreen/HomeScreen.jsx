@@ -12,7 +12,6 @@ function HomeScreen() {
         <Box>
             <PopupBanner />
             <NoticeMarque />
-            
             <Box mb={4}>
                 <Slider />
             </Box>

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Grid, Typography, Button } from '@mui/material'
 import { MdOutlineFileDownload } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import {  getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
+import {  downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi'
 import ReusablePagination from '../ReusablePagination'
-import { cleanDescription, formatDate } from '../../../Components/utilityFunctions'
+import { cleanDescription, downloadFile, formatDate } from '../../../Components/utilityFunctions'
 const FILE_URL = import.meta.env.VITE_FILE_URL
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
-const defaultImage = import.meta.env.VITE_LOGO_URL
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function Curriculum() {
     const [allCurriculum, setAllCurriculum] = useState([])
@@ -58,7 +58,7 @@ function Curriculum() {
                                     {
                                         item.isFile && (
                                             <>
-                                                <a href={`${FILE_URL}/content/${item.file}`} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                                <a onClick={() => downloadPublicationFile(item.file)} className="px-2 group  inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                                                     Download
                                                     <span aria-hidden="true" className="block">
                                                         <MdOutlineFileDownload fontSize='18px' />

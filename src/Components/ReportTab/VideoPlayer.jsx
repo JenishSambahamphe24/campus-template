@@ -1,17 +1,14 @@
 import { Grid } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import YouTube from 'react-youtube';
-import { Button, Box, Typography } from '@mui/material';
+import { Button,  Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Divider } from '@mui/material';
 import { getAllGallery } from '../../Screens/cmsScreen/cms-components/cms-gallery/galleryApii';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 import { videoIdParser } from '../utilityFunctions';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
-const defaultImage = import.meta.env.VITE_LOGO_URL
-
-
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
 function VideoPlayer() {
     const [images, setImages] = useState([])
@@ -28,7 +25,7 @@ function VideoPlayer() {
         };
         fetchData()
     }, [])
-
+//  console.log(images)
     return (
         <Grid container direction='row' rowGap='10px' columnGap='15px'>
             <Grid container gap='10px'
@@ -60,7 +57,7 @@ function VideoPlayer() {
                         )
                         :
                         (
-                            <Grid xs={12} className='content-center min-h-[150px]  text-red-600'>
+                            <Grid xs={12} className='content-center min-h-[150px]  text-red-700'>
                                 <h1 className='text-md text-center'>No Gallery Uploaded yet!</h1>
                             </Grid>
                         )
@@ -90,14 +87,14 @@ function VideoPlayer() {
 
                         :
                         (
-                            <Grid xs={12} className='min-h-[150px] content-center  text-red-600'>
+                            <Grid xs={12} className='min-h-[150px] content-center  text-red-700'>
                                 <h1 className='text-md text-center'>No Videos Uploaded yet!</h1>
                             </Grid>
                         )
                 }
 
             </Grid>
-            <div className='w-full mt-4 flex justify-center'>
+            <div className='w-full mt-4 flex justify-end'>
                 <Button sx={{ textTransform: 'none' }} size="small" variant="outlined" className="flex items-center gap-2">
                     <Link to='/gallery'>
                         <Typography >

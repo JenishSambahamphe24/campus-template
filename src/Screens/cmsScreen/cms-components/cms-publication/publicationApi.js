@@ -50,7 +50,7 @@ export const deletePublication = async (id) => {
         const token = getAuthToken();
         if (!token) throw new Error("Token is missing");
         const headers = {
-          Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         };
         const response = await axios.delete(`${BASE_URL}/publication/${id}`, { headers });
         return response.data;
@@ -78,7 +78,7 @@ export const addPublicationCategory = async (data) => {
         const token = getAuthToken();
         if (!token) throw new Error("Token is missing");
         const headers = {
-          Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         };
         const response = await axios.post(`${BASE_URL}/publicationCategories`, data, { headers })
         return response.data
@@ -94,7 +94,7 @@ export const updatePublicationCategoryById = async (id, data) => {
         const token = getAuthToken();
         if (!token) throw new Error("Token is missing");
         const headers = {
-          Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         };
         const response = await axios.patch(`${BASE_URL}/publicationCategories/${id}`, data, { headers });
         return response.data;
@@ -104,14 +104,38 @@ export const updatePublicationCategoryById = async (id, data) => {
     }
 };
 
-export const deletePublicationCategoryById = async (id) => {
+export const downloadPublicationFile = async (filename) => {
     try {
-        const token = getAuthToken();
-        if (!token) throw new Error("Token is missing");
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        const response = await axios.delete(`${BASE_URL}/publicationCategories/${id}`, { headers });
+        const response = await fetch(`${BASE_URL}/download/${filename}`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Download failed: ${response.statusText}`);
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error("Download failed:", error);
+        alert("Failed to download file.");
+    }
+};
+
+// Updated publicationApi.js - downloadPublicationFile function
+
+export const deletePublicationCategoryById = async (filename) => {
+    try {
+
+        const response = await fetch(`${BASE_URL}/api/download/${filename}`, {
+            method: 'GET',
+        });
         return response.data;
     } catch (error) {
         console.error("Error while deleting Publication category:", error.response?.data || error.message);

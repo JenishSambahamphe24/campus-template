@@ -4,7 +4,7 @@ import { getAllpublication } from '../../cmsScreen/cms-components/cms-publicatio
 import { cleanDescription, formatDateShort } from '../../../Components/utilityFunctions';
 import { Grid } from '@mui/material';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
-const defaultImage = import.meta.env.VITE_LOGO_URL;
+const defaultImage = import.meta.env.VITE_DEFAULT_IMG;
 
 function NewsGrid() {
     const [allNewsEvents, setAllNews] = useState([]);
@@ -38,7 +38,7 @@ function NewsGrid() {
         <div className="max-w-screen-xl mx-auto py-8 px-20 relative">
             <div>
                 <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-4">
-                    News and Events
+                    News and Events 
                 </h2>
             </div>
             {allNewsEvents.length > 0 ? (

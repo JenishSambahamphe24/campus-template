@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import PaginationForReports from './component/PaginationForReports';
-import { getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
 import { extractDate } from '../../../Components/utilityFunctions';
 
-const FILE_URL = import.meta.env.VITE_FILE_URL;
-
 function Notices() {
+    const { category } = useParams();
     const [notices, setNotices] = useState({});
     const [currentPages, setCurrentPages] = useState({});
     const itemsPerPage = 10;
 
     const fetchData = async () => {
         const response = await getAllpublication();
-        const noticesData = response.filter(item => item.categoryName === 'Notices');
+        const noticesData = response.filter(item => item.categoryName === category);
 
         const groupedNotices = noticesData.reduce((acc, item) => {
             if (!acc[item.subCategoryName]) {
@@ -30,7 +30,7 @@ function Notices() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [category]);
 
     const handlePageChange = (subCategory, page) => {
         setCurrentPages(prev => ({ ...prev, [subCategory]: page }));
@@ -53,10 +53,7 @@ function Notices() {
                                     paginatedItems.map((item, index) => (
                                         <li key={index}>
                                             <a
-                                                href={`${FILE_URL}/content/${item.file}`}
-                                                download
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                            onClick={() => downloadPublicationFile(item.file)}
                                                 className="flex text-sm"
                                             >
                                                 {item.title}
