@@ -256,6 +256,22 @@ function PublicationCategory() {
                     }}
                 />
 
+                {['Notices', 'Thesis'].includes(formData.categoryName) && category.length === 0 && (
+  <Box textAlign="center" mt={4}>
+    <img
+      src="/assets/empty-state-icon.svg" // Replace with your actual image path
+      alt="No content"
+      style={{ width: '120px', marginBottom: '16px' }}
+    />
+    <Typography variant="h6" color="textSecondary" fontWeight={600}>
+      No {formData.categoryName} available yet.
+    </Typography>
+    <Typography variant="body2" color="textSecondary">
+      Add a new one to get things rolling!
+    </Typography>
+  </Box>
+)}
+
                 <Box>
                     <EditCategoryDialog categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />
                     <CommonDeleteDialog
