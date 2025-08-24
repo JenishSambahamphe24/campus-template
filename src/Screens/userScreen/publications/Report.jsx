@@ -10,11 +10,7 @@ import {
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
 const NoReportMessage = () => (
-  <Grid
-    item
-    xs={12}
-    className="flex flex-col items-center justify-center py-6"
-  >
+  <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
     <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
       <MdReportGmailerrorred className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
       <h3 className="text-xl font-semibold text-gray-800 mb-2">
@@ -63,8 +59,8 @@ function Report() {
   };
 
   return (
-    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
-      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
+    <Grid container className="justify-start px-4 py-4 lg:px-20 lg:py-16 " gap="20px">
+      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal -m-10">
         Our Reports
       </h2>
 
@@ -80,17 +76,15 @@ function Report() {
 
           return (
             <Grid item xs={11.8} lg={3.8} md={5.8} key={subCategory}>
-              <h1 className="border-b border-[#1169bf] text-lg font-semibold text-gray-700">
-                {subCategory}
-              </h1>
-              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem] rounded-md shadow-sm">
+              <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
+              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                   {paginatedItems.length > 0 ? (
                     paginatedItems.map((item, index) => (
                       <li key={index}>
                         <a
                           onClick={() => downloadPublicationFile(item.file)}
-                          className="flex text-sm text-blue-700 hover:underline hover:text-blue-900 transition"
+                          className="flex text-sm"
                         >
                           {item.title}
                           <MdOutlineFileDownload
