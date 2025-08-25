@@ -196,6 +196,8 @@
 // }
 
 // export default ProgramListUser;
+
+
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import {
@@ -316,7 +318,7 @@ function ProgramListUser() {
                     <p className="text-gray-600">Loading programs...</p>
                   </div>
                 ) : bachelorPrograms.length > 0 ? (
-                  <Grid justifyContent="flex-start" container gap="10px">
+                  <Grid container gap="10px">
                     {bachelorPrograms.map((item, index) => (
                       <Grid
                         component={Link}
@@ -363,8 +365,8 @@ function ProgramListUser() {
                         to={`/program/${item.id}`}
                         item
                         key={index}
-                        xs={6}
-                        sm={4}
+                        xs={5.8}
+                        sm={3.8}
                         lg={1.9}
                         className="group relative flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-[#1169bf] px-6 pt-10 pb-8 ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 sm:mx-auto sm:max-w-sm sm:rounded-3xl sm:px-10"
                       >
@@ -374,7 +376,7 @@ function ProgramListUser() {
                             <FaBookReader className="h-10 w-10 text-white transition-all" />
                           </span>
                           <div className="pt-3 text-base font-semibold leading-7 text-center">
-                            <p className="text-white transition-all duration-300 group-hover:text-white text-sm">
+                            <p className="text-white transition-all duration-300 group-hover:text-white text-md">
                               {item.shortName}
                             </p>
                           </div>
