@@ -89,7 +89,7 @@ function EditCategoryDialog({ handleClose, open, categoryId }) {
                         <Grid container spacing='1rem'>
                             <Grid item xs={6}>
                                 <FormControl size='small' fullWidth>
-                                    <InputLabel>Category Name</InputLabel>
+                                    <InputLabel>Category Name </InputLabel>
                                     <Select
                                         required
                                         InputLabelProps={{

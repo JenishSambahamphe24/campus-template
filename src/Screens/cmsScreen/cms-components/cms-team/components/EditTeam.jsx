@@ -36,48 +36,49 @@ const salutation = [
 ];
 
 function EditTeam() {
-  const { teamId } = useParams();
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    salutation: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    phoneNo: "",
-    position: "",
-    category: "",
-    subCategory: "",
-    department: "",
-    appointedDate: "",
-    fbUrl: "",
-    twitterUrl: "",
-    cvDetail: "",
-    index: null,
-    ppImage: null,
-    status: false,
-    highestAcademicDeg: "",
-  });
-  const [fetchedImage, setFetchedImage] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      if (teamId) {
-        try {
-          const data = await getTeamById(teamId);
-          setFormData((prev) => ({
-            ...prev,
-            ...data,
-            ppImage: null,
-          }));
-          setFetchedImage(data.ppImage);
-        } catch (error) {
-          console.error("Error fetching team data:", error);
-          toast.error("Failed to fetch team data");
-        }
-      }
-    };
-    fetchData();
-  }, [teamId]);
+    const { teamId } = useParams()
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        salutation: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        email: '',
+        phoneNo: '',
+        position: '',
+        category: '',
+        subCategory: '',
+        department: '',
+        appointedDate: '',
+        fbUrl: '',
+        twitterUrl: '',
+        cvDetail: '',
+        index: null,
+        ppImage: null,
+        status: false,
+        highestAcademicDeg: ''
+    });
+    const [fetchedImage, setFetchedImage] = useState(null);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            if (teamId) {
+                try {
+                    const data = await getTeamById(teamId);
+                    setFormData((prev) => ({
+                        ...prev,
+                        ...data,
+                        ppImage: null,
+                    }));
+                    setFetchedImage(data.ppImage);
+                } catch (error) {
+                    console.error('Error fetching team data:', error);
+                    toast.error('Failed to fetch team data');
+                }
+            }
+        };
+        fetchData();
+    }, [teamId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -118,13 +119,34 @@ function EditTeam() {
     setFetchedImage(null);
   };
 
-  const handleRemoveFetchedImage = () => {
-    setFetchedImage(null);
-    setFormData((prev) => ({
-      ...prev,
-      ppImage: null,
-    }));
-  };
+    const handleRemoveFetchedImage = () => {
+        setFetchedImage(null);
+        setFormData((prev) => ({
+            ...prev,
+            ppImage: null,
+        }));
+    };
+
+    // Helper function to format date for database
+    const formatDateForDB = (dateValue) => {
+        if (!dateValue) return '';
+        
+        // If it's already a Date object or a valid date string
+        const date = new Date(dateValue);
+        
+        // Check if the date is valid
+        if (isNaN(date.getTime())) return '';
+        
+        // Format as YYYY-MM-DD HH:mm:ss (MySQL datetime format)
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    };
 
   const getSubCategoryOptions = () => {
     switch (formData.category) {
@@ -173,44 +195,45 @@ function EditTeam() {
     e.preventDefault();
     const updatedData = new FormData();
 
-    if (formData.ppImage) {
-      updatedData.append("ppImage", formData.ppImage);
-    } else if (fetchedImage) {
-      updatedData.append("ppImage", fetchedImage);
-    }
-    updatedData.append("salutation", formData.salutation);
-    updatedData.append("firstName", formData.firstName);
-    updatedData.append("middleName", formData.middleName);
-    updatedData.append("lastName", formData.lastName);
-    updatedData.append("email", formData.email);
-    updatedData.append("phoneNo", formData.phoneNo);
-    updatedData.append("position", formData.position);
-    updatedData.append("department", formData.department);
-    updatedData.append("appointedDate", formData.appointedDate);
-    updatedData.append("fbUrl", formData.fbUrl);
-    updatedData.append("twitterUrl", formData.twitterUrl);
-    updatedData.append("cvDetail", formData.cvDetail);
-    updatedData.append("status", formData.status);
-    updatedData.append("category", formData.category);
-    updatedData.append("subCategory", formData.subCategory);
-    updatedData.append("index", formData.index);
-    updatedData.append("highestAcademicDeg", formData.highestAcademicDeg);
-    updatedData.append("createdAt", extractDate(formData.createdAt));
-    updatedData.append(
-      "updatedAt",
-      extractDate(formData.updatedAt || new Date())
-    );
-    try {
-      await updateTeamById(teamId, updatedData);
-      toast.success("Team updated successfully");
-      setTimeout(() => {
-        navigate("/admin/viewTeam");
-      }, 700);
-    } catch (error) {
-      console.error("Error updating team:", error);
-      toast.error("Failed to update team");
-    }
-  };
+        if (formData.ppImage) {
+            updatedData.append('ppImage', formData.ppImage);
+        } else if (fetchedImage) {
+            updatedData.append('ppImage', fetchedImage);
+        }
+        updatedData.append('salutation', formData.salutation);
+        updatedData.append('firstName', formData.firstName);
+        updatedData.append('middleName', formData.middleName);
+        updatedData.append('lastName', formData.lastName);
+        updatedData.append('email', formData.email);
+        updatedData.append('phoneNo', formData.phoneNo);
+        updatedData.append('position', formData.position);
+        updatedData.append('department', formData.department);
+        
+        // Format the appointed date properly for database
+        updatedData.append('appointedDate', formatDateForDB(formData.appointedDate));
+        
+        updatedData.append('fbUrl', formData.fbUrl);
+        updatedData.append('twitterUrl', formData.twitterUrl);
+        updatedData.append('cvDetail', formData.cvDetail);
+        updatedData.append('status', formData.status);
+        updatedData.append('category', formData.category);
+        updatedData.append('subCategory', formData.subCategory);
+        updatedData.append('index', formData.index);
+        updatedData.append('highestAcademicDeg', formData.highestAcademicDeg);
+        updatedData.append('createdAt', extractDate(formData.createdAt));
+        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
+        
+        try {
+            await updateTeamById(teamId, updatedData);
+            toast.success('Team updated successfully');
+            setTimeout(() => {
+                navigate('/admin/viewTeam');
+            }, 700);
+        } catch (error) {
+            console.error('Error updating team:', error);
+            toast.error('Failed to update team');
+        }
+    };
 
   return (
     <Grid container mx="auto" md={12} className="px-20 pb-10">

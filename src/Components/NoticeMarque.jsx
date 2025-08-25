@@ -7,21 +7,21 @@ import { extractDate } from './utilityFunctions';
 
 function NoticeMarque() {
   const [notices, setNotices] = useState([]);
-  const nepaliDate = new NepaliDate()
-  const nepaliDateToday = `${nepaliDate.year}-${nepaliDate.month}-${nepaliDate.day}`
+  const pad = (n) => n.toString().padStart(2, "0");
+
+  const nepaliDate = new NepaliDate();
+  const nepaliDateToday = `${nepaliDate.year}-${pad(nepaliDate.month)}-${pad(nepaliDate.day)}`;
 
   const isExpired = (expiredAt) => {
-    if (!expiredAt) return true;
-
-    const today = nepaliDateToday;
-    return expiredAt <= today;
+    if (!expiredAt) return false;
+    return expiredAt < nepaliDateToday;
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllpublication();
-        
+
         const latestReports = data
           .filter(item => item.categoryName === 'Report' && item.isScrollable === true)
           .map(item => ({
@@ -76,7 +76,7 @@ function NoticeMarque() {
           .filter(item => !isExpired(item.expiredAt))
           .sort((a, b) => b.id - a.id)
           .slice(0, 2);
-          
+
         setNotices([...latestReports, ...latestNews, ...latestNotices, ...latestPublication, ...latestDownloads]);
       } catch (error) {
         console.error('Error fetching notices:', error);

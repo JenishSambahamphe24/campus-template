@@ -1,190 +1,492 @@
-import { useState } from 'react';
-import {
-    TextField, MenuItem, Select, InputLabel, Button, Grid, FormControl, Typography, Paper,
-    RadioGroup, FormLabel, Radio, FormControlLabel
-} from '@mui/material';
-import FileDroppable from './FileDroppable';
-import { addGallery } from './galleryApii';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import ImageUpload from '../../../../Components/ImageUpload';
-
-
-function AddGallery() {
+the appointedDate is going the value like thiu 2082-04-01T00:00:00.000Z
+function EditTeam() {
+    const { teamId } = useParams()
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        galleryType: '',
-        galleryName: '',
-        galleryDescription: '',
-        thumbnailImage: null,
-        videoUrl: '',
-        status: true,
-        multipleImage: null,
+        salutation: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        email: '',
+        phoneNo: '',
+        position: '',
+        category: '',
+        subCategory: '',
+        department: '',
+        appointedDate: '',
+        fbUrl: '',
+        twitterUrl: '',
+        cvDetail: '',
+        index: null,
+        ppImage: null,
+        status: false,
+        highestAcademicDeg: ''
     });
-
-    const handleImageSelect = (file) => {
-        setFormData(prev => ({
-            ...prev,
-            thumbnailImage: file
-        }))
-    }
+    const [fetchedImage, setFetchedImage] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (teamId) {
+                try {
+                    const data = await getTeamById(teamId);
+                    setFormData((prev) => ({
+                        ...prev,
+                        ...data,
+                        ppImage: null,
+                    }));
+                    setFetchedImage(data.ppImage);
+                } catch (error) {
+                    console.error('Error fetching team data:', error);
+                    toast.error('Failed to fetch team data');
+                }
+            }
+        };
+        fetchData();
+    }, [teamId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        if (name === 'phoneNo' && !/^\d*$/.test(value)) {
+            return;
+        }
+        if (name === 'status') {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value === 'true',
+            }));
+        } else if (name === 'category') {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+                subCategory: ''
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
+    };
+
+    const handleDateChange = (name, newValue) => {
+        setFormData((prev) => ({
             ...prev,
-            [name]: name === 'status' ? JSON.parse(value) : value,
+            [name]: newValue
         }));
     };
 
-    const handleMultipleImageUpload = (images) => {
-        const newImages = images.map((image) => ({
-            name: image.name,
-            type: image.type,
-            value: image,
+    const handleImageChange = (updatedFile, type) => {
+        setFormData((prev) => ({
+            ...prev,
+            [type]: updatedFile[0] || null,
         }));
-        setFormData((prev) => ({ ...prev, multipleImage: newImages }));
+        setFetchedImage(null);
+    };
+
+    const handleRemoveFetchedImage = () => {
+        setFetchedImage(null);
+        setFormData((prev) => ({
+            ...prev,
+            ppImage: null,
+        }));
+    };
+
+    const getSubCategoryOptions = () => {
+        switch (formData.category) {
+            case 'Committe member':
+                return [
+                    { value: 'Chairman', label: 'Chairman' },
+                    { value: 'Vice-Chairman', label: 'Vice-Chairman' },
+                    { value: 'Secretary', label: 'Secretary' },
+                    { value: 'Treasurer', label: 'Treasurer' },
+                    { value: 'Member', label: 'Member' },
+                ];
+            case 'Teaching staff':
+                return [
+                    { value: 'Campus Chief', label: 'Campus Chief' },
+                    { value: 'Asst. Campus Chief', label: 'Asst. Campus Chief' },
+                    { value: 'Professor', label: 'Professor' },
+                    { value: 'Asst. professor', label: 'Asst. professor' },
+                    { value: 'Lecturer', label: 'Lecturer' },
+                    { value: 'Asst. Lecturer/Teaching Assistant', label: 'Asst. Lecturer/Teaching Assistant' },
+                    { value: 'Instructor', label: 'Instructor' },
+                    { value: 'Information Officer', label: 'Information Officer' },
+                ];
+            case 'Non-teaching staff':
+                return [
+                    { value: 'Information Officer', label: 'Information Officer' },
+                    { value: 'Administrative or A/c Officer', label: 'Administrative and/or Account Officer' },
+                    { value: 'Accountant', label: 'Accountant' },
+                    { value: 'Asst. Accountant', label: 'Asst. Accountant' },
+                    { value: 'Office Assistant', label: 'Office Assistant' },
+                    { value: 'Librarian', label: 'Librarian' },
+                    { value: 'Peon', label: 'Peon' },
+                    { value: 'Other', label: 'Other' }
+                ];
+            default:
+                return [];
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const updatedData = new FormData();
 
-        if (!formData.galleryName || !formData.galleryType) {
-            toast.error('Please fill all required fields');
-            return;
+        if (formData.ppImage) {
+            updatedData.append('ppImage', formData.ppImage);
+        } else if (fetchedImage) {
+            updatedData.append('ppImage', fetchedImage);
         }
-
-        const payload = new FormData();
-        payload.append('galleryType', formData.galleryType);
-        payload.append('galleryName', formData.galleryName);
-        payload.append('galleryDescription', formData.galleryDescription);
-        payload.append('thumbnailImage', formData.thumbnailImage);
-        payload.append('videoUrl', formData.videoUrl);
-        payload.append('audioFile', formData.audioFile);
-        payload.append('status', formData.status);
-
-        // Append multiple images only if gallery type is 'Image' and there are images
-        if (formData.galleryType === 'Image' && formData.multipleImage) {
-            formData.multipleImage.forEach((image) => {
-                payload.append('multipleImage', image.value);
-            });
-        }
-
+        updatedData.append('salutation', formData.salutation);
+        updatedData.append('firstName', formData.firstName);
+        updatedData.append('middleName', formData.middleName);
+        updatedData.append('lastName', formData.lastName);
+        updatedData.append('email', formData.email);
+        updatedData.append('phoneNo', formData.phoneNo);
+        updatedData.append('position', formData.position);
+        updatedData.append('department', formData.department);
+        updatedData.append('appointedDate', formData.appointedDate);
+        updatedData.append('fbUrl', formData.fbUrl);
+        updatedData.append('twitterUrl', formData.twitterUrl);
+        updatedData.append('cvDetail', formData.cvDetail);
+        updatedData.append('status', formData.status);
+        updatedData.append('category', formData.category);
+        updatedData.append('subCategory', formData.subCategory);
+        updatedData.append('index', formData.index);
+        updatedData.append('highestAcademicDeg', formData.highestAcademicDeg);
+        updatedData.append('createdAt', extractDate(formData.createdAt));
+        updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
         try {
-            const newGallery = await addGallery(payload);
-            toast.success('Gallery added successfully', { autoClose: 400 });
+            await updateTeamById(teamId, updatedData);
+            toast.success('Team updated successfully');
             setTimeout(() => {
-                navigate('/admin/viewGallery');
-            }, 1000);
+                navigate('/admin/viewTeam');
+            }, 700);
         } catch (error) {
-            if ( error.response.status === 413) {
-                toast.error('The images are too large. Please reduce the size and try again.');
-            }}
+            console.error('Error updating team:', error);
+            toast.error('Failed to update team');
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Typography variant='h5' textAlign='center'>
-                Add New Gallery
+        <Grid container mx='auto' md={12} className='px-20 pb-10' >
+            <Typography mb='20px' variant='h5' textAlign='center' width='100%'>
+                Edit Member
             </Typography>
-
-            <Grid container component={Paper} elevation={6} width='70%' mx='auto' my='2rem' spacing={2} pr={2} pt='1rem' pb='2rem'>
-                <Grid item md={3}>
-                    <FormControl size='small' fullWidth>
-                        <InputLabel size='small'>Gallery Type</InputLabel>
-                        <Select
-                            name='galleryType'
-                            value={formData.galleryType}
-                            onChange={handleChange}
-                            label="Gallery Type"
-                            size="small"
-                        >
-                            <MenuItem value='Image'>Image</MenuItem>
-                            <MenuItem value='Slider'>Slider</MenuItem>
-                            <MenuItem value='Video'>Video</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-
-                <Grid item md={6}>
-                    <TextField
-                        fullWidth
-                        size='small'
-                        label={formData.galleryType === 'Slider' ? "Slider Name" : "Gallery Name"}
-                        name='galleryName'
-                        value={formData.galleryName}
-                        onChange={handleChange}
-                    />
-                </Grid>
-
-                <Grid item md={3}>
-                    <ImageUpload
-                        name='thumbnailImage'
-                        label={formData.galleryType === 'Slider' ? 'Slider Image' : 'ThumbnailImage Image'}
-                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
-                        required={formData.galleryType === 'Image'}
-                        onImageSelect={handleImageSelect}
-                    />
-                </Grid>
-                <Grid item md={12}>
-                    <TextField
-                        fullWidth
-                        size='small'
-                        label={formData.galleryType === 'Slider' ? "Slider description" : "Gallery description"}
-                        name='galleryDescription'
-                        value={formData.galleryDescription}
-                        onChange={handleChange}
-                        disabled={formData.galleryType !== 'Image' && formData.galleryType !== 'Slider'}
-                        InputLabelProps={{ shrink: true }}
-                    />
-                </Grid>
-                {
-                    formData.galleryType === 'Video' && (
-                        <Grid item md={8}>
+            <Stack component={Paper} width='100%' elevation='5' padding='20px' direction="column" >
+                <form onSubmit={handleSubmit}>
+                    {/* First Row: Salutation, First Name, Middle Name, Last Name */}
+                    <Grid container width="100%" spacing={2}>
+                        <Grid item xs={2}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Salutation</InputLabel>
+                                <Select
+                                    required
+                                    variant="standard"
+                                    name="salutation"
+                                    value={formData.salutation}
+                                    onChange={handleChange}
+                                    label='Salutation'
+                                >
+                                    {salutation.map((item, index) => (
+                                        <MenuItem key={index} value={item}>{item}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={3.3}>
+                            <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="First Name"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={3.4}>
                             <TextField
                                 fullWidth
-                                size='small'
-                                name='videoUrl'
-                                value={formData.videoUrl}
+                                size="small"
+                                variant="standard"
+                                label="Middle Name"
+                                name="middleName"
+                                value={formData.middleName}
                                 onChange={handleChange}
-                                label='Video URL'
-                                disabled={formData.galleryType !== 'Video'}
                             />
                         </Grid>
-                    )
-                }
-                {
-                    formData.galleryType === 'Image' && (
-                        <Grid item md={12}>
+                        <Grid item xs={3.3}>
+                            <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Last Name"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {/* Second Row: Email, Phone, Category, Sub-category */}
+                    <Grid container mt='2px' width="100%" spacing={2}>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Phone Number"
+                                name="phoneNo"
+                                value={formData.phoneNo}
+                                onChange={handleChange}
+                                inputProps={{ pattern: "[0-9]*", inputMode: "numeric" }}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Type</InputLabel>
+                                <Select
+                                    required
+                                    variant="standard"
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    label='Type'
+                                >
+                                    <MenuItem value='Committe member'>Committee Member</MenuItem>
+                                    <MenuItem value='Teaching staff'>Teaching staff</MenuItem>
+                                    <MenuItem value='Non-teaching staff'>Non-teaching staff</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <FormControl required size='small' fullWidth>
+                                <InputLabel
+                                    InputLabelProps={{
+                                        sx: {
+                                            '& .MuiInputLabel-asterisk': {
+                                                color: 'brown',
+                                            },
+                                        },
+                                    }}>Sub-category</InputLabel>
+                                <Select
+                                    required
+                                    variant="standard"
+                                    name="subCategory"
+                                    value={formData.subCategory}
+                                    onChange={handleChange}
+                                    label='Sub-category'
+                                    disabled={!formData.category}
+                                >
+                                    {getSubCategoryOptions().map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+
+                    {/* Third Row: Employee Index, Department, Appointed Date, Position */}
+                    <Grid mt='2px' container width="100%" spacing={2}>
+                        <Grid item xs={3}>
+                            <TextField
+                                required
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                    shrink: true,
+                                }}
+                                fullWidth
+                                size="small"
+                                type='number'
+                                variant="standard"
+                                label="Employee Index"
+                                name="index"
+                                value={formData.index}
+                                onChange={handleChange}
+                                inputProps={{ min: 0 }}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Department"
+                                name="department"
+                                value={formData.department}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <DateInputField
+                                variant='standard'
+                                label="Appointed date"
+                                required
+                                name="appointedDate"
+                                value={formData.appointedDate}
+                                onChange={(newValue) => handleDateChange("appointedDate", newValue)}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                InputLabelProps={{
+                                    sx: {
+                                        '& .MuiInputLabel-asterisk': { color: 'brown' },
+                                    },
+                                    shrink: true,
+                                }}
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Position in the Team"
+                                name="position"
+                                value={formData.position}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {/* Fourth Row: Facebook URL */}
+                    <Grid mt='2px' container width="100%" spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Highest academic degree acquired"
+                                name="highestAcademicDeg"
+                                value={formData.highestAcademicDeg}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <TextField
+                                fullWidth
+                                size="small"
+                                variant="standard"
+                                label="Facebook URL"
+                                name="fbUrl"
+                                value={formData.fbUrl}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {/* Profile Picture Upload and Status */}
+                    <Grid border='1px solid #c2c2c2' borderRadius='8px' container width="100%" mt='10px' padding='10px'>
+                        <Grid px='5px' item xs={6}>
+                            <Typography>Member Image</Typography>
                             <FileDroppable
-                                required={true}
-                                placeholder=' upload gallery images'
-                                name='multipleImage'
-                                allowMultiple={true}
-                                onImagesChange={handleMultipleImageUpload}
+                                placeholder='New member image'
+                                name="ppImage"
+                                allowMultiple={false}
+                                onImagesChange={(updatedFiles) => handleImageChange(updatedFiles, 'ppImage')}
                             />
+                            {fetchedImage && (
+                                <div style={{ position: 'relative', marginTop: '5px', width: '60px', height: '60px' }}>
+                                    <img src={`${IMAGE_URL}/team/${fetchedImage}`} alt="Fetched" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+                                    <IconButton
+                                        size="small"
+                                        onClick={handleRemoveFetchedImage}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '-10px',
+                                            right: '-10px',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                        }}
+                                    >
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                </div>
+                            )}
                         </Grid>
-                    )
-                }
-                <Grid item md={4} display='flex' justifyContent='center'>
-                    <FormControl>
-                        <FormLabel id="status">Status</FormLabel>
-                        <RadioGroup row value={formData.status} onChange={handleChange} name="status">
-                            <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
-                            <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid>
 
-                <Grid item md={12} textAlign='center'>
-                    <Button type='submit' variant='contained'>
-                        Add Gallery
-                    </Button>
-                </Grid>
-            </Grid>
-        </form>
-    );
-}
+                        {/* Status Field */}
+                        <Grid px='5px' mt='15px' display='flex' justifyContent='center' item xs={6}>
+                            <FormControl>
+                                <FormLabel>Status</FormLabel>
+                                <RadioGroup row value={formData.status} onChange={handleChange} name="status">
+                                    <FormControlLabel value={true} control={<Radio size="small" />} label="Active" />
+                                    <FormControlLabel value={false} control={<Radio size="small" />} label="Inactive" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
 
-export default AddGallery;
-
+                    {/* Rich Text Editor for CV */}
+                    <Grid width="100%" mt="1rem">
+                        <TipTapEditor
+                            placeholder="Add description"
+                            name="cvDetail"
+                            value={formData.cvDetail}
+                            onChange={(value) => setFormData((prev) => ({ ...prev, cvDetail: value }))}
+                            height="320px"
+                        />
+                    </Grid>
+                    <div className='flex justify-end mt-2'>
+                        <Button type="submit" size="small" variant="contained">Update Member</Button>
+                    </div>
+                </form>
+            </Stack>
+        </Grid>
+    )
+} and im getting {
+    "message": "Incorrect datetime value: '2082-04-01T00:00:00.000Z' for column 'appointedDate' at row 1",
+        "stack": null
+} i think it is because of Z in last please remove it 

@@ -180,7 +180,7 @@ function NoticeTabs() {
                     </span>
                     <div className="pt-1 text-base font-semibold leading-6 text-center">
                       <p className="text-white transition-all duration-300 group-hover:text-white text-md">
-                        {item.id}
+                        {item.shortName}
                       </p>
                     </div>
                   </div>

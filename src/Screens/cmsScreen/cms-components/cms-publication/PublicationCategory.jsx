@@ -1,5 +1,5 @@
-import  { useEffect, useState } from 'react';
-import { TextField, Button, Grid, Typography,  FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { TextField, Button, Grid, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { addPublicationCategory, deletePublicationCategoryById, getPublicationCategory } from './publicationApi';
 import { toast } from 'react-toastify';
 import { DataGrid } from '@mui/x-data-grid';
@@ -75,7 +75,7 @@ function PublicationCategory() {
         { field: 'sNo', headerName: 'S.No.', flex: 50 },
         {
             field: 'categoryName',
-            headerName: 'Category Name',
+            headerName: 'Category Name ',
             flex: 150,
             editable: true,
         },
@@ -117,7 +117,7 @@ function PublicationCategory() {
             ),
         }
     ];
-    const rows = category?.map((item, index) => ({
+    const rows = category?.sort((a,b) => b.id-a.id).map((item, index) => ({
         id: item.id,
         sNo: index + 1,
         categoryName: item.categoryName,
@@ -257,20 +257,20 @@ function PublicationCategory() {
                 />
 
                 {['Notices', 'Thesis'].includes(formData.categoryName) && category.length === 0 && (
-  <Box textAlign="center" mt={4}>
-    <img
-      src="/assets/empty-state-icon.svg" // Replace with your actual image path
-      alt="No content"
-      style={{ width: '120px', marginBottom: '16px' }}
-    />
-    <Typography variant="h6" color="textSecondary" fontWeight={600}>
-      No {formData.categoryName} available yet.
-    </Typography>
-    <Typography variant="body2" color="textSecondary">
-      Add a new one to get things rolling!
-    </Typography>
-  </Box>
-)}
+                    <Box textAlign="center" mt={4}>
+                        <img
+                            src="/assets/empty-state-icon.svg" // Replace with your actual image path
+                            alt="No content"
+                            style={{ width: '120px', marginBottom: '16px' }}
+                        />
+                        <Typography variant="h6" color="textSecondary" fontWeight={600}>
+                            No {formData.categoryName} available yet.
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                            Add a new one to get things rolling!
+                        </Typography>
+                    </Box>
+                )}
 
                 <Box>
                     <EditCategoryDialog categoryId={categoryId} open={editDialogOpen} handleClose={handleEditDialogClose} setOpen={setEditDialogOpen} />

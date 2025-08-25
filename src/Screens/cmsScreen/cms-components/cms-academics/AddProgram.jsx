@@ -31,7 +31,6 @@ function AddProgram() {
     useEffect(() => {
         const fetchLevel = async () => {
             const levelData = await getAllFaculties();
-            console.log('Fetched Level Data:', levelData); // Debugging line
             const bindedFacultyName = levelData.reduce((acc, item) => {
                 const { level, facultyName, id } = item;
                 const existingLevel = acc.find(levelObj => levelObj.level === level);
@@ -176,6 +175,7 @@ function AddProgram() {
                             size='small'
                             label='Short Name (Abbreviation)'
                             name='shortName'
+                            required
                             value={formData.shortName}
                             onChange={handleChange}
                         />
