@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
+import React, { useState, useEffect } from "react";
+import { Grid } from "@mui/material";
 import {
   Tabs,
   TabsHeader,
@@ -7,32 +7,32 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import { FaBookReader } from 'react-icons/fa';
-import { Link, useParams } from 'react-router-dom';
-import { getAllPrograms } from '../../Screens/cmsScreen/cms-components/cms-academics/academicsApi';
+import { FaBookReader } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
+import { getAllPrograms } from "../../Screens/cmsScreen/cms-components/cms-academics/academicsApi";
 
 function ProgramListUser() {
   const { tab } = useParams();
-  const [bachelorPrograms, setBachelorPrograms] = useState([])
-  const [masterPrograms, setMasterPrograms] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [bachelorPrograms, setBachelorPrograms] = useState([]);
+  const [masterPrograms, setMasterPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchPrograms = async () => {
     try {
-      setLoading(true)
-      const response = await getAllPrograms()
-      setBachelorPrograms(response.filter(item => item.level === 'Bachelor'))
-      setMasterPrograms(response.filter(item => item.level === 'Master'))
+      setLoading(true);
+      const response = await getAllPrograms();
+      setBachelorPrograms(response.filter((item) => item.level === "Bachelor"));
+      setMasterPrograms(response.filter((item) => item.level === "Master"));
     } catch (error) {
-      console.error("Error fetching programs:", error)
+      console.error("Error fetching programs:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchPrograms()
-  }, [])
+    fetchPrograms();
+  }, []);
 
   const [activeTab, setActiveTab] = React.useState(tab || "Bachelor");
   const data = [
@@ -40,7 +40,7 @@ function ProgramListUser() {
       label: "Bachelor",
       value: "Bachelor",
     },
-   
+
     {
       label: "Master",
       value: "Master",
@@ -49,36 +49,42 @@ function ProgramListUser() {
 
   // No programs message component
   const NoProgramsMessage = () => (
-    <div className="w-full flex flex-col items-center justify-center py-12">
-      <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md">
-        <FaBookReader className="h-16 w-16 mx-auto text-blue-500 mb-4" />
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">No Programs Available</h3>
-        <p className="text-gray-600 mb-4">
+    <Grid
+      item
+      xs={12}
+      className="flex flex-col items-center justify-center py-12"
+    >
+      <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
+        <FaBookReader className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          No Programs Available
+        </h3>
+        <p className="text-gray-600">
           Please login to the CMS and set up programs to display here.
         </p>
       </div>
-    </div>
+    </Grid>
   );
 
   return (
-    <Grid container className='px-2 md:px-6 lg:px-9' my='25px'>
+    <Grid container className="px-2 md:px-6 lg:px-9" my="25px">
       <Grid item sm={12}>
-        <h1 className='text-center mb-4 text-2xl font-bold'>Our Programs</h1>
+        <h1 className="text-center mb-4 text-2xl font-bold">Our Programs</h1>
       </Grid>
       <Grid item xs={12}>
         <Tabs value={activeTab}>
-          <Grid item md={12} >
+          <Grid item md={12}>
             <TabsHeader
-                style={{
-                  background: '#1169bf',
-                  color: 'white',
-                  zIndex: '1',
-                  height: '35px',
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  gap: '10px'
+              style={{
+                background: "#1169bf",
+                color: "white",
+                zIndex: "1",
+                height: "35px",
+                display: "flex",
+                justifyContent: "flex-start",
+                gap: "10px",
               }}
-              className='rounded'
+              className="rounded"
             >
               {data.map(({ label, value }) => (
                 <Tab
@@ -87,11 +93,11 @@ function ProgramListUser() {
                   onClick={() => setActiveTab(value)}
                   className={activeTab === value ? "text-gray-900" : ""}
                   style={{
-                    padding: '0 16px',
-                    minWidth: 'auto',
-                    width: 'auto',
-                    textAlign: 'center',
-                    whiteSpace: 'nowrap'
+                    padding: "0 16px",
+                    minWidth: "auto",
+                    width: "auto",
+                    textAlign: "center",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {label}
@@ -101,14 +107,17 @@ function ProgramListUser() {
           </Grid>
 
           <TabsBody>
-            {activeTab === 'Bachelor' ? (
-              <TabPanel style={{ marginTop: '20px', padding: '0' }} value='Bachelor'>
+            {activeTab === "Bachelor" ? (
+              <TabPanel
+                style={{ marginTop: "20px", padding: "0" }}
+                value="Bachelor"
+              >
                 {loading ? (
                   <div className="w-full text-center py-8">
                     <p className="text-gray-600">Loading programs...</p>
                   </div>
                 ) : bachelorPrograms.length > 0 ? (
-                  <Grid justifyContent='flex-start' container gap='10px'>
+                  <Grid justifyContent="flex-start" container gap="10px">
                     {bachelorPrograms.map((item, index) => (
                       <Grid
                         component={Link}
@@ -139,13 +148,16 @@ function ProgramListUser() {
                 )}
               </TabPanel>
             ) : (
-              <TabPanel value='Master' style={{ padding: '0px', marginTop: '20px' }}>
+              <TabPanel
+                value="Master"
+                style={{ padding: "0px", marginTop: "20px" }}
+              >
                 {loading ? (
                   <div className="w-full text-center py-8">
                     <p className="text-gray-600">Loading programs...</p>
                   </div>
                 ) : masterPrograms.length > 0 ? (
-                  <Grid container gap='10px'>
+                  <Grid container gap="10px">
                     {masterPrograms.map((item, index) => (
                       <Grid
                         component={Link}
@@ -180,7 +192,7 @@ function ProgramListUser() {
         </Tabs>
       </Grid>
     </Grid>
-  )
+  );
 }
 
-export default ProgramListUser
+export default ProgramListUser;

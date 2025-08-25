@@ -19,7 +19,7 @@ function GalleryList() {
 
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchData = async () => { 
     const data = await getAllGallery();
     if (Array.isArray(data)) {
       setAllGallery(data);

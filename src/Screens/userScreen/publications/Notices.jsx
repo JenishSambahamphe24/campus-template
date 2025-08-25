@@ -73,7 +73,7 @@ function Notices() {
                                         </li>
                                     ))
                                 ) : (
-                                    <h1 className="text-center text-sm">No any items !!</h1>
+                                    <h1 className="text-center text-sm">No any contents!!</h1>
                                 )}
                             </ul>
                             <div className="flex flex-col mt-auto">

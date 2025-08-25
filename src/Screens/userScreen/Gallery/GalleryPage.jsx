@@ -20,14 +20,22 @@ function GalleryPage() {
     const { tab } = useParams();
     const [videos, setVideos] = useState([])
     const [imageGallery, setImageGallery] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getAllGallery()
-            const videoGallery = data.filter(item => item.galleryType === 'Video')
-            setVideos(videoGallery)
-            const images = data.filter(item => item.galleryType === 'Image')
-            setImageGallery(images)
+            try {
+                setLoading(true);
+                const data = await getAllGallery()
+                const videoGallery = data.filter(item => item.galleryType === 'Video')
+                setVideos(videoGallery)
+                const images = data.filter(item => item.galleryType === 'Image')
+                setImageGallery(images)
+            } catch (error) {
+                console.error("Error fetching gallery:", error);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchData()
     }, [])
@@ -85,9 +93,20 @@ function GalleryPage() {
                                 activeTab === 'image' ? (
                                     <TabPanel style={{ padding: '0px', marginTop: '20px' }} value='image'>
                                         <Box sx={{ width: '100%' }}>
-                                            <Grid container spacing='2rem'>
-                                                {imageGallery.length > 0 ? (
-                                                    imageGallery.sort((a, b) => b.id - a.id).map((item, index) => (
+                                            {loading ? (
+                                                <Grid container spacing='2rem'>
+                                                    {[1, 2, 3, 4].map((item) => (
+                                                        <Grid key={item} item xs={12} sm={6} md={3}>
+                                                            <div className="group relative m-0 flex h-72 w-full rounded-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg">
+                                                                <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 bg-gray-200 animate-pulse">
+                                                                </div>
+                                                            </div>
+                                                        </Grid>
+                                                    ))}
+                                                </Grid>
+                                            ) : imageGallery.length > 0 ? (
+                                                <Grid container spacing='2rem'>
+                                                    {imageGallery.sort((a, b) => b.id - a.id).map((item, index) => (
                                                         <Grid key={index} item xs={12} sm={6} md={3}>
                                                             <Link to={`/galleryGrid/${item.id}`} className="group relative m-0 flex h-72 w-full rounded-xl  ring-gray-900/5 sm:mx-auto sm:max-w-lg">
                                                                 <div className="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200  transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 ">
@@ -102,23 +121,31 @@ function GalleryPage() {
                                                                 </div>
                                                             </Link>
                                                         </Grid>
-                                                    ))
-                                                ) :
-                                                    (
-                                                        <Grid item xs={12} textAlign='center' alignContent='center' sm={12} minHeight='200px'   >
+                                                    ))}
+                                                </Grid>
+                                            ) : (
+                                                <Grid container>
+                                                    <Grid item xs={12} textAlign='center' minHeight='200px' display='flex' alignItems='center' justifyContent='center'>
                                                         <p className='text-xl text-red-700'>No Image Uploaded yet !</p>
                                                     </Grid>
-                                                    )
-                                                }
-                                            </Grid>
+                                                </Grid>
+                                            )}
                                         </Box>
                                     </TabPanel>
                                 ) :
                                     (
                                         <TabPanel value='video' style={{ padding: '0px', marginTop: '20px' }}>
-                                            <Grid container spacing={2}>
-                                                {videos.length > 0 ? (
-                                                    videos.map((item, index) => {
+                                            {loading ? (
+                                                <Grid container spacing={2}>
+                                                    {[1, 2, 3].map((item) => (
+                                                        <Grid key={item} item sm={4}>
+                                                            <div className="video-player bg-gray-200 animate-pulse" style={{ width: '100%', height: '300px' }}></div>
+                                                        </Grid>
+                                                    ))}
+                                                </Grid>
+                                            ) : videos.length > 0 ? (
+                                                <Grid container spacing={2}>
+                                                    {videos.map((item, index) => {
                                                         const videoId = videoIdParser(item.videoUrl);
                                                         return (
                                                             <Grid key={index} item sm={4}>
@@ -132,13 +159,15 @@ function GalleryPage() {
                                                                 />
                                                             </Grid>
                                                         );
-                                                    })
-                                                ) : (
-                                                    <Grid item xs={12} textAlign='center' alignContent='center' sm={12} minHeight='200px'   >
+                                                    })}
+                                                </Grid>
+                                            ) : (
+                                                <Grid container>
+                                                    <Grid item xs={12} textAlign='center' minHeight='200px' display='flex' alignItems='center' justifyContent='center'>
                                                         <p className='text-xl text-red-700'>No Video Uploaded yet !</p>
                                                     </Grid>
-                                                )}
-                                            </Grid>
+                                                </Grid>
+                                            )}
                                         </TabPanel>
                                     )
                             }
