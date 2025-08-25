@@ -40,7 +40,7 @@ function Curriculum() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  console.log(paginatedItems)
   const NoCurriculumMessage = () => (
     <Grid
       item
@@ -59,19 +59,19 @@ function Curriculum() {
       </div>
     </Grid>
   );
-
+ console.log(paginatedItems)
   return (
     <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
       <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
-        Our Curriculum
+        Our Curriculum 
       </h2>
       <Grid mt="10px" container mx="20px" spacing="20px">
         {paginatedItems.length > 0 ? (
           paginatedItems.map((item, index) => (
             <Grid key={index} item xs={12} sm={4} lg={3}>
               <article
-                style={{ minHeight: "320px" }}
-                className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
+                style={{ minHeight: "220px" }}
+                className="bg-gray-200 py-2 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
               >
                 <Link to={`/curriculum/${item.id}`}>
                   <img
@@ -93,7 +93,7 @@ function Curriculum() {
                     </p>
                   </div>
                 </Link>
-                <div className="flex px-2 pb-2">
+                <div className="flex px-2 pb-1">
                   {item.isFile && (
                     <>
                       <a
@@ -109,6 +109,9 @@ function Curriculum() {
                   <span className="text-blue-500 text-md">
                     {formatDate(item.publishedAt)}
                   </span>
+                </div>
+                <div className="px-2">
+                  <h1 className="text-lg  line-clamp-1">{item.title} </h1>
                 </div>
               </article>
             </Grid>
