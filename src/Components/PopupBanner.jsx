@@ -26,6 +26,7 @@ function PopupBanner() {
         const fetchAllPopups = async () => {
             try {
                 const response = await getAllpublication();
+                console.log(response)
                 const popups = response
                     .filter(item => item.isPopUp === true)
                     .map(item => ({
