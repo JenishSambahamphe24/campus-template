@@ -11,16 +11,16 @@ function PopupBanner() {
     const [isVisible, setIsVisible] = useState(false);
     const [data, setData] = useState([]);
     const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
+    const pad = (n) => n.toString().padStart(2, "0");
 
-    const nepaliDate = new NepaliDate()
-    const nepaliDateToday = `${nepaliDate.year}-${nepaliDate.month}-${nepaliDate.day}`
+    const nepaliDate = new NepaliDate();
+    const nepaliDateToday = `${nepaliDate.year}-${pad(nepaliDate.month)}-${pad(nepaliDate.day)}`;
 
     const isExpired = (expiredAt) => {
-        if (!expiredAt) return true;
-
-        const today = nepaliDateToday;
-        return expiredAt <= today;
+        if (!expiredAt) return false;
+        return expiredAt < nepaliDateToday;
     };
+
 
     useEffect(() => {
         const fetchAllPopups = async () => {
@@ -43,6 +43,7 @@ function PopupBanner() {
         };
         fetchAllPopups();
     }, [nepaliDateToday]);
+
 
     useEffect(() => {
         const popupTimer = setTimeout(() => {

@@ -16,7 +16,6 @@ function AdminHomePage() {
                 Browse Contents
               </Button>
             </Link>
-
           </div>
         </div>
       </div>

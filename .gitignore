@@ -10,6 +10,7 @@ lerna-debug.log*
 *.zip
 .env
 node_modules
+Logo.png
 dist
 dist-ssr
 *.local
