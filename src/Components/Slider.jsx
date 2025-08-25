@@ -283,9 +283,9 @@ function Slider({ onLoad }) {
               }}
               to="/team"
             >
-              <Button sx={{ textTransform: "none" }} size="small" className="flex items-center gap-1">
+              <Button sx={{ textTransform: "none" }} size="small" variant='filled' color='error' className="flex items-center gap-1">
                 <span className='text-white flex items-center'>
-                  College Management Team
+                  Our Team
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

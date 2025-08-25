@@ -1,9 +1,9 @@
-import  { useState, useEffect } from 'react'
-import { Typography,  Box } from '@mui/material';
+import { useState, useEffect } from 'react'
+import { Typography, Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Grid, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getAllTeams, getAllUsers } from './teamApi';
+import { getAllTeams } from './teamApi';
 import { GridOverlay } from '@mui/x-data-grid';
 import { useAuth } from '../../../../context/AuthContextProvider';
 import { showStatus } from '../../../../Components/utilityFunctions';
@@ -30,7 +30,7 @@ function TeamList() {
         fetchData()
     };
 
-    
+
     const fetchData = async () => {
         try {
             const data = await getAllTeams()
@@ -46,20 +46,9 @@ function TeamList() {
     };
 
     useEffect(() => {
-        fetchData(allTeams)
-    }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getAllUsers()
-            }
-            catch (error) {
-                console.error('Error fetching teams:', error);
-            }
-        };
         fetchData()
     }, [])
+
 
 
     const columns = [
@@ -85,8 +74,6 @@ function TeamList() {
             headerName: 'Contact Number',
             flex: 1.3,
         },
-
-
         {
             field: 'status',
             headerName: 'Status',
@@ -122,7 +109,7 @@ function TeamList() {
                                     >
                                         Delete
                                     </Typography>
-                                   
+
                                 </>
                             )
                         }

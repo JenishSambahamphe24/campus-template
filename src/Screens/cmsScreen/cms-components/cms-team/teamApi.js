@@ -58,7 +58,6 @@ export const deleteTeam = async (id) => {
     console.error("Error while deleting team:", error.response?.data || error.message);
     throw error;
   }
-
 };
 
 export const getAllUsers = async () => {
