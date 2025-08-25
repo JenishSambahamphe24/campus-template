@@ -62,12 +62,9 @@ function Publication() {
                                         onError={(e) => { e.target.src = defaultImage; }}
                                     />
                                     <div className="p-1 sm:p-2">
-                                        <p className="mt-1 line-clamp-2 text-sm text-gray-500">
-                                            <div
-                                                style={{ fontSize: '16px' }}
-                                                dangerouslySetInnerHTML={{ __html: cleanDescription(item.description) }}
-                                            />
-                                        </p>
+                                        <h1 className="mt-1 line-clamp-2 text-sm text-gray-500">
+                                           {item.title}
+                                        </h1>
                                     </div>
                                 </Link>
                                 <div className="flex px-2 pb-2">
