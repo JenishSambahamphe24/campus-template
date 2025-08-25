@@ -25,12 +25,12 @@ function CurriculumPage() {
         <Grid  container className='px-10  sm:px-2 md:px-4 lg:px-20 py-10' display='flex' justifyContent='center'  gap='10px'>
             <Grid display='flex' justifyContent='space-between' flexDirection='column' item xs={12} sm={7.4}  md={8.3} lg={8.8}  order={{xs:2, sm:2 , md:2, lg:1}}>
                 <div>
-                    <Typography fontFamily='fantasy'>
-                        <div
+                    <div
                             style={{ fontSize: '16px' }}
-                            dangerouslySetInnerHTML={{ __html: curriculumDetail.cvDetail } || "No CV details available"}
+                            dangerouslySetInnerHTML={{ 
+                                __html: curriculumDetail.description || "No curriculum details available !!"
+                            }}
                         />
-                    </Typography>
                 </div>
 
                 <Link to='/curriculum'>

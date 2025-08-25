@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
-import { MdOutlineFileDownload, MdCloudOff } from 'react-icons/md';
-import PaginationForReports from './component/PaginationForReports';
-import { downloadPublicationFile, getAllpublication } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
+import { useState, useEffect } from "react";
+import { Grid } from "@mui/material";
+import { MdOutlineFileDownload, MdCloudOff } from "react-icons/md";
+import PaginationForReports from "./component/PaginationForReports";
+import {
+  downloadPublicationFile,
+  getAllpublication,
+} from "../../cmsScreen/cms-components/cms-publication/publicationApi";
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
@@ -10,9 +13,12 @@ const NoDownloadsMessage = () => (
   <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
     <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
       <MdCloudOff className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">No Downloads Available</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+        No Downloads Available
+      </h3>
       <p className="text-gray-600">
-        Please check back later or contact the admin to upload new downloadable content.
+        Please check back later or contact the admin to upload new downloadable
+        content.
       </p>
     </div>
   </Grid>
@@ -25,7 +31,10 @@ function Downloads() {
 
   const fetchData = async () => {
     const response = await getAllpublication();
-    const noticesData = response.filter(item => item.categoryName === 'Downloads' || item.categoryName === 'Others');
+    const noticesData = response.filter(
+      (item) =>
+        item.categoryName === "Downloads" || item.categoryName === "Others"
+    );
 
     const groupedNotices = noticesData.reduce((acc, item) => {
       if (!acc[item.subCategoryName]) {
@@ -36,7 +45,12 @@ function Downloads() {
     }, {});
 
     setNotices(groupedNotices);
-    setCurrentPages(Object.keys(groupedNotices).reduce((acc, key) => ({ ...acc, [key]: 1 }), {}));
+    setCurrentPages(
+      Object.keys(groupedNotices).reduce(
+        (acc, key) => ({ ...acc, [key]: 1 }),
+        {}
+      )
+    );
   };
 
   useEffect(() => {
@@ -44,12 +58,12 @@ function Downloads() {
   }, []);
 
   const handlePageChange = (subCategory, page) => {
-    setCurrentPages(prev => ({ ...prev, [subCategory]: page }));
+    setCurrentPages((prev) => ({ ...prev, [subCategory]: page }));
   };
 
   return (
-    <Grid container className="justify-start px-4 py-4 lg:px-20 lg:py-16 " gap="20px">
-      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal -m-10">
+    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
+      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
         Our Downloads
       </h2>
 
@@ -70,23 +84,32 @@ function Downloads() {
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                   {paginatedItems.length > 0 ? (
                     paginatedItems
-                      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+                      .sort(
+                        (a, b) =>
+                          new Date(b.publishedAt) - new Date(a.publishedAt)
+                      )
                       .map((item, index) => (
                         <li key={index}>
                           <a
                             onClick={() => downloadPublicationFile(item.file)}
-                            className="flex text-sm text-blue-700 hover:underline hover:text-blue-900 transition"
+                            className="flex text-sm"
                           >
                             {item.title}
                             <MdOutlineFileDownload
                               fontSize="17px"
-                              style={{ marginTop: '2px', marginLeft: '5px', color: '#1169bf' }}
+                              style={{
+                                marginTop: "2px",
+                                marginLeft: "5px",
+                                color: "#1169bf",
+                              }}
                             />
                           </a>
                         </li>
                       ))
                   ) : (
-                    <h1 className="text-center text-sm text-gray-600">No items available</h1>
+                    <h1 className="text-center text-sm text-gray-600">
+                      No items available
+                    </h1>
                   )}
                 </ul>
                 <div className="flex flex-col mt-auto">

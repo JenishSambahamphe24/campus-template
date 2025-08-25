@@ -21,6 +21,7 @@ function ProgramListUser() {
     try {
       setLoading(true);
       const response = await getAllPrograms();
+      console.log(response)
       setBachelorPrograms(response.filter((item) => item.level === "Bachelor"));
       setMasterPrograms(response.filter((item) => item.level === "Master"));
     } catch (error) {
@@ -176,7 +177,7 @@ function ProgramListUser() {
                           </span>
                           <div className="pt-3 text-base font-semibold leading-7 text-center">
                             <p className="text-white transition-all duration-300 group-hover:text-white text-sm">
-                              {item.shortName}
+                              {item.programName}
                             </p>
                           </div>
                         </div>

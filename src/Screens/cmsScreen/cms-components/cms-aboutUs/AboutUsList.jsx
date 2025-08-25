@@ -111,9 +111,9 @@ function AboutUsList() {
         status: showStatus(item.status),
     }));
     return (
-        <Grid container mx='auto' mb='2rem' md={11}>
-            <Stack direction='column' gap='20px' sx={{ height: 'auto', flex: '100%', padding: '0 20px' }}>
-                <Typography mx='auto' variant='h4' mb='1rem'> About us Content</Typography>
+    <Grid container sx={{ px: { xs: 2, sm: 4, md: 8 }, pb: 5 }} mx="auto">
+      <Stack direction="column" gap={3} sx={{ width: "100%" }}>
+                <Typography mx='auto' variant='h4'> About us Content</Typography>
                 <DataGrid
                     rows={rows}
                     columns={columns}

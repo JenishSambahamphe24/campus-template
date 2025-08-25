@@ -49,17 +49,6 @@ function TeamList() {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getAllUsers()
-            }
-            catch (error) {
-                console.error('Error fetching teams:', error);
-            }
-        };
-        fetchData()
-    }, [])
 
 
     const columns = [
@@ -143,7 +132,7 @@ function TeamList() {
     }));
 
     return (
-        <Grid container className='px-20 pb-10' mx='auto'>
+        <Grid container className='px-20 sm:px-10 md:px-20 pb-10' mx='auto'>
             <Typography mx='auto' variant='h4' >   List of team members</Typography>
             <Box width='100%'>
                 <Link to='/admin/addTeam'>

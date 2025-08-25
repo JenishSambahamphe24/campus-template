@@ -102,7 +102,7 @@ function GalleryList() {
 
 
   return (
-    <Grid container className='px-20 pb-10' mx='auto'>
+    <Grid container className='px-20 sm:px-10 md:px-20 pb-10' mx='auto'>
       <Typography mx='auto' variant='h4'>List of Gallery</Typography>
       <Box width='100%'>
         <Link to='/admin/addGallery'>

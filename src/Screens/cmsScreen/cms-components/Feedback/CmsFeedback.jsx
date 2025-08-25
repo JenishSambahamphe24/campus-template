@@ -24,7 +24,7 @@ function CmsFeedback() {
         {
             field: 'userName',
             headerName: 'Name',
-            flex: 1.3,
+            flex: 2,
             renderCell: (params) => (
                 <div style={{
                     width: '100%',
@@ -40,7 +40,7 @@ function CmsFeedback() {
         {
             field: 'email',
             headerName: 'Email',
-            flex: 2,
+            flex: 3,
             renderCell: (params) => (
                 <div style={{
                     width: '100%',
@@ -56,7 +56,7 @@ function CmsFeedback() {
         {
             field: 'contact',
             headerName: 'Contact No',
-            flex: 1.2,
+            flex: 2,
             renderCell: (params) => (
                 <div style={{
                     width: '100%',
@@ -100,7 +100,7 @@ function CmsFeedback() {
 
     return (
         <>
-            <Grid container className='px-20 pb-10' mx='auto'>
+            <Grid container className='px-20 sm:px-10 md:px-20 pb-10' mx='auto'>
                 <Typography mx='auto' variant='h4' mb='2rem' >   List of feedbacks</Typography>
                 <Box width='100%'>
                     <DataGrid

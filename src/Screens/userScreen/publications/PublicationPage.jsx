@@ -44,7 +44,7 @@ function PublicationPage() {
                         <div
                             style={{ fontSize: '16px' }}
                             dangerouslySetInnerHTML={{ 
-                                __html: publicationDetail.description || "No publication details available !!"
+                                __html: publicationDetail.description|| "No details available !!"
                             }}
                         />
                 </div>

@@ -4,7 +4,10 @@ import { MdNewspaper } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { getAllpublication } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
 import ReusablePagination from "../ReusablePagination";
-import { cleanDescription, formatDateShort } from "../../../Components/utilityFunctions";
+import {
+  cleanDescription,
+  formatDateShort,
+} from "../../../Components/utilityFunctions";
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 const defaultImage = import.meta.env.VITE_DEFAULT_IMG;
@@ -38,7 +41,11 @@ function NewsGrid() {
   };
 
   const NoNewsMessage = () => (
-    <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
+    <Grid
+      item
+      xs={12}
+      className="flex flex-col items-center justify-center py-6"
+    >
       <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
         <MdNewspaper className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
         <h3 className="text-xl font-semibold text-gray-800 mb-2">
@@ -62,7 +69,7 @@ function NewsGrid() {
           paginatedItems.map((item, index) => (
             <Grid key={index} item xs={12} sm={4} lg={3}>
               <article
-                style={{ minHeight: "320px" }}
+                style={{ minHeight: "220px" }}
                 className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
               >
                 <Link to={`/publication/${item.id}`}>
@@ -78,23 +85,16 @@ function NewsGrid() {
                     }}
                     className="h-56 w-full object-cover"
                   />
-                  <div className="p-1 sm:p-2">
-                    <h4 className="text-gray-900 font-semibold text-sm line-clamp-2 hover:text-indigo-600 transition">
-                      {item.title}
-                    </h4>
-                    <div
-                      style={{ fontSize: "14px" }}
-                      className="mt-1 text-gray-600 text-sm line-clamp-3"
-                      dangerouslySetInnerHTML={{
-                        __html: cleanDescription(item.description),
-                      }}
-                    />
-                  </div>
+                  <div className="p-1 sm:p-2" />
                 </Link>
                 <div className="flex px-2 pb-2">
-                  <span className="text-blue-500 text-sm">
+                  <span className="text-blue-500 text-md">
                     {formatDateShort(item.createdAt || "2024-01-01")}
                   </span>
+                </div>
+
+                <div className="px-2 pb-2">
+                  <h1 className="text-lg line-clamp-1">{item.title} </h1>
                 </div>
               </article>
             </Grid>
