@@ -40,12 +40,12 @@ function Curriculum() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  console.log(paginatedItems)
+  console.log(paginatedItems);
   const NoCurriculumMessage = () => (
     <Grid
       item
       xs={12}
-      className="flex flex-col items-center justify-center py-12"
+      className="flex flex-col items-center justify-center py-6"
     >
       <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
         <MdSchool className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
@@ -59,11 +59,11 @@ function Curriculum() {
       </div>
     </Grid>
   );
- console.log(paginatedItems)
+  console.log(paginatedItems);
   return (
     <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
       <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
-        Our Curriculum 
+        Our Curriculum
       </h2>
       <Grid mt="10px" container mx="20px" spacing="20px">
         {paginatedItems.length > 0 ? (
@@ -71,7 +71,7 @@ function Curriculum() {
             <Grid key={index} item xs={12} sm={4} lg={3}>
               <article
                 style={{ minHeight: "220px" }}
-                className="bg-gray-200 py-2 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
+                className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
               >
                 <Link to={`/curriculum/${item.id}`}>
                   <img
@@ -84,7 +84,7 @@ function Curriculum() {
                     onError={(e) => {
                       e.target.src = defaultImage;
                     }}
-                    className="h-56 w-full object-cover"
+                    className="h-56  w-full object-cover"
                   />
                   <div className="p-1 sm:p-2" />
                 </Link>
@@ -106,7 +106,7 @@ function Curriculum() {
                   </span>
                 </div>
                 <div className="px-2">
-                  <h1 className="text-lg  line-clamp-1">{item.title} </h1>
+                  <h1 className="text-lg pb-2 line-clamp-1">{item.title} </h1>
                 </div>
               </article>
             </Grid>

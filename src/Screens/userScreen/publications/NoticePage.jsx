@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { SlCalender } from "react-icons/sl";
 import { downloadPublicationFile, getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
-import { FaRegFilePdf } from 'react-icons/fa';
+import { MdOutlineFileDownload } from "react-icons/md";
 import { useState, useEffect } from 'react';
 import { extractDate } from '../../../Components/utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
@@ -44,11 +44,11 @@ function NoticePage() {
                         </div>
                         {
                             notice.isFile === true && (
-                                <button onClick={() => downloadPublicationFile(notice.file)} className='flex h-5 mt-1 ml-1 px-2  bg-[#F36710] rounded-lg'>
-                                    <span className='text-xs mt-[1px] text-white'>
+                                <button onClick={() => downloadPublicationFile(notice.file)} className='flex h-5 mt-1 mr-4'>
+                                    <span className='text-xs mt-[1px] text-[#1169bf]'>
                                         download
                                     </span>
-                                    <FaRegFilePdf fontSize="16px" style={{ marginLeft: '5px', color: 'white', marginTop: '2px' }} />
+                                    <MdOutlineFileDownload fontSize="16px" style={{ marginLeft: '5px', color: '#1169bf', marginTop: '2px' }} />
                                 </button>
                             )
                         }

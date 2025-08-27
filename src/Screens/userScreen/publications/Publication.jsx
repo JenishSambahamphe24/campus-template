@@ -63,62 +63,67 @@ function Publication() {
     </Grid>
   );
 
-    return (
-        <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
-            <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">Our Publication</h2>
-            <Grid mt="10px" container mx="20px" spacing="20px">
-                {paginatedItems.length > 0 ? (
-                    paginatedItems.map((item, index) => (
-                        <Grid key={index} item xs={12} sm={4} lg={3}>
-                            <article
-                                style={{ minHeight: '320px' }}
-                                className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
-                            >
-                                <Link to={`/publication/${item.id}`}>
-                                    <img
-                                        alt=""
-                                        src={`${IMAGE_URL}/thumb/${item.thumbnailImage}`}
-                                        className="h-56 w-full object-cover"
-                                        onError={(e) => { e.target.src = defaultImage; }}
-                                    />
-                                    <div className="p-1 sm:p-2">
-                                        <h1 className="mt-1 line-clamp-2 text-sm text-gray-500">
-                                           {item.title}
-                                        </h1>
-                                    </div>
-                                </Link>
-                                <div className="flex px-2 pb-2">
-                                    {item.isFile && (
-                                        <>
-                                            <a
-                                                onClick={() => downloadPublicationFile(item.file)}
-                                                className="group inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:underline"
-                                            >
-                                                Download
-                                                <MdOutlineFileDownload fontSize="18px" />
-                                            </a>
-                                            <span className="mx-1 text-gray-400">|</span>
-                                        </>
-                                    )}
-                                    <span className="text-blue-500 text-md">{formatDate(item.publishedAt)}</span>
-                                </div>
-                            </article>
-                        </Grid>
-                    ))
-                ) : (
-                    <NoPublicationsMessage />
-                )}
+  return (
+    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
+      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
+        Our Publication
+      </h2>
+      <Grid mt="10px" container mx="20px" spacing="20px">
+        {paginatedItems.length > 0 ? (
+          paginatedItems.map((item, index) => (
+            <Grid key={index} item xs={12} sm={4} lg={3}>
+              <article
+                style={{ minHeight: "220px" }}
+                className="bg-gray-200 hover:bg-gray-300 overflow-hidden rounded-lg border border-gray-400 shadow-sm transition-transform transform hover:scale-105 hover:cursor-pointer"
+              >
+                <Link to={`/publication/${item.id}`}>
+                  <img
+                    alt=""
+                    src={`${IMAGE_URL}/thumb/${item.thumbnailImage}`}
+                    className="h-56 w-full object-cover"
+                    onError={(e) => {
+                      e.target.src = defaultImage;
+                    }}
+                  />
+                  <div className="p-1 sm:p-2" />
+                </Link>
+                <div className="flex px-2 pb-1">
+                  {item.isFile && (
+                    <>
+                      <a
+                        onClick={() => downloadPublicationFile(item.file)}
+                        className="group inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:underline"
+                      >
+                        Download
+                        <MdOutlineFileDownload fontSize="18px" />
+                      </a>
+                      <span className="mx-1 text-gray-400">|</span>
+                    </>
+                  )}
+                  <span className="text-blue-500 text-md">
+                    {formatDate(item.publishedAt)}
+                  </span>
+                </div>
+                <div className="px-2">
+                  <h1 className="text-lg pb-2 line-clamp-1">{item.title} </h1>
+                </div>
+              </article>
             </Grid>
-            {paginatedItems.length > 0 && (
-                <ReusablePagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                    itemsPerPage={itemsPerPage}
-                />
-            )}
-        </Grid>
-    );
+          ))
+        ) : (
+          <NoPublicationsMessage />
+        )}
+      </Grid>
+      {paginatedItems.length > 0 && (
+        <ReusablePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          itemsPerPage={itemsPerPage}
+        />
+      )}
+    </Grid>
+  );
 }
 
 export default Publication;

@@ -59,13 +59,15 @@ function Report() {
   };
 
   return (
-    <Grid container className="justify-start px-4 py-4 lg:px-20 lg:py-16 " gap="20px">
-      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal -m-10">
+    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
+      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
         Our Reports
       </h2>
 
       {Object.keys(reports).length === 0 ? (
-        <NoReportMessage />
+        <Grid mt="10px" container mx="20px" spacing="20px">
+          <NoReportMessage />
+        </Grid>
       ) : (
         Object.entries(reports).map(([subCategory, items]) => {
           const currentPage = currentPages[subCategory] || 1;
@@ -75,7 +77,7 @@ function Report() {
           const paginatedItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
           return (
-            <Grid item xs={11.8} lg={3.8} md={5.8} key={subCategory}>
+            <Grid item xs={11.8} lg={3.8} md={4} sx={{p: 0.5, mr:2.8}} key={subCategory}>
               <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
               <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">

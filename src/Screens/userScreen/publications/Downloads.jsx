@@ -10,7 +10,7 @@ import {
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
 const NoDownloadsMessage = () => (
-  <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
+      <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
     <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
       <MdCloudOff className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
       <h3 className="text-xl font-semibold text-gray-800 mb-2">
@@ -68,7 +68,9 @@ function Downloads() {
       </h2>
 
       {Object.keys(notices).length === 0 ? (
+        <Grid mt="10px" container mx="20px" spacing="20px">
         <NoDownloadsMessage />
+        </Grid>
       ) : (
         Object.entries(notices).map(([subCategory, items]) => {
           const currentPage = currentPages[subCategory] || 1;
@@ -78,7 +80,7 @@ function Downloads() {
           const paginatedItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
           return (
-            <Grid item xs={11.8} lg={3.8} md={5.8} key={subCategory}>
+            <Grid item xs={11.8} lg={3.8} md={4} sx={{p: 0.5, mr:2.8}} key={subCategory}>
               <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
               <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
@@ -124,7 +126,8 @@ function Downloads() {
             </Grid>
           );
         })
-      )}
+      )
+      }
     </Grid>
   );
 }

@@ -41,14 +41,10 @@ function NewsGrid() {
   };
 
   const NoNewsMessage = () => (
-    <Grid
-      item
-      xs={12}
-      className="flex flex-col items-center justify-center py-6"
-    >
-      <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
-        <MdNewspaper className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+      <Grid item xs={12} className="flex flex-col items-center justify-center py-6">
+    <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
+        <MdNewspaper className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce"/>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
           No News Available
         </h3>
         <p className="text-gray-600">

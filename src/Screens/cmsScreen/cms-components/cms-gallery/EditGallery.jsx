@@ -207,7 +207,7 @@ function EditGallery() {
                             {
                                 images.map((item, index) => (
                                     <Grid item sm={1.9} bgcolor='teal' key={index} className='relative'>
-                                        <img className='w-full h-20 object-cover' src={`${IMAGE_URL}/images/${item.image}`} alt="" />
+                                        <img className='w-full h-20 object-cover' src={`${IMAGE_URL}/thumb/${item.image}`} alt="" />
                                         <button type='button' onClick={() => handleImageDelete(item.id)} className='bg-white absolute top-0 p-[2px] rounded-md right-0'>
                                             <IoCloseSharp />
                                         </button>
