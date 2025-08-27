@@ -69,7 +69,7 @@ function VideoPlayer() {
                 </Grid>
                 {
                     videos.length > 0 ?
-                        videos.slice(0, 2).map((item, index) => {
+                        videos.slice(0, 3).map((item, index) => {
                             const videoId = videoIdParser(item.videoUrl)
                             return (
                                 <Grid key={index} mx={isMobile ? 'auto' : ''} item xs={10} sm={3}  >

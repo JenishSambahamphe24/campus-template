@@ -137,7 +137,7 @@ function GalleryPage() {
                                         <TabPanel value='video' style={{ padding: '0px', marginTop: '20px' }}>
                                             {loading ? (
                                                 <Grid container spacing={2}>
-                                                    {[1, 2, 3].map((item) => (
+                                                    {[1, 2, 3, 4].map((item) => (
                                                         <Grid key={item} item sm={4}>
                                                             <div className="video-player bg-gray-200 animate-pulse" style={{ width: '100%', height: '300px' }}></div>
                                                         </Grid>

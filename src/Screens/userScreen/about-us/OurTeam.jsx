@@ -9,7 +9,8 @@ import {
     TabsBody,
     Tab,
     TabPanel,
-} from "@material-tailwind/react";
+} from "@material-tailwind/react"
+import { FaBookReader } from "react-icons/fa";
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
@@ -85,6 +86,25 @@ function OurTeam() {
     const handleTabChange = (value) => {
         setActiveTab(value);
     };
+
+    // No team members message component
+    const NoTeamMessage = () => (
+        <Grid
+            item
+            xs={12}
+            className="flex flex-col items-center justify-center py-12"
+        >
+            <div className="bg-blue-50 rounded-lg p-6 text-center max-w-md shadow-md">
+                <FaBookReader className="h-12 w-12 mx-auto text-blue-500 mb-4 animate-bounce" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    No Team Members Available
+                </h3>
+                <p className="text-gray-600">
+                    Please login to the CMS and add team members to display here.
+                </p>
+            </div>
+        </Grid>
+    );
 
     // Render team member card
     const renderTeamMemberCard = (item, index, showLinkWrapper = false) => {
@@ -218,70 +238,46 @@ function OurTeam() {
                                     whiteSpace: 'nowrap'
                                 }}
                             >
-                                <h1 className='xs:text-xs'>
-                                    {label}
-                                </h1>
+                                <h1 className='xs:text-xs'>{label}</h1>
                             </Tab>
                         ))}
                     </TabsHeader>
 
                     <TabsBody>
-                        {/* Committee Members Tab */}
-                        <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Committe member">
-                            <Grid minHeight='250px' gap='10px' container mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Committe member").map((item, index) =>
-                                    renderTeamMemberCard(item, index, false)
+                        {tabData.map(({ value }) => (
+                            <TabPanel
+                                key={value}
+                                value={value}
+                                style={{ marginTop: '20px', padding: '0' }}
+                            >
+                                {getFilteredData(value).length > 0 ? (
+                                    <Grid
+                                        container
+                                        minHeight='250px'
+                                        gap='10px'
+                                        mx='auto'
+                                        mb='1.5rem'
+                                        padding='10px 0px'
+                                    >
+                                        {getPaginatedData(value).map((item, index) =>
+                                            renderTeamMemberCard(item, index, value !== "Committe member")
+                                        )}
+                                    </Grid>
+                                ) : (
+                                    <NoTeamMessage />
                                 )}
-                            </Grid>
 
-                            {getTotalPages("Committe member") > 1 && (
-                                <div className="flex justify-center mt-6">
-                                    <ReusablePagination
-                                        currentPage={paginationState["Committe member"].currentPage}
-                                        totalPages={getTotalPages("Committe member")}
-                                        onPageChange={(page) => handlePageChange("Committe member", page)}
-                                    />
-                                </div>
-                            )}
-                        </TabPanel>
-
-                        {/* Teaching Staff Tab */}
-                        <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Teaching staff">
-                            <Grid container minHeight='250px' spacing={2} mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Teaching staff").map((item, index) =>
-                                    renderTeamMemberCard(item, index, true)
+                                {getTotalPages(value) > 1 && (
+                                    <div className="flex justify-center mt-6">
+                                        <ReusablePagination
+                                            currentPage={paginationState[value].currentPage}
+                                            totalPages={getTotalPages(value)}
+                                            onPageChange={(page) => handlePageChange(value, page)}
+                                        />
+                                    </div>
                                 )}
-                            </Grid>
-
-                            {getTotalPages("Teaching staff") > 1 && (
-                                <div className="flex justify-center mt-6">
-                                    <ReusablePagination
-                                        currentPage={paginationState["Teaching staff"].currentPage}
-                                        totalPages={getTotalPages("Teaching staff")}
-                                        onPageChange={(page) => handlePageChange("Teaching staff", page)}
-                                    />
-                                </div>
-                            )}
-                        </TabPanel>
-
-                        {/* Non-Teaching Staff Tab */}
-                        <TabPanel style={{ marginTop: '20px', padding: '0' }} value="Non-teaching staff">
-                            <Grid container minHeight='250px' spacing={2} mx='auto' mb='1.5rem' padding='10px 0px'>
-                                {getPaginatedData("Non-teaching staff").map((item, index) =>
-                                    renderTeamMemberCard(item, index, true)
-                                )}
-                            </Grid>
-
-                            {getTotalPages("Non-teaching staff") > 1 && (
-                                <div className="flex justify-center mt-6">
-                                    <ReusablePagination
-                                        currentPage={paginationState["Non-teaching staff"].currentPage}
-                                        totalPages={getTotalPages("Non-teaching staff")}
-                                        onPageChange={(page) => handlePageChange("Non-teaching staff", page)}
-                                    />
-                                </div>
-                            )}
-                        </TabPanel>
+                            </TabPanel>
+                        ))}
                     </TabsBody>
                 </Tabs>
             </Grid>

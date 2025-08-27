@@ -1,70 +1,66 @@
-
-
 import { useState, useEffect } from 'react';
 import { IoIosCloseCircle } from "react-icons/io";
 import { getAllpublication } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 import NepaliDate from 'nepali-datetime';
 import { extractDate } from './utilityFunctions';
+
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
 function PopupBanner() {
     const [isVisible, setIsVisible] = useState(false);
-    const [data, setData] = useState([]);
-    const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
-    const pad = (n) => n.toString().padStart(2, "0");
+    const [popups, setPopups] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const nepaliDate = new NepaliDate();
-    const nepaliDateToday = `${nepaliDate.year}-${pad(nepaliDate.month)}-${pad(nepaliDate.day)}`;
+    const nepaliDateToday = `${nepaliDate.year}-${String(nepaliDate.month).padStart(2,'0')}-${String(nepaliDate.day).padStart(2,'0')}`;
 
+    // Check if popup is expired
     const isExpired = (expiredAt) => {
-        if (!expiredAt) return false;
-        return expiredAt < nepaliDateToday;
+        if (!expiredAt) return true;
+        const expiredDateStr = expiredAt.split('T')[0];
+        return expiredDateStr < nepaliDateToday;
     };
 
-
+    // Fetch popups from API
     useEffect(() => {
-        const fetchAllPopups = async () => {
+        const fetchPopups = async () => {
             try {
                 const response = await getAllpublication();
-                const popups = response
+                const validPopups = response
                     .filter(item => item.isPopUp === true)
                     .map(item => ({
+                        id: item.id, // Use ID to sort by upload order
                         title: item.title,
                         image: item.thumbnailImage,
-                        publishedAt: item.publishedAt,
                         expiredAt: extractDate(item.expiredAt)
                     }))
-                    .filter(item => !isExpired(item.expiredAt));
-
-                setData(popups);
+                    .filter(item => !isExpired(item.expiredAt))
+                    .sort((a, b) => b.id - a.id); // Latest uploaded first
+                
+                setPopups(validPopups);
+                if (validPopups.length > 0) setIsVisible(true);
             } catch (error) {
-                console.log(error);
+                console.error("Error fetching popups:", error);
             }
         };
-        fetchAllPopups();
+
+        fetchPopups();
     }, [nepaliDateToday]);
 
-
-    useEffect(() => {
-        const popupTimer = setTimeout(() => {
-            setIsVisible(true);
-        }, 1000);
-
-        return () => clearTimeout(popupTimer);
-    }, []);
-
     const handleClose = () => {
-        if (currentPopupIndex < data.length - 1) {
-            setCurrentPopupIndex(prevIndex => prevIndex + 1);
+        if (currentIndex < popups.length - 1) {
+            setCurrentIndex(prev => prev + 1);
         } else {
             setIsVisible(false);
         }
     };
 
-    if (!isVisible || data.length === 0 || currentPopupIndex >= data.length) {
+    if (!isVisible || popups.length === 0 || currentIndex >= popups.length) {
         return null;
     }
-    const currentPopup = data[currentPopupIndex];
+
+    const currentPopup = popups[currentIndex];
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div
@@ -72,24 +68,49 @@ function PopupBanner() {
                 onClick={handleClose}
             />
 
-            <div className="relative w-[620px] h-[540px] bg-white rounded-xl shadow-2xl overflow-hidden z-10 animate-fadeIn">
-                <div
-                    className="absolute inset-0 bg-none bg-center bg-cover bg-no-repeat opacity-80"
-                    style={{ backgroundImage: `url(${IMAGE_URL}/thumb/${currentPopup.image})` }}
-                />
-
-                <div className="relative p-6">
-
+            <div className="relative w-[550px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden z-10 animate-fadeIn">
+                <div className="relative bg-white p-4 border-b border-gray-200 z-20">
                     <button
-                        className="absolute top-2 right-2 text-gray-900 hover:text-red-900 transition-colors"
+                        className="absolute top-2 right-2 text-gray-600 hover:text-red-600 transition-colors"
                         onClick={handleClose}
                         aria-label="Close popup"
                     >
                         <IoIosCloseCircle className="text-3xl" />
                     </button>
-
+                    {currentPopup.title && (
+                        <h3 className="text-lg font-semibold text-gray-800 pr-10 truncate">
+                            {currentPopup.title}
+                        </h3>
+                    )}
                 </div>
+
+                <div className="flex-1 overflow-auto custom-scrollbar" style={{ height: 'calc(100% - 80px)' }}>
+                    <div className="p-4">
+                        <img
+                            src={`${IMAGE_URL}/thumb/${currentPopup.image}`}
+                            alt={currentPopup.title || "Popup image"}
+                            className="w-full h-auto object-contain rounded-lg shadow-md"
+                            onError={(e) => {
+                                e.target.src = '/path/to/fallback-image.jpg';
+                                e.target.alt = 'Image not available';
+                            }}
+                        />
+                    </div>
+                </div>
+
+                {popups.length > 1 && (
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
+                        {currentIndex + 1} of {popups.length}
+                    </div>
+                )}
             </div>
+
+            <style>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+            `}</style>
         </div>
     );
 }
