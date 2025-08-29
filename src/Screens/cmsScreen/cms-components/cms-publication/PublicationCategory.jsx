@@ -247,7 +247,7 @@ function PublicationCategory() {
           category.length === 0 && (
             <Box textAlign="center" mt={4}>
               <img
-                src="/assets/empty-state-icon.svg" // Replace with your actual image path
+                src="/assets/empty-state-icon.svg" 
                 alt="No content"
                 style={{ width: "120px", marginBottom: "16px" }}
               />
@@ -280,4 +280,4 @@ function PublicationCategory() {
   );
 }
 
-export default PublicationCategory;
+export default PublicationCategory

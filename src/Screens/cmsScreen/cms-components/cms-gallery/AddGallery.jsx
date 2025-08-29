@@ -17,6 +17,7 @@ function AddGallery() {
         thumbnailImage: null,
         videoUrl: '',
         status: true,
+        isIntroVideo: null,
     });
 
     const handleImageSelect = (file) => {
@@ -48,6 +49,7 @@ function AddGallery() {
         payload.append('galleryDescription', formData.galleryDescription);
         payload.append('thumbnailImage', formData.thumbnailImage);
         payload.append('videoUrl', formData.videoUrl);
+        payload.append('isIntroVideo', formData.isIntroVideo);
         payload.append('status', formData.status);
 
         try {
@@ -138,7 +140,7 @@ function AddGallery() {
                 </Grid>
 
                 {formData.galleryType === 'Video' && (
-                    <Grid item md={8}>
+                    <Grid item md={9}>
                         <TextField
                             fullWidth
                             size="small"
@@ -148,6 +150,25 @@ function AddGallery() {
                             label="Video URL"
                             disabled={formData.galleryType !== 'Video'}
                         />
+                    </Grid>
+                )}
+
+                {/* Intro Video Selector */}
+                {formData.galleryType === 'Video' && (
+                    <Grid item sm={12} md={3}>
+                        <FormControl size="small" fullWidth>
+                            <InputLabel size="small">Is Introductory Video?</InputLabel>
+                            <Select
+                                name="isIntroVideo"
+                                value={formData.isIntroVideo}
+                                onChange={handleChange}
+                                label="Is Introductory Video?"
+                                size="small"
+                            >
+                                <MenuItem value={true}>Yes</MenuItem>
+                                <MenuItem value={false}>No</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                 )}
 
@@ -184,4 +205,4 @@ function AddGallery() {
     );
 }
 
-export default AddGallery;
+export default AddGallery

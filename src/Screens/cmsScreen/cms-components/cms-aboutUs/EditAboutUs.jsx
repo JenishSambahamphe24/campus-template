@@ -196,7 +196,7 @@ function EditAboutUs() {
 
                     <DialogActions>
                         <Button type="submit" size="small" variant="contained">
-                            Edit
+                            Update
                         </Button>
                     </DialogActions>
                 </form>
