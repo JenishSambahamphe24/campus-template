@@ -26,11 +26,11 @@ function PopupBanner() {
     const expiredDateStr = expiredAt.split("T")[0];
     const result = expiredDateStr < nepaliDateToday;
 
-    // // Debug logs
-    // console.log("Today:", nepaliDateToday);
-    // console.log("Expired at:", expiredAt);
-    // console.log("Extracted expiry date:", expiredDateStr);
-    // console.log("Is expired:", result);
+    // Debug logs
+    console.log("Today:", nepaliDateToday);
+    console.log("Expired at:", expiredAt);
+    console.log("Extracted expiry date:", expiredDateStr);
+    console.log("Is expired:", result);
 
     return result;
   };

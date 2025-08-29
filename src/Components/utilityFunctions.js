@@ -3,14 +3,6 @@ export const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-export const formatDateShort = (dateString) => {
-    if (!dateString) {
-        dateString = '2024-01-01';
-    }
-
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options).replace(',', '');
-}
 
 export const cleanDescription = (description) => {
     const parser = new DOMParser();
@@ -50,6 +42,15 @@ export function extractDate(isoString) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+}
+
+export const formatDateShort = (dateString) => {
+    if (!dateString) {
+        dateString = '2024-01-01';
+    }
+
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options).replace(',', '');
 }
 
 export function showStatus(status) {

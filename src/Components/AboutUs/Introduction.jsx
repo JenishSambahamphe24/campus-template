@@ -25,7 +25,7 @@ function Introduction() {
         // Fetch Gallery data
         const galleryResult = await getAllGallery();
         const videoGallery = galleryResult.filter(
-          (item) => item.galleryType === "Video"
+          (item) => item.galleryType === "Video" && item.isIntroVideo === 1
         );
         setVideos(videoGallery);
       } catch (error) {
@@ -50,12 +50,12 @@ function Introduction() {
   return (
     <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
       {/* Heading */}
-      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal">
+      <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
         Introduction
       </h2>
 
       {/* Card Container */}
-      <div className="bg-white md:p-5 rounded-xl  max-w-5xl mx-auto flex flex-col gap-6 mt-3 p-5">
+      <div className="bg-white md:p-5 rounded-xl shadow-xl border border-gray-100 max-w-5xl mx-auto flex flex-col gap-6 mt-6 p-5">
         {/* Video Row (full width if exists) */}
         {videos && videos.length > 0 && (
           <div className="w-full overflow-hidden shadow-lg h-80">
