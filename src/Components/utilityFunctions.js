@@ -3,14 +3,6 @@ export const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-export const formatDateShort = (dateString) => {
-    if (!dateString) {
-        dateString = '2024-01-01';
-    }
-
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options).replace(',', '');
-}
 
 export const cleanDescription = (description) => {
     const parser = new DOMParser();
@@ -27,21 +19,19 @@ export const cleanDescription = (description) => {
 };
 
 export const videoIdParser = (url) => {
-    if (!url) return null; // Check if the URL is null or undefined
-    const videoURL = url;
-    const splited = videoURL.split("v=");
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.hostname === "youtu.be") {
+      return urlObj.pathname.slice(1); // removes the leading /
+    } else if (urlObj.hostname.includes("youtube.com")) {
+      return urlObj.searchParams.get("v");
+    }
+  } catch (err) {
+    console.error("Invalid URL", url);
+    return null;
+  }
+};
 
-    // Ensure that the URL contains the 'v=' part
-    if (splited.length < 2) return null;
-
-    const splitedAgain = splited[1].split("&");
-
-    // Ensure that the 'v=' is followed by some ID
-    if (splitedAgain.length === 0) return null;
-
-    const videoId = splitedAgain[0];
-    return videoId;
-}
 
 export function extractDate(isoString) {
     if (!isoString) {
@@ -52,6 +42,15 @@ export function extractDate(isoString) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+}
+
+export const formatDateShort = (dateString) => {
+    if (!dateString) {
+        dateString = '2024-01-01';
+    }
+
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options).replace(',', '');
 }
 
 export function showStatus(status) {

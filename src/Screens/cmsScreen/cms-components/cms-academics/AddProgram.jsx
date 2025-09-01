@@ -175,6 +175,7 @@ function AddProgram() {
                             size='small'
                             label='Short Name (Abbreviation)'
                             name='shortName'
+                            required
                             value={formData.shortName}
                             onChange={handleChange}
                         />

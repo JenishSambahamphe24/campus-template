@@ -122,9 +122,9 @@ function FacultyList() {
     }
 
     return (
-        <Grid container mx='auto' md={11}>
-            <Stack direction='column' gap='20px' sx={{ height: 'auto', flex: '100%', padding: '0 20px' }}>
-                <Typography mx='auto' variant='h4' mb='.7rem'> List of Faculties </Typography>
+    <Grid container sx={{ px: { xs: 2, sm: 4, md: 8 }, pb: 5 }} mx="auto">
+      <Stack direction="column" gap={3} sx={{ width: "100%" }}>
+                <Typography mx="auto" variant="h4"> List of Faculties </Typography>
                 <FormControl fullWidth sx={{ maxWidth: "30%" }} size="small">
                     <InputLabel>Select Level</InputLabel>
                     <Select

@@ -130,17 +130,22 @@ export const downloadPublicationFile = async (filename) => {
 
 // Updated publicationApi.js - downloadPublicationFile function
 
-export const deletePublicationCategoryById = async (filename) => {
-    try {
+export const deletePublicationCategoryById = async (id) => {
+  try {
+    const token = getAuthToken();
+    if (!token) throw new Error("Token is missing");
 
-        const response = await fetch(`${BASE_URL}/api/download/${filename}`, {
-            method: 'GET',
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error while deleting Publication category:", error.response?.data || error.message);
-        throw error;
-    }
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.delete(`${BASE_URL}/publicationCategories/${id}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error while deleting Publication category:", error.response?.data || error.message);
+    throw error;
+  }
 };
+
 
 

@@ -190,7 +190,6 @@ function PublicationList() {
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>
                         <TabPanel key={activeTab} value={activeTab}>
-                            <div style={{ minWidth: '800px', minHeight:'460px', overflowX: 'auto' }}>
                                 <DataGrid
                                     rows={rows}
                                     columns={columns}
@@ -252,7 +251,6 @@ function PublicationList() {
                                         marginTop: '0'
                                     }}
                                 />
-                            </div>
                         </TabPanel>
                     </TabsBody>
                 </Tabs>

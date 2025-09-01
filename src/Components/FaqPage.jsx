@@ -30,7 +30,7 @@ function FaqPage() {
     console.log(faqs)
     return (
         <div>
-            <section className="py-10 bg-gray-50 ">
+            <section className="py-10">
                 <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                     <div>
                         <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">Frequently Asked Questions</h2>

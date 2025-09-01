@@ -354,5 +354,5 @@ function AddPublication() {
     );
 }
 
-export default AddPublication;
+export default AddPublication
 
