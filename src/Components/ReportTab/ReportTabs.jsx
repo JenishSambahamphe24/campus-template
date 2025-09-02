@@ -24,7 +24,7 @@ function ReportTabs() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllpublication();
-            const filteredData = data.filter(item => item.categoryName === 'Report');
+            const filteredData = data.filter(item => item.categoryName === 'Report' && item.displayStatus === true);
             const uniqueSubCategories = Array.from(new Set(filteredData.map(item => item.subCategoryName)));
             if (uniqueSubCategories) {
                 setSubCategories(uniqueSubCategories);
@@ -88,9 +88,12 @@ function ReportTabs() {
     return (
         <Grid container rowGap='20px'>
             <Divider style={{ width: '100%', backgroundColor: '#c2c2c2' }} />
-            <h1 className='text-2xl'>
-                Reports
-            </h1>
+            <Grid className=" text-white" sm={12}>
+          <h1 className="inline-block px-1  bg-[#1169bf]  text-lg">
+            {" "}
+            Reports
+          </h1>
+        </Grid>
             <Grid item mx='auto' xs={12}>
                 {
                     allReports.length > 0 ? (

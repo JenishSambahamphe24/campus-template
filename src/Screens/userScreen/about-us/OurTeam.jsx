@@ -52,12 +52,22 @@ function OurTeam() {
 
     const itemsPerPage = 8;
 
-    // Get filtered data for current tab
-    const getFilteredData = (category) => {
-        return allTeamMember
-            ?.filter(item => item.category === category)
-            .sort((a, b) => a.index - b.index) || [];
-    };
+    // Get filtered data for current tab (active members only)
+  const getFilteredData = (category) => {
+    const filtered =
+      allTeamMember
+        ?.filter((item) => {
+          // Normalize category comparison
+          const itemCategory = item.category?.toLowerCase();
+          const targetCategory = category.toLowerCase();
+          return itemCategory === targetCategory && item.status === true;
+        })
+        .sort((a, b) => a.index - b.index) || [];
+
+    console.log(`Filtered ${category} members:`, filtered); // Debug log
+    return filtered;
+  };
+
 
     // Get paginated data for current tab
     const getPaginatedData = (category) => {

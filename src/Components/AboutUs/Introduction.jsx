@@ -17,15 +17,16 @@ function Introduction() {
       try {
         // Fetch About Us data
         const aboutUsResult = await getAllaboutUs();
+        
         const introData = aboutUsResult.find(
-          (item) => item.heading === "Introduction"
+          (item) => item.heading === "Introduction" 
         );
         setData(introData || {});
 
         // Fetch Gallery data
         const galleryResult = await getAllGallery();
         const videoGallery = galleryResult.filter(
-          (item) => item.galleryType === "Video" && item.isIntroVideo === 1
+          (item) => item.galleryType === "Video" && item.isIntroVideo === 1 
         );
         setVideos(videoGallery);
       } catch (error) {
@@ -46,7 +47,7 @@ function Introduction() {
     : data.aboutUsImage
     ? `${IMAGE_URL}/aboutUs/${data.aboutUsImage}`
     : defaultImage;
-  console.log(data.aboutUsImage);
+  
   return (
     <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
       {/* Heading */}
@@ -55,7 +56,7 @@ function Introduction() {
       </h2>
 
       {/* Card Container */}
-      <div className="bg-white md:p-5 rounded-xl shadow-xl border border-gray-100 max-w-5xl mx-auto flex flex-col gap-6 mt-6 p-5">
+      <div className="bg-white md:p-5 rounded-xl  border border-gray-100 w-full max-w-5xl mx-auto flex flex-col gap-6 mt-5 p-5">
         {/* Video Row (full width if exists) */}
         {videos && videos.length > 0 && (
           <div className="w-full overflow-hidden shadow-lg h-80">
@@ -81,10 +82,10 @@ function Introduction() {
         {/* Image + Description Row */}
         {(imageSource || data.description) && (
           <div className="w-full">
-            {/* For larger screens: float image left with text wrapping around */}
+            {/* For larger screens */}
             <div className="hidden md:block">
               {imageSource && (
-                <div className="float-left w-1/3 mr-6 mb-4 overflow-hidden group h-60 mt-2">
+                <div className={`overflow-hidden group h-60 mt-5 ${data.description ? "float-left w-1/3 mr-6 mb-4" : "w-full flex justify-center"}`}>
                   <img
                     src={imageSource}
                     alt="Campus Logo"
@@ -105,7 +106,7 @@ function Introduction() {
               )}
             </div>
 
-            {/* For mobile: stack image and description */}
+            {/* For mobile */}
             <div className="md:hidden flex flex-col gap-6">
               {imageSource && (
                 <div className="w-full overflow-hidden group h-60 mt-2">

@@ -174,6 +174,7 @@ function EditTeam() {
         ];
       case "Non-teaching staff":
         return [
+          { value: "Officer", label: "Officer" },
           { value: "Information Officer", label: "Information Officer" },
           {
             value: "Administrative or A/c Officer",
