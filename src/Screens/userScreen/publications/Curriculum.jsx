@@ -25,7 +25,7 @@ function Curriculum() {
     const fetchdata = async () => {
       const data = await getAllpublication();
       const filteredData = data.filter(
-        (item) => item.categoryName === "Curriculum"
+        (item) => item.categoryName === "Curriculum" && item.displayStatus === true
       );
       setAllCurriculum(filteredData);
     };

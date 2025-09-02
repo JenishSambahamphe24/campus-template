@@ -17,15 +17,16 @@ function Introduction() {
       try {
         // Fetch About Us data
         const aboutUsResult = await getAllaboutUs();
+        
         const introData = aboutUsResult.find(
-          (item) => item.heading === "Introduction"
+          (item) => item.heading === "Introduction" 
         );
         setData(introData || {});
 
         // Fetch Gallery data
         const galleryResult = await getAllGallery();
         const videoGallery = galleryResult.filter(
-          (item) => item.galleryType === "Video" && item.isIntroVideo === 1
+          (item) => item.galleryType === "Video" && item.isIntroVideo === 1 
         );
         setVideos(videoGallery);
       } catch (error) {

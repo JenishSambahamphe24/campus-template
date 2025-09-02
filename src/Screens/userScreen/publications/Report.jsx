@@ -31,7 +31,7 @@ function Report() {
   const fetchData = async () => {
     const response = await getAllpublication();
     const reportData = response.filter(
-      (item) => item.categoryName === "Report"
+      (item) => item.categoryName === "Report" && item.displayStatus === true
     );
 
     const groupedReport = reportData.reduce((acc, item) => {

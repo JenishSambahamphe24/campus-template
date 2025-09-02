@@ -265,7 +265,7 @@ function Navbar() {
                                     className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive(aboutPaths) ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                     style={{ listStyle: 'none' }}
                                 >
-                                    About
+                                    About us
                                     <div className="flex items-center">
                                         {mobileAboutOpen || isAnyActive(aboutPaths) ? (
                                             <ChevronUpIcon
@@ -304,22 +304,22 @@ function Navbar() {
                         </div>
 
                         <div className="divide-y divide-gray-100">
-                            <details className="group" open={mobilePubOpen || isAnyActive([...contentPaths, '/report', '/curriculum'])} onToggle={(e) => setMobilePubOpen(e.target.open)}>
+                            <details className="group" open={mobilePubOpen || isAnyActive(contentPaths)} onToggle={(e) => setMobilePubOpen(e.target.open)}>
                                 <summary
-                                    className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                                    className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive(contentPaths) ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                                     style={{ listStyle: 'none' }}
                                 >
-                                    Publications
+                                    Contents
                                     <div className="flex items-center">
-                                        {mobilePubOpen || isAnyActive([...contentPaths, '/report', '/curriculum']) ? (
+                                        {mobilePubOpen || isAnyActive(contentPaths) ? (
                                             <ChevronUpIcon
                                                 aria-hidden="true"
-                                                className={`h-5 w-5 ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white'}`}
+                                                className={`h-5 w-5 ${isAnyActive(contentPaths) ? 'text-[#f36710]' : 'text-white'}`}
                                             />
                                         ) : (
                                             <ChevronDownIcon
                                                 aria-hidden="true"
-                                                className={`h-5 w-5 ${isAnyActive([...contentPaths, '/report', '/curriculum']) ? 'text-[#f36710]' : 'text-white'}`}
+                                                className={`h-5 w-5 ${isAnyActive(contentPaths) ? 'text-[#f36710]' : 'text-white'}`}
                                             />
                                         )}
                                     </div>
