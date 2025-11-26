@@ -97,9 +97,11 @@ function AddTeam() {
                 ];
             case 'Non-teaching staff':
                 return [
-                    { value: 'Officer', label: 'Officer' },
+                    { value: 'Officer', label: 'Officer' }, 
+                    { value: 'IT Officer', label: 'IT Officer' },
                     { value: 'Information Officer', label: 'Information Officer' },
-                    { value: 'Administrative or A/c Officer', label: 'Administrative and/or Account Officer' },
+                    { value: 'Administrative Officer', label: 'Administrative Officer' },
+                    { value: 'Account Officer', label: 'Account Officer' },
                     { value: 'Accountant', label: 'Accountant' },
                     { value: 'Asst. Accountant', label: 'Asst. Accountant' },
                     { value: 'Office Assistant', label: 'Office Assistant' },

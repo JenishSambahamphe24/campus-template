@@ -181,11 +181,17 @@ function PublicationList() {
                         <Tab onClick={() => setActiveTab('Downloads')} value='Downloads' style={{ color: activeTab === 'Downloads' ? 'black' : 'white' }}>
                             Downloads
                         </Tab>
-                        <Tab onClick={() => setActiveTab('Other')} value='Other' style={{ color: activeTab === 'Other' ? 'black' : 'white' }}>
-                            Others
+                        <Tab onClick={() => setActiveTab('Thesis')} value='Thesis' style={{ color: activeTab === 'Thesis' ? 'black' : 'white' }}>
+                            Thesis
+                        </Tab>
+                        <Tab onClick={() => setActiveTab('Research')} value='Research' style={{ color: activeTab === 'Research' ? 'black' : 'white' }}>
+                            Research
                         </Tab>
                         <Tab onClick={() => setActiveTab('Curriculum')} value='Curriculum' style={{ color: activeTab === 'Curriculum' ? 'black' : 'white' }}>
                             Curriculum
+                        </Tab>
+                        <Tab onClick={() => setActiveTab('Other')} value='Other' style={{ color: activeTab === 'Other' ? 'black' : 'white' }}>
+                            Others
                         </Tab>
                     </TabsHeader>
                     <TabsBody className='bg-gray-100'>
