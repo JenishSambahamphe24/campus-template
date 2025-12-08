@@ -26,22 +26,16 @@ function PopupBanner() {
     const expiredDateStr = expiredAt.split("T")[0];
     const result = expiredDateStr < nepaliDateToday;
 
-    // Debug logs
-    console.log("Today:", nepaliDateToday);
-    console.log("Expired at:", expiredAt);
-    console.log("Extracted expiry date:", expiredDateStr);
-    console.log("Is expired:", result);
-
     return result;
   };
-
+  console.log(popups);
   // Fetch popups from API
   useEffect(() => {
     const fetchPopups = async () => {
       try {
         const response = await getAllpublication();
         const validPopups = response
-          .filter((item) => item.isPopUp === true)
+          .filter((item) => item.isPopUp === true && !!item.thumbnailImage && item.displayStatus === true)
           .map((item) => ({
             id: item.id, // Use ID to sort by upload order
             title: item.title,

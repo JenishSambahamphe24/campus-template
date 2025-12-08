@@ -170,6 +170,7 @@ function PublicationCategory() {
                   <MenuItem value="Downloads">Downloads</MenuItem>
                   <MenuItem value="Curriculum">Curriculum</MenuItem>
                   <MenuItem value="Thesis">Thesis</MenuItem>
+                  <MenuItem value="Research">Research</MenuItem>
                   <MenuItem value="Other">Others</MenuItem>
                 </Select>
               </FormControl>

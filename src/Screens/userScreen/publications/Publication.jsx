@@ -25,7 +25,7 @@ function Publication() {
     const fetchdata = async () => {
       const data = await getAllpublication();
       const filteredData = data.filter(
-        (item) => item.categoryName === "Publication"
+        (item) => item.categoryName === "Publication" && item.displayStatus === true
       );
       setAllPublication(filteredData);
     };

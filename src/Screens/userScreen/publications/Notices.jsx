@@ -18,8 +18,10 @@ function Notices() {
 
   const fetchData = async () => {
     const response = await getAllpublication();
+
+    // ✅ Filter only active/visible items
     const noticesData = response.filter(
-      (item) => item.categoryName === category
+      (item) => item.categoryName === category && item.displayStatus === true
     );
 
     const groupedNotices = noticesData.reduce((acc, item) => {
@@ -93,31 +95,30 @@ function Notices() {
               <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                   {paginatedItems.length > 0 ? (
-                    paginatedItems.map((item, index) => (
+                    paginatedItems
+                    .sort(
+                        (a, b) =>
+                          new Date(b.publishedAt) - new Date(a.publishedAt)
+                      )
+                    .map((item, index) => (
                       <li key={index}>
-                        <Link to={`/notices/${item.id}`}>
-                          <span className="flex justify-between text-md overflow-hidden">
-                            <p className="line-clamp-2">{item.title}</p>
-                            {item.isFile && (
-                              <button
-                                onClick={() =>
-                                  downloadPublicationFile(item.file)
-                                }
-                                className="flex text-sm"
-                              >
-                                <MdOutlineFileDownload
-                                  fontSize="17px"
-                                  style={{
-                                    marginTop: "2px",
-                                    marginLeft: "5px",
-                                    color: "#1169bf",
-                                  }}
-                                />
-                              </button>
-                            )}
-                          </span>
-                        </Link>
-                      </li>
+    
+                            <a
+                              onClick={() => downloadPublicationFile(item.file)}
+                              className="flex text-sm"
+                            >
+                              {item.title}
+                              <MdOutlineFileDownload
+                                fontSize="17px"
+                                style={{
+                                  marginTop: "2px",
+                                  marginLeft: "5px",
+                                  color: "#1169bf",
+                                }}
+                              />
+                            </a>
+                          </li>
+                        
                     ))
                   ) : (
                     <Grid mt="10px" container mx="20px" spacing="20px">

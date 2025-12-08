@@ -27,21 +27,28 @@ function NoticeTabs() {
   const fetchData = async () => {
     const noticeResponse = await getAllpublication();
     const newsResponse = noticeResponse.filter(
-      (item) => item.categoryName === "News and Events"
+      (item) =>
+        item.categoryName === "News and Events" && item.displayStatus === true
     );
     const sortedData = newsResponse.sort((a, b) => b.id - a.id);
     const top4Data = sortedData.slice(0, 5);
     setNews(top4Data);
+    // if (noticeResponse) {
+    //   setAllNotices(
+    //     noticeResponse.filter(
+    //       (item) => 
+    //         item.categoryName === "Notices" 
+    //     )
+    //   );
+    // } else {
+    //   setAllNotices([]);
+    // }
     if (noticeResponse) {
       setAllNotices(
-        noticeResponse.filter((item) => item.categoryName === "Notices")
-      );
-    } else {
-      setAllNotices([]);
-    }
-    if (noticeResponse) {
-      setAllNotices(
-        noticeResponse.filter((item) => item.categoryName === "Notices")
+        noticeResponse.filter(
+          (item) =>
+            item.categoryName === "Notices" && item.displayStatus === true
+        )
       );
     } else {
       setAllNotices([]);
@@ -91,6 +98,7 @@ function NoticeTabs() {
           <ul className="flex-grow list-disc pl-5 pt-1 space-y-4 overflow-auto">
             {allNotices.length > 0 ? (
               allNotices
+                .filter((item) => item.displayStatus === true) // ✅ only active/visible
                 .sort(
                   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
                 )

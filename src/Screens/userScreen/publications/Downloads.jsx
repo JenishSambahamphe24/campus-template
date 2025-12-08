@@ -33,7 +33,7 @@ function Downloads() {
     const response = await getAllpublication();
     const noticesData = response.filter(
       (item) =>
-        item.categoryName === "Downloads" || item.categoryName === "Others"
+        item.categoryName === "Downloads" || item.categoryName === "Others" && item.displayStatus === true
     );
 
     const groupedNotices = noticesData.reduce((acc, item) => {

@@ -165,20 +165,17 @@ function EditTeam() {
           { value: "Professor", label: "Professor" },
           { value: "Asst. professor", label: "Asst. professor" },
           { value: "Lecturer", label: "Lecturer" },
-          {
-            value: "Asst. Lecturer/Teaching Assistant",
-            label: "Asst. Lecturer/Teaching Assistant",
-          },
+          { value: "Asst. Lecturer/Teaching Assistant", label: "Asst. Lecturer/Teaching Assistant"},
           { value: "Instructor", label: "Instructor" },
           { value: "Information Officer", label: "Information Officer" },
         ];
       case "Non-teaching staff":
         return [
+          { value: "Officer", label: "Officer" },
+          { value: 'IT Officer', label: 'IT Officer' },
           { value: "Information Officer", label: "Information Officer" },
-          {
-            value: "Administrative or A/c Officer",
-            label: "Administrative and/or Account Officer",
-          },
+          { value: "Administrative or A/c Officer", label: "Administrative and/or Account Officer"},
+          { value: 'Account Officer', label: 'Account Officer' },
           { value: "Accountant", label: "Accountant" },
           { value: "Asst. Accountant", label: "Asst. Accountant" },
           { value: "Office Assistant", label: "Office Assistant" },
