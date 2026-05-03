@@ -54,8 +54,9 @@ function Slider({ onLoad }) {
   const fetchTeams = async () => {
     try {
       const response = await getAllTeams();
-      const chairman = response.find(item => item.subCategory === 'Chairman') || {};
-      const chief = response.find(item => item.subCategory === 'Campus Chief') || {};
+      const reversedResponse = response.slice().reverse();
+      const chairman = reversedResponse.find(item => item.subCategory === 'Chairman') || {};
+      const chief = reversedResponse.find(item => item.subCategory === 'Campus Chief') || {};
 
       setChairmanInfo(chairman);
       setChiefInfo(chief);

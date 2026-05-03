@@ -19,9 +19,10 @@ function ChairmanMessage() {
             } else {
                 setData({})
             }
-            setData(data.find(item => item.heading === 'Message-chairman'))
+            setData(data.slice().reverse().find(item => item.heading === 'Message-chairman'))
             const response = await getAllTeams()
-            setChairmanImage(response.find(item => item.subCategory === 'Chairman').ppImage)
+            const latestChairman = response.slice().reverse().find(item => item.subCategory === 'Chairman')
+            setChairmanImage(latestChairman ? latestChairman.ppImage : '')
         };
         fetchData()
     }, [])

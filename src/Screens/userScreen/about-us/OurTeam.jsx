@@ -30,7 +30,9 @@ function OurTeam() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllTeams()
-            setAllTeamMeber(data)
+            // Filter at source to be sure
+            const activeData = data ? data.filter(item => item.status == true || item.status === 'true') : []
+            setAllTeamMeber(activeData)
         };
         fetchData()
     }, [])
@@ -60,11 +62,11 @@ function OurTeam() {
           // Normalize category comparison
           const itemCategory = item.category?.toLowerCase();
           const targetCategory = category.toLowerCase();
-          return itemCategory === targetCategory && item.status === true;
+          const isActive = (item.status === true || item.status === 'true' || item.status === 1 || item.status === '1');
+          return itemCategory === targetCategory && isActive;
         })
         .sort((a, b) => a.index - b.index) || [];
 
-    console.log(`Filtered ${category} members:`, filtered); // Debug log
     return filtered;
   };
 
@@ -131,11 +133,8 @@ function OurTeam() {
                     </h3>
                     <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
                         {item.subCategory}
-                        {item.department ? `, ${item.department}` : ''}
                     </h3>
-                    <h3 className="text-sm  font-medium text-gray-900 line-clamp-1">
-                        {item.highestAcademicDeg ? `${item.highestAcademicDeg}` : ''}
-                    </h3>
+                   
 
                     {!showLinkWrapper && (
                         <Link to={`/member-details/${item.id}`} className="group relative block overflow-hidden">

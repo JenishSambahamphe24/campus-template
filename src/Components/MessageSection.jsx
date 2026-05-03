@@ -37,9 +37,10 @@ function MessageSection() {
                     throw new Error("Invalid response format from API");
                 }
 
-                const intro = response.find(item => item?.heading === 'Introduction');
-                const chief = response.find(item => item?.heading === 'Message-campus-chief');
-                const chairman = response.find(item => item?.heading === 'Message-chairman');
+                const reversedResponse = response.slice().reverse();
+                const intro = reversedResponse.find(item => item?.heading === 'Introduction');
+                const chief = reversedResponse.find(item => item?.heading === 'Message-campus-chief');
+                const chairman = reversedResponse.find(item => item?.heading === 'Message-chairman');
 
                 setIntroduction(intro || { heading: 'Introduction', description: 'Information not available' });
                 setChiefMessage(chief || { heading: 'Message-campus-chief', description: 'Message not available' });
@@ -65,8 +66,9 @@ function MessageSection() {
                     throw new Error("Invalid team data format");
                 }
 
-                const chairmanData = response.find(item => item?.subCategory === 'Chairman');
-                const chiefData = response.find(item => item?.subCategory === 'Campus Chief');
+                const reversedResponse = response.slice().reverse();
+                const chairmanData = reversedResponse.find(item => item?.subCategory === 'Chairman');
+                const chiefData = reversedResponse.find(item => item?.subCategory === 'Campus Chief');
 
                 setTeamInfo({
                     chairman: chairmanData
