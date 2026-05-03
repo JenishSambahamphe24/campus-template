@@ -25,7 +25,7 @@ function Footer() {
     const fetchInfoOfficer = async () => {
         const response = await getAllTeams()
         if(response){
-            setOfficerInfo(response.find(item => item.subCategory === 'Information Officer'))
+            setOfficerInfo(response.slice().reverse().find(item => item.subCategory === 'Information Officer'))
         }else{
             setOfficerInfo({})
         }

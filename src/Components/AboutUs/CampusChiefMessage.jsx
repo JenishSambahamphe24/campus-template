@@ -19,9 +19,10 @@ function CampusChiefMessage() {
             }else{
                 setData({})
             }
-            setData(data.find(item => item.heading === 'Message-campus-chief'))
+            setData(data.slice().reverse().find(item => item.heading === 'Message-campus-chief'))
             const response = await getAllTeams()
-            setChiefImage(response.find(item => item.subCategory === 'Campus Chief').ppImage)
+            const latestChief = response.slice().reverse().find(item => item.subCategory === 'Campus Chief')
+            setChiefImage(latestChief ? latestChief.ppImage : '')
         };
         fetchData()
     }, [])
