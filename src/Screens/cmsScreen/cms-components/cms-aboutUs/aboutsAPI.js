@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const getAuthToken = () => localStorage.getItem("authToken");
+const getAuthToken = () => sessionStorage.getItem("authToken");
 
 export const getAllaboutUs = async () => {
     const response = await axios.get(`${BASE_URL}/aboutUs`);
@@ -15,7 +15,7 @@ export const getAboutUsById = async (id) => {
 
 export const updateAboutUsById = async (id, data) => {
     try {
-        const token = localStorage.getItem('authToken')
+        const token = sessionStorage.getItem('authToken')
         const headers = {
             'Authorization': `Bearer ${token}`
         };
@@ -30,7 +30,7 @@ export const updateAboutUsById = async (id, data) => {
 
 export const addAboutUs = async (data) => {
     try {
-        const token = localStorage.getItem('authToken')
+        const token = sessionStorage.getItem('authToken')
         const headers = {
             'Authorization': `Bearer ${token}`
         };

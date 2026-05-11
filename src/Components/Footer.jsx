@@ -46,7 +46,7 @@ function Footer() {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token = sessionStorage.getItem('authToken');
         fetchInfoOfficer()
         fetchLinks()
     }, []);
