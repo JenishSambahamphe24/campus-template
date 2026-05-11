@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-const getAuthToken = () => localStorage.getItem("authToken");
+const getAuthToken = () => sessionStorage.getItem("authToken");
 
 
 export const getAllpublication = async () => {

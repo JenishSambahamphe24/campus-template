@@ -10,6 +10,7 @@ import { showStatus } from '../../../../Components/utilityFunctions';
 import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteDialog from './components/DeleteDialog';
+import { CMS_USER } from '../../../../utils/constants';
 
 
 function TeamList() {
@@ -99,7 +100,7 @@ function TeamList() {
                             Edit
                         </Typography>
                         {
-                            role === 'admin' && (
+                            role === CMS_USER && (
                                 <>
                                     <Typography
                                         fontSize='14px'

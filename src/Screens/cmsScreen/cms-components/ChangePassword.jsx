@@ -25,7 +25,7 @@ function ChangePassword() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        const email = localStorage.getItem('email');
+        const email = sessionStorage.getItem('email');
         setFormData((prev) => ({
             ...prev,
             email: email
@@ -82,7 +82,7 @@ function ChangePassword() {
         setErrors({}); 
         
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             if (!token) {
                 throw new Error("Token is missing");
             }
@@ -100,7 +100,7 @@ function ChangePassword() {
             
             if (response.data && response.status === 200) {
                 toast.info('Password changed successfully! Please Login again with new credentials!!', {autoClose:1500});
-                localStorage.clear()
+                sessionStorage.clear()
                 setTimeout(() => {
                     navigate('/signIn')
                 }, 2000);

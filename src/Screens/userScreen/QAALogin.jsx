@@ -1,12 +1,13 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-const BASE_URL = import.meta.env.VITE_API_URL;
 import { useAuth } from '../../context/AuthContextProvider';
 import { CMS_USER, UGC_USER } from '../../utils/constants';
 
-function AdminSignIn() {
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+function QAALogin() {
     const { login } = useAuth()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,7 @@ function AdminSignIn() {
             [name]: value
         }))
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -46,7 +48,7 @@ function AdminSignIn() {
                 }
             }, 700);
         } catch (error) {
-            toast.error('No user found', { autoClose: 200 })
+            toast.error('Invalid credentials', { autoClose: 200 })
             console.error('Error during login:', error.response?.data || error.message);
         }
     };
@@ -54,11 +56,11 @@ function AdminSignIn() {
     return (
         <section className="bg-white">
             <div className="w-full mx-auto max-w-xl flex flex-col justify-center py-20 relative p-8">
-                {/* <h1 className='text-lg text-center mb-4'>  CMS Login</h1> */}
+                <h1 className='text-3xl font-bold text-center mb-8 text-[#1169bf]'>QAA Login</h1>
                 <div >
                     <form onSubmit={handleSubmit} className="w-full divide-neutral-200 rounded-3xl bg-white shadow-2xl border p-8 lg:p-8" >
                         <div className="py-1 space-y-2">
-                            <label htmlFor="login_email" className="block text-md text-gray-700">Email</label>
+                            <label htmlFor="login_email" className="block text-md text-gray-700 font-medium">Email</label>
                             <input
                                 type="email"
                                 name='email'
@@ -68,14 +70,10 @@ function AdminSignIn() {
                                 className="block w-full h-12 px-4 py-3 placeholder-gray-500 bg-gray-100 border-0 rounded-lg appearance-none text-[#1169bf] focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-[#1169bf] focus:ring-inset focus:ring-2 text-sm"
                                 placeholder="Enter your email"
                                 required
-                               
                             />
-                            {!formData.email && (
-                                <p className="text-red-500 text-sm mt-1">Email is required   </p>
-                            )}
                         </div>
                         <div className="py-1 space-y-2">
-                            <label htmlFor="login_password" className="block text-md text-gray-700">Password</label>
+                            <label htmlFor="login_password" className="block text-md text-gray-700 font-medium">Password</label>
                             <div className="relative">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
@@ -94,23 +92,21 @@ function AdminSignIn() {
                                     {showPassword ? 'Hide' : 'Show'}
                                 </span>
                             </div>
-
                         </div>
-                        <div className="mt-4">
+                        <div className="mt-8">
                             <button
                                 type="submit"
                                 style={{ backgroundColor: '#1169bf' }}
-                                className="rounded-full px-8 py-1 h-10 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full"
+                                className="rounded-full px-8 py-3 h-12 text-md font-bold text-white hover:bg-blue-600 transition-colors duration-300 w-full shadow-lg"
                             >
-                                Login
+                                Sign In
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </section>
     )
 }
 
-export default AdminSignIn
+export default QAALogin

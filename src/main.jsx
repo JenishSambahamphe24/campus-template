@@ -8,6 +8,7 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
 
 import { AuthProvider } from './context/AuthContextProvider.jsx';
@@ -48,6 +49,13 @@ import FileUpload from './Screens/FileUpload.jsx';
 import EditGallery from './Screens/cmsScreen/cms-components/cms-gallery/EditGallery.jsx';
 import ScrollToTop from './ScrollToTop.js';
 import EditAboutUs from './Screens/cmsScreen/cms-components/cms-aboutUs/EditAboutUs.jsx';
+import QAALogin from './Screens/userScreen/QAALogin.jsx';
+import QAADashboard from './Screens/userScreen/QAADashboard.jsx';
+import UGCUserManagement from './Screens/cmsScreen/cms-components/cms-qaa/UGCUserManagement.jsx';
+import QAADocumentManagement from './Screens/cmsScreen/cms-components/cms-qaa/QAADocumentManagement.jsx';
+import QAALayout from './Screens/QAALayout.jsx';
+import ErrorPage from './Screens/ErrorPage.jsx';
+import { CMS_USER, UGC_USER } from './utils/constants.js';
 
 import ProgramPage from './Components/Programs/ProgramPage.jsx';
 import FacultyList from './Screens/cmsScreen/cms-components/cms-academics/FacultyList.jsx';
@@ -81,7 +89,7 @@ import NoticePage from './Screens/userScreen/publications/NoticePage.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />}>
+      <Route path="/" element={<App />} errorElement={<ErrorPage />}>
         <Route index={true} path='/' element={<HomeScreen />} />
         <Route index={true} path='/popup' element={<PopupBanner />} />
         <Route index={true} path='/signIn' element={<AdminSignIn />} />
@@ -111,9 +119,24 @@ const router = createBrowserRouter(
         <Route index={true} path='/introduction' element={<Introduction />} />
         <Route index={true} path='/message-from-chairman' element={<ChairmanMessage />} />
         <Route index={true} path='/message-from-campus_chief' element={<CampusChiefMessage />} />
+        
+        {/* QAA Public Route */}
+        <Route index={true} path='/qaa/login' element={<QAALogin />} />
+        
+        {/* Redirect old QA paths */}
+        <Route path="/qa/*" element={<Navigate to="/qaa/qaa" replace />} />
       </Route>
 
-      <Route element={<PrivateRoutes />}>
+      {/* UGC User Protected Routes */}
+      <Route element={<PrivateRoutes allowedRoles={[UGC_USER, CMS_USER]} />}>
+        <Route element={<QAALayout />}>
+          <Route path="/qaa/password-settings" element={<ChangePassword />} />
+          <Route path="/qaa/:tab" element={<QAADashboard />} />
+          <Route path="/qaa" element={<Navigate to="/qaa/qaa" replace />} />
+        </Route>
+      </Route>
+
+      <Route element={<PrivateRoutes allowedRoles={[CMS_USER]} />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index={true} path='/admin' element={<AdminHomePage />} />
           <Route index={true} path='fileUpload' element={<FileUpload />} />
@@ -147,6 +170,10 @@ const router = createBrowserRouter(
           <Route index={true} path='editProgram/:id' element={< EditProgram />} />
 
           <Route index={true} path='password-settings' element={< ChangePassword />} />
+          
+          {/* New CMS Modules */}
+          <Route index={true} path='ugc-users' element={<UGCUserManagement />} />
+          <Route index={true} path='qaa-documents' element={<QAADocumentManagement />} />
         </Route>
       </Route>
     </>

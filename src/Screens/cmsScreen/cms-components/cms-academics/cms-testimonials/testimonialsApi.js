@@ -13,7 +13,7 @@ export const getTestimonialById = async (id) => {
 };
 
 export const updateTestimonialById = async (id, data) => {
-    const token = localStorage.getItem('authToken')
+    const token = sessionStorage.getItem('authToken')
     console.log(token)
     const headers = {
         'Authorization': `Bearer ${token}`
@@ -23,7 +23,7 @@ export const updateTestimonialById = async (id, data) => {
 };
 
 export const addTestimonial = async (data) => {
-    const token = localStorage.getItem('authToken')
+    const token = sessionStorage.getItem('authToken')
     const headers = {
         'Authorization': `Bearer ${token}`
     };
@@ -32,7 +32,7 @@ export const addTestimonial = async (data) => {
 };
 
 export const deleteTestimonial = async (id) => {
-    const token = localStorage.getItem('authToken')
+    const token = sessionStorage.getItem('authToken')
     const headers = {
         'Authorization': `Bearer ${token}`
     };

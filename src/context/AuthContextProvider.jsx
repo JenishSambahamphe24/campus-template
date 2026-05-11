@@ -28,13 +28,13 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-        const email = localStorage.getItem('email');
-        const role = localStorage.getItem('role');
-        const userName = localStorage.getItem('userName');
+        const token = sessionStorage.getItem('authToken');
+        const email = sessionStorage.getItem('email');
+        const role = sessionStorage.getItem('role');
+        const userName = sessionStorage.getItem('userName');
 
         if (token && email && role && userName) {
-            setAuthState({ token, email, role, userName }); // Restore authState from localStorage
+            setAuthState({ token, email, role, userName }); // Restore authState from sessionStorage
         }
 
         setLoading(false); // Set loading to false after the state is restored
@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }) => {
 
     const login = ({ email, role, token, userName }) => {
         setAuthState({ email, role, token, userName });
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('role', role);
-        localStorage.setItem('email', email);
-        localStorage.setItem('userName', userName);
+        sessionStorage.setItem('authToken', token);
+        sessionStorage.setItem('role', role);
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('userName', userName);
     };
 
     const logout = () => {
@@ -55,10 +55,10 @@ export const AuthProvider = ({ children }) => {
             role: null,
             token: null,
         });
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('email');
-        localStorage.removeItem('role');
-        localStorage.removeItem('userName');
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('role');
+        sessionStorage.removeItem('userName');
     };
 
     const value = {

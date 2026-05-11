@@ -1,5 +1,5 @@
 import axios from "axios";
-const getAuthToken = () => localStorage.getItem("authToken");
+const getAuthToken = () => sessionStorage.getItem("authToken");
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 

@@ -5,13 +5,14 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { CMS_USER } from '../../utils/constants';
 
 function RegisterUser() {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
         userName: '',
-        role:'Adin',
+        role: CMS_USER,
         password: '',
         confirmPassword: ''
     });

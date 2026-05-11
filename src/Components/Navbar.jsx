@@ -1,11 +1,15 @@
 
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import PersonIcon from '@mui/icons-material/Person';
+import { Divider } from '@mui/material';
+import { useAuth } from '../context/AuthContextProvider';
+import { toast } from 'react-toastify';
 import { getPublicationCategory } from '../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
+import { CMS_USER } from '../utils/constants';
 
 const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
@@ -17,12 +21,23 @@ const bgColor = import.meta.env.VITE_NAV_BG
 
 
 function Navbar() {
+    const navigate = useNavigate();
+    const { token, email, role } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownCategories, setDropdownCategories] = useState([])
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
     const location = useLocation();
     const currentPath = location.pathname;
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        toast.success('Successfully logged out', { autoClose: 300 });
+        setTimeout(() => {
+            navigate('/signIn');
+            window.location.reload();
+        }, 1000);
+    };
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -207,6 +222,13 @@ function Navbar() {
                                 Curriculum
                             </Link>
                             <Link
+                                className={`mx-4  leading-5 ${isActive('/signIn') ? activeStyle : inactiveStyle}`}
+                                to="/qaa/login"
+                                target='_blank'
+                            >
+                                QAA
+                            </Link>
+                            <Link
                                 className={`mx-4  leading-5 ${isActive('/gallery') ? activeStyle : inactiveStyle}`}
                                 to="/gallery"
                             >
@@ -221,7 +243,7 @@ function Navbar() {
                         </div>
 
                         <div className="hidden lg:flex ml-auto">
-                            <Link target='_blank' className="font-medium mx-4  leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
+                            <Link target='_blank' className="font-medium mx-4 leading-5 hover:text-gray-900 transition-colors duration-300 transform text-white" to="/signIn" >
                                 <PersonIcon sx={{ marginTop: '-3px', fontSize: '18px', marginRight: '5px' }} />
                                 Login
                             </Link>
@@ -372,6 +394,13 @@ function Navbar() {
                             to="/news"
                         >
                             News & events
+                        </Link>
+                        <Link
+                            className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/qaa/login') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
+                            to="/qaa/login"
+                            target='_blank'
+                        >
+                            QAA
                         </Link>
                         <Link
                             className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/gallery') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
