@@ -30,7 +30,7 @@ function UGCUserManagement() {
             const response = await axios.get(`${BASE_URL}/admin/ugc-users`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            setUsers(response.data)
+            setUsers(Array.isArray(response.data) ? response.data : [])
         } catch (error) {
             console.error('Error fetching users:', error)
             toast.error('Failed to load UGC users')
