@@ -50,7 +50,7 @@ function EditLinkDialog({ handleClose, open, linkId }) {
         e.preventDefault();
         const formattedData = {
             ...formData,
-            createdAt: extractDate(formData.createdAt),
+            publishedAt: extractDate(formData.publishedAt),
             updatedAt: extractDate(formData.updatedAt)
         }
         try {

@@ -153,7 +153,7 @@ function EditTeam() {
         updatedData.append('subCategory', formData.subCategory);
         updatedData.append('index', formData.index);
         updatedData.append('highestAcademicDeg', formData.highestAcademicDeg);
-        updatedData.append('createdAt', extractDate(formData.createdAt));
+        updatedData.append('publishedAt', extractDate(formData.publishedAt));
         updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
         try {
             await updateTeamById(teamId, updatedData);

@@ -23,7 +23,7 @@ function NoticeMarque() {
         const data = await getAllpublication();
 
         const latestReports = data
-          .filter(item => item.categoryName === 'Report' && item.isScrollable === true)
+          .filter(item => item.categoryName === 'Report' && item.isScrollable === true && item.displayStatus === true)
           .map(item => ({
             ...item,
             expiredAt: extractDate(item.expiredAt),
@@ -34,7 +34,7 @@ function NoticeMarque() {
           .slice(0, 2);
 
         const latestNotices = data
-          .filter(item => item.categoryName === 'Notices' && item.isScrollable === true)
+          .filter(item => item.categoryName === 'Notices' && item.isScrollable === true && item.displayStatus === true)
           .map(item => ({
             ...item,
             expiredAt: extractDate(item.expiredAt),
@@ -45,7 +45,7 @@ function NoticeMarque() {
           .slice(0, 2);
 
         const latestPublication = data
-          .filter(item => item.categoryName === 'Publication' && item.isScrollable === true)
+          .filter(item => item.categoryName === 'Publication' && item.isScrollable === true && item.displayStatus === true)
           .map(item => ({
             ...item,
             expiredAt: extractDate(item.expiredAt),
@@ -56,7 +56,7 @@ function NoticeMarque() {
           .slice(0, 2);
 
         const latestDownloads = data
-          .filter(item => item.categoryName === 'Downloads' && item.isScrollable === true)
+          .filter(item => item.categoryName === 'Downloads' && item.isScrollable === true && item.displayStatus === true)
           .map(item => ({
             ...item,
             expiredAt: extractDate(item.expiredAt),
@@ -67,7 +67,7 @@ function NoticeMarque() {
           .slice(0, 2);
 
         const latestNews = data
-          .filter(item => item.categoryName === 'News and Events')
+          .filter(item => item.categoryName === 'News and Events' && item.isScrollable === true && item.displayStatus === true)
           .map(item => ({
             ...item,
             expiredAt: extractDate(item.expiredAt),

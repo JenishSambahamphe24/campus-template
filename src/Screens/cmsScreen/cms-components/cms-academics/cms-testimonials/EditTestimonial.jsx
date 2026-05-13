@@ -104,7 +104,7 @@ function EditTestimonial() {
         updatedData.append('status', formData.status || false);
         updatedData.append('testimonials', formData.testimonials || '');
 
-        updatedData.append('createdAt', extractDate(formData.createdAt));
+        updatedData.append('publishedAt', extractDate(formData.publishedAt));
         updatedData.append('updatedAt', extractDate(formData.updatedAt || new Date()));
         try {
             await updateTestimonialById(testimonialId, updatedData);

@@ -14,8 +14,10 @@ const address = import.meta.env.VITE_ADDRESS;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const addressNepali = import.meta.env.VITE_ADDRESS_NEPALI;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
-const logoURL = import.meta.env.VITE_DEFAULT_IMG
-const textColor = import.meta.env.VITE_NAV_TEXT
+const affiliationNepali = import.meta.env.VITE_AFFILIATION_NEPALI;
+const affiliationEn = import.meta.env.VITE_AFFILIATION_EN;
+const logoURL = import.meta.env.VITE_LOGO_URL;
+const textColor = import.meta.env.VITE_NAV_TEXT;
 const bgColor = import.meta.env.VITE_NAV_BG
 
 console.log(logoURL)
@@ -56,8 +58,8 @@ function AdminNavbar() {
                         />
                     </Link>
                     <div className={`ml-2 mt-4 text-[${textColor}] md:mt-1 lg:ml-4 flex flex-col justify-center`}>
-                        <h1 className={`text-xs text-center lg:text-xs text-[${textColor}] font-medium tracking-wide`}> त्रिभुवन विश्वविद्यालयबाट सम्बन्धन प्राप्त </h1>
-                        <p className={`text-xs text-${textColor} text-center lg:text-xs`}> Affiliated to Tribhuwan University </p>
+                        <h1 className={`text-xs text-center lg:text-xs text-[${textColor}] font-medium tracking-wide`}>{affiliationNepali}</h1>
+                        <p className={`text-xs text-${textColor} text-center lg:text-xs`}>{affiliationEn}</p>
                         <h1 className={`text-md lg:text-xl font-bold text-[${textColor}] text-center`}>{collegeNameNepali}</h1>
                         <h1 className={`text-xs lg:text-lg font-bold text-[${textColor}] uppercase text-center`}>{collegeName}</h1>
                         <h1 className={`text-xs font-medium text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>

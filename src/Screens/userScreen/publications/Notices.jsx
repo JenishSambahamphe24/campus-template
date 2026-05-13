@@ -7,7 +7,7 @@ import {
   downloadPublicationFile,
   getAllpublication,
 } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
-import { extractDate } from "../../../Components/utilityFunctions";
+import { extractDate, isOnOrBeforeCutoff } from "../../../Components/utilityFunctions";
 import { Link } from "react-router-dom";
 
 function Notices() {
@@ -19,9 +19,12 @@ function Notices() {
   const fetchData = async () => {
     const response = await getAllpublication();
 
-    // ✅ Filter only active/visible items
+    // ✅ Filter only active/visible items up to cutoff date
     const noticesData = response.filter(
-      (item) => item.categoryName === category && item.displayStatus === true
+      (item) =>
+        item.categoryName === category &&
+        item.displayStatus === true &&
+        isOnOrBeforeCutoff(item.publishedAt)
     );
 
     const groupedNotices = noticesData.reduce((acc, item) => {
@@ -96,30 +99,34 @@ function Notices() {
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                   {paginatedItems.length > 0 ? (
                     paginatedItems
-                    .sort(
-                        (a, b) =>
-                          new Date(b.publishedAt) - new Date(a.publishedAt)
-                      )
-                    .map((item, index) => (
-                      <li key={index}>
-    
-                            <a
-                              onClick={() => downloadPublicationFile(item.file)}
-                              className="flex text-sm"
+                      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+                      .map((item, index) => (
+                        <li key={index} className="flex justify-between items-start">
+                          <div>
+                            <Link
+                              to={`/notices/${item.id}`}
+                              className="text-sm font-medium text-black hover:underline"
                             >
                               {item.title}
+                            </Link>
+                            <div className="text-xs text-[#1f4d7a] mt-1">
+                              {extractDate(item.publishedAt)}
+                            </div>
+                          </div>
+
+                          {item.isFile === true && (
+                            <button
+                              onClick={() => downloadPublicationFile(item.file)}
+                              className="flex items-center text-[#1169bf] hover:text-[#0d47a1]"
+                            >
                               <MdOutlineFileDownload
                                 fontSize="17px"
-                                style={{
-                                  marginTop: "2px",
-                                  marginLeft: "5px",
-                                  color: "#1169bf",
-                                }}
+                                style={{ marginTop: "2px", marginLeft: "5px" }}
                               />
-                            </a>
-                          </li>
-                        
-                    ))
+                            </button>
+                          )}
+                        </li>
+                      ))
                   ) : (
                     <Grid mt="10px" container mx="20px" spacing="20px">
                       <NoContentMessage />

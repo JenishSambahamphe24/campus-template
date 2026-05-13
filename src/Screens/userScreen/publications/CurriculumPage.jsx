@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Grid, Button, Typography, Stack, Divider } from "@mui/material";
-import { Link } from "react-router-dom";
-import { BsFacebook, BsTwitterX } from "react-icons/bs";
-import { useParams } from "react-router-dom";
-import { getPublicationById } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
-import { extractDate } from "../../../Components/utilityFunctions";
+import { Grid } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import {
+  downloadPublicationFile,
+  getPublicationById,
+} from "../../cmsScreen/cms-components/cms-publication/publicationApi";
+import { extractDate, extractPlainText } from "../../../Components/utilityFunctions";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 const defaultImage = import.meta.env.VITE_DEFAULT_IMG;
 
@@ -39,97 +40,63 @@ function CurriculumPage() {
   };
 
   const imageSource = getImageSource();
-  const isDefaultImage = imageSource === defaultImage;
 
   return (
-    <Grid
-      container
-      className="px-10  sm:px-2 md:px-4 lg:px-20 py-10"
-      display="flex"
-      justifyContent="center"
-      gap="10px"
-    >
-      <Grid
-        display="flex"
-        justifyContent="space-between"
-        flexDirection="column"
-        item
-        xs={12}
-        sm={7.4}
-        md={8.3}
-        lg={8.8}
-        order={{ xs: 2, sm: 2, md: 2, lg: 1 }}
-      >
-        <div>
-          <div
-            style={{ fontSize: "16px" }}
-            dangerouslySetInnerHTML={{
-              __html:
-                curriculumDetail.description ||
-                "No curriculum details available !!",
-            }}
-          />
-        </div>
-
-        <Link to="/curriculum">
-          <Button
-            sx={{ textTransform: "none", mt: "30px" }}
-            size="small"
-            variant="outlined"
-            className="flex items-center gap-3 bg-red-900"
-          >
-            See all Curriculum
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </Button>
-        </Link>
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        sm={4.3}
-        md={3.5}
-        lg={3}
-        className="border border-gray-100"
-        order={{ xs: 1, sm: 1, md: 1, lg: 1 }}
-      >
-        <div className="full group relative block overflow-hidden">
+    <Grid container justifyContent="center">
+      <Grid item className="p-16">
+        <div className="w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
           <img
             src={imageSource}
             onError={handleImageError}
-            alt="Publication"
-            className={`h-52 transition duration-500 sm:h-52 object-cover ${
-              isDefaultImage ? "w-2/3 mx-auto" : "w-full group-hover:scale-105"
-            }`}
+            alt="Curriculum"
+            className="w-full h-72 object-cover rounded-t-lg"
           />
-          <div className="relative px-2 bg-white">
-            <h3 className="mt-1 mb-1 text-lg font-medium text-gray-900">
+
+          <div className="px-5 mt-4 pb-5">
+            <h5 className="text-l font-semibold tracking-tight text-gray-900">
               {curriculumDetail.title || "No title available"}
-            </h3>
-            {curriculumDetail.subCategoryName && (
-              <h3 className="text-sm font-medium text-gray-900">
-                {curriculumDetail.subCategoryName}
-              </h3>
+            </h5>
+            <div className="text-sm text-gray-600 mt-2">
+              {curriculumDetail.subCategoryName && (
+                <div>{curriculumDetail.subCategoryName}</div>
+              )}
+              <div>{curriculumDetail.categoryName || "Curriculum"}</div>
+            </div>
+
+            <div className="flex items-center mt-2.5 mb-2">
+              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm">
+                {curriculumDetail.publishedAt
+                  ? extractDate(curriculumDetail.publishedAt)
+                  : "Date not available"}
+              </span>
+            </div>
+
+            <div className="text-sm text-gray-700 mb-3 whitespace-pre-line">
+              {extractPlainText(curriculumDetail.description) ||
+                "No curriculum details available !!"}
+            </div>
+
+            {curriculumDetail.isFile === true && curriculumDetail.file && (
+              <button
+                onClick={() => downloadPublicationFile(curriculumDetail.file)}
+                className="flex items-center text-[#1169bf] hover:text-[#0d47a1] mb-3"
+              >
+                <span>Download</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-4 w-4 ml-1"
+                >
+                  <path d="M12 16l4-4h-3V4h-2v8H8l4 4z" />
+                  <path d="M20 18H4v2h16v-2z" />
+                </svg>
+              </button>
             )}
-            <h3 className="text-sm font-medium text-gray-900">
-              <span className="text-sm mr-2">Published at:</span>
-              {curriculumDetail.publishedAt
-                ? extractDate(curriculumDetail.publishedAt)
-                : "Date not available"}
-            </h3>
+
+            <Link to="/curriculum" className="text-sm text-[#1169bf] hover:underline">
+              See all Curriculum
+            </Link>
           </div>
         </div>
       </Grid>

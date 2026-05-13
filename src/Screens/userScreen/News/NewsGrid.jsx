@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { getAllpublication } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
 import ReusablePagination from "../ReusablePagination";
 import {
-  cleanDescription,
-  formatDateShort,
+  extractDate,
+  isOnOrBeforeCutoff,
 } from "../../../Components/utilityFunctions";
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
@@ -22,7 +22,9 @@ function NewsGrid() {
       const data = await getAllpublication();
       const newsData = data.filter(
         (item) =>
-          item.categoryName === "News and Events" && item.displayStatus === true
+          item.categoryName === "News and Events" &&
+          item.displayStatus === true &&
+          isOnOrBeforeCutoff(item.publishedAt)
       );
       setAllNews(newsData);
     };
@@ -85,7 +87,7 @@ function NewsGrid() {
                 </Link>
                 <div className="flex px-2 pb-2">
                   <span className="text-blue-500 text-md">
-                    {formatDateShort(item.createdAt || "2024-01-01")}
+                    {extractDate(item.publishedAt)}
                   </span>
                 </div>
 
