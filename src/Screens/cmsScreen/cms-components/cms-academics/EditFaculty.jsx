@@ -49,7 +49,7 @@ function EditFaculty({ handleClose, open, categoryId }) {
         e.preventDefault();
         const formattedData = {
             ...formData,
-            createdAt: extractDate(formData.createdAt),
+            publishedAt: extractDate(formData.publishedAt),
             updatedAt: extractDate(formData.updatedAt)
         }
         try {

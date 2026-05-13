@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { MdOutlineFileDownload, MdReportGmailerrorred } from "react-icons/md";
+import { Link } from "react-router-dom";
 import PaginationForReports from "./component/PaginationForReports";
 import {
   downloadPublicationFile,
   getAllpublication,
 } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
+import { extractDate, isOnOrBeforeCutoff } from "../../../Components/utilityFunctions";
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
@@ -31,7 +33,10 @@ function Report() {
   const fetchData = async () => {
     const response = await getAllpublication();
     const reportData = response.filter(
-      (item) => item.categoryName === "Report" && item.displayStatus === true
+      (item) =>
+        item.categoryName === "Report" &&
+        item.displayStatus === true &&
+        isOnOrBeforeCutoff(item.publishedAt)
     );
 
     const groupedReport = reportData.reduce((acc, item) => {
@@ -83,21 +88,29 @@ function Report() {
                 <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
                   {paginatedItems.length > 0 ? (
                     paginatedItems.map((item, index) => (
-                      <li key={index}>
-                        <a
-                          onClick={() => downloadPublicationFile(item.file)}
-                          className="flex text-sm"
-                        >
-                          {item.title}
-                          <MdOutlineFileDownload
-                            fontSize="17px"
-                            style={{
-                              marginTop: "2px",
-                              marginLeft: "5px",
-                              color: "#1169bf",
-                            }}
-                          />
-                        </a>
+                      <li key={index} className="flex justify-between items-start">
+                        <div>
+                          <Link
+                            to={`/publication/${item.id}`}
+                            className="text-sm font-medium text-black hover:underline"
+                          >
+                            {item.title}
+                          </Link>
+                          <div className="text-xs text-[#1f4d7a] mt-1">
+                            {extractDate(item.publishedAt)}
+                          </div>
+                        </div>
+                        {item.isFile === true && (
+                          <button
+                            onClick={() => downloadPublicationFile(item.file)}
+                            className="flex items-center text-[#1169bf] hover:text-[#0d47a1]"
+                          >
+                            <MdOutlineFileDownload
+                              fontSize="17px"
+                              style={{ marginLeft: "5px" }}
+                            />
+                          </button>
+                        )}
                       </li>
                     ))
                   ) : (

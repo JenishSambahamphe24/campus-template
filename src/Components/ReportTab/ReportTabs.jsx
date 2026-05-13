@@ -10,7 +10,7 @@ import { Grid, Box, Button, Typography, Divider } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getAllpublication } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
-import { formatDate } from '../utilityFunctions';
+import { extractDate } from '../utilityFunctions'; // Changed from formatDate to extractDate
 import { Link } from 'react-router-dom';
 import { downloadPublicationFile } from '../../Screens/cmsScreen/cms-components/cms-publication/publicationApi';
 
@@ -81,7 +81,7 @@ function ReportTabs() {
                 id: item.id,
                 fileName: item.title,
                 file: item.file,
-                publishedDate: formatDate(item.publishedAt),
+                publishedDate: extractDate(item.publishedAt), // Changed from formatDate to extractDate
             }));
     };
 

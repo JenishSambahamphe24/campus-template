@@ -18,6 +18,20 @@ export const cleanDescription = (description) => {
     return doc.body.innerHTML;
 };
 
+export const extractPlainText = (htmlString) => {
+    if (!htmlString) return '';
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    return (doc.body.textContent || '').replace(/\u00a0/g, ' ').trim();
+};
+
+export const isOnOrBeforeCutoff = (dateString, cutoff = '2082-12-27T00:00:00.000Z') => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return false;
+    return date <= new Date(cutoff);
+};
+
 export const videoIdParser = (url) => {
   try {
     const urlObj = new URL(url);
@@ -35,12 +49,12 @@ export const videoIdParser = (url) => {
 
 export function extractDate(isoString) {
     if (!isoString) {
-    return ''
+        return '';
     }
     const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 

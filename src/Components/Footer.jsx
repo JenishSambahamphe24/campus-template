@@ -97,7 +97,9 @@ function Footer() {
                             <p className="font-medium text-white text-2xl mb-2" >Contact Us</p>
                             <div className='flex flex-col  space-y-4'>
                                 <div className='flex  text-white'>
-                                    <IoMdMail className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{email}</span>
+                                    <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`} target='_blank' rel='noreferrer' className='flex items-center text-white'>
+                                        <IoMdMail className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{email}</span>
+                                    </a>
                                 </div>
                                 <div className='flex text-white'>
                                     <IoMdCall className='text-lg mt-[2px] mr-1' /> <span className='text-sm'>{phone}</span>

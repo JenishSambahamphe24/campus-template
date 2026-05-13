@@ -4,7 +4,7 @@ import { SlCalender } from "react-icons/sl";
 import { downloadPublicationFile, getPublicationById } from '../../cmsScreen/cms-components/cms-publication/publicationApi';
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useState, useEffect } from 'react';
-import { extractDate } from '../../../Components/utilityFunctions';
+import { extractDate, extractPlainText } from '../../../Components/utilityFunctions';
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 const defaultImage = import.meta.env.VITE_DEFAULT_IMG
 
@@ -42,16 +42,21 @@ function NoticePage() {
                             </div>
                             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm  ms-3">{extractDate(notice.publishedAt)}</span>
                         </div>
-                        {
-                            notice.isFile === true && (
-                                <button onClick={() => downloadPublicationFile(notice.file)} className='flex h-5 mt-1 mr-4'>
-                                    <span className='text-xs mt-[1px] text-[#1169bf]'>
-                                        download
-                                    </span>
-                                    <MdOutlineFileDownload fontSize="16px" style={{ marginLeft: '5px', color: '#1169bf', marginTop: '2px' }} />
-                                </button>
-                            )
-                        }
+
+                        {notice.description && (
+                            <div className="text-sm text-gray-700 mb-3 whitespace-pre-line">
+                                {extractPlainText(notice.description)}
+                            </div>
+                        )}
+
+                        {notice.isFile === true && (
+                            <button onClick={() => downloadPublicationFile(notice.file)} className='flex h-5 mt-1 mr-4'>
+                                <span className='text-xs mt-[1px] text-[#1169bf]'>
+                                    Download
+                                </span>
+                                <MdOutlineFileDownload fontSize="16px" style={{ marginLeft: '5px', color: '#1169bf', marginTop: '2px' }} />
+                            </button>
+                        )}
 
                     </div>
                 </div>

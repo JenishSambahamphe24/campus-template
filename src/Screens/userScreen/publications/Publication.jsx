@@ -9,7 +9,8 @@ import {
 import ReusablePagination from "../ReusablePagination";
 import {
   cleanDescription,
-  formatDate,
+  extractDate,
+  isOnOrBeforeCutoff,
 } from "../../../Components/utilityFunctions";
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
@@ -25,7 +26,10 @@ function Publication() {
     const fetchdata = async () => {
       const data = await getAllpublication();
       const filteredData = data.filter(
-        (item) => item.categoryName === "Publication" && item.displayStatus === true
+        (item) =>
+          item.categoryName === "Publication" &&
+          item.displayStatus === true &&
+          isOnOrBeforeCutoff(item.publishedAt)
       );
       setAllPublication(filteredData);
     };
@@ -101,7 +105,7 @@ function Publication() {
                     </>
                   )}
                   <span className="text-blue-500 text-md">
-                    {formatDate(item.publishedAt)}
+                    {extractDate(item.publishedAt)}
                   </span>
                 </div>
                 <div className="px-2">
