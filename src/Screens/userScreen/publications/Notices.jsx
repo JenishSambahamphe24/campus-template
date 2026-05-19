@@ -7,7 +7,7 @@ import {
   downloadPublicationFile,
   getAllpublication,
 } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
-import { extractDate, isOnOrBeforeCutoff } from "../../../Components/utilityFunctions";
+import { extractDate } from "../../../Components/utilityFunctions";
 import { Link } from "react-router-dom";
 
 function Notices() {
@@ -23,8 +23,7 @@ function Notices() {
     const noticesData = response.filter(
       (item) =>
         item.categoryName === category &&
-        item.displayStatus === true &&
-        isOnOrBeforeCutoff(item.publishedAt)
+        item.displayStatus === true
     );
 
     const groupedNotices = noticesData.reduce((acc, item) => {

@@ -140,7 +140,7 @@ function MessageSection() {
     };
     const imageSource = imgError ?
         defaultImage :
-        (introduction.aboutUsImage ? `${IMAGE_URL}/aboutUs/${introduction.aboutUsImage}` : defaultImage);
+        (introduction.aboutUsImage ? `${IMAGE_URL}/aboutus/${introduction.aboutUsImage}` : defaultImage);
 
     return (
         <div className="w-full  py-8">

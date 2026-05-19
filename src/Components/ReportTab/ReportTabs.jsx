@@ -48,19 +48,28 @@ function ReportTabs() {
 
     const reportColumns = [
         { field: 'sNo', headerName: 'S.No.', flex: .4 },
-        { field: 'fileName', headerName: 'File Name', flex: 4 },
+        { 
+            field: 'fileName', 
+            headerName: 'File Name', 
+            flex: 4,
+            renderCell: (params) => (
+                <Link to={`/publication/${params.row.id}`} style={{ color: 'inherit', textDecoration: 'none' }} className="hover:text-[#1169bf] hover:underline">
+                    {params.value}
+                </Link>
+            )
+        },
         { field: 'publishedDate', headerName: 'Published Date', flex: 2.5 },
         {
             field: 'action',
             headerName: 'Action',
             flex: 1.5,
             renderHeader: () => (
-                <div style={{ textAlign: 'center', fontWeight: '600' }}>
+                <div style={{ textAlign: 'left', fontWeight: '600' }}>
                     Action
                 </div>
             ),
             renderCell: (params) => (
-                <Box textAlign='center'>
+                <Box textAlign='left'>
                     <button
                         style={{ textDecoration: 'none' }}
                         onClick={() => downloadPublicationFile(params.row.file)}

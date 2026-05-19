@@ -7,7 +7,7 @@ import {
   downloadPublicationFile,
   getAllpublication,
 } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
-import { extractDate, isOnOrBeforeCutoff } from "../../../Components/utilityFunctions";
+import { extractDate } from "../../../Components/utilityFunctions";
 
 const FILE_URL = import.meta.env.VITE_FILE_URL;
 
@@ -35,8 +35,7 @@ function Report() {
     const reportData = response.filter(
       (item) =>
         item.categoryName === "Report" &&
-        item.displayStatus === true &&
-        isOnOrBeforeCutoff(item.publishedAt)
+        item.displayStatus === true
     );
 
     const groupedReport = reportData.reduce((acc, item) => {

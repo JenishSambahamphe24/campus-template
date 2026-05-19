@@ -45,7 +45,7 @@ function Introduction() {
   const imageSource = imgError
     ? defaultImage
     : data.aboutUsImage
-    ? `${IMAGE_URL}/aboutUs/${data.aboutUsImage}`
+    ? `${IMAGE_URL}/aboutus/${data.aboutUsImage}`
     : defaultImage;
   
   return (
