@@ -31,18 +31,20 @@ function AdminSignIn() {
             });
             const token = response.data.token;
             const role = response.data.user.role;
+            const normalizedRole = typeof role === 'string' ? role.toUpperCase() : '';
             const email = response.data.user.email;
             const userName = response.data.user.userName;
 
-            login({ email, token, role, userName })
-            toast.success('Login successful', { autoClose: 500 })
+            login({ email, token, role: normalizedRole, userName });
+            toast.success('Login successful', { autoClose: 500 });
             setTimeout(() => {
-                if (role === CMS_USER) {
+                if (normalizedRole === CMS_USER) {
                     navigate('/admin');
-                } else if (role === UGC_USER) {
+                } else if (normalizedRole === UGC_USER) {
                     navigate('/qaa/qaa');
                 } else {
-                    navigate('/');
+                    toast.error('Unknown user role. Please contact support.', { autoClose: 2000 });
+                    navigate('/signIn');
                 }
             }, 700);
         } catch (error) {

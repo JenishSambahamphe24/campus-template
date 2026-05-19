@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../../../context/AuthContextProvider'
-import { FaCloudUploadAlt, FaTrash, FaEdit, FaEye, FaEyeSlash, FaFileDownload } from 'react-icons/fa'
+import { FaCloudUploadAlt, FaTrash, FaEdit, FaEye, FaEyeSlash, FaFileDownload, FaEllipsisV, FaExternalLinkAlt } from 'react-icons/fa'
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +19,8 @@ function QAADocumentManagement() {
         description: '',
         visibility: true
     })
+    const [openDropdownId, setOpenDropdownId] = useState(null)
+    const [deleteModalDocId, setDeleteModalDocId] = useState(null)
 
     useEffect(() => {
         fetchDocuments()
@@ -82,16 +84,23 @@ function QAADocumentManagement() {
         }
     }
 
-    const handleDelete = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this document?')) return
+    const handleDeleteClick = (id) => {
+        setDeleteModalDocId(id)
+        setOpenDropdownId(null)
+    }
+
+    const confirmDelete = async () => {
+        if (!deleteModalDocId) return
         try {
-            await axios.delete(`${BASE_URL}/qaa/delete/${id}`, {
+            await axios.delete(`${BASE_URL}/qaa/delete/${deleteModalDocId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             toast.success('Document deleted')
             fetchDocuments()
         } catch (error) {
             toast.error('Failed to delete document')
+        } finally {
+            setDeleteModalDocId(null)
         }
     }
 
@@ -178,28 +187,67 @@ function QAADocumentManagement() {
                         ) : documents.map((doc, index) => (
                             <tr key={doc.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 font-medium text-gray-800">{index + 1}</td>
-                                <td className="px-6 py-4 font-medium text-gray-800">{doc.title}</td>
+                                <td className="px-6 py-4 font-medium text-gray-800">
+                                    <a href={`${import.meta.env.VITE_FILE_URL}/content/${doc.filePath}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#1169bf] hover:underline">
+                                        {doc.title}
+                                    </a>
+                                </td>
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${doc.visibility ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                                         {doc.visibility ? 'Public (UGC)' : 'Private'}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 text-gray-600 text-sm">{new Date(doc.uploadDate).toLocaleDateString()}</td>
-                                <td className="px-6 py-4 text-right">
-                                    <div className="flex justify-end gap-3">
-                                        <button onClick={() => toggleVisibility(doc)} title={doc.visibility ? "Hide" : "Show"} className="p-2 text-orange-600 hover:bg-orange-50 rounded-lg">
-                                            {doc.visibility ? <FaEye /> : <FaEyeSlash />}
-                                        </button>
-                                        <button onClick={() => handleDownload(doc)} title="Download" className="p-2 text-green-600 hover:bg-green-50 rounded-lg">
-                                            <FaFileDownload />
-                                        </button>
-                                        <button onClick={() => openEditModal(doc)} title="Edit" className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                                            <FaEdit />
-                                        </button>
-                                        <button onClick={() => handleDelete(doc.id)} title="Delete" className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
-                                            <FaTrash />
-                                        </button>
-                                    </div>
+                                <td className="px-6 py-4 text-gray-600 text-sm">{new Date(doc.uploadDate).toISOString().split('T')[0]}</td>
+                                <td className="px-6 py-4 text-right relative">
+                                    <button 
+                                        onClick={() => setOpenDropdownId(openDropdownId === doc.id ? null : doc.id)}
+                                        className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+                                    >
+                                        <FaEllipsisV />
+                                    </button>
+                                    
+                                    {openDropdownId === doc.id && (
+                                        <>
+                                            <div 
+                                                className="fixed inset-0 z-10" 
+                                                onClick={() => setOpenDropdownId(null)}
+                                            ></div>
+                                            <div className="absolute right-10 top-12 w-48 bg-white rounded-lg shadow-xl border border-gray-100 z-20 py-2 text-left">
+                                                <a 
+                                                    href={`${import.meta.env.VITE_FILE_URL}/qaa/${doc.filePath}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full"
+                                                >
+                                                    <FaExternalLinkAlt className="text-gray-400" /> View
+                                                </a>
+                                                <button 
+                                                    onClick={() => { toggleVisibility(doc); setOpenDropdownId(null); }}
+                                                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                                                >
+                                                    {doc.visibility ? <><FaEyeSlash className="text-orange-500" /> Hide (Private)</> : <><FaEye className="text-green-500" /> Show (Public)</>}
+                                                </button>
+                                                <button 
+                                                    onClick={() => { handleDownload(doc); setOpenDropdownId(null); }}
+                                                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                                                >
+                                                    <FaFileDownload className="text-blue-500" /> Download
+                                                </button>
+                                                <button 
+                                                    onClick={() => { openEditModal(doc); setOpenDropdownId(null); }}
+                                                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                                                >
+                                                    <FaEdit className="text-indigo-500" /> Edit
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDeleteClick(doc.id)}
+                                                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 w-full text-left"
+                                                >
+                                                    <FaTrash className="text-red-500" /> Delete
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -262,6 +310,32 @@ function QAADocumentManagement() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {deleteModalDocId && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden p-6 text-center">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <FaTrash className="text-2xl text-red-600" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-2">Delete Document</h3>
+                        <p className="text-gray-500 text-sm mb-6">Are you sure you want to delete this document? This action cannot be undone.</p>
+                        <div className="flex gap-3">
+                            <button 
+                                onClick={() => setDeleteModalDocId(null)} 
+                                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                onClick={confirmDelete} 
+                                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-colors"
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

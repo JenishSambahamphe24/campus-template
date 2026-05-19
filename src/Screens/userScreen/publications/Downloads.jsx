@@ -9,7 +9,6 @@ import {
 } from "../../cmsScreen/cms-components/cms-publication/publicationApi";
 import {
   extractDate,
-  isOnOrBeforeCutoff,
 } from "../../../Components/utilityFunctions";
 
 const NoDownloadsMessage = () => (
@@ -37,8 +36,7 @@ function Downloads() {
     const noticesData = response.filter(
       (item) =>
         (item.categoryName === "Downloads" || item.categoryName === "Others") &&
-        item.displayStatus === true &&
-        isOnOrBeforeCutoff(item.publishedAt)
+        item.displayStatus === true
     );
 
     const groupedNotices = noticesData.reduce((acc, item) => {

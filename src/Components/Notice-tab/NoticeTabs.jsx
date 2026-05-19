@@ -295,7 +295,7 @@ function NoticeTabs() {
                   <div className="text-sm flex flex-col justify-center">
                     <a
                       href="#"
-                      className="text-gray-900 font-medium hover:text-[#f36710] leading-none line-clamp-2"
+                      className="text-gray-900 font-medium hover:text-[#f36710]  line-clamp-7"
                     >
                       {item.title}
                     </a>

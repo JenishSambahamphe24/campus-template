@@ -294,7 +294,7 @@ function EditGallery() {
                 >
                   <img
                     className="w-full h-20 object-cover"
-                    src={`${IMAGE_URL}/thumb/${item.image}`}
+                    src={`${IMAGE_URL}/images/${item.image}`}
                     alt=""
                   />
                   <button
