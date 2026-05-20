@@ -14,7 +14,7 @@ import { FaBookReader } from "react-icons/fa";
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL
 
-function OurTeam() {
+function OurTeam({ hideTitle = false }) {
     const [allTeamMember, setAllTeamMeber] = useState([])
     const [activeTab, setActiveTab] = useState("Committe member");
 
@@ -216,9 +216,13 @@ function OurTeam() {
 
     return (
         <Grid container className='px-2 md:px-6 lg:px-9 py-8'>
-            <Grid item xs={12}>
-                <h1 className='text-center mb-4 text-2xl font-bold'>Our Team</h1>
-            </Grid>
+            {/* Hide "Our Team" heading when hideTitle prop is true (for QAA panel) */}
+            {!hideTitle && (
+                <Grid item xs={12}>
+                    <h1 className='text-center mb-4 text-2xl font-bold'>Our Team</h1>
+                </Grid>
+            )}
+            
             <Grid item xs={12}>
                 <Tabs value={activeTab}>
                     <TabsHeader

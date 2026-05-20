@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LuMenu } from 'react-icons/lu';
@@ -18,6 +17,7 @@ const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
 const affiliationNepali = import.meta.env.VITE_AFFILIATION_NEPALI;
 const affiliationEn = import.meta.env.VITE_AFFILIATION_EN;
 const logoURL = import.meta.env.VITE_LOGO_URL;
+const logoURL2 = import.meta.env.VITE_LOGO_URL2;
 const textColor = import.meta.env.VITE_NAV_TEXT;
 const bgColor = import.meta.env.VITE_NAV_BG;
 
@@ -29,6 +29,7 @@ function Navbar() {
     const [dropdownCategories, setDropdownCategories] = useState([])
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
     const [mobilePubOpen, setMobilePubOpen] = useState(false)
+    const [logo2Error, setLogo2Error] = useState(false);
     const location = useLocation();
     const currentPath = location.pathname;
 
@@ -77,6 +78,7 @@ function Navbar() {
         <nav className="relative bg-white shadow ">
             <div className="pb-0 mx-auto">
                 <div className={`px-4 lg:px-20 bg-[${bgColor}] py-4  md:py-1  h-full items-center mx-auto flex flex-col sm:flex-column md:flex-row justify-between w-full`}>
+                    {/* Left Logo */}
                     <Link className="flex items-center" to="/">
                         <img
                             className="w-[120px] h-auto"
@@ -84,6 +86,8 @@ function Navbar() {
                             alt="Logo"
                         />
                     </Link>
+                    
+                    {/* Center Content - College Info */}
                     <div className={`ml-2 mt-4 text-[${textColor}] md:mt-1 lg:ml-4 flex flex-col justify-center`}>
                         <h1 className={`text-xs text-center lg:text-xs text-[${textColor}]  font-medium tracking-wide`}>{affiliationNepali}</h1>
                         <p className={`text-xs text-${textColor} text-center lg:text-xs`}>{affiliationEn}</p>
@@ -92,8 +96,19 @@ function Navbar() {
                         <h1 className={`text-xs font-medium text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>
                         <h1 className={`text-xs font-medium text-[${textColor}]  text-center`}>{address}</h1>
                     </div>
+                    
+                    {/* Right Logo - Conditional rendering with error handling */}
                     <div className='hidden lg:block'>
-                        <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="" />
+                        {!logo2Error ? (
+                            <img 
+                                src={logoURL2} 
+                                className='w-32 h-32 object-contain' 
+                                alt="Logo 2" 
+                                onError={() => setLogo2Error(true)}
+                            />
+                        ) : (
+                            <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="Nepal Flag" />
+                        )}
                     </div>
                 </div>
                 {/* main navigation */}
