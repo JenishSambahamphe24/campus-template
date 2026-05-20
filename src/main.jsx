@@ -53,6 +53,7 @@ import QAALogin from './Screens/userScreen/QAALogin.jsx';
 import QAADashboard from './Screens/userScreen/QAADashboard.jsx';
 import UGCUserManagement from './Screens/cmsScreen/cms-components/cms-qaa/UGCUserManagement.jsx';
 import QAADocumentManagement from './Screens/cmsScreen/cms-components/cms-qaa/QAADocumentManagement.jsx';
+import QAACategoryManagement from './Screens/cmsScreen/cms-components/cms-qaa/QAACategoryManagement.jsx';
 import QAALayout from './Screens/QAALayout.jsx';
 import ErrorPage from './Screens/ErrorPage.jsx';
 import { CMS_USER, UGC_USER } from './utils/constants.js';
@@ -174,6 +175,7 @@ const router = createBrowserRouter(
           {/* New CMS Modules */}
           <Route index={true} path='ugc-users' element={<UGCUserManagement />} />
           <Route index={true} path='qaa-documents' element={<QAADocumentManagement />} />
+          <Route index={true} path='qaa-categories' element={<QAACategoryManagement />} />
         </Route>
       </Route>
     </>

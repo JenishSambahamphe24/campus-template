@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { getAllpublication } from "../Screens/cmsScreen/cms-components/cms-publication/publicationApi";
-import NepaliDate from "nepali-datetime";
 import { extractDate } from "./utilityFunctions";
 
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
@@ -11,39 +10,41 @@ function PopupBanner() {
   const [popups, setPopups] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nepaliDate = new NepaliDate();
-  const nepaliDateToday = `${nepaliDate.year}-${String(
-    nepaliDate.month + 1
-  ).padStart(2, "0")}-${String(nepaliDate.day).padStart(2, "0")}`;
+  // Get today's Gregorian date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   // Check if popup is expired
   const isExpired = (expiredAt) => {
     if (!expiredAt) {
-      console.log("No expiry date provided - treating as expired");
-      return true;
+      return false; // No expiry date means it never expires
     }
 
-    const expiredDateStr = expiredAt.split("T")[0];
-    const result = expiredDateStr < nepaliDateToday;
-
-    return result;
+    const todayDate = getTodayDate();
+    return expiredAt < todayDate;
   };
-  console.log(popups);
   // Fetch popups from API
   useEffect(() => {
     const fetchPopups = async () => {
       try {
         const response = await getAllpublication();
+        
         const validPopups = response
-          .filter((item) => item.isPopUp === true && !!item.thumbnailImage && item.displayStatus === true)
+          .filter((item) => item.isPopUp === true && item.displayStatus === true)
           .map((item) => ({
-            id: item.id, // Use ID to sort by upload order
+            id: item.id,
             title: item.title,
-            image: item.thumbnailImage,
+            description: item.description,
+            image: item.popUpImage || item.thumbnailImage || null,
             expiredAt: extractDate(item.expiredAt),
           }))
           .filter((item) => !isExpired(item.expiredAt))
-          .sort((a, b) => b.id - a.id); // Latest uploaded first
+          .sort((a, b) => b.id - a.id);
 
         setPopups(validPopups);
         if (validPopups.length > 0) setIsVisible(true);
@@ -53,7 +54,7 @@ function PopupBanner() {
     };
 
     fetchPopups();
-  }, [nepaliDateToday]);
+  }, []);
 
   const handleClose = () => {
     if (currentIndex < popups.length - 1) {
@@ -97,15 +98,24 @@ function PopupBanner() {
           style={{ height: "calc(100% - 80px)" }}
         >
           <div className="p-4">
-            <img
-              src={`${IMAGE_URL}/thumb/${currentPopup.image}`}
-              alt={currentPopup.title || "Popup image"}
-              className="w-full h-auto object-contain rounded-lg shadow-md"
-              onError={(e) => {
-                e.target.src = "/path/to/fallback-image.jpg";
-                e.target.alt = "Image not available";
-              }}
-            />
+            {currentPopup.image ? (
+              <img
+                src={`${IMAGE_URL}/thumb/${currentPopup.image}`}
+                alt={currentPopup.title || "Popup image"}
+                className="w-full h-auto object-contain rounded-lg shadow-md"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                }}
+              />
+            ) : (
+              <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+                {currentPopup.description ? (
+                  <div dangerouslySetInnerHTML={{ __html: currentPopup.description }} />
+                ) : (
+                  <p className="text-center text-gray-500">No additional content</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

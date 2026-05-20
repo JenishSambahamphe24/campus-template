@@ -36,7 +36,7 @@ function AdminNavbar() {
     const isAnyActive = (paths) => paths.some(path => currentPath.startsWith(path));
     const academicPaths = ['/admin/faculties', '/admin/addFaculty', '/admin/programs', '/admin/addProgram', '/admin/editProgram'];
     const contentPaths = ['/admin/publications', '/admin/addPublication', '/admin/editPublication', '/admin/addCategory', '/admin/aboutUs', '/admin/addAboutUs', '/admin/editAboutUs'];
-    const qaUserPaths = ['/admin/ugc-users', '/admin/qaa-documents'];
+    const qaUserPaths = ['/admin/ugc-users', '/admin/qaa-documents', '/admin/qaa-categories'];
 
     const handleLogout = () => {
         sessionStorage.clear();
@@ -186,6 +186,14 @@ function AdminNavbar() {
                                                 className={`block px-4 py-1 ${isActive('/admin/qaa-documents') ? 'text-[#f36710]' : 'text-white hover:bg-blue-900'}`}
                                             >
                                                 QAA Document Management
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link
+                                                to="/admin/qaa-categories"
+                                                className={`block px-4 py-1 ${isActive('/admin/qaa-categories') ? 'text-[#f36710]' : 'text-white hover:bg-blue-900'}`}
+                                            >
+                                                QAA Category Management
                                             </Link>
                                         </MenuItem>
                                     </div>
@@ -344,6 +352,7 @@ function AdminNavbar() {
                                 <div className='flex flex-col space-y-1'>
                                     <Link to="/admin/ugc-users" className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/admin/ugc-users') ? activeStyle : inactiveStyle}`}>UGC User Management</Link>
                                     <Link to="/admin/qaa-documents" className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/admin/qaa-documents') ? activeStyle : inactiveStyle}`}>QAA Document Management</Link>
+                                    <Link to="/admin/qaa-categories" className={`relative ml-2 leading-2 transition-colors duration-300 transform text-sm before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-[1px] before:bg-white before:mr-1 pl-5 ${isActive('/admin/qaa-categories') ? activeStyle : inactiveStyle}`}>QAA Category Management</Link>
                                 </div>
                             </details>
                         </div>

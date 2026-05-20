@@ -14,17 +14,33 @@ function QAADocumentManagement() {
     const [isEditing, setIsEditing] = useState(false)
     const [selectedDoc, setSelectedDoc] = useState(null)
     const [file, setFile] = useState(null)
+    const [categories, setCategories] = useState([])
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        visibility: true
+        visibility: true,
+        categoryId: ''
     })
     const [openDropdownId, setOpenDropdownId] = useState(null)
     const [deleteModalDocId, setDeleteModalDocId] = useState(null)
+    const [page, setPage] = useState(0)
+    const pageSize = 10
 
     useEffect(() => {
         fetchDocuments()
+        fetchCategories()
     }, [])
+
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/qaaCategories`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setCategories(Array.isArray(response.data) ? response.data : [])
+        } catch (error) {
+            console.error('Error fetching QAA categories:', error)
+        }
+    }
 
     const fetchDocuments = async () => {
         try {
@@ -33,6 +49,7 @@ function QAADocumentManagement() {
             })
             console.log('Fetched QAA documents:', response.data)
             setDocuments(Array.isArray(response.data) ? response.data : [])
+            setPage(0)
         } catch (error) {
             console.error('Error fetching QAA documents:', error)
             toast.error('Failed to load QAA documents')
@@ -56,6 +73,7 @@ function QAADocumentManagement() {
         data.append('title', formData.title)
         data.append('description', formData.description)
         data.append('visibility', formData.visibility)
+        if (formData.categoryId) data.append('categoryId', formData.categoryId)
         if (file) data.append('file', file)
 
         try {
@@ -124,7 +142,8 @@ function QAADocumentManagement() {
         setFormData({
             title: doc.title,
             description: doc.description,
-            visibility: doc.visibility === 1 || doc.visibility === true
+            visibility: doc.visibility === 1 || doc.visibility === true,
+            categoryId: doc.categoryId || ''
         })
         setIsEditing(true)
         setShowModal(true)
@@ -135,7 +154,7 @@ function QAADocumentManagement() {
         setIsEditing(false)
         setSelectedDoc(null)
         setFile(null)
-        setFormData({ title: '', description: '', visibility: true })
+        setFormData({ title: '', description: '', visibility: true, categoryId: '' })
     }
 
     const handleDownload = async (doc) => {
@@ -156,6 +175,11 @@ function QAADocumentManagement() {
         }
     }
 
+    const startIdx = page * pageSize;
+    const endIdx = startIdx + pageSize;
+    const pageCount = Math.ceil(documents.length / pageSize);
+    const pageDocuments = documents.slice(startIdx, endIdx);
+
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
@@ -168,29 +192,33 @@ function QAADocumentManagement() {
                 </button>
             </div>
 
-            <div className="bg-white rounded-xl shadow overflow-hidden border border-gray-200">
+            <div className="bg-white rounded-xl shadow border border-gray-200">
                 <table className="w-full text-left">
                     <thead className="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm w-16">S.No.</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm w-16 rounded-tl-xl">S.No.</th>
                             <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Title</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Category</th>
                             <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Visibility</th>
                             <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Upload Date</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Actions</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right rounded-tr-xl">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                         {loading ? (
-                            <tr><td colSpan="5" className="text-center py-8">Loading...</td></tr>
+                            <tr><td colSpan="6" className="text-center py-8">Loading...</td></tr>
                         ) : documents.length === 0 ? (
-                            <tr><td colSpan="5" className="text-center py-8">No documents found</td></tr>
-                        ) : documents.map((doc, index) => (
+                            <tr><td colSpan="6" className="text-center py-8">No documents found</td></tr>
+                        ) : pageDocuments.map((doc, index) => (
                             <tr key={doc.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 font-medium text-gray-800">{index + 1}</td>
+                                <td className="px-6 py-4 font-medium text-gray-800">{startIdx + index + 1}</td>
                                 <td className="px-6 py-4 font-medium text-gray-800">
-                                    <a href={`${import.meta.env.VITE_FILE_URL}/content/${doc.filePath}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#1169bf] hover:underline">
+                                    <a href={`${import.meta.env.VITE_FILE_URL}/qaa/${doc.filePath}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#1169bf] hover:underline">
                                         {doc.title}
                                     </a>
+                                </td>
+                                <td className="px-6 py-4 text-gray-600 text-sm font-medium">
+                                    {doc.categoryName || <span className="text-gray-400 italic">No Category</span>}
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${doc.visibility ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
@@ -253,6 +281,42 @@ function QAADocumentManagement() {
                         ))}
                     </tbody>
                 </table>
+                {documents.length > pageSize && (
+                    <div className="flex items-center justify-between px-6 py-3 border-t border-gray-200 bg-white">
+                        <div className="text-sm text-gray-600">
+                            Showing {startIdx + 1} to {Math.min(endIdx, documents.length)} of {documents.length}
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setPage(Math.max(0, page - 1))}
+                                disabled={page === 0}
+                                className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
+                            {Array.from({ length: pageCount }, (_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setPage(i)}
+                                    className={`px-3 py-1 text-sm border rounded ${
+                                        page === i
+                                            ? 'bg-[#1169bf] text-white border-[#1169bf]'
+                                            : 'border-gray-300 hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                            <button
+                                onClick={() => setPage(Math.min(pageCount - 1, page + 1))}
+                                disabled={page >= pageCount - 1}
+                                className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {showModal && (
@@ -282,6 +346,22 @@ function QAADocumentManagement() {
                                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#1169bf] focus:border-transparent outline-none"
                                     rows="3"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <select
+                                    name="categoryId"
+                                    value={formData.categoryId}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#1169bf] focus:border-transparent outline-none bg-white"
+                                >
+                                    <option value="">Select Category (Optional)</option>
+                                    {categories.map((cat) => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">File (PDF/DOCX/IMG) {isEditing && <span className="text-gray-400 text-xs">(Leave empty to keep existing)</span>}</label>
