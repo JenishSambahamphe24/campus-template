@@ -147,10 +147,9 @@ function AddTeam() {
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6} md={2}>
-                                <FormControl required size='small' fullWidth>
+                                <FormControl size='small' fullWidth>
                                     <InputLabel>Salutation</InputLabel>
                                     <Select
-                                        required
                                         name="salutation"
                                         value={formData.salutation}
                                         onChange={handleChange}

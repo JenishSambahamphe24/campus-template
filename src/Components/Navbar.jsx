@@ -99,7 +99,7 @@ function Navbar() {
                     
                     {/* Right Logo - Conditional rendering with error handling */}
                     <div className='hidden lg:block'>
-                        {!logo2Error ? (
+                        {logoURL2 && !logo2Error ? (
                             <img 
                                 src={logoURL2} 
                                 className='w-32 h-32 object-contain' 

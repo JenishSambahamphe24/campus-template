@@ -511,6 +511,7 @@ function QAADashboard() {
         if (!activeTab) return null;
 
         const crumbs = [
+            { label: 'Home', tab: 'home' },
             { label: 'QAA', tab: 'qaa' }
         ];
 

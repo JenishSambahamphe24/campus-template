@@ -248,20 +248,11 @@ function EditTeam() {
           {/* First Row: Salutation, First Name, Middle Name, Last Name */}
           <Grid container width="100%" spacing={2}>
             <Grid item xs={2}>
-              <FormControl required size="small" fullWidth>
-                <InputLabel
-                  InputLabelProps={{
-                    sx: {
-                      "& .MuiInputLabel-asterisk": {
-                        color: "brown",
-                      },
-                    },
-                  }}
-                >
+              <FormControl size="small" fullWidth>
+                <InputLabel>
                   Salutation
                 </InputLabel>
                 <Select
-                  required
                   variant="standard"
                   name="salutation"
                   value={formData.salutation}

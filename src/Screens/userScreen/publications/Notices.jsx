@@ -14,7 +14,7 @@ function Notices() {
   const { category } = useParams();
   const [notices, setNotices] = useState({});
   const [currentPages, setCurrentPages] = useState({});
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   const fetchData = async () => {
     const response = await getAllpublication();
@@ -80,6 +80,7 @@ function Notices() {
       container
       className="justify-start px-4 py-4 lg:px-20 lg:py-16"
       gap="20px"
+      sx={{ alignItems: 'stretch' }}
     >
       {hasContent ? (
         Object.entries(notices).map(([subCategory, items]) => {
@@ -92,16 +93,16 @@ function Notices() {
             .slice(indexOfFirstItem, indexOfLastItem);
 
           return (
-            <Grid item xs={11.8} lg={3.8} md={5.8} key={subCategory}>
+            <Grid item xs={11.8} lg={3.8} md={5.8} sx={{ display: 'flex', flexDirection: 'column' }} key={subCategory}>
               <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
-              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
-                <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
+              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[22rem]">
+                <ul className="flex-grow list-disc pl-5 space-y-2 overflow-hidden">
                   {paginatedItems.length > 0 ? (
                     paginatedItems
                       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
                       .map((item, index) => (
-                        <li key={index} className="flex justify-between items-start">
-                          <div>
+                        <li key={index} className="flex justify-between items-start gap-2">
+                          <div className="min-w-0 flex-1">
                             <Link
                               to={`/notices/${item.id}`}
                               className="text-sm font-medium text-black hover:underline"
@@ -116,12 +117,10 @@ function Notices() {
                           {item.isFile === true && (
                             <button
                               onClick={() => downloadPublicationFile(item.file)}
-                              className="flex items-center text-[#1169bf] hover:text-[#0d47a1]"
+                              className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-[#1169bf] border border-blue-200 hover:bg-[#1169bf] hover:text-white hover:border-[#1169bf] hover:shadow-md transition-all duration-300 ml-2 shrink-0"
+                              title="Download"
                             >
-                              <MdOutlineFileDownload
-                                fontSize="17px"
-                                style={{ marginTop: "2px", marginLeft: "5px" }}
-                              />
+                              <MdOutlineFileDownload fontSize="18px" />
                             </button>
                           )}
                         </li>

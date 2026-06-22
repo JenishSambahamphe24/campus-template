@@ -94,48 +94,42 @@ function NoticeTabs() {
           Latest Notices
         </h1>
 
-        <div className="flex flex-col h-full p-2">
-          <ul className="flex-grow list-disc pl-5 pt-1 space-y-4 overflow-auto">
+        <div className="flex flex-col p-2 pb-10 h-[calc(27rem-2.75rem)]">
+          <ul className="flex-grow list-disc pl-5 pt-1 space-y-3 overflow-hidden">
             {allNotices.length > 0 ? (
               allNotices
-                .filter((item) => item.displayStatus === true) // ✅ only active/visible
+                .filter((item) => item.displayStatus === true)
                 .sort(
                   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
                 )
-                .slice(0, 5) // show latest 5 notices only
+                .slice(0, 5)
                 .map((item, index) => (
                   <li key={index}>
-                    <div className="line-clamp-1">
-                      <span className="flex justify-between text-md overflow-hidden">
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="min-w-0 flex-1">
                         <Link to={`notices/${item.id}`}>
-                          <p className="line-clamp-2">{item.title}</p>
+                          <p className="text-sm font-medium line-clamp-2 hover:underline">{item.title}</p>
                         </Link>
-                        {item.isFile === true && (
-                          <button
-                            onClick={() => downloadPublicationFile(item.file)}
-                          >
-                            <MdOutlineFileDownload
-                              fontSize="17px"
-                              style={{
-                                marginTop: "2px",
-                                marginLeft: "5px",
-                                color: "#1169bf",
-                              }}
-                            />
-                          </button>
-                        )}
-                      </span>
-                      <p className="flex text-xs mt-[-2px] italic">
-                        <SlCalender
-                          fontSize="12px"
-                          style={{
-                            color: "#1169bf",
-                            marginRight: "3px",
-                            marginTop: "2px",
-                          }}
-                        />
-                        {extractDate(item.publishedAt)}
-                      </p>
+                        <p className="flex text-xs italic mt-0.5 items-center">
+                          <SlCalender
+                            fontSize="11px"
+                            style={{
+                              color: "#1169bf",
+                              marginRight: "3px",
+                            }}
+                          />
+                          {extractDate(item.publishedAt)}
+                        </p>
+                      </div>
+                      {item.isFile === true && (
+                        <button
+                          onClick={() => downloadPublicationFile(item.file)}
+                          className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-[#1169bf] border border-blue-200 hover:bg-[#1169bf] hover:text-white hover:border-[#1169bf] hover:shadow-md transition-all duration-300 shrink-0"
+                          title="Download"
+                        >
+                          <MdOutlineFileDownload fontSize="16px" />
+                        </button>
+                      )}
                     </div>
                   </li>
                 ))
@@ -144,9 +138,8 @@ function NoticeTabs() {
             )}
           </ul>
 
-          {/* View All Button */}
           <Link
-            className="w-full flex justify-end mb-1 absolute bottom-0 right-1"
+            className="w-full flex justify-end absolute bottom-1 right-1"
             to="other/Notices"
           >
             <Button

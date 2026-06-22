@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
@@ -10,6 +9,7 @@ import { useAuth } from '../context/AuthContextProvider'
 import { toast } from 'react-toastify'
 
 const logoURL = import.meta.env.VITE_LOGO_URL;
+const logoURL2 = import.meta.env.VITE_LOGO_URL2;
 const collegeName = import.meta.env.VITE_COLLEGE_NAME;
 const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
 const address = import.meta.env.VITE_ADDRESS;
@@ -23,7 +23,6 @@ function QAANavbar() {
     const navigate = useNavigate()
     const location = useLocation()
     const { email } = useAuth()
-    const currentPath = location.pathname + location.search
     const [isOpen, setIsOpen] = useState(false)
     const [mobileAcademicOpen, setMobileAcademicOpen] = useState(false)
 
@@ -31,8 +30,11 @@ function QAANavbar() {
     const inactiveStyle = "text-white hover:text-[#f36710] transition-colors duration-300 transform"
 
     const isActive = (path) => location.pathname === path
+    const isHomeActive = location.pathname === '/qaa/home'
+    const isQAAActive = location.pathname === '/qaa/qaa'
     const isTabActive = (tab) => location.pathname === `/qaa/${tab}`
     const isAnyActive = (tabs) => tabs.some(tab => location.pathname === `/qaa/${tab}`)
+    const [logo2Error, setLogo2Error] = useState(false);
 
     const handleLogout = () => {
         sessionStorage.clear()
@@ -59,8 +61,18 @@ function QAANavbar() {
                         <h1 className={`text-xs font-medium text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>
                         <h1 className={`text-xs font-medium text-[${textColor}] text-center`}>{address}</h1>
                     </div>
+                    {/* Right Logo - Conditional rendering with error handling */}
                     <div className='hidden lg:block'>
-                        <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="Flag" />
+                        {logoURL2 && !logo2Error ? (
+                            <img 
+                                src={logoURL2} 
+                                className='w-32 h-32 object-contain' 
+                                alt="Logo 2" 
+                                onError={() => setLogo2Error(true)}
+                            />
+                        ) : (
+                            <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="Nepal Flag" />
+                        )}
                     </div>
                 </div>
 
@@ -69,14 +81,21 @@ function QAANavbar() {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex w-full items-center">
                         <Link
-                            className={`mx-4 leading-5 ${isTabActive('qaa') ? activeStyle : inactiveStyle}`}
+                            className={`mx-4 leading-5 ${isHomeActive ? activeStyle : inactiveStyle}`}
+                            to="/qaa/home"
+                        >
+                            Home
+                        </Link>
+
+                        <Link
+                            className={`mx-4 leading-5 ${isQAAActive ? activeStyle : inactiveStyle}`}
                             to="/qaa/qaa"
                         >
                             QAA
                         </Link>
 
                         {/* Academics Dropdown */}
-                        <Menu as="div" className="relative inline-block text-left">
+                        {/* <Menu as="div" className="relative inline-block text-left">
                             <MenuButton
                                 className={`mx-4 flex leading-3 items-center ${isAnyActive(['faculties', 'programs']) ? activeStyle : inactiveStyle}`}
                             >
@@ -106,7 +125,7 @@ function QAANavbar() {
                                     </MenuItem>
                                 </div>
                             </MenuItems>
-                        </Menu>
+                        </Menu> */}
 
                         <Link
                             className={`mx-4 leading-5 ${isTabActive('publications') ? activeStyle : inactiveStyle}`}
@@ -173,8 +192,9 @@ function QAANavbar() {
                     className={`${isOpen ? 'relative' : 'absolute'} bg-[#1169bf] inset-x-0 z-20 w-full px-3 pt-0 pb-4 transition-all duration-200 ease-in-out md:hidden ${isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full hidden'}`}
                 >
                     <div className="flex flex-col">
-                        <Link className={`my-1 leading-2 transition-colors duration-300 transform text-md ${isTabActive('qaa') ? activeStyle : inactiveStyle}`} to="/qaa/qaa">QAA</Link>
-                        
+                        <Link className={`my-1 leading-2 transition-colors duration-300 transform text-md ${isHomeActive ? activeStyle : inactiveStyle}`} to="/qaa/home">Home</Link>
+                        <Link className={`my-1 leading-2 transition-colors duration-300 transform text-md ${isQAAActive ? activeStyle : inactiveStyle}`} to="/qaa/qaa">QAA</Link>
+
                         <div className="divide-y divide-gray-100">
                             <details className="group" open={mobileAcademicOpen || isAnyActive(['faculties', 'programs'])} onToggle={(e) => setMobileAcademicOpen(e.target.open)}>
                                 <summary className={`flex my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isAnyActive(['faculties', 'programs']) ? activeStyle : inactiveStyle}`} style={{ listStyle: 'none' }}>

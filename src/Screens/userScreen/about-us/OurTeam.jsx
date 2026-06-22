@@ -129,7 +129,7 @@ function OurTeam({ hideTitle = false }) {
                 />
                 <div className="relative border border-gray-100 bg-white p-1">
                     <h3 className="mt-1 text-sm font-medium text-gray-900 line-clamp-1">
-                        {`${item.salutation ? item.salutation : ''} ${item.firstName} ${item.middleName} ${item.lastName}`}
+                        {`${item.firstName} ${item.middleName} ${item.lastName}`}
                     </h3>
                     <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
                         {item.subCategory}

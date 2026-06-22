@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
+import { MdOutlineFileDownload } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { extractDate, renderSafeHTML } from "../../../Components/utilityFunctions";
 import {
@@ -105,18 +106,10 @@ function PublicationPage() {
               {publicationDetail.isFile === true && publicationDetail.file && (
                 <button
                   onClick={() => downloadPublicationFile(publicationDetail.file)}
-                  className="inline-flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-[#1169bf] hover:text-[#0b4d91] font-bold text-xs px-5 py-3 rounded-xl transition-all duration-300"
+                  className="inline-flex items-center gap-2 bg-[#1169bf] hover:bg-[#0b4d91] text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 >
+                  <MdOutlineFileDownload fontSize="20px" />
                   <span>Download</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-4 w-4"
-                  >
-                    <path d="M12 16l4-4h-3V4h-2v8H8l4 4z" />
-                    <path d="M20 18H4v2h16v-2z" />
-                  </svg>
                 </button>
               )}
 

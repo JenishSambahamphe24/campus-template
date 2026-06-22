@@ -17,6 +17,7 @@ const collegeNameNepali = import.meta.env.VITE_COLLEGE_NAME_NEPALI;
 const affiliationNepali = import.meta.env.VITE_AFFILIATION_NEPALI;
 const affiliationEn = import.meta.env.VITE_AFFILIATION_EN;
 const logoURL = import.meta.env.VITE_LOGO_URL;
+const logoURL2 = import.meta.env.VITE_LOGO_URL2;
 const textColor = import.meta.env.VITE_NAV_TEXT;
 const bgColor = import.meta.env.VITE_NAV_BG
 
@@ -37,6 +38,7 @@ function AdminNavbar() {
     const academicPaths = ['/admin/faculties', '/admin/addFaculty', '/admin/programs', '/admin/addProgram', '/admin/editProgram'];
     const contentPaths = ['/admin/publications', '/admin/addPublication', '/admin/editPublication', '/admin/addCategory', '/admin/aboutUs', '/admin/addAboutUs', '/admin/editAboutUs'];
     const qaUserPaths = ['/admin/ugc-users', '/admin/qaa-documents', '/admin/qaa-categories'];
+    const [logo2Error, setLogo2Error] = useState(false);
 
     const handleLogout = () => {
         sessionStorage.clear();
@@ -65,8 +67,18 @@ function AdminNavbar() {
                         <h1 className={`text-xs font-medium text-[${textColor}] uppercase text-center`}>{addressNepali}</h1>
                         <h1 className={`text-xs font-medium text-[${textColor}] text-center`}>{address}</h1>
                     </div>
+                     {/* Right Logo - Conditional rendering with error handling */}
                     <div className='hidden lg:block'>
-                        <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="" />
+                        {logoURL2 && !logo2Error ? (
+                            <img 
+                                src={logoURL2} 
+                                className='w-32 h-32 object-contain' 
+                                alt="Logo 2" 
+                                onError={() => setLogo2Error(true)}
+                            />
+                        ) : (
+                            <img src="https://media.tenor.com/MCKjaHTU0kwAAAAj/nepal.gif" className='w-32 h-32' alt="Nepal Flag" />
+                        )}
                     </div>
                 </div>
 

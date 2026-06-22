@@ -106,12 +106,10 @@ function NewsGrid() {
                         {item.isFile === true && (
                           <button
                             onClick={() => downloadPublicationFile(item.file)}
-                            className="flex items-center text-[#1169bf] hover:text-[#0d47a1]"
+                            className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-[#1169bf] border border-blue-200 hover:bg-[#1169bf] hover:text-white hover:border-[#1169bf] hover:shadow-md transition-all duration-300 ml-2 shrink-0"
+                            title="Download"
                           >
-                            <MdOutlineFileDownload
-                              fontSize="17px"
-                              style={{ marginLeft: "5px" }}
-                            />
+                            <MdOutlineFileDownload fontSize="18px" />
                           </button>
                         )}
                       </li>
