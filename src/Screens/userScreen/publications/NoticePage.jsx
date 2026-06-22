@@ -69,12 +69,12 @@ function NoticePage() {
 
                         {notice.isFile === true && notice.file && (
                             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                                <button 
-                                    onClick={() => downloadPublicationFile(notice.file)} 
-                                    className="inline-flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-[#1169bf] hover:text-[#0b4d91] font-bold text-xs px-5 py-3 rounded-xl transition-all duration-300"
+                                <button
+                                    onClick={() => downloadPublicationFile(notice.file)}
+                                    className="inline-flex items-center gap-2 bg-[#1169bf] hover:bg-[#0b4d91] text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                                 >
+                                    <MdOutlineFileDownload fontSize="20px" />
                                     <span>Download</span>
-                                    <MdOutlineFileDownload fontSize="18px" />
                                 </button>
                             </div>
                         )}

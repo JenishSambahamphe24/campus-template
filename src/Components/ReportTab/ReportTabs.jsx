@@ -69,12 +69,13 @@ function ReportTabs() {
                 </div>
             ),
             renderCell: (params) => (
-                <Box textAlign='left'>
+                <Box textAlign='left' display='flex' alignItems='center' height='100%'>
                     <button
-                        style={{ textDecoration: 'none' }}
                         onClick={() => downloadPublicationFile(params.row.file)}
+                        className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-[#1169bf] border border-blue-200 hover:bg-[#1169bf] hover:text-white hover:border-[#1169bf] hover:shadow-md transition-all duration-300"
+                        title="Download"
                     >
-                        <DownloadIcon fontSize="14px" />
+                        <DownloadIcon sx={{ fontSize: 16 }} />
                     </button>
                 </Box>
             ),
@@ -156,7 +157,7 @@ function ReportTabs() {
                                         disableDensitySelector={true}
                                         autosizeOnMount={true}
                                         columnHeaderHeight={40}
-                                        rowHeight={30}
+                                        rowHeight={43}
                                         showCellVerticalBorder={true}
                                         pagination
                                         initialState={{
@@ -209,7 +210,7 @@ function ReportTabs() {
                                 disableDensitySelector={true}
                                 autosizeOnMount={true}
                                 columnHeaderHeight={40}
-                                rowHeight={30}
+                                rowHeight={43}
                                 showCellVerticalBorder={true}
                                 pagination
                                 initialState={{

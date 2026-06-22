@@ -50,6 +50,7 @@ import EditGallery from './Screens/cmsScreen/cms-components/cms-gallery/EditGall
 import ScrollToTop from './ScrollToTop.js';
 import EditAboutUs from './Screens/cmsScreen/cms-components/cms-aboutUs/EditAboutUs.jsx';
 import QAALogin from './Screens/userScreen/QAALogin.jsx';
+import QAAHomePage from './Screens/userScreen/QAAHomePage.jsx';
 import QAADashboard from './Screens/userScreen/QAADashboard.jsx';
 import UGCUserManagement from './Screens/cmsScreen/cms-components/cms-qaa/UGCUserManagement.jsx';
 import QAADocumentManagement from './Screens/cmsScreen/cms-components/cms-qaa/QAADocumentManagement.jsx';
@@ -132,8 +133,9 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoutes allowedRoles={[UGC_USER, CMS_USER]} />}>
         <Route element={<QAALayout />}>
           <Route path="/qaa/password-settings" element={<ChangePassword />} />
+          <Route path="/qaa/home" element={<QAAHomePage />} />
           <Route path="/qaa/:tab" element={<QAADashboard />} />
-          <Route path="/qaa" element={<Navigate to="/qaa/qaa" replace />} />
+          <Route path="/qaa" element={<Navigate to="/qaa/home" replace />} />
         </Route>
       </Route>
 

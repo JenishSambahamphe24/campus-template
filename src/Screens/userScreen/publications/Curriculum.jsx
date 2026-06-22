@@ -28,7 +28,7 @@ const NoCurriculumMessage = () => (
 function Curriculum() {
   const [curriculums, setCurriculums] = useState({});
   const [currentPages, setCurrentPages] = useState({});
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   const fetchData = async () => {
     const response = await getAllpublication();
@@ -65,7 +65,7 @@ function Curriculum() {
   };
 
   return (
-    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6">
+    <Grid container sm={12} className="p-4 lg:px-20 lg:py-6" sx={{ alignItems: 'stretch' }}>
       <h2 className="w-full text-center text-2xl font-bold text-gray-900 font-manrope leading-normal pb-1">
         Our Curriculum
       </h2>
@@ -83,14 +83,14 @@ function Curriculum() {
           const paginatedItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
           return (
-            <Grid item xs={11.8} lg={3.8} md={4} sx={{ p: 0.5, mr: 2.8 }} key={subCategory}>
+            <Grid item xs={11.8} lg={3.8} md={4} sx={{ p: 0.5, mr: 2.8, display: 'flex', flexDirection: 'column' }} key={subCategory}>
               <h1 className="border-b border-[#1169bf]">{subCategory}</h1>
-              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[24rem]">
-                <ul className="flex-grow list-disc pl-5 space-y-2 overflow-auto">
+              <div className="mt-6 flex flex-col bg-[#b2c6d5] p-4 h-[22rem]">
+                <ul className="flex-grow list-disc pl-5 space-y-2 overflow-hidden">
                   {paginatedItems.length > 0 ? (
                     paginatedItems.map((item, index) => (
-                      <li key={index} className="flex justify-between items-start">
-                        <div>
+                      <li key={index} className="flex justify-between items-start gap-2">
+                        <div className="min-w-0 flex-1">
                           <Link
                             to={`/curriculum/${item.id}`}
                             className="text-sm font-medium text-black hover:underline"
@@ -104,12 +104,10 @@ function Curriculum() {
                         {item.isFile === true && (
                           <button
                             onClick={() => downloadPublicationFile(item.file)}
-                            className="flex items-center text-[#1169bf] hover:text-[#0d47a1]"
+                            className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-[#1169bf] border border-blue-200 hover:bg-[#1169bf] hover:text-white hover:border-[#1169bf] hover:shadow-md transition-all duration-300 ml-2 shrink-0"
+                            title="Download"
                           >
-                            <MdOutlineFileDownload
-                              fontSize="17px"
-                              style={{ marginLeft: "5px" }}
-                            />
+                            <MdOutlineFileDownload fontSize="18px" />
                           </button>
                         )}
                       </li>
