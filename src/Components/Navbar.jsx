@@ -20,6 +20,7 @@ const logoURL = import.meta.env.VITE_LOGO_URL;
 const logoURL2 = import.meta.env.VITE_LOGO_URL2;
 const textColor = import.meta.env.VITE_NAV_TEXT;
 const bgColor = import.meta.env.VITE_NAV_BG;
+const showQAA = import.meta.env.VITE_SHOW_QAA === 'true';
 
 
 function Navbar() {
@@ -238,13 +239,13 @@ function Navbar() {
                             >
                                 Curriculum
                             </Link>
-                            {/* <Link
+                            {showQAA && <Link
                                 className={`mx-4  leading-5 ${isActive('/signIn') ? activeStyle : inactiveStyle}`}
                                 to="/qaa/login"
                                 target='_blank'
                             >
                                 QAA
-                            </Link> */}
+                            </Link>}
                             <Link
                                 className={`mx-4  leading-5 ${isActive('/gallery') ? activeStyle : inactiveStyle}`}
                                 to="/gallery"
@@ -412,13 +413,13 @@ function Navbar() {
                         >
                             News & events
                         </Link>
-                        {/* <Link
+                        {showQAA && <Link
                             className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/qaa/login') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                             to="/qaa/login"
                             target='_blank'
                         >
                             QAA
-                        </Link> */}
+                        </Link>}
                         <Link
                             className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/gallery') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                             to="/gallery"
