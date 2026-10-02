@@ -7,10 +7,9 @@ import { extractDate } from './utilityFunctions';
 
 function NoticeMarque() {
   const [notices, setNotices] = useState([]);
-  const pad = (n) => n.toString().padStart(2, "0");
 
   const nepaliDate = new NepaliDate();
-  const nepaliDateToday = `${nepaliDate.year}-${pad(nepaliDate.month)}-${pad(nepaliDate.day)}`;
+  const nepaliDateToday = nepaliDate.format("YYYY-MM-DD");
 
   const isExpired = (expiredAt) => {
     if (!expiredAt) return false;
