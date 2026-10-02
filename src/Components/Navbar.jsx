@@ -238,13 +238,13 @@ function Navbar() {
                             >
                                 Curriculum
                             </Link>
-                            <Link
+                            {/* <Link
                                 className={`mx-4  leading-5 ${isActive('/signIn') ? activeStyle : inactiveStyle}`}
                                 to="/qaa/login"
                                 target='_blank'
                             >
                                 QAA
-                            </Link>
+                            </Link> */}
                             <Link
                                 className={`mx-4  leading-5 ${isActive('/gallery') ? activeStyle : inactiveStyle}`}
                                 to="/gallery"
@@ -412,13 +412,13 @@ function Navbar() {
                         >
                             News & events
                         </Link>
-                        <Link
+                        {/* <Link
                             className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/qaa/login') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                             to="/qaa/login"
                             target='_blank'
                         >
                             QAA
-                        </Link>
+                        </Link> */}
                         <Link
                             className={`my-1 leading-2 transition-colors duration-300 transform cursor-pointer text-md ${isActive('/gallery') ? 'text-[#f36710]' : 'text-white hover:text-[#f36710]'}`}
                             to="/gallery"
