@@ -52,7 +52,7 @@ function OurTeam({ hideTitle = false }) {
         },
     ];
 
-    const itemsPerPage = 8;
+    const itemsPerPage = 24; // 6 rows x 4 cards on desktop
 
     // Get filtered data for current tab (active members only)
   const getFilteredData = (category) => {

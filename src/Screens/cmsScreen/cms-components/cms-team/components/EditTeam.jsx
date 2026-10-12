@@ -196,6 +196,8 @@ function EditTeam() {
             updatedData.append('ppImage', formData.ppImage);
         } else if (fetchedImage) {
             updatedData.append('ppImage', fetchedImage);
+        } else {
+            updatedData.append('ppImage', ''); // image removed
         }
         updatedData.append('salutation', formData.salutation);
         updatedData.append('firstName', formData.firstName);
