@@ -126,7 +126,7 @@ function TeamList() {
         subCategory: team.subCategory,
         sNo: index + 1,
         id: team.id,
-        fullName: `${team.firstName || ''} ${team.middleName || ''} ${team.lastName || ''}`,
+        fullName: `${team.salutation || ''} ${team.firstName || ''} ${team.middleName || ''} ${team.lastName || ''}`,
         email: team.email,
         contactNumber: team.phoneNo,
         position: team.position,

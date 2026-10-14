@@ -33,6 +33,7 @@ const salutation = [
   "Professor",
   "Professor Dr.",
   "Associate Prof Dr.",
+  "Assistant Professor",
 ];
 
 function EditTeam() {
