@@ -262,6 +262,9 @@ function EditTeam() {
                   onChange={handleChange}
                   label="Salutation"
                 >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
                   {salutation.map((item, index) => (
                     <MenuItem key={index} value={item}>
                       {item}
