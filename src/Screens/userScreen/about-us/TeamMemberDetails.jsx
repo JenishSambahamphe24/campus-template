@@ -59,7 +59,7 @@ function TeamMemberDetails() {
                             }`}
                     />
                     <div className="relative  bg-white">
-                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"} </h3>
+                        <h3 className="mt-1 text-lg font-medium text-gray-900">{`${teamDetail.salutation || ''} ${teamDetail.firstName} ${teamDetail.middleName} ${teamDetail.lastName}` || "Unknown Member"} </h3>
                         <h3 className=" text-lg font-medium text-gray-900">
                             {teamDetail.subCategory || ""}
                             {teamDetail.subCategory && teamDetail.department ? ", " : ""}

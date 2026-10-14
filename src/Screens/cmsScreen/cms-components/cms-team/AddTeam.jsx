@@ -7,7 +7,7 @@ import ImageUpload from '../../../../Components/ImageUpload'
 import TipTapEditor from '../../../../Components/Tiptap/TipTapEditor'
 import DateInputField from '../../../../Components/DateInputField'
 
-const salutation = ['Mr.', 'Mrs.', 'Miss.', 'Professor', 'Professor Dr.', 'Associate Prof Dr.']
+const salutation = ['Mr.', 'Mrs.', 'Miss.', 'Professor', 'Professor Dr.', 'Associate Prof Dr.', 'Assistant Professor']
 
 function AddTeam() {
     const [loading, setLoading] = useState(false);
